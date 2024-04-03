@@ -11,21 +11,21 @@ End Class
 '	Inherits System.Windows.Forms.Form
 '	'UPGRADE_NOTE: DefInt A-Z statement was removed. Variables were explicitly declared as type Short. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="92AFD3E3-440D-4D49-A8BF-580D74A8C9F2"'
 
-'	Dim psTekst(5) As String
+'	Dim ReportText(5) As String
 '	Dim LFontSize(20) As Single
 '	Dim LAantalL(20) As Short
 '	Dim FontDefChanged As Short
 
-'	Dim VeldTXT(20) As String
+'	Dim FieldText(20) As String
 
 '	Dim SubTotaalD As Decimal
 '	Dim SubTotaalC As Decimal
-'	Dim TotaalD As Decimal
-'	Dim TotaalC As Decimal
+'	Dim TotalDebit As Decimal
+'	Dim TotalCredit As Decimal
 '	Dim AlgTotaalD As Decimal
 '	Dim AlgTotaalC As Decimal
 
-'	Dim Lijn As Integer
+'	Dim Line As Integer
 '	Dim SelectieVanTot As String
 
 
@@ -35,18 +35,18 @@ End Class
 '		Dim T As Short
 
 '		For T = 0 To 8
-'			VeldTXT(T) = ""
+'			FieldText(T) = ""
 '		Next 
 
-'		VeldTXT(2) = "Proef- en Saldi :"
-'		VeldTXT(5) = Dec(AlgTotaalD, MaskerEURBH)
-'		VeldTXT(6) = Dec(System.Math.Abs(AlgTotaalC), MaskerEURBH)
+'		FieldText(2) = "Proef- en Saldi :"
+'		FieldText(5) = Dec(AlgTotaalD, MaskEURBH)
+'		FieldText(6) = Dec(System.Math.Abs(AlgTotaalC), MaskEURBH)
 
 '		T = 0
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(VeldTXT(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(FieldText(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
@@ -88,15 +88,15 @@ End Class
 '		Dim DCBedrag As Decimal
 '		Dim XX As Short
 
-'		Lijn = 0
+'		Line = 0
 '		VorigeSleutel.Value = ""
 '		BeginSleutel.Value = vSet(TekstLijn(2).Text, 7) & VB.Left(SelectieVanTot, 8)
 '		EindSleutel.Value = vSet(TekstLijn(3).Text, 7) & VB.Right(SelectieVanTot, 8)
 
-'		psTekst(2) = "Historieken " & Mid(Mim.Text, InStr(Mim.Text, "["))
-'		psTekst(0) = TekstLijn(1).Text
+'		ReportText(2) = "Historieken " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(0) = TekstLijn(1).Text
 
-'		InitVelden()
+'		InitializeFields()
 '		bFirst(FlJournaal, 0)
 '		bGetOrGreater(FlJournaal, 0, BeginSleutel.Value)
 '		If Ktrl Then
@@ -106,7 +106,7 @@ End Class
 
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-'		PaginaTeller = 0
+'		PageCounter = 0
 '		If chkAfdrukInVenster.CheckState = 0 Then
 '			If Printer.Width > 12000 Then
 '				Printer.FontSize = 10
@@ -174,11 +174,11 @@ End Class
 '		Exit Sub
 
 'InstalSubTitel: 
-'		If Lijn <> 0 Then
+'		If Line <> 0 Then
 '			PeriodiekTotaal()
 '			EindTotaal()
 '		End If
-'		Lijn = 0
+'		Line = 0
 '		RecordToVeld(FlJournaal)
 '		bGet(FlRekening, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
 '		If Ktrl Then
@@ -187,7 +187,7 @@ End Class
 '			RecordToVeld(FlRekening)
 '			SubTitelTekst = vBibTekst(FlRekening, "#v019 #") & " " & vBibTekst(FlRekening, "#v020 #")
 '			SnelHelpPrint(SubTitelTekst, blLogging)
-'			psTekst(3) = SubTitelTekst
+'			ReportText(3) = SubTitelTekst
 '		End If
 '		VorigeSleutel.Value = vSet(KeyBuf(FlJournaal), 15)
 '		PrintTitel()
@@ -196,22 +196,22 @@ End Class
 
 'PrintInfo: 
 '		RecordToVeld(FlJournaal)
-'		Lijn = Lijn + 1
-'		VeldTXT(0) = VB6.Format(Lijn, "00000")
-'		VeldTXT(1) = fDatumText(vBibTekst(FlJournaal, "#v066 #"))
-'		VeldTXT(2) = vBibTekst(FlJournaal, "#v067 #")
-'		VeldTXT(3) = vBibTekst(FlJournaal, "#v033 #")
-'		VeldTXT(4) = vBibTekst(FlJournaal, "#v038 #")
-'		VeldTXT(7) = vBibTekst(FlJournaal, "#v069 #")
-'		If RTrim(VeldTXT(3)) <> "" Then
-'			bGet(Fldokument, 0, VeldTXT(3))
+'		Line = Line + 1
+'		FieldText(0) = VB6.Format(Line, "00000")
+'		FieldText(1) = FunctionDateText(vBibTekst(FlJournaal, "#v066 #"))
+'		FieldText(2) = vBibTekst(FlJournaal, "#v067 #")
+'		FieldText(3) = vBibTekst(FlJournaal, "#v033 #")
+'		FieldText(4) = vBibTekst(FlJournaal, "#v038 #")
+'		FieldText(7) = vBibTekst(FlJournaal, "#v069 #")
+'		If RTrim(FieldText(3)) <> "" Then
+'			bGet(Fldokument, 0, FieldText(3))
 '			If Ktrl Then
-'				VeldTXT(8) = VeldTXT(3)
+'				FieldText(8) = FieldText(3)
 '			Else
-'				VeldTXT(8) = ""
+'				FieldText(8) = ""
 '			End If
 '		Else
-'			VeldTXT(8) = ""
+'			FieldText(8) = ""
 '		End If
 
 '		DCBedrag = Val(vBibTekst(FlJournaal, "#v068 #"))
@@ -219,14 +219,14 @@ End Class
 '		Select Case DCBedrag
 '			Case Is < 0
 '				SubTotaalC = SubTotaalC + DCBedrag
-'				TotaalC = TotaalC + DCBedrag
-'				VeldTXT(5) = ""
-'				VeldTXT(6) = Dec(System.Math.Abs(DCBedrag), MaskerEURBH)
+'				TotalCredit = TotalCredit + DCBedrag
+'				FieldText(5) = ""
+'				FieldText(6) = Dec(System.Math.Abs(DCBedrag), MaskEURBH)
 '			Case Else
 '				SubTotaalD = SubTotaalD + DCBedrag
-'				TotaalD = TotaalD + DCBedrag
-'				VeldTXT(5) = Dec(DCBedrag, MaskerEURBH)
-'				VeldTXT(6) = ""
+'				TotalDebit = TotalDebit + DCBedrag
+'				FieldText(5) = Dec(DCBedrag, MaskEURBH)
+'				FieldText(6) = ""
 '		End Select
 
 '		PrintVelden()
@@ -240,18 +240,18 @@ End Class
 '		Dim T As Short
 
 '		For T = 0 To 8
-'			VeldTXT(T) = ""
+'			FieldText(T) = ""
 '		Next 
 
-'		VeldTXT(2) = "Boekjaartotalen :"
-'		VeldTXT(5) = Dec(TotaalD, MaskerEURBH)
-'		VeldTXT(6) = Dec(System.Math.Abs(TotaalC), MaskerEURBH)
+'		FieldText(2) = "Boekjaartotalen :"
+'		FieldText(5) = Dec(TotalDebit, MaskEURBH)
+'		FieldText(6) = Dec(System.Math.Abs(TotalCredit), MaskEURBH)
 
 '		T = 0
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(VeldTXT(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(FieldText(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
@@ -266,11 +266,11 @@ End Class
 '			PrintTitel()
 '		End If
 
-'		Lijn = 0
+'		Line = 0
 '		SubTotaalD = 0
 '		SubTotaalC = 0
-'		TotaalD = 0
-'		TotaalC = 0
+'		TotalDebit = 0
+'		TotalCredit = 0
 
 '	End Sub
 
@@ -282,17 +282,17 @@ End Class
 '			Exit Sub
 '		End If
 
-'		PaginaTeller = 0
+'		PageCounter = 0
 '		AlgTotaalD = 0
 '		AlgTotaalC = 0
 '		SubTotaalD = 0
 '		SubTotaalC = 0
-'		TotaalD = 0
-'		TotaalC = 0
+'		TotalDebit = 0
+'		TotalCredit = 0
 
 '		SelectieVanTot = BoekjaarVanTot.Value
-'		TxtPeriodeVanTot.Text = fDatumText(VB.Left(SelectieVanTot, 8)) & " - " & fDatumText(VB.Right(SelectieVanTot, 8))
-'		TekstLijn(1).Text = Rdt.Value
+'		TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(SelectieVanTot, 8)) & " - " & FunctionDateText(VB.Right(SelectieVanTot, 8))
+'		TekstLijn(1).Text = MimGlobalDate.Value
 '		TekstLijn(2).Text = CStr(10)
 '		TekstLijn(3).Text = "7999999"
 
@@ -309,36 +309,36 @@ End Class
 
 '	End Sub
 
-'	Private Sub InitVelden()
+'	Private Sub InitializeFields()
 
-'		RapportVeld(0) = "Lijn"
-'		RapportTab(0) = 2
+'		ReportField(0) = "Line"
+'		ReportTab(0) = 2
 
-'		RapportVeld(1) = "Datum"
-'		RapportTab(1) = 9
+'		ReportField(1) = "Datum"
+'		ReportTab(1) = 9
 
-'		RapportVeld(2) = "Omschrijving"
-'		RapportTab(2) = 22
+'		ReportField(2) = "Omschrijving"
+'		ReportTab(2) = 22
 
-'		RapportVeld(3) = "dokument"
-'		RapportTab(3) = 53
+'		ReportField(3) = "dokument"
+'		ReportTab(3) = 53
 
-'		RapportVeld(4) = "Fin.Dok."
-'		RapportTab(4) = 67
+'		ReportField(4) = "Fin.Dok."
+'		ReportTab(4) = 67
 
-'		RapportVeld(5) = "       Debet"
-'		RapportTab(5) = 76
+'		ReportField(5) = "       Debet"
+'		ReportTab(5) = 76
 
-'		RapportVeld(6) = "      Credit"
-'		RapportTab(6) = 89
+'		ReportField(6) = "      Credit"
+'		ReportTab(6) = 89
 
-'		RapportVeld(7) = "T.Reken"
-'		RapportTab(7) = 103
+'		ReportField(7) = "T.Reken"
+'		ReportTab(7) = 103
 
-'		RapportVeld(8) = "VSF.Kode"
-'		RapportTab(8) = 111
+'		ReportField(8) = "VSF.Kode"
+'		ReportTab(8) = 111
 
-'		RapportTab(9) = 0
+'		ReportTab(9) = 0
 
 '	End Sub
 
@@ -349,12 +349,12 @@ End Class
 '		On Error GoTo PrtHandler5
 
 '		For T = 0 To 8
-'			VeldTXT(T) = ""
+'			FieldText(T) = ""
 '		Next 
 
-'		VeldTXT(2) = "Periodiek totaal :"
-'		VeldTXT(5) = Dec(SubTotaalD, MaskerEURBH)
-'		VeldTXT(6) = Dec(System.Math.Abs(SubTotaalC), MaskerEURBH)
+'		FieldText(2) = "Periodiek totaal :"
+'		FieldText(5) = Dec(SubTotaalD, MaskEURBH)
+'		FieldText(6) = Dec(System.Math.Abs(SubTotaalC), MaskEURBH)
 
 '		AlgTotaalD = AlgTotaalD + SubTotaalD
 '		AlgTotaalC = AlgTotaalC + SubTotaalC
@@ -367,10 +367,10 @@ End Class
 
 '		T = 0
 '		Printer.Write(vbCrLf)
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(VeldTXT(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(FieldText(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
@@ -403,19 +403,19 @@ End Class
 
 '		If chkAfdrukInVenster.CheckState Then Exit Sub
 
-'		Printer.Write(TAB(1), psTekst(3) & vbCrLf)
-'		Printer.Write(Lijntje.Value & vbCrLf)
+'		Printer.Write(TAB(1), ReportText(3) & vbCrLf)
+'		Printer.Write(FullLine.Value & vbCrLf)
 
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(RapportVeld(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(ReportField(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
 '		Loop 
 
-'		Printer.Write(Lijntje.Value & vbCrLf)
+'		Printer.Write(FullLine.Value & vbCrLf)
 '		If Printer.CurrentY >= Printer.Height - 1250 Then
 '			Printer.NewPage()
 '			Printer.FontSize = Printer.FontSize
@@ -437,10 +437,10 @@ End Class
 '		Dim T As Short
 '		Dim VeldTekst As String
 
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(VeldTXT(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(FieldText(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
@@ -499,9 +499,9 @@ End Class
 
 '		Select Case Index
 '			Case 1
-'				If DatumFout(TekstLijn(1).Text) Then
+'				If DateWrongFormat(TekstLijn(1).Text) Then
 '					Beep()
-'					TekstLijn(1).Text = Rdt.Value
+'					TekstLijn(1).Text = MimGlobalDate.Value
 '					TekstLijn(1).Focus()
 '				End If
 '			Case 2
@@ -519,10 +519,10 @@ End Class
 '	Private Sub VolgendePagina()
 '		Dim Printer As New Printer
 
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), psTekst(2), TAB(108), "Pagina : " & Dec(PaginaTeller, "##########") & vbCrLf)
-'		Printer.Write(TAB(108), "Datum  : " & psTekst(0) & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), ReportText(2), TAB(108), "Pagina : " & Dec(PageCounter, "##########") & vbCrLf)
+'		Printer.Write(TAB(108), "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
 
 '	End Sub
 
@@ -535,15 +535,15 @@ End Class
 
 '	Private Sub TxtPeriodeVanTot_Leave(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles TxtPeriodeVanTot.Leave
 
-'		If DatumFout(VB.Right(TxtPeriodeVanTot.Text, 10)) Then
+'		If DateWrongFormat(VB.Right(TxtPeriodeVanTot.Text, 10)) Then
 '			MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !")
-'			TxtPeriodeVanTot.Text = fDatumText(VB.Left(BoekjaarVanTot.Value, 8)) & " - " & fDatumText(VB.Right(BoekjaarVanTot.Value, 8))
+'			TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(BoekjaarVanTot.Value, 8)) & " - " & FunctionDateText(VB.Right(BoekjaarVanTot.Value, 8))
 '			SelectieVanTot = BoekjaarVanTot.Value
 '			TxtPeriodeVanTot.Focus()
 '			Exit Sub
 '		ElseIf Len(TxtPeriodeVanTot.Text) <> 23 Then 
 '			MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !")
-'			TxtPeriodeVanTot.Text = fDatumText(VB.Left(BoekjaarVanTot.Value, 8)) & " - " & fDatumText(VB.Right(BoekjaarVanTot.Value, 8))
+'			TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(BoekjaarVanTot.Value, 8)) & " - " & FunctionDateText(VB.Right(BoekjaarVanTot.Value, 8))
 '			TxtPeriodeVanTot.Focus()
 '			SelectieVanTot = BoekjaarVanTot.Value
 '			Exit Sub

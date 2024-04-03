@@ -54,7 +54,7 @@ Module ModLibs
     Public Const LeesLock As Boolean = False
 
     Public Const MaskerEURX As String = "######0.0000"
-    Public Const MaskerEURBH As String = "########0.00"
+    Public Const MaskEURBH As String = "########0.00"
 
     Public Const MaskerBEF As String = "##########"
     Public Const MaskerEUR As String = "######0.00"
@@ -92,8 +92,8 @@ Module ModLibs
     Public PrinterStuurkodes(2) As Short
     Public BladLengte(2) As Short
     Public PrinterINI(2) As String
-    Public RapportVeld(23) As String
-    Public RapportTab(23) As Short
+    Public ReportField(23) As String
+    Public ReportTab(23) As Short
 
     'UPGRADE_ISSUE: Declaration type not supported: Array of fixed-length strings. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="934BD4FF-1FF9-47BD-888F-D411E47E78FA"'
     Public TeleBibCode(maxTeleBib) As String '*10
@@ -108,9 +108,9 @@ Module ModLibs
     Public FL99 As Short
     Public Fl99Record As String
     Public PrinterCurrentY As Short
-    Public PaginaTeller As Short
+    Public PageCounter As Short
 
-    <VBFixedString(128)> Public Lijntje As String 'New VB6.FixedLengthString(128)
+    <VBFixedString(128)> Public FullLine As String 'New VB6.FixedLengthString(128)
 
     Public marVersion As String
     Public LogPrint As String
@@ -126,7 +126,7 @@ Module ModLibs
     Public PeriodeVanTot As String ' New VB6.FixedLengthString(16)
     Public BoekjaarVanTot As String 'New VB6.FixedLengthString(16)
     Public AktiefBoekjaar As Short
-    Public Rdt As String 'New VB6.FixedLengthString(10)
+    Public MimGlobalDate As String 'New VB6.FixedLengthString(10)
     Public BtwBouw As Boolean
     Public DirecteVerkoopString As String
 

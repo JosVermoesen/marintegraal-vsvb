@@ -127,7 +127,7 @@ Public Class BetalingsVerzoek
 		btnAdd.Enabled = False
 
 		cbPaymentType.SelectedIndex = 0
-		DateTimePicker.Text = Rdt
+		DateTimePicker.Text = MimGlobalDate
 		RasterSchoon()
 		cbPaymentType.SelectedIndex = 0
 		CRLFCaption.Text = Dec(0, "##0")
@@ -221,8 +221,8 @@ Public Class BetalingsVerzoek
 
 	Private Sub DateTimePicker_Leave(sender As Object, e As EventArgs) Handles DateTimePicker.Leave
 
-		If DatumFout(format (DateTimePicker.value,"dd/MM/yyyy")) Then
-			DateTimePicker.Text = Rdt
+		If DateWrongFormat(format (DateTimePicker.value,"dd/MM/yyyy")) Then
+			DateTimePicker.Text = MimGlobalDate
 			Beep()
 			DateTimePicker.Focus()
 		End If
@@ -590,7 +590,7 @@ Public Class BetalingsVerzoek
 				BedragEUR = Val(rsMAR(FlPolis).Fields("B010").Value) + Val(rsMAR(FlPolis).Fields("e069").Value)
 			End If
 			'BedragBEF = System.Math.Round(BedragEUR * Euro)
-			datKwijting = vSet(Mid(vBibTekst(FlPolis, "#AW_2 #"), 7, 2), 2) & "/" & vSet(vBibTekst(FlPolis, "#v164 #"), 2) & "/" & mid(Rdt, 7, 4)
+			datKwijting = vSet(Mid(vBibTekst(FlPolis, "#AW_2 #"), 7, 2), 2) & "/" & vSet(vBibTekst(FlPolis, "#v164 #"), 2) & "/" & mid(MimGlobalDate, 7, 4)
 
 			'SDLijn(teldetail) = SDLijn(teldetail) & Dec(BedragBEF, MaskerSy(0)) & vbCrLf 'Premie in BEF
 			SDLijn(teldetail) = SDLijn(teldetail) & vSet(vBibTekst(FlPolis, "#A000 #"), 12) & Space(14)
@@ -1199,7 +1199,7 @@ End Class
 '				If PolisDetail.Rows = 2 Then
 '					Exit Sub
 '				ElseIf Positie < 0 Then 
-'					MsgBox("Eerst een lijn selekteren !", 0, "Lijn wijzigen")
+'					MsgBox("Eerst een lijn selekteren !", 0, "Line wijzigen")
 '					Exit Sub
 '				End If
 '				On Error Resume Next

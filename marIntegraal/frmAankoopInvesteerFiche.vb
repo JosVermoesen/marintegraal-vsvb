@@ -33,7 +33,7 @@ End Class
 '		TekstInfo(3).Text = vBibTekst(FlRekening, "#v019 #")
 '		RekeningTest2 = RTrim(vBibTekst(FlRekening, "#v019 #"))
 '		TekstInfo(0).Text = Mid(GridText, 1, 10)
-'		TekstInfo(1).Text = Dec(Val(Mid(GridText, 11, 12)), MaskerEURBH)
+'		TekstInfo(1).Text = Dec(Val(Mid(GridText, 11, 12)), MaskEURBH)
 '		TLBRecord(FlAllerlei) = ""
 
 '		Teller = Len(RekeningTest2)
@@ -72,7 +72,7 @@ End Class
 '		If Ktrl Then
 '			TekstInfo(6).Text = ""
 '			For T = 7 To 8
-'				TekstInfo(T).Text = Dec(0, MaskerEURBH)
+'				TekstInfo(T).Text = Dec(0, MaskEURBH)
 '			Next 
 '			TekstInfo(2).Text = Dec(5, "###")
 '			TekstInfo(5).Text = "6300000"
@@ -81,8 +81,8 @@ End Class
 '			RecordToVeld(FlAllerlei)
 '			TekstInfo(2).Text = Dec(Val(vBibTekst(FlAllerlei, "#v082 #")), "###") 'lineair over aantal jaar
 '			TekstInfo(6).Text = (vBibTekst(FlAllerlei, "#v083 #")) 'datum vorige bewerking
-'			TekstInfo(7).Text = Dec(Val(vBibTekst(FlAllerlei, "#v084 #")), MaskerEURBH) 'totaal vorige bewerkingen
-'			TekstInfo(8).Text = Dec(Val(vBibTekst(FlAllerlei, "#v085 #")), MaskerEURBH) 'reeds afgeschreven
+'			TekstInfo(7).Text = Dec(Val(vBibTekst(FlAllerlei, "#v084 #")), MaskEURBH) 'totaal vorige bewerkingen
+'			TekstInfo(8).Text = Dec(Val(vBibTekst(FlAllerlei, "#v085 #")), MaskEURBH) 'reeds afgeschreven
 '			Versneld.CheckState = Val(vBibTekst(FlAllerlei, "#v086 #")) 'versnelde afschrijving
 '			TekstInfo(4).Text = vBibTekst(FlAllerlei, "#v087 #")
 '			TekstInfo(5).Text = vBibTekst(FlAllerlei, "#v088 #")
@@ -115,7 +115,7 @@ End Class
 '		vBib(FlAllerlei, (TekstInfo(3).Text), "v019")
 '		vBib(FlAllerlei, (TekstInfo(2).Text), "v082")
 '		vBib(FlAllerlei, (TekstInfo(0).Text), "v083")
-'		vBib(FlAllerlei, Dec(Val(TekstInfo(1).Text) + Val(TekstInfo(7).Text), MaskerEURBH), "v084")
+'		vBib(FlAllerlei, Dec(Val(TekstInfo(1).Text) + Val(TekstInfo(7).Text), MaskEURBH), "v084")
 '		'v085 TekstInfo(8).Text reeds afgeschreven mag niet gewijzigd worden
 '		vBib(FlAllerlei, VB6.Format(Versneld.CheckState, "0"), "v086")
 '		vBib(FlAllerlei, (TekstInfo(4).Text), "v087")
@@ -148,12 +148,12 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				If DatumFout(TekstInfo(Index).Text) Then
+'				If DateWrongFormat(TekstInfo(Index).Text) Then
 '					TekstInfo(Index).Text = Mid(GridText, 1, 10)
 '					Beep()
 '				End If
 '			Case 1, 8
-'				TekstInfo(Index).Text = Dec(Val(TekstInfo(Index).Text), MaskerEURBH)
+'				TekstInfo(Index).Text = Dec(Val(TekstInfo(Index).Text), MaskEURBH)
 '			Case 2
 '				TempoBdrg = Val(TekstInfo(Index).Text)
 '				If TempoBdrg < 1 Or TempoBdrg > 50 Then

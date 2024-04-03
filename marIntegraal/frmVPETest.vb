@@ -81,8 +81,8 @@ VPETEST:
         Mim.Report.TextBold = 0
         Mim.Report.TextItalic = 0
         Mim.Report.TextUnderline = 0
-        Ktrl = Mim.Report.Print(1, vsoftVAN, Lijntje) 'was vpeprint
-        Ktrl = Mim.Report.Print(1, VsoftTot, Lijntje)
+        Ktrl = Mim.Report.Print(1, vsoftVAN, FullLine) 'was vpeprint
+        Ktrl = Mim.Report.Print(1, VsoftTot, FullLine)
         Exit Sub
 
 errorCMDVSOFTSPACE:

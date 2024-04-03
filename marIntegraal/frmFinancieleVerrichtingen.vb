@@ -135,7 +135,7 @@ End Class
 '			RecordToVeld(FlJournaal)
 '			If vBibTekst(FlJournaal, "#v066 #") > VB6.Format(Datum.Value, "yyyymmdd") Then
 '				Msg = "Er zijn reeds uittreksels met een hogere datum !" & vbCrLf & vbCrLf
-'				Msg = Msg & "Laatste uittreksel nr. " & UCase(VB.Left(vBibTekst(FlRekening, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000") & " dateert van : " & fDatumText(vBibTekst(FlJournaal, "#v066 #")) & vbCrLf & vbCrLf
+'				Msg = Msg & "Laatste uittreksel nr. " & UCase(VB.Left(vBibTekst(FlRekening, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000") & " dateert van : " & FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) & vbCrLf & vbCrLf
 '				Msg = Msg & "Vervolg.  Bent U zeker ?"
 '				Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel afsluiten")
 '				If Ktrl = MsgBoxResult.No Then
@@ -367,7 +367,7 @@ End Class
 
 '		LabelInfo(2).Text = " dokument    " & "TegenR. " & "      Bedrag " & "Omschrijving                    " & "Fin. Kort."
 
-'		Datum.Value = Rdt.Value
+'		Datum.Value = MimGlobalDate.Value
 '		BeginBalans = Val(String99(Lees, 64))
 
 '		ToegestaneKorting.Value = String99(Lees, 28)
@@ -646,7 +646,7 @@ End Class
 '		ElseIf dBedragTekst = Val(rsMAR(Fldokument).Fields("v249").Value) Then 
 '			DummyText = DummyText & vBibTekst(Fldokument, "#v033 #") & Chr(124)
 '			dTotaal = Val(vBibTekst(Fldokument, "#v249")) - Val(vBibTekst(Fldokument, "#v037 #"))
-'			DummyText = DummyText & Dec(dTotaal, MaskerEURBH) & vbCrLf
+'			DummyText = DummyText & Dec(dTotaal, MaskEURBH) & vbCrLf
 '			dBedragKtrl = dBedragKtrl + dTotaal
 '		Else
 '			'MsgBox "Situatie buiten controle", vbInformation
@@ -721,7 +721,7 @@ End Class
 '			BeginSaldo = CDbl(lblInfo(0).Text)
 '			EindSaldo = CDbl(lblInfo(1).Text)
 '			VerschilSaldo = EindSaldo - BeginSaldo
-'			vBib(FlJournaal, "Sld:" & Dec(CDbl(lblInfo(0).Text), MaskerEURBH) & "/" & Dec(CDbl(lblInfo(1).Text), MaskerEURBH), "v067")
+'			vBib(FlJournaal, "Sld:" & Dec(CDbl(lblInfo(0).Text), MaskEURBH) & "/" & Dec(CDbl(lblInfo(1).Text), MaskEURBH), "v067")
 '			vBib(FlJournaal, Dec(VerschilSaldo, MaskerSy(2)), "v068")
 '		Else
 '			vBib(FlJournaal, "Sld : " & Dec(CDbl(LabelInfo(12).Text), MaskerSy(0)) & " - " & Dec(CDbl(LabelInfo(13).Text), MaskerSy(0)), "v067")

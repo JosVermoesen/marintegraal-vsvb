@@ -38,7 +38,7 @@
         ' Mim.Basis(11).Enabled = True
 
         BJPERDAT.Hide()
-        BJPERDAT.DatumVerwerking.Value = Rdt
+        BJPERDAT.DatumVerwerking.Value = MimGlobalDate
         BJPERDAT.PeriodeBoekjaar.Items.Clear()
 
         Dim c As String = ""
@@ -877,7 +877,7 @@ handlerVVDag:
         End Select
         SleutelDok = VoorLetter & Mid(PeriodeVanTot, 1, 4) & Format(Val(Fl99Record) + 1, "00000")
     End Function
-    Function fDatumText(ByRef fDatumSleutel As String) As String
+    Function FunctionDateText(ByRef fDatumSleutel As String) As String
         Dim Dag As String = "  "
         Dim Maand As String = "  "
         Dim Jaar As String = "    "
@@ -885,7 +885,7 @@ handlerVVDag:
         Dag = Mid(fDatumSleutel, 7, 2)
         Maand = Mid(fDatumSleutel, 5, 2)
         Jaar = Mid(fDatumSleutel, 1, 4)
-        fDatumText = Dag & "/" & Maand & "/" & Jaar
+        FunctionDateText = Dag & "/" & Maand & "/" & Jaar
     End Function
     Function CopyFile(ByRef SourcePath As String, ByRef TargetPath As String, ByRef FileToCopy As String) As Short
         Dim FlCopy1 As Short
@@ -1197,20 +1197,20 @@ errorCMDWRITEBOX:
 errorCMDPRINT:
         MsgBox("CMDPRINT foutieve definitie")
     End Sub
-    Function DatumFout(ByRef fDatum As String) As Short
+    Function DateWrongFormat(ByRef fDatum As String) As Short
         Dim Dag As Short
         Dim Maand As Short
         Dim Jaar As Short
         If Len(fDatum) <> 10 Then
-            DatumFout = True
+            DateWrongFormat = True
         Else
             Dag = Val(Mid(fDatum, 1, 2))
             Maand = Val(Mid(fDatum, 4, 2))
             Jaar = Val(Mid(fDatum, 7, 4))
             If Dag < 32 And Dag > 0 And Maand < 13 And Maand > 0 And Jaar > 1985 And Jaar < 2025 Then
-                DatumFout = False
+                DateWrongFormat = False
             Else
-                DatumFout = True
+                DateWrongFormat = True
                 Beep()
             End If
         End If

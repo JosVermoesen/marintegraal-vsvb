@@ -305,7 +305,7 @@ Public Class frmDiversePosten
             'kan alleen nog creditering zijn (zonder tegenrekening)
             totaalDCBedrag = -totaalDCBedrag
         End If
-        LijnText = vSet((RekeningNummer.Text), 7) & " " & vSet((NaamRekening.Text), 40) & " " & Dec(totaalDCBedrag, MaskerEURBH) & " "
+        LijnText = vSet((RekeningNummer.Text), 7) & " " & vSet((NaamRekening.Text), 40) & " " & Dec(totaalDCBedrag, MaskEURBH) & " "
         If TRvlag.CheckState Then
             LijnText = LijnText & vSet((Tegenrekening.Text), 7)
         Else
@@ -326,7 +326,7 @@ Public Class frmDiversePosten
                 totaalDCBedrag = totaalDCBedrag + Val(Mid(Msg, 50, 12))
             End If
         Next
-        Saldo.Text = Dec(totaalDCBedrag, MaskerEURBH)
+        Saldo.Text = Dec(totaalDCBedrag, MaskEURBH)
         If Val(Saldo.Text) = 0 Then
             Afsluiten.Enabled = True
             AcceptButton = Afsluiten
@@ -426,14 +426,14 @@ Public Class frmDiversePosten
 
         'Msg = ""
         'If TotaalResultaat <> 0 Then
-        '    Msg = Msg & "Resultatenbalans verschil  : " & Dec(TotaalResultaat, MaskerEURBH) & vbCrLf
+        '    Msg = Msg & "Resultatenbalans verschil  : " & Dec(TotaalResultaat, MaskEURBH) & vbCrLf
         'End If
         'If TotaalBalans <> 0 Then
         '    If Msg = "" Then
         '        Verwittigen = True
         '        Msg = "Blijkbaar is het resultaat verleden jaar GOED geboekt maar actief/passief is verschillend.  Straks wordt U de mogelijkheid geboden om de verschillen bij te werken OP EIGEN VERANTWOORDELIJKHEID" & vbCrLf & vbCrLf
         '    End If
-        '    Msg = Msg & "ACTIVE/PASSIVA verschil   : " & Dec(TotaalBalans, MaskerEURBH) & vbCrLf
+        '    Msg = Msg & "ACTIVE/PASSIVA verschil   : " & Dec(TotaalBalans, MaskEURBH) & vbCrLf
         'End If
         'If Msg = "" Then
         'Else
@@ -464,7 +464,7 @@ Public Class frmDiversePosten
         '    End If
         '    dTotaalKtrl = dTotaalKtrl + dBedrag
         '    If dBedrag <> 0 Then
-        '        LijnText = vSet(vBibTekst(FlRekening, "#v019 #"), 7) & " " & vSet(vBibTekst(FlRekening, "#v020 #"), 40) & " " & Dec(dBedrag, MaskerEURBH) & " " & vSet("", 7)
+        '        LijnText = vSet(vBibTekst(FlRekening, "#v019 #"), 7) & " " & vSet(vBibTekst(FlRekening, "#v020 #"), 40) & " " & Dec(dBedrag, MaskEURBH) & " " & vSet("", 7)
         '        JournaalPost.Items.Add(LijnText)
         '    End If
         '    Do
@@ -480,7 +480,7 @@ Public Class frmDiversePosten
         '            End If
         '            dTotaalKtrl = dTotaalKtrl + dBedrag
         '            If dBedrag <> 0 Then
-        '                LijnText = vSet(vBibTekst(FlRekening, "#v019 #"), 7) & " " & vSet(vBibTekst(FlRekening, "#v020 #"), 40) & " " & Dec(dBedrag, MaskerEURBH) & " " & vSet("", 7)
+        '                LijnText = vSet(vBibTekst(FlRekening, "#v019 #"), 7) & " " & vSet(vBibTekst(FlRekening, "#v020 #"), 40) & " " & Dec(dBedrag, MaskEURBH) & " " & vSet("", 7)
         '                JournaalPost.Items.Add(LijnText)
         '            End If
         '        End If
@@ -600,7 +600,7 @@ Public Class frmDiversePosten
 
         '            If bhEuro = True Then
         '                restKtrl = 0.5
-        '                MaskerHier = MaskerEURBH
+        '                MaskerHier = MaskEURBH
         '            Else
         '                restKtrl = 20
         '                MaskerHier = MaskerSy(0)
@@ -633,7 +633,7 @@ Public Class frmDiversePosten
         '        Else
         '            Succes = False
         '        End If
-        '        LijnText = vSet(vBibTekst(FlAllerlei, "#v088 #"), 7) & " " & OmschrijvingsLijn.Value & " " & Dec(Das, MaskerEURBH) & " " & vSet(vBibTekst(FlAllerlei, "#v087 #"), 7)
+        '        LijnText = vSet(vBibTekst(FlAllerlei, "#v088 #"), 7) & " " & OmschrijvingsLijn.Value & " " & Dec(Das, MaskEURBH) & " " & vSet(vBibTekst(FlAllerlei, "#v087 #"), 7)
         '        JournaalPost.Items.Add(LijnText)
         '        'FIXIT: Return has new meaning in Visual Basic .NET                                        FixIT90210ae-R9642-H1984
         '        'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'

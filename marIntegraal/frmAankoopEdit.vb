@@ -145,11 +145,11 @@ End Class
 '				'OvergangsToggle is EUR
 '				If bhEuro Then
 '					'Toggle EUR en boekhouding EUR, geen probleem
-'					TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text), MaskerEURBH)
+'					TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text), MaskEURBH)
 '				Else
 '					'Boekhouding nog in BEF mét overgangstoggle !!
 '					'kan dus niet anders dan 1/ Euro zijn...
-'					TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text), MaskerEURBH)
+'					TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text), MaskEURBH)
 '				End If
 '			Else
 '				'Toggle is BEF
@@ -163,12 +163,12 @@ End Class
 '						'Boekhouding in EUR, factuur in munt buiten BEF of EUR
 '						'MsgBox "andere munt stop"
 '					Else
-'						TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text) / dMuntL, MaskerEURBH)
+'						TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text) / dMuntL, MaskEURBH)
 '					End If
 '				Else
 '					'Boekhouding in BEF, toggle in BEF, alles zoals vroeger
 '					If dMuntL <> 1 Then
-'						TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text) / dMuntL, MaskerEURBH)
+'						TekstInfo(2).Text = Dec(Val(TekstInfo(2).Text) / dMuntL, MaskEURBH)
 '					Else
 '						'Boekhouding in BEF, factuur in BEF, toggle in BEF
 '						'Niets te wijzigen dus
@@ -211,12 +211,12 @@ End Class
 '			If InStr(DirekteAankoop.cmdSwitch.Text, "EUR") Then
 '				'ingave in EUR
 '				If bhEuro Then
-'					VeldBedrag.Value = Dec(HetBedrag, MaskerEURBH)
+'					VeldBedrag.Value = Dec(HetBedrag, MaskEURBH)
 '				Else
 '					'Boekhouding nog in BEF mét overgangstoggle !!
 '					'kan dus niet anders dan 1/ Euro zijn...
 '					'moet dus afgebleven worden
-'					VeldBedrag.Value = Dec(HetBedrag, MaskerEURBH)
+'					VeldBedrag.Value = Dec(HetBedrag, MaskEURBH)
 '				End If
 '			Else
 '				'ingave in BEF
@@ -224,17 +224,17 @@ End Class
 '					'Boekhouding in EUR
 '					If System.Math.Round(dMuntL, 8) = System.Math.Round(1 / Euro, 8) Then
 '						'toggle in BEF dus van BEF afblijven
-'						VeldBedrag.Value = Dec(System.Math.Round(HetBedrag), MaskerEURBH)
+'						VeldBedrag.Value = Dec(System.Math.Round(HetBedrag), MaskEURBH)
 '					ElseIf dMuntL <> 1 Then 
 '						'een echte andere munt dan BEF of EUR
-'						VeldBedrag.Value = Dec(System.Math.Round(HetBedrag * dMuntL), MaskerEURBH)
+'						VeldBedrag.Value = Dec(System.Math.Round(HetBedrag * dMuntL), MaskEURBH)
 '						MsgBox("Stop")
 '					Else
 '						MsgBox("onlogica stop")
 '					End If
 '				Else
 '					'Boekhouding in BEF, toggle in BEF of andere MUNT zoals vroeger
-'					VeldBedrag.Value = Dec(System.Math.Round(HetBedrag * dMuntL), MaskerEURBH)
+'					VeldBedrag.Value = Dec(System.Math.Round(HetBedrag * dMuntL), MaskEURBH)
 '				End If
 '			End If
 
@@ -443,9 +443,9 @@ End Class
 '				End If
 
 '				If InStr(DirekteAankoop.cmdSwitch.Text, "EUR") Then
-'					TekstInfo(2).Text = Dec(System.Math.Round(Val(TekstInfo(5).Text) * Val(vBibTekst(FlProdukt, "#e113 #")), 2), MaskerEURBH)
+'					TekstInfo(2).Text = Dec(System.Math.Round(Val(TekstInfo(5).Text) * Val(vBibTekst(FlProdukt, "#e113 #")), 2), MaskEURBH)
 '				Else
-'					TekstInfo(2).Text = Dec(System.Math.Round(Val(TekstInfo(5).Text) * Val(vBibTekst(FlProdukt, "#v113 #")), 2), MaskerEURBH)
+'					TekstInfo(2).Text = Dec(System.Math.Round(Val(TekstInfo(5).Text) * Val(vBibTekst(FlProdukt, "#v113 #")), 2), MaskEURBH)
 '				End If
 '				'UPGRADE_ISSUE: DoEvents does not return a value. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="8D115264-E27F-4472-A684-865A00B5E826"'
 '				XDoEvents = System.Windows.Forms.Application.DoEvents()

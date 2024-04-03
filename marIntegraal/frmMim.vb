@@ -6,7 +6,7 @@ Public Class Mim
     Inherits System.Windows.Forms.Form
 
     Sub InitEerst()
-        Lijntje = New String(Chr(173), 128)
+        FullLine = New String(Chr(173), 128)
         Bestand(FlAllerlei) = "0000000.ONT" '00
         Bestand(FlKlant) = "0010000.ONT" '01
         Bestand(FlLeverancier) = "0020000.ONT" '02
@@ -99,7 +99,7 @@ Public Class Mim
     Private Sub Mim_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InitEerst()
-        Rdt = Format(Now, "dd/MM/yyyy")
+        MimGlobalDate = Format(Now, "dd/MM/yyyy")
         ProgrammaLokatie = My.Application.Info.DirectoryPath & "\"
 
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
@@ -223,7 +223,7 @@ Public Class Mim
         DiversePosten.Show()
     End Sub
     Private Sub DiversePostenboekToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DiversePostenboekToolStripMenuItem.Click
-        Dim dpBoek As New frmDiversePostenBoek
+        Dim dpBoek As New FrmJournalEntriesBook
         'dpBoek.MdiParent = Me
         dpBoek.ShowDialog()
     End Sub

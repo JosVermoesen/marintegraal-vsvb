@@ -102,10 +102,10 @@ End Class
 '				End If
 '			Case 46
 '				If Positie < 0 Then
-'					MsgBox("Eerst een lijn selekteren !", 0, "Lijn wijzigen")
+'					MsgBox("Eerst een lijn selekteren !", 0, "Line wijzigen")
 '					Exit Sub
 '				End If
-'				Msg = "Lijn verwijderen !  Bent U zeker ?"
+'				Msg = "Line verwijderen !  Bent U zeker ?"
 '				Ktrl = MsgBox(Msg, 292)
 '				If Ktrl = 6 Then
 '					AankoopDetail.Items.RemoveAt(Positie)
@@ -125,7 +125,7 @@ End Class
 '		Select Case KeyAscii
 '			Case 13
 '				If Positie < 0 Then
-'					MsgBox("Eerst een lijn selekteren !", 0, "Lijn wijzigen")
+'					MsgBox("Eerst een lijn selekteren !", 0, "Line wijzigen")
 '					GoTo EventExitSub
 '				End If
 '				GridText = AankoopDetail.Text
@@ -398,7 +398,7 @@ End Class
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) * Euro, 0), MaskerEURBH)
+'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) * Euro, 0), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
 '				Next 
@@ -409,13 +409,13 @@ End Class
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) * Euro, 0), MaskerEURBH)
+'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) * Euro, 0), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
 '				Next 
 '			End If
 '		Else
-'			TekstInfo(6).Text = Dec(Val(TekstInfo(6).Text) / Euro, MaskerEURBH)
+'			TekstInfo(6).Text = Dec(Val(TekstInfo(6).Text) / Euro, MaskEURBH)
 '			cmdSwitch.Text = "Ingave in EUR"
 '			'Stap 2: de nodige schermopmaak voor EUR
 '			If bhEuro Then
@@ -425,7 +425,7 @@ End Class
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) / Euro, 2), MaskerEURBH)
+'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) / Euro, 2), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
 '				Next 
@@ -436,7 +436,7 @@ End Class
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) / Euro, 2), MaskerEURBH)
+'					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) / Euro, 2), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
 '				Next 
@@ -722,7 +722,7 @@ End Class
 '		fRekNum.Value = VB.Left(GridText, 7)
 '		If fRekNum.Value < VB.Left(GrensDetail(0), 7) Or fRekNum.Value > VB.Right(GrensDetail(0), 7) Then
 '		Else
-'			GridText = TekstInfo(0).Text & Dec(Val(Mid(GridText, 50, 12)), MaskerEURBH)
+'			GridText = TekstInfo(0).Text & Dec(Val(Mid(GridText, 50, 12)), MaskEURBH)
 '			InvesteringsFiche.ShowDialog()
 '		End If
 
@@ -917,7 +917,7 @@ End Class
 '			TekstInfo(T).Enabled = False
 '			TekstInfo(T).Mask = ""
 '			TekstInfo(T).Mask = "##/##/####"
-'			TekstInfo(T).Text = Rdt.Value
+'			TekstInfo(T).Text = MimGlobalDate.Value
 '			If Err.Number Then MsgBox("Landinstellingen voor België voorzien a.u.b.  Het programma wordt hierna beëindigd.", MsgBoxStyle.Critical) : End
 '		Next 
 '		On Error GoTo 0
@@ -1109,8 +1109,8 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				If DatumFout(TekstInfo(0).Text) Then
-'					TekstInfo(0).Text = Rdt.Value
+'				If DateWrongFormat(TekstInfo(0).Text) Then
+'					TekstInfo(0).Text = MimGlobalDate.Value
 '					TekstInfo(0).Focus()
 '				ElseIf Not DatumKtrl(TekstInfo(0).Text, TekstPeriode) Then 
 '					BJPERDAT.WindowState = System.Windows.Forms.FormWindowState.Normal
@@ -1118,12 +1118,12 @@ End Class
 '				End If
 
 '			Case 1
-'				If DatumFout(TekstInfo(1).Text) Then
-'					TekstInfo(1).Text = Rdt.Value
+'				If DateWrongFormat(TekstInfo(1).Text) Then
+'					TekstInfo(1).Text = MimGlobalDate.Value
 '					TekstInfo(1).Focus()
 '				Else
 '					TekstInfo(2).Text = VValdag(TekstInfo(1).Text, vBibTekst(FlLeverancier, "#vs04 #"))
-'					TekstInfo(0).Text = Rdt.Value
+'					TekstInfo(0).Text = MimGlobalDate.Value
 '				End If
 '				If DatumKey(TekstInfo(1).Text) < VB.Left(BoekjaarVanTot.Value, 8) Or DatumKey(TekstInfo(1).Text) > VB.Right(BoekjaarVanTot.Value, 8) Then
 '					Msg = "Datum aankoopdocument valt BUITEN het actieve boekjaar." & vbCr
@@ -1134,7 +1134,7 @@ End Class
 '				End If
 
 '			Case 2
-'				If DatumFout(TekstInfo(2).Text) Then
+'				If DateWrongFormat(TekstInfo(2).Text) Then
 '					TekstInfo(2).Text = VValdag(TekstInfo(1).Text, vBibTekst(FlLeverancier, "#vs04 #"))
 '					TekstInfo(2).Focus()
 '				End If
@@ -1279,10 +1279,10 @@ End Class
 '			TotaalBedrag = TotaalBedrag + Bedrag
 '			If AankoopOptie(0).Checked = True Then
 '				'factuur
-'				vBib(FlJournaal, Dec(Bedrag, MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(Bedrag, MaskEURBH), "v068")
 '			ElseIf AankoopOptie(1).Checked = True Then 
 '				'creditnota
-'				vBib(FlJournaal, Dec(-Bedrag, MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(-Bedrag, MaskEURBH), "v068")
 '			Else
 '				MsgBox("logicafout")
 '			End If
@@ -1405,10 +1405,10 @@ End Class
 
 '		If Val(TekstInfo(5).Text) <> 0 Then
 '			If Ar = 3 Then
-'				vBib(FlJournaal, Dec(-Val(TekstInfo(5).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(-Val(TekstInfo(5).Text), MaskEURBH), "v068")
 '				vBib(FlJournaal, rbtwVAK(5), "v019")
 '			Else
-'				vBib(FlJournaal, Dec(Val(TekstInfo(5).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(Val(TekstInfo(5).Text), MaskEURBH), "v068")
 '				vBib(FlJournaal, vSet(TekstInfo(10).Text, 7), "v019")
 '			End If
 '			bInsert(FlJournaal, 0)
@@ -1417,9 +1417,9 @@ End Class
 '		If AankoopFlg = 0 Then
 '			If Medekontraktant.CheckState Then
 '				If Ar = 1 Then
-'					vBib(FlJournaal, Dec(-Val(TekstInfo(7).Text), MaskerEURBH), "v068")
+'					vBib(FlJournaal, Dec(-Val(TekstInfo(7).Text), MaskEURBH), "v068")
 '				Else
-'					vBib(FlJournaal, Dec(Val(TekstInfo(7).Text), MaskerEURBH), "v068")
+'					vBib(FlJournaal, Dec(Val(TekstInfo(7).Text), MaskEURBH), "v068")
 '				End If
 '				FVT(FlJournaal, 1) = rbtwVAK(2)
 '				vBib(FlJournaal, rbtwVAK(2), "v019")
@@ -1430,16 +1430,16 @@ End Class
 
 '		If AankoopFlg = 2 Then
 '			If Ar = 1 Then
-'				vBib(FlJournaal, Dec(-Val(TekstInfo(7).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(-Val(TekstInfo(7).Text), MaskEURBH), "v068")
 '			Else
-'				vBib(FlJournaal, Dec(Val(TekstInfo(7).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(Val(TekstInfo(7).Text), MaskEURBH), "v068")
 '			End If
 '			vBib(FlJournaal, rbtwVAK(3), "v019")
 '		Else
 '			If Ar = 1 Then
-'				vBib(FlJournaal, Dec(-Val(TekstInfo(7).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(-Val(TekstInfo(7).Text), MaskEURBH), "v068")
 '			Else
-'				vBib(FlJournaal, Dec(Val(TekstInfo(7).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(Val(TekstInfo(7).Text), MaskEURBH), "v068")
 '			End If
 '			vBib(FlJournaal, rbtwVAK(1), "v019")
 '		End If
@@ -1448,9 +1448,9 @@ End Class
 'Label1440: 
 '		If Val(TekstInfo(8).Text) <> 0 Then
 '			If Ar = 3 Then
-'				vBib(FlJournaal, Dec(-Val(TekstInfo(8).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(-Val(TekstInfo(8).Text), MaskEURBH), "v068")
 '			Else
-'				vBib(FlJournaal, Dec(Val(TekstInfo(8).Text), MaskerEURBH), "v068")
+'				vBib(FlJournaal, Dec(Val(TekstInfo(8).Text), MaskEURBH), "v068")
 '			End If
 '			vBib(FlJournaal, PriveRekening.Value, "v019")
 '			bInsert(FlJournaal, 0)
@@ -1458,9 +1458,9 @@ End Class
 
 '		DVT99 = Str(Val(DVT99) + Val(TekstInfo(5).Text) + Val(TekstInfo(8).Text) - Val(TekstInfo(7).Text))
 '		If Ar = 1 Then
-'			vBib(FlJournaal, Dec(-Val(DVT99), MaskerEURBH), "v068")
+'			vBib(FlJournaal, Dec(-Val(DVT99), MaskEURBH), "v068")
 '		Else
-'			vBib(FlJournaal, Dec(Val(DVT99), MaskerEURBH), "v068")
+'			vBib(FlJournaal, Dec(Val(DVT99), MaskEURBH), "v068")
 '		End If
 '		vBib(FlJournaal, vSet(TekstInfo(3).Text, 7), "v019")
 '		bInsert(FlJournaal, 0)

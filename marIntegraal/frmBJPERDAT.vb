@@ -8,7 +8,7 @@ Public Class frmBJPERDAT
     End Sub
     Private Sub DatumVerwerking_ValueChanged(sender As Object, e As EventArgs) Handles DatumVerwerking.ValueChanged
 
-        Rdt = Format(DatumVerwerking.Value, "dd/MM/yyyy")
+        MimGlobalDate = Format(DatumVerwerking.Value, "dd/MM/yyyy")
 
     End Sub
     Private Sub Boekjaar_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Boekjaar.SelectedIndexChanged

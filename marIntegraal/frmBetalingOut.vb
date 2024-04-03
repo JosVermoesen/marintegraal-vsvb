@@ -10,42 +10,42 @@ End Class
 'Friend Class frmOGM
 '	Inherits System.Windows.Forms.Form
 
-'	Dim psTekst(5) As String
-'	Dim TotaalD As Integer
-'	Dim TotaalC As Integer
+'	Dim ReportText(5) As String
+'	Dim TotalDebit As Integer
+'	Dim TotalCredit As Integer
 
-'	Dim VeldTXT(17) As String
+'	Dim FieldText(17) As String
 
-'	Dim TLijnen As Short
+'	Dim TotalLines As Short
 
-'	Private Sub InitVelden()
+'	Private Sub InitializeFields()
 '		Dim T As Short
 
-'		RapportVeld(0) = "Lijn"
-'		RapportTab(0) = 2
+'		ReportField(0) = "Line"
+'		ReportTab(0) = 2
 
-'		RapportVeld(1) = "MemoDatum"
-'		RapportTab(1) = 7
+'		ReportField(1) = "MemoDatum"
+'		ReportTab(1) = 7
 
-'		RapportVeld(2) = "    Bedrag"
-'		RapportTab(2) = 18
+'		ReportField(2) = "    Bedrag"
+'		ReportTab(2) = 18
 
-'		RapportVeld(3) = "Munt"
-'		RapportTab(3) = 29
+'		ReportField(3) = "Munt"
+'		ReportTab(3) = 29
 
-'		RapportVeld(4) = "Begunstigde"
-'		RapportTab(4) = 34
+'		ReportField(4) = "Begunstigde"
+'		ReportTab(4) = 34
 
-'		RapportVeld(5) = "Rekeningnr."
-'		RapportTab(5) = 65
+'		ReportField(5) = "Rekeningnr."
+'		ReportTab(5) = 65
 
-'		RapportVeld(6) = "OGM/Referte"
-'		RapportTab(6) = 80
+'		ReportField(6) = "OGM/Referte"
+'		ReportTab(6) = 80
 
-'		RapportVeld(7) = "DocumentID"
-'		RapportTab(7) = 95
+'		ReportField(7) = "DocumentID"
+'		ReportTab(7) = 95
 
-'		RapportTab(8) = 0
+'		ReportTab(8) = 0
 
 '		If chkAfdrukInVenster.CheckState Then
 '			Me.Hide()
@@ -56,7 +56,7 @@ End Class
 '			Xlog.X.Row = 0
 '			For T = 0 To 6
 '				Xlog.X.Col = T
-'				Xlog.X.Text = RapportVeld(T)
+'				Xlog.X.Text = ReportField(T)
 '			Next 
 '			Me.Show()
 '		End If
@@ -77,25 +77,25 @@ End Class
 '			Printer.CurrentY = 50
 '			Printer.Write(usrLicentieInfo)
 '		End If
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), psTekst(2), TAB(108), "Pagina : " & Dec(PaginaTeller, "##########"))
+'		Printer.Write(TAB(1), ReportText(2), TAB(108), "Pagina : " & Dec(PageCounter, "##########"))
 
-'		Printer.Write(TAB(108), "Datum  : " & psTekst(0) & vbCrLf & vbCrLf)
-'		Printer.Write(TAB(1), UCase(psTekst(3)))
+'		Printer.Write(TAB(108), "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), UCase(ReportText(3)))
 
-'		Printer.Print(vbCrLf & Lijntje.Value)
+'		Printer.Print(vbCrLf & FullLine.Value)
 
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(RapportVeld(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(ReportField(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
 '		Loop 
 
-'		Printer.Write(Lijntje.Value & vbCrLf & vbCrLf)
+'		Printer.Write(FullLine.Value & vbCrLf & vbCrLf)
 
 '		Exit Sub
 
@@ -113,14 +113,14 @@ End Class
 
 '		T = 0
 '		aa = ""
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState Then
-'				aa = aa & VeldTXT(T) & vbTab
+'				aa = aa & FieldText(T) & vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -146,7 +146,7 @@ End Class
 
 
 
-'	Private Sub PrintTotaal()
+'	Private Sub PrintTotal()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim aa As Object
@@ -155,26 +155,26 @@ End Class
 
 '		If chkAfdrukInVenster.CheckState Then
 '		Else
-'			Printer.Print(vbCrLf & Lijntje.Value)
+'			Printer.Print(vbCrLf & FullLine.Value)
 '		End If
 '		For T = 0 To 6
-'			VeldTXT(T) = ""
+'			FieldText(T) = ""
 '		Next 
 
-'		VeldTXT(1) = "Totaal BEF"
-'		VeldTXT(2) = Dec(CDbl(lblBEF.Text), MaskerBEF)
+'		FieldText(1) = "Totaal BEF"
+'		FieldText(2) = Dec(CDbl(lblBEF.Text), MaskerBEF)
 '		T = 0
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		aa = ""
 '		Do While T < 8
 '			If chkAfdrukInVenster.CheckState Then
 '				'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'				aa = aa + VeldTXT(T) + vbTab
+'				aa = aa + FieldText(T) + vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -185,20 +185,20 @@ End Class
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		If chkAfdrukInVenster.CheckState Then Xlog.X.AddItem(aa, Xlog.X.Rows - 1)
 
-'		VeldTXT(1) = "Totaal EUR"
-'		VeldTXT(2) = Dec(CDbl(lblEUR.Text), MaskerEUR)
+'		FieldText(1) = "Totaal EUR"
+'		FieldText(2) = Dec(CDbl(lblEUR.Text), MaskerEUR)
 '		T = 0
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		aa = ""
 '		Do While T < 8
 '			If chkAfdrukInVenster.CheckState Then
 '				'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'				aa = aa + VeldTXT(T) + vbTab
+'				aa = aa + FieldText(T) + vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -291,7 +291,7 @@ End Class
 '			rekNummerTotaal = rekNummerTotaal + rekNummer
 '			Mid(goString1.Value, 24, 12) = grdDokumentDetail.get_TextMatrix(volgNr, 6) 'Rekeningnummer begunstigde
 
-'			'VeldTXT(1) = grdDokumentDetail.TextMatrix(Teller, 3)
+'			'FieldText(1) = grdDokumentDetail.TextMatrix(Teller, 3)
 
 '			bdrgBedrag = CDec(grdDokumentDetail.get_TextMatrix(volgNr, 5))
 '			bdrgTotaal = bdrgTotaal + bdrgBedrag
@@ -380,12 +380,12 @@ End Class
 '		Dim Printer As New Printer
 '		Dim Teller As Short
 
-'		psTekst(2) = "Lijst Overschrijvingen " & Mid(Mim.Text, InStr(Mim.Text, "["))
-'		psTekst(0) = Rdt.Value
-'		psTekst(3) = "Bank " & cbBank.Text
+'		ReportText(2) = "Lijst Overschrijvingen " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(0) = MimGlobalDate.Value
+'		ReportText(3) = "Bank " & cbBank.Text
 
-'		InitVelden()
-'		PaginaTeller = 0
+'		InitializeFields()
+'		PageCounter = 0
 '		If chkAfdrukInVenster.CheckState = 0 Then
 '			Printer = Printers(LijstPrinterNr)
 '			On Error Resume Next
@@ -408,21 +408,21 @@ End Class
 '			If Len(grdDokumentDetail.get_TextMatrix(Teller, 3)) <> 10 Then
 '				Exit For
 '			End If
-'			VeldTXT(0) = VB6.Format(Teller, "000")
-'			VeldTXT(1) = grdDokumentDetail.get_TextMatrix(Teller, 3)
-'			VeldTXT(3) = grdDokumentDetail.get_TextMatrix(Teller, 4)
-'			If VeldTXT(3) = "BEF" Then
-'				VeldTXT(2) = Dec(CDbl(grdDokumentDetail.get_TextMatrix(Teller, 5)), MaskerBEF)
+'			FieldText(0) = VB6.Format(Teller, "000")
+'			FieldText(1) = grdDokumentDetail.get_TextMatrix(Teller, 3)
+'			FieldText(3) = grdDokumentDetail.get_TextMatrix(Teller, 4)
+'			If FieldText(3) = "BEF" Then
+'				FieldText(2) = Dec(CDbl(grdDokumentDetail.get_TextMatrix(Teller, 5)), MaskerBEF)
 '			Else
-'				VeldTXT(2) = Dec(CDbl(grdDokumentDetail.get_TextMatrix(Teller, 5)), MaskerEUR)
+'				FieldText(2) = Dec(CDbl(grdDokumentDetail.get_TextMatrix(Teller, 5)), MaskerEUR)
 '			End If
-'			VeldTXT(4) = VB.Left(grdDokumentDetail.get_TextMatrix(Teller, 1), 30)
-'			VeldTXT(5) = grdDokumentDetail.get_TextMatrix(Teller, 6)
-'			VeldTXT(6) = grdDokumentDetail.get_TextMatrix(Teller, 7)
-'			VeldTXT(7) = grdDokumentDetail.get_TextMatrix(Teller, 8)
+'			FieldText(4) = VB.Left(grdDokumentDetail.get_TextMatrix(Teller, 1), 30)
+'			FieldText(5) = grdDokumentDetail.get_TextMatrix(Teller, 6)
+'			FieldText(6) = grdDokumentDetail.get_TextMatrix(Teller, 7)
+'			FieldText(7) = grdDokumentDetail.get_TextMatrix(Teller, 8)
 '			PrintVelden()
 '		Next 
-'		PrintTotaal()
+'		PrintTotal()
 '		If chkAfdrukInVenster.CheckState = 0 Then Printer.EndDoc()
 '		'UPGRADE_ISSUE: Unable to determine which constant to upgrade vbNormal to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
 '		'UPGRADE_ISSUE: Screen property Screen.MousePointer does not support custom mousepointers. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="45116EAB-7060-405E-8ABE-9DBB40DC2E86"'
@@ -463,7 +463,7 @@ End Class
 '		End If
 
 '		cbBank.SelectedIndex = 0
-'		Datum.Value = Rdt.Value
+'		Datum.Value = MimGlobalDate.Value
 
 '		TekstLijn(2).Text = "0"
 '		TekstLijn(3).Text = New String("z", 12)
@@ -655,32 +655,32 @@ End Class
 '					'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '					Return 
 '			End Select
-'			'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'			'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '			'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'			aa = aa & oWaarde(rsMAR(Fl).Fields("A100")) & vbTab
+'			aa = aa & ObjectValue(rsMAR(Fl).Fields("A100")) & vbTab
 '		End If
-'		'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		aa = aa & oWaarde(rsMAR(Fldokument).Fields("v033")) & vbTab
+'		aa = aa & ObjectValue(rsMAR(Fldokument).Fields("v033")) & vbTab
 '		'vervaldag < memodatum?
-'		'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(rsMAR(Fldokument)(v036)). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		If ktrlMemoDatum > oWaarde(rsMAR(Fldokument).Fields("v036")) Then
+'		'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(rsMAR(Fldokument)(v036)). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		If ktrlMemoDatum > ObjectValue(rsMAR(Fldokument).Fields("v036")) Then
 '			'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'			aa = aa & fDatumText(ktrlMemoDatum) & vbTab
+'			aa = aa & FunctionDateText(ktrlMemoDatum) & vbTab
 '		Else
-'			'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'			'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '			'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'			aa = aa & fDatumText(oWaarde(rsMAR(Fldokument).Fields("v036"))) & vbTab
+'			aa = aa & FunctionDateText(ObjectValue(rsMAR(Fldokument).Fields("v036"))) & vbTab
 '		End If
-'		'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		aa = aa & oWaarde(rsMAR(Fl).Fields("vs03")) & vbTab
-'		'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(rsMAR(Fl)(vs03)). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		If oWaarde(rsMAR(Fl).Fields("vs03")) = "EUR" And bhEuro = False Then
+'		aa = aa & ObjectValue(rsMAR(Fl).Fields("vs03")) & vbTab
+'		'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(rsMAR(Fl)(vs03)). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		If ObjectValue(rsMAR(Fl).Fields("vs03")) = "EUR" And bhEuro = False Then
 '			'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '			aa = aa & System.Math.Round((dTotaal - dBetaald) / Euro, 2) & vbTab
-'			'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(rsMAR(Fl)(vs03)). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		ElseIf oWaarde(rsMAR(Fl).Fields("vs03")) = "BEF" And bhEuro = True Then 
+'			'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(rsMAR(Fl)(vs03)). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		ElseIf ObjectValue(rsMAR(Fl).Fields("vs03")) = "BEF" And bhEuro = True Then 
 '			'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '			aa = aa & System.Math.Round((dTotaal - dBetaald) * Euro, 0) & vbTab
 '		ElseIf bhEuro = True Then 
@@ -693,13 +693,13 @@ End Class
 '		Else
 '			MsgBox("onlogische situatie")
 '		End If
-'		'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		If Len(Trim(oWaarde(rsMAR(Fl).Fields("A170")))) = 14 Then
-'			'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'			If BankOk(oWaarde(rsMAR(Fl).Fields("A170"))) Then
-'				'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		If Len(Trim(ObjectValue(rsMAR(Fl).Fields("A170")))) = 14 Then
+'			'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'			If BankOk(ObjectValue(rsMAR(Fl).Fields("A170"))) Then
+'				'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '				'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'				aa = aa & Mid(oWaarde(rsMAR(Fl).Fields("A170")), 1, 3) & Mid(oWaarde(rsMAR(Fl).Fields("A170")), 5, 7) & Mid(oWaarde(rsMAR(Fl).Fields("A170")), 13, 2) & vbTab
+'				aa = aa & Mid(ObjectValue(rsMAR(Fl).Fields("A170")), 1, 3) & Mid(ObjectValue(rsMAR(Fl).Fields("A170")), 5, 7) & Mid(ObjectValue(rsMAR(Fl).Fields("A170")), 13, 2) & vbTab
 '			Else
 '				'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '				aa = aa & "!!" & vBibTekst(Fl, "#A170 #") & vbTab
@@ -713,9 +713,9 @@ End Class
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		aa = aa & vBibTekst(Fldokument, "#v039 #") & vbTab
 '		On Error Resume Next
-'		'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+'		'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		aa = aa & oWaarde(rsMAR(Fldokument).Fields("rvID"))
+'		aa = aa & ObjectValue(rsMAR(Fldokument).Fields("rvID"))
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		grdDokumentDetail.AddItem(aa, grdDokumentDetail.Rows - 1)
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -889,9 +889,9 @@ End Class
 '		Select Case Index
 '			Case 1
 '				VB6.SetDefault(Samenstellen, False)
-'				If DatumFout(TekstLijn(1).Text) Then
+'				If DateWrongFormat(TekstLijn(1).Text) Then
 '					Beep()
-'					TekstLijn(1).Text = Rdt.Value
+'					TekstLijn(1).Text = MimGlobalDate.Value
 '					TekstLijn(1).Focus()
 '				End If
 '			Case 2, 3

@@ -197,10 +197,10 @@
     <Compile Include="frmBtwAangifte.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDiversePostenBoek.Designer.vb">
-      <DependentUpon>frmDiversePostenBoek.vb</DependentUpon>
+    <Compile Include="FrmJournalEntriesBook.Designer.vb">
+      <DependentUpon>FrmJournalEntriesBook.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDiversePostenBoek.vb">
+    <Compile Include="FrmJournalEntriesBook.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmAankoopVerrichtingen.Designer.vb">
@@ -474,8 +474,8 @@
     <EmbeddedResource Include="frmBtwAangifte.resx">
       <DependentUpon>frmBtwAangifte.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDiversePostenBoek.resx">
-      <DependentUpon>frmDiversePostenBoek.vb</DependentUpon>
+    <EmbeddedResource Include="FrmJournalEntriesBook.resx">
+      <DependentUpon>FrmJournalEntriesBook.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAankoopVerrichtingen.resx">
       <DependentUpon>frmAankoopVerrichtingen.vb</DependentUpon>

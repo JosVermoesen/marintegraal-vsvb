@@ -193,7 +193,7 @@ End Class
 '		End If
 
 '		'UPGRADE_WARNING: Couldn't resolve default property of object KtrlInput. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		KtrlInput = InputBox("Aanmaakdatum", "ProduktieFiche " & CmdSProdukt.Text, Rdt.Value)
+'		KtrlInput = InputBox("Aanmaakdatum", "ProduktieFiche " & CmdSProdukt.Text, MimGlobalDate.Value)
 '		'UPGRADE_WARNING: Couldn't resolve default property of object KtrlInput. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		If KtrlInput = "" Or Len(KtrlInput) <> 10 Then
 '			Exit Sub
@@ -203,7 +203,7 @@ End Class
 '		End If
 
 '		'UPGRADE_WARNING: Couldn't resolve default property of object KtrlInput. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		KtrlInput = InputBox("Klaar tegen", "ProduktieFiche " & CmdSProdukt.Text, Rdt.Value)
+'		KtrlInput = InputBox("Klaar tegen", "ProduktieFiche " & CmdSProdukt.Text, MimGlobalDate.Value)
 '		'UPGRADE_WARNING: Couldn't resolve default property of object KtrlInput. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		If KtrlInput = "" Or Len(KtrlInput) <> 10 Then
 '			Exit Sub
@@ -238,8 +238,8 @@ End Class
 '		Printer.PaperBin = LaadTekst(My.Application.Info.Title, "LIJSTPRINTER")
 '		Printer.FontName = "Courier New"
 '		Printer.FontSize = 7.2
-'		Printer.Write(vbCrLf & vbCrLf & Lijntje.Value & vbCrLf)
-'		Printer.Write(TAB(10), "PRODUKTIEFICHE : " & dokumentSleutel.Value, TAB(100), Rdt.Value & vbCrLf)
+'		Printer.Write(vbCrLf & vbCrLf & FullLine.Value & vbCrLf)
+'		Printer.Write(TAB(10), "PRODUKTIEFICHE : " & dokumentSleutel.Value, TAB(100), MimGlobalDate.Value & vbCrLf)
 '		Printer.Write(vbCrLf, TAB(10), CmdSProdukt.Text & " : " & Mid(LblProduktInfo.Text, InStr(LblProduktInfo.Text, vbCrLf) + 2) & vbCrLf)
 '		Printer.Write(vbCrLf & vbCrLf)
 '		Printer.Write(TAB(20), "STANDAARD    WERKELIJK" & vbCrLf)
@@ -248,7 +248,7 @@ End Class
 '		Printer.Write(TAB(10), "AANTAL  : " & Dec(Aantal, MaskerSy(2)) & "  .........." & vbCrLf)
 '		Printer.Write(vbCrLf & vbCrLf)
 '		Printer.Write("Anal. produkt Omschrijving                             Maat   Stand.hoev. Stand.prijs Werk.hoev. Werk.prijs" & vbCrLf)
-'		Printer.Print(Lijntje.Value)
+'		Printer.Print(FullLine.Value)
 
 '		TotaalPrijs = 0
 '		For Teller = 1 To grdProduktDetail.Rows - 2
@@ -272,7 +272,7 @@ End Class
 '			Printer.Write(Dec(BedragX, MaskerSy(4)))
 '			Printer.Write(" ........   ........." & Dec(BedragX * Aantal, MaskerSy(4)) & vbCrLf)
 '		Next 
-'		Printer.Write(Lijntje.Value & vbCrLf)
+'		Printer.Write(FullLine.Value & vbCrLf)
 '		Printer.Write(TAB(75), Dec(TotaalPrijs, MaskerSy(4)) & vbCrLf)
 '		Printer.Write(TAB(20), "Totaal voor aantal", TAB(75), Dec(TotaalPrijs * Aantal, MaskerSy(4)))
 '		Printer.EndDoc()

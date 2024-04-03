@@ -12,7 +12,7 @@ End Class
 '	Inherits System.Windows.Forms.Form
 '	'UPGRADE_NOTE: DefInt A-Z statement was removed. Variables were explicitly declared as type Short. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="92AFD3E3-440D-4D49-A8BF-580D74A8C9F2"'
 
-'	Dim psTekst(5) As String 'Koptekstinfo
+'	Dim ReportText(5) As String 'Koptekstinfo
 
 '	Dim sFile(20) As String
 '	Dim smin(10) As String
@@ -69,7 +69,7 @@ End Class
 
 '		On Error GoTo PrtHandler2
 
-'		PaginaTeller = 0
+'		PageCounter = 0
 '		Printer = Printers(LijstPrinterNr)
 '		On Error Resume Next
 '		'UPGRADE_WARNING: Couldn't resolve default property of object LaadTekst(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
@@ -103,9 +103,9 @@ End Class
 '			ideler = 1
 '		End If
 
-'		psTekst(2) = "Rapportage " & UCase(Mid(Mim.Text, InStr(Mim.Text, "[")))
-'		psTekst(0) = TekstLijn(1).Text
-'		psTekst(3) = smg(9) & " Boekjaar " & BJPERDAT.Boekjaar.Text
+'		ReportText(2) = "Rapportage " & UCase(Mid(Mim.Text, InStr(Mim.Text, "[")))
+'		ReportText(0) = TekstLijn(1).Text
+'		ReportText(3) = smg(9) & " Boekjaar " & BJPERDAT.Boekjaar.Text
 
 '		While Not EOF(FlTemp)
 '			lijntel = lijntel + 1
@@ -198,7 +198,7 @@ End Class
 '				If rTotaal1 = 0 Or rTotaal2 = 0 Then
 '				Else
 '					Msg = Mid(Mim.SnelHelp.Text, 9) & vbCrLf & vbCrLf
-'					Msg = Msg & VB6.Format(rTotaal1, MaskerEURBH) & " ? " & VB6.Format(rTotaal2, MaskerEURBH)
+'					Msg = Msg & VB6.Format(rTotaal1, MaskEURBH) & " ? " & VB6.Format(rTotaal2, MaskEURBH)
 '					MsgBox(Msg, 0, "Kontroleer a.u.b. !")
 '				End If
 '			Case Else
@@ -323,8 +323,8 @@ End Class
 '			End If
 '		End If
 
-'		Printer.Write(Scode & Chr(ichr(5)), TAB(72 + apos - 2), Dec(dTOT / ideler, MaskerEURBH))
-'		Printer.Write(TAB(93), Chr(ichr(5)), TAB(95 + apos), Dec(dvtot / ideler, MaskerEURBH))
+'		Printer.Write(Scode & Chr(ichr(5)), TAB(72 + apos - 2), Dec(dTOT / ideler, MaskEURBH))
+'		Printer.Write(TAB(93), Chr(ichr(5)), TAB(95 + apos), Dec(dvtot / ideler, MaskEURBH))
 '		Printer.Print(TAB(117), " " & Chr(ichr(5)))
 '		dTOT = 0
 '		dvtot = 0
@@ -389,7 +389,7 @@ End Class
 
 '		SetBounds(VB6.TwipsToPixelsX((VB6.PixelsToTwipsX(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width) - VB6.PixelsToTwipsX(Width)) \ 2), VB6.TwipsToPixelsY((VB6.PixelsToTwipsY(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height) - VB6.PixelsToTwipsY(Height)) \ 2), 0, 0, Windows.Forms.BoundsSpecified.X Or Windows.Forms.BoundsSpecified.Y)
 
-'		TekstLijn(1).Text = Rdt.Value
+'		TekstLijn(1).Text = MimGlobalDate.Value
 '		Text = Text & " " & BJPERDAT.Boekjaar.Text
 
 '		i = 0
@@ -439,13 +439,13 @@ End Class
 '			Printer.CurrentY = 50
 '			Printer.Write(usrLicentieInfo)
 '		End If
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), psTekst(2), TAB(108), "Pagina : " & Dec(PaginaTeller, "##########"))
-'		Printer.Write(TAB(108), "Datum  : " & psTekst(0) & vbCrLf & vbCrLf)
-'		Printer.Write(TAB(1), UCase(psTekst(3)))
+'		Printer.Write(TAB(1), ReportText(2), TAB(108), "Pagina : " & Dec(PageCounter, "##########"))
+'		Printer.Write(TAB(108), "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), UCase(ReportText(3)))
 
-'		Printer.Write(vbCrLf & Lijntje.Value & vbCrLf & vbCrLf)
+'		Printer.Write(vbCrLf & FullLine.Value & vbCrLf & vbCrLf)
 '		Exit Sub
 
 'PrtHandler1: 
@@ -459,9 +459,9 @@ End Class
 
 '		Select Case Index
 '			Case 1
-'				If DatumFout(TekstLijn(1).Text) Then
+'				If DateWrongFormat(TekstLijn(1).Text) Then
 '					Beep()
-'					TekstLijn(1).Text = Rdt.Value
+'					TekstLijn(1).Text = MimGlobalDate.Value
 '					TekstLijn(1).Focus()
 '				End If
 '		End Select

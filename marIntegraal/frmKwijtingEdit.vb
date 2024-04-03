@@ -59,7 +59,7 @@ Public Class KwijtingEdit
 
 	Private Sub tbVervaldag_Leave(sender As Object, e As EventArgs) Handles tbVervaldag.Leave
 
-		If DatumFout(tbVervaldag.Text) Then
+		If DateWrongFormat(tbVervaldag.Text) Then
 			tbVervaldag.Text = format(Now,"dd/MM/yyyy")
 			Beep()
 			tbVervaldag.Focus()

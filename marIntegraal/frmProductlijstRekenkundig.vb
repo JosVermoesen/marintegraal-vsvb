@@ -12,11 +12,11 @@ End Class
 '	Inherits System.Windows.Forms.Form
 '	'UPGRADE_NOTE: DefInt A-Z statement was removed. Variables were explicitly declared as type Short. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="92AFD3E3-440D-4D49-A8BF-580D74A8C9F2"'
 
-'	Dim psTekst(5) As String
-'	Dim VeldTXT(17) As String
+'	Dim ReportText(5) As String
+'	Dim FieldText(17) As String
 '	Dim aa As String
 
-'	Dim TLijnen As Integer
+'	Dim TotalLines As Integer
 
 '	Dim rsLijstProducten As ADODB.Recordset
 
@@ -61,7 +61,7 @@ End Class
 '		Dim Printer As New Printer
 '		Dim BeginSleutel As String
 '		Dim EindSleutel As String
-'		Dim Lijn As Integer
+'		Dim Line As Integer
 '		Dim DCBedrag As Integer
 '		Dim XX As Short
 '		Dim Bedrag As Double
@@ -73,16 +73,16 @@ End Class
 '		Dim SQLstring As String
 
 '		aa = ""
-'		TLijnen = 0
-'		Lijn = 0
+'		TotalLines = 0
+'		Line = 0
 '		BeginSleutel = TekstInfo(0).Text
 '		EindSleutel = TekstInfo(1).Text
 
-'		psTekst(2) = CmbLijstType.Text & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
-'		psTekst(0) = TekstLijn(1).Text
-'		psTekst(3) = TekstLijn(0).Text
+'		ReportText(2) = CmbLijstType.Text & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(0) = TekstLijn(1).Text
+'		ReportText(3) = TekstLijn(0).Text
 
-'		InitVelden()
+'		InitializeFields()
 '		bClose(FlProdukt)
 '		'Set rsLijstProducten = New ADODB.Recordset
 '		'SQLstring = "SELECT * FROM Produkten WHERE "
@@ -96,7 +96,7 @@ End Class
 '		Else
 '			'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-'			PaginaTeller = 0
+'			PageCounter = 0
 '			If chkAfdrukInVenster.CheckState = 0 Then
 '				If Printer.Width > 12000 Then
 '					Printer.FontSize = 10
@@ -124,7 +124,7 @@ End Class
 '				GoSub PrintInfo
 '			End If
 '		Loop 
-'		PrintTotaal()
+'		PrintTotal()
 '		If chkAfdrukInVenster.CheckState = 0 Then
 '			Printer.EndDoc()
 '		End If
@@ -142,43 +142,43 @@ End Class
 '		RecordToVeld(FlProdukt)
 '		Select Case CmbLijstType.SelectedIndex
 '			Case 0
-'				VeldTXT(0) = vBibTekst(FlProdukt, "#v102 #")
-'				VeldTXT(1) = vBibTekst(FlProdukt, "#v105 #")
+'				FieldText(0) = vBibTekst(FlProdukt, "#v102 #")
+'				FieldText(1) = vBibTekst(FlProdukt, "#v105 #")
 
 '				Basisbedrag = Val(vBibTekst(FlProdukt, "#e112 #"))
-'				VeldTXT(2) = Dec(Val(vBibTekst(FlProdukt, "#e112 #")), MaskerEUR & "00")
+'				FieldText(2) = Dec(Val(vBibTekst(FlProdukt, "#e112 #")), MaskerEUR & "00")
 
-'				VeldTXT(3) = vBibTekst(FlProdukt, "#v111 #")
-'				VeldTXT3 = Mid(fmarBoxText("002", "2", VeldTXT(3)), 4)
+'				FieldText(3) = vBibTekst(FlProdukt, "#v111 #")
+'				VeldTXT3 = Mid(fmarBoxText("002", "2", FieldText(3)), 4)
 
 '				BasisAantal = Val(vBibTekst(FlProdukt, "#v107 #"))
-'				VeldTXT(4) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v107 #")), MaskerSy(7)), 6)
+'				FieldText(4) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v107 #")), MaskerSy(7)), 6)
 
-'				VeldTXT(5) = Mid(fmarBoxText("004", "2", vBibTekst(FlProdukt, "#v106 #")), 4)
+'				FieldText(5) = Mid(fmarBoxText("004", "2", vBibTekst(FlProdukt, "#v106 #")), 4)
 '				TicketEUR2005 = ((Basisbedrag * BasisAantal) + ((Basisbedrag * BasisAantal * Val(VeldTXT3) / 100)))
-'				VeldTXT(6) = VB.Right(Dec(TicketEUR2005, MaskerEUR), 8)
-'				VeldTXT(7) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v114 #")) + Val(vBibTekst(FlProdukt, "#v119 #")) - Val(vBibTekst(FlProdukt, "#v120 #")), MaskerSy(7)), 6)
-'				VeldTXT(8) = vBibTekst(FlProdukt, "#v109 #")
+'				FieldText(6) = VB.Right(Dec(TicketEUR2005, MaskerEUR), 8)
+'				FieldText(7) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v114 #")) + Val(vBibTekst(FlProdukt, "#v119 #")) - Val(vBibTekst(FlProdukt, "#v120 #")), MaskerSy(7)), 6)
+'				FieldText(8) = vBibTekst(FlProdukt, "#v109 #")
 
 '			Case 1
-'				VeldTXT(0) = vBibTekst(FlProdukt, "#v102 #")
-'				VeldTXT(1) = vBibTekst(FlProdukt, "#v105 #")
+'				FieldText(0) = vBibTekst(FlProdukt, "#v102 #")
+'				FieldText(1) = vBibTekst(FlProdukt, "#v105 #")
 
 '				Basisbedrag = Val(vBibTekst(FlProdukt, "#e113 #"))
-'				VeldTXT(2) = Dec(Val(vBibTekst(FlProdukt, "#e113 #")), MaskerEUR & "00")
+'				FieldText(2) = Dec(Val(vBibTekst(FlProdukt, "#e113 #")), MaskerEUR & "00")
 
-'				VeldTXT(3) = vBibTekst(FlProdukt, "#v111 #")
-'				VeldTXT3 = Mid(fmarBoxText("002", "2", VeldTXT(3)), 4)
+'				FieldText(3) = vBibTekst(FlProdukt, "#v111 #")
+'				VeldTXT3 = Mid(fmarBoxText("002", "2", FieldText(3)), 4)
 
 '				BasisAantal = Val(vBibTekst(FlProdukt, "#v107 #"))
-'				VeldTXT(4) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v107 #")), MaskerSy(7)), 6)
-'				VeldTXT(5) = Mid(fmarBoxText("004", "2", vBibTekst(FlProdukt, "#v106 #")), 4)
+'				FieldText(4) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v107 #")), MaskerSy(7)), 6)
+'				FieldText(5) = Mid(fmarBoxText("004", "2", vBibTekst(FlProdukt, "#v106 #")), 4)
 
 '				'TicketEUR2005 = ((Basisbedrag * BasisAantal) + ((Basisbedrag * BasisAantal * Val(VeldTXT3) / 100)))
-'				'VeldTXT(6) = Right(Dec((TicketEUR2005), MaskerEUR), 8)
-'				VeldTXT(6) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v115 #")), MaskerSy(7)), 6)
-'				VeldTXT(7) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v114 #")) + Val(vBibTekst(FlProdukt, "#v119 #")) - Val(vBibTekst(FlProdukt, "#v120 #")), MaskerSy(7)), 6)
-'				VeldTXT(8) = Dec(Val(VeldTXT(6)) - Val(VeldTXT(7)), MaskerSy(7))
+'				'FieldText(6) = Right(Dec((TicketEUR2005), MaskerEUR), 8)
+'				FieldText(6) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v115 #")), MaskerSy(7)), 6)
+'				FieldText(7) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v114 #")) + Val(vBibTekst(FlProdukt, "#v119 #")) - Val(vBibTekst(FlProdukt, "#v120 #")), MaskerSy(7)), 6)
+'				FieldText(8) = Dec(Val(FieldText(6)) - Val(FieldText(7)), MaskerSy(7))
 '		End Select
 '		PrintVelden()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -199,7 +199,7 @@ End Class
 '		Dim SorteringTel As Short
 
 '		TekstLijn(0).Text = ""
-'		TekstLijn(1).Text = Rdt.Value
+'		TekstLijn(1).Text = MimGlobalDate.Value
 
 '		Printer = Printers(LijstPrinterNr)
 '		On Error Resume Next
@@ -228,66 +228,66 @@ End Class
 
 '	End Sub
 
-'	Private Sub InitVelden()
+'	Private Sub InitializeFields()
 '		Dim T As Short
 
 '		Select Case CmbLijstType.SelectedIndex
 '			Case 0
-'				RapportVeld(0) = "Nummer"
-'				RapportTab(0) = 5
+'				ReportField(0) = "Nummer"
+'				ReportTab(0) = 5
 
-'				RapportVeld(1) = "Omschrijving"
-'				RapportTab(1) = 19
+'				ReportField(1) = "Omschrijving"
+'				ReportTab(1) = 19
 
-'				RapportVeld(2) = "VK EUR Ex."
-'				RapportTab(2) = 60
+'				ReportField(2) = "VK EUR Ex."
+'				ReportTab(2) = 60
 
-'				RapportVeld(3) = "B"
-'				RapportTab(3) = 73
+'				ReportField(3) = "B"
+'				ReportTab(3) = 73
 
-'				RapportVeld(4) = "Verpak"
-'				RapportTab(4) = 75
+'				ReportField(4) = "Verpak"
+'				ReportTab(4) = 75
 
-'				RapportVeld(5) = "Maat"
-'				RapportTab(5) = 83
+'				ReportField(5) = "Maat"
+'				ReportTab(5) = 83
 
-'				RapportVeld(6) = "EUR incl"
-'				RapportTab(6) = 89
+'				ReportField(6) = "EUR incl"
+'				ReportTab(6) = 89
 
-'				RapportVeld(7) = " Stock"
-'				RapportTab(7) = 98
+'				ReportField(7) = " Stock"
+'				ReportTab(7) = 98
 
-'				RapportVeld(8) = "Plaats"
-'				RapportTab(8) = 107
+'				ReportField(8) = "Plaats"
+'				ReportTab(8) = 107
 '				tMaxVeld = 8
 
 '			Case 1
-'				RapportVeld(0) = "Nummer"
-'				RapportTab(0) = 5
+'				ReportField(0) = "Nummer"
+'				ReportTab(0) = 5
 
-'				RapportVeld(1) = "Omschrijving"
-'				RapportTab(1) = 19
+'				ReportField(1) = "Omschrijving"
+'				ReportTab(1) = 19
 
-'				RapportVeld(2) = "AK EUR Ex."
-'				RapportTab(2) = 60
+'				ReportField(2) = "AK EUR Ex."
+'				ReportTab(2) = 60
 
-'				RapportVeld(3) = "B"
-'				RapportTab(3) = 73
+'				ReportField(3) = "B"
+'				ReportTab(3) = 73
 
-'				RapportVeld(4) = "Verpak"
-'				RapportTab(4) = 75
+'				ReportField(4) = "Verpak"
+'				ReportTab(4) = 75
 
-'				RapportVeld(5) = "Maat"
-'				RapportTab(5) = 83
+'				ReportField(5) = "Maat"
+'				ReportTab(5) = 83
 
-'				RapportVeld(6) = "Min.Stock"
-'				RapportTab(6) = 89
+'				ReportField(6) = "Min.Stock"
+'				ReportTab(6) = 89
 
-'				RapportVeld(7) = " Stock"
-'				RapportTab(7) = 98
+'				ReportField(7) = " Stock"
+'				ReportTab(7) = 98
 
-'				RapportVeld(8) = "Bestellen"
-'				RapportTab(8) = 107
+'				ReportField(8) = "Bestellen"
+'				ReportTab(8) = 107
 '				tMaxVeld = 8
 
 '			Case Else
@@ -303,7 +303,7 @@ End Class
 '			Xlog.X.Row = 0
 '			For T = 0 To tMaxVeld
 '				Xlog.X.Col = T
-'				Xlog.X.Text = RapportVeld(T)
+'				Xlog.X.Text = ReportField(T)
 '			Next 
 '			Me.Show()
 '		End If
@@ -323,25 +323,25 @@ End Class
 '			Printer.CurrentY = 50
 '			Printer.Write(usrLicentieInfo)
 '		End If
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), psTekst(2), TAB(107), Dec(PaginaTeller, "##########"))
+'		Printer.Write(TAB(1), ReportText(2), TAB(107), Dec(PageCounter, "##########"))
 
-'		Printer.Write(TAB(107), psTekst(0) & vbCrLf & vbCrLf)
-'		Printer.Write(TAB(1), UCase(psTekst(3)))
+'		Printer.Write(TAB(107), ReportText(0) & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), UCase(ReportText(3)))
 
-'		Printer.Print(vbCrLf & Lijntje.Value)
+'		Printer.Print(vbCrLf & FullLine.Value)
 
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(RapportVeld(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(ReportField(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
 '		Loop 
 
-'		Printer.Write(Lijntje.Value & vbCrLf & vbCrLf)
+'		Printer.Write(FullLine.Value & vbCrLf & vbCrLf)
 
 '		Exit Sub
 
@@ -351,30 +351,30 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTotaal()
+'	Private Sub PrintTotal()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
 '		For T = 0 To tMaxVeld
-'			VeldTXT(T) = ""
+'			FieldText(T) = ""
 '		Next 
-'		VeldTXT(1) = "Totaal aantal lijnen : " & VB6.Format(TLijnen)
+'		FieldText(1) = "Totaal aantal lijnen : " & VB6.Format(TotalLines)
 
 '		If chkAfdrukInVenster.CheckState Then
 '		Else
-'			Printer.Print(vbCrLf & Lijntje.Value)
+'			Printer.Print(vbCrLf & FullLine.Value)
 '		End If
 
 '		T = 0
 '		aa = ""
 '		Do While T < tMaxVeld
 '			If chkAfdrukInVenster.CheckState Then
-'				aa = aa & VeldTXT(T) & vbTab
+'				aa = aa & FieldText(T) & vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -434,21 +434,21 @@ End Class
 
 '		If CmbLijstType.SelectedIndex = 1 Then
 '			'Bestellijst geselecteerd.  Enkel afdrukken indien nodig
-'			If Val(VeldTXT(8)) > 0 Then
+'			If Val(FieldText(8)) > 0 Then
 '			Else
 '				Exit Sub
 '			End If
 '		End If
-'		TLijnen = TLijnen + 1
+'		TotalLines = TotalLines + 1
 
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState Then
-'				aa = aa & VeldTXT(T) & vbTab
+'				aa = aa & FieldText(T) & vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -501,9 +501,9 @@ End Class
 
 '		Select Case Index
 '			Case 1
-'				If DatumFout(TekstLijn(1).Text) Then
+'				If DateWrongFormat(TekstLijn(1).Text) Then
 '					Beep()
-'					TekstLijn(1).Text = Rdt.Value
+'					TekstLijn(1).Text = MimGlobalDate.Value
 '				End If
 '		End Select
 

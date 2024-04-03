@@ -138,15 +138,15 @@ End Class
 '			TotaalLoon = TotaalLoon + Val(PolisDetail.Text)
 '			PolisDetail.Col = 4
 '			If InStr(PolisDetail.Text, "Kontroleer") Then
-'				MsgBox("Lijn " & VB6.Format(PolisDetail.Row - 2) & " kontroleren a.u.b. !")
+'				MsgBox("Line " & VB6.Format(PolisDetail.Row - 2) & " kontroleren a.u.b. !")
 '				Exit Sub
 '			End If
 '		Next 
 
 '		Msg = RTrim(KeuzeInfo(1).Text) & " van" & vbCrLf
 '		Msg = Msg & RTrim(KeuzeInfo(0).Text) & vbCrLf & vbCrLf
-'		Msg = Msg & "Totaal premie(s) : " & Dec(TotaalPremie, MaskerEURBH) & vbCrLf
-'		Msg = Msg & "Totaal loon : " & Dec(TotaalLoon, MaskerEURBH) & vbCrLf
+'		Msg = Msg & "Totaal premie(s) : " & Dec(TotaalPremie, MaskEURBH) & vbCrLf
+'		Msg = Msg & "Totaal loon : " & Dec(TotaalLoon, MaskEURBH) & vbCrLf
 '		Msg = Msg & "Boekdatum : " & TekstInfo(0).Text
 '		Ktrl = MsgBox(Msg, 292, "Afboeken " & VB.Right(dokumentSleutel.Value, 5) & " tot " & VB6.Format(Val(VB.Right(dokumentSleutel.Value, 5)) + PolisDetail.Rows - 3, "00000") & " ?")
 '		If Ktrl = MsgBoxResult.No Then
@@ -689,7 +689,7 @@ End Class
 '				If PolisDetail.Rows = 2 Then
 '					Exit Sub
 '				ElseIf Positie < 0 Then 
-'					MsgBox("Eerst een lijn selekteren !", 0, "Lijn wijzigen")
+'					MsgBox("Eerst een lijn selekteren !", 0, "Line wijzigen")
 '					Exit Sub
 '				End If
 '				PolisDetail.RemoveItem(Positie)
@@ -742,7 +742,7 @@ End Class
 '		Dim T As Short
 
 '		Afsluiten.Enabled = False
-'		TekstInfo(0).Text = Rdt.Value
+'		TekstInfo(0).Text = MimGlobalDate.Value
 '		RasterSchoon()
 
 '	End Sub
@@ -778,8 +778,8 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				If DatumFout(TekstInfo(0).Text) Then
-'					TekstInfo(0).Text = Rdt.Value
+'				If DateWrongFormat(TekstInfo(0).Text) Then
+'					TekstInfo(0).Text = MimGlobalDate.Value
 '					Beep()
 '					TekstInfo(0).Focus()
 '				ElseIf Not DatumKtrl(TekstInfo(0).Text, TekstPeriode) Then 

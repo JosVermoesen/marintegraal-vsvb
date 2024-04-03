@@ -11,14 +11,14 @@ End Class
 '	Inherits System.Windows.Forms.Form
 '	'UPGRADE_NOTE: DefInt A-Z statement was removed. Variables were explicitly declared as type Short. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="92AFD3E3-440D-4D49-A8BF-580D74A8C9F2"'
 
-'	Dim psTekst(5) As String 'Koptekstinfo
+'	Dim ReportText(5) As String 'Koptekstinfo
 '	Dim aa As String
 
 '	Dim RapportSelektie As String
 '	Dim RapportTitel As String
 '	Dim RapportDefinitie As String
 '	Dim LijstNaam As String
-'	Dim VeldTXT(20) As String
+'	Dim FieldText(20) As String
 
 '	Dim dTotaal As Decimal
 '	Dim dBeTeWe As Decimal
@@ -52,7 +52,7 @@ End Class
 
 '		Dim dTnt1 As Decimal
 '		Dim dTnt2 As Decimal
-'		Dim Lijn As Short
+'		Dim Line As Short
 '		Dim BedragMinstens As Decimal
 
 '		dTotaal = 0
@@ -67,10 +67,10 @@ End Class
 '		BeginSleutel = vSet("K0", 13)
 '		EindSleutel = vSet("K" & "zzzzzzzzzzzz", 13)
 
-'		psTekst(2) = LijstNaam & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
-'		psTekst(0) = VB6.Format(Datum._Value, "dd/mm/yyyy")
-'		psTekst(3) = TekstLijn(0).Text
-'		InitVelden()
+'		ReportText(2) = LijstNaam & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(0) = VB6.Format(Datum._Value, "dd/mm/yyyy")
+'		ReportText(3) = TekstLijn(0).Text
+'		InitializeFields()
 
 '		ktrlEur = EurBefJaar()
 
@@ -82,12 +82,12 @@ End Class
 '			Beep()
 '			Exit Sub
 '		Else
-'			VeldTXT(0) = Chr(0)
+'			FieldText(0) = Chr(0)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub OpenTabBestand
 '			'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-'			PaginaTeller = 0
+'			PageCounter = 0
 '			If chkAfdrukInVenster.CheckState = 0 Then
 '				Printer = Printers(LijstPrinterNr)
 '				On Error Resume Next
@@ -126,11 +126,11 @@ End Class
 '		Loop 
 
 '		If obMunt(0).Checked Then
-'			VeldTXT(7) = Dec(dTnt1, MaskerBEF)
-'			VeldTXT(8) = Dec(dTnt2, MaskerBEF)
+'			FieldText(7) = Dec(dTnt1, MaskerBEF)
+'			FieldText(8) = Dec(dTnt2, MaskerBEF)
 '		Else
-'			VeldTXT(7) = Dec(dTnt1, MaskerEUR)
-'			VeldTXT(8) = Dec(dTnt2, MaskerEUR)
+'			FieldText(7) = Dec(dTnt1, MaskerEUR)
+'			FieldText(8) = Dec(dTnt2, MaskerEUR)
 '		End If
 '		'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '		GoSub PrintDeLijn
@@ -184,14 +184,14 @@ End Class
 '		End Select
 
 '		If Trim(vBibTekst(Fldokument, "#v034 #")) <> Trim(KopBuf) Then
-'			If VeldTXT(0) = Chr(0) Then
+'			If FieldText(0) = Chr(0) Then
 '			Else
 '				If obMunt(0).Checked Then
-'					VeldTXT(7) = Dec(dTnt1, MaskerBEF)
-'					VeldTXT(8) = Dec(dTnt2, MaskerBEF)
+'					FieldText(7) = Dec(dTnt1, MaskerBEF)
+'					FieldText(8) = Dec(dTnt2, MaskerBEF)
 '				Else
-'					VeldTXT(7) = Dec(dTnt1, MaskerEUR)
-'					VeldTXT(8) = Dec(dTnt2, MaskerEUR)
+'					FieldText(7) = Dec(dTnt1, MaskerEUR)
+'					FieldText(8) = Dec(dTnt2, MaskerEUR)
 '				End If
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub PrintDeLijn
@@ -201,18 +201,18 @@ End Class
 '			dTnt2 = 0
 '			bGet(FlKlant, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
 '			KopBuf = vBibTekst(Fldokument, "#v034 #")
-'			VeldTXT(0) = Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12)
+'			FieldText(0) = Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12)
 '			If Ktrl Then
-'				VeldTXT(1) = "* niet meer aanwezig *"
+'				FieldText(1) = "* niet meer aanwezig *"
 '			Else
 '				RecordToVeld(FlKlant)
-'				VeldTXT(1) = vSet(vBibTekst(FlKlant, "#A100 #"), 32)
-'				SnelHelpPrint(VeldTXT(1), blLogging)
-'				VeldTXT(2) = vSet(RTrim(RTrim(vBibTekst(FlKlant, "#A104 #")) & " " & RTrim(vBibTekst(aIndex, "#A105 #")) & " " & RTrim(vBibTekst(aIndex, "#A106 #"))), 24)
-'				VeldTXT(3) = vSet(vBibTekst(FlKlant, "#A107 #"), 4)
-'				VeldTXT(4) = vSet(RTrim(vBibTekst(FlKlant, "#A108 #")), 23)
-'				VeldTXT(5) = "BE"
-'				VeldTXT(6) = vSet(Mid(vBibTekst(FlKlant, "#A161 #"), 1, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 5, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 9, 3), 9)
+'				FieldText(1) = vSet(vBibTekst(FlKlant, "#A100 #"), 32)
+'				SnelHelpPrint(FieldText(1), blLogging)
+'				FieldText(2) = vSet(RTrim(RTrim(vBibTekst(FlKlant, "#A104 #")) & " " & RTrim(vBibTekst(aIndex, "#A105 #")) & " " & RTrim(vBibTekst(aIndex, "#A106 #"))), 24)
+'				FieldText(3) = vSet(vBibTekst(FlKlant, "#A107 #"), 4)
+'				FieldText(4) = vSet(RTrim(vBibTekst(FlKlant, "#A108 #")), 23)
+'				FieldText(5) = "BE"
+'				FieldText(6) = vSet(Mid(vBibTekst(FlKlant, "#A161 #"), 1, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 5, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 9, 3), 9)
 '			End If
 '		End If
 
@@ -249,7 +249,7 @@ End Class
 '				Msg = Msg & "na te kijken én te verbeteren a.u.b. vooraleer door te sturen..."
 '				MsgBox(Msg)
 '				vBib(FlKlant, "000-000-000", "A161 ")
-'				VeldTXT(6) = vSet(Mid(vBibTekst(FlKlant, "#A161 #"), 1, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 5, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 9, 3), 9)
+'				FieldText(6) = vSet(Mid(vBibTekst(FlKlant, "#A161 #"), 1, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 5, 3) & Mid(vBibTekst(FlKlant, "#A161 #"), 9, 3), 9)
 '				bUpdate(FlKlant, 0)
 '			End If
 '			'kontrole btw nummer
@@ -260,12 +260,12 @@ End Class
 
 '			dTotaal = dTotaal + dTnt1
 '			dBeTeWe = dBeTeWe + dTnt2
-'			Lijn = Lijn + 1
-'			VeldTXT(0) = Dec(Lijn, "000000")
+'			Line = Line + 1
+'			FieldText(0) = Dec(Line, "000000")
 '			PrintVelden()
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub BtwLijn
-'			VeldTXT(0) = ""
+'			FieldText(0) = ""
 '		End If
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -274,16 +274,16 @@ End Class
 '		FlTabBestand = FreeFile
 '		FileOpen(FlTabBestand, BedrijfsLokatie & VB.Right(VB6.Format(Datum._Value, "dd/mm/yyyy"), 4) & ".BTW", OpenMode.Output)
 
-'		VeldTXT(0) = "000000"
-'		VeldTXT(1) = vSet(String99(Lees, 46), 32) 'Naam aangever
-'		VeldTXT(2) = vSet(String99(Lees, 47), 24) 'Straat en nr.
-'		VeldTXT(3) = vSet(String99(Lees, 48), 4) 'Postcode
-'		VeldTXT(4) = vSet(Mid(String99(Lees, 48), 6), 23) 'Plaats
-'		VeldTXT(5) = "BE"
-'		VeldTXT(6) = Mid(String99(Lees, 51), 1, 3) & Mid(String99(Lees, 51), 5, 3) & Mid(String99(Lees, 51), 9, 3)
-'		VeldTXT(7) = Space(10)
-'		VeldTXT(8) = Space(10)
-'		VeldTXT(9) = Space(8)
+'		FieldText(0) = "000000"
+'		FieldText(1) = vSet(String99(Lees, 46), 32) 'Naam aangever
+'		FieldText(2) = vSet(String99(Lees, 47), 24) 'Straat en nr.
+'		FieldText(3) = vSet(String99(Lees, 48), 4) 'Postcode
+'		FieldText(4) = vSet(Mid(String99(Lees, 48), 6), 23) 'Plaats
+'		FieldText(5) = "BE"
+'		FieldText(6) = Mid(String99(Lees, 51), 1, 3) & Mid(String99(Lees, 51), 5, 3) & Mid(String99(Lees, 51), 9, 3)
+'		FieldText(7) = Space(10)
+'		FieldText(8) = Space(10)
+'		FieldText(9) = Space(8)
 '		'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '		GoSub BtwLijn
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -291,17 +291,17 @@ End Class
 
 'BtwLijn: 
 '		For Teller = 0 To 6
-'			Print(FlTabBestand, VeldTXT(Teller))
+'			Print(FlTabBestand, FieldText(Teller))
 '		Next 
 '		If obMunt(0).Checked Then
-'			Print(FlTabBestand, Dec(Val(VeldTXT(7)), "0000000000"))
-'			Print(FlTabBestand, Dec(Val(VeldTXT(8)), "0000000000"))
+'			Print(FlTabBestand, Dec(Val(FieldText(7)), "0000000000"))
+'			Print(FlTabBestand, Dec(Val(FieldText(8)), "0000000000"))
 '		Else
-'			Print(FlTabBestand, Dec(Val(VeldTXT(7)) * 100, "0000000000"))
-'			Print(FlTabBestand, Dec(Val(VeldTXT(8)) * 100, "0000000000"))
+'			Print(FlTabBestand, Dec(Val(FieldText(7)) * 100, "0000000000"))
+'			Print(FlTabBestand, Dec(Val(FieldText(8)) * 100, "0000000000"))
 '		End If
 
-'		If VeldTXT(0) = "000000" Then
+'		If FieldText(0) = "000000" Then
 '			If obMunt(0).Checked = True Then
 '				Print(FlTabBestand, "B" & VB.Right(VB6.Format(Datum._Value, "dd/mm/yyyy"), 4) & New String(" ", 3) & vbCrLf)
 '			Else
@@ -314,22 +314,22 @@ End Class
 '		Return 
 
 'Vs1Afsluiten: 
-'		VeldTXT(0) = "999999"
+'		FieldText(0) = "999999"
 '		If obMunt(0).Checked Then
-'			VeldTXT(1) = Dec(dTotaal, "0000000000000000")
-'			VeldTXT(1) = VeldTXT(1) & Dec(dBeTeWe, "0000000000000000")
+'			FieldText(1) = Dec(dTotaal, "0000000000000000")
+'			FieldText(1) = FieldText(1) & Dec(dBeTeWe, "0000000000000000")
 '		Else
-'			VeldTXT(1) = Dec(dTotaal * 100, "0000000000000000")
-'			VeldTXT(1) = VeldTXT(1) & Dec(dBeTeWe * 100, "0000000000000000")
+'			FieldText(1) = Dec(dTotaal * 100, "0000000000000000")
+'			FieldText(1) = FieldText(1) & Dec(dBeTeWe * 100, "0000000000000000")
 '		End If
-'		VeldTXT(2) = Space(24)
-'		VeldTXT(3) = Space(4)
-'		VeldTXT(4) = Space(23)
-'		VeldTXT(5) = "BE"
-'		VeldTXT(6) = Mid(String99(Lees, 51), 1, 3) & Mid(String99(Lees, 51), 5, 3) & Mid(String99(Lees, 51), 9, 3)
-'		VeldTXT(7) = Space(10)
-'		VeldTXT(8) = Space(10)
-'		VeldTXT(9) = Space(8)
+'		FieldText(2) = Space(24)
+'		FieldText(3) = Space(4)
+'		FieldText(4) = Space(23)
+'		FieldText(5) = "BE"
+'		FieldText(6) = Mid(String99(Lees, 51), 1, 3) & Mid(String99(Lees, 51), 5, 3) & Mid(String99(Lees, 51), 9, 3)
+'		FieldText(7) = Space(10)
+'		FieldText(8) = Space(10)
+'		FieldText(9) = Space(8)
 '		'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '		GoSub BtwLijn
 '		FileClose(FlTabBestand)
@@ -460,7 +460,7 @@ End Class
 '		Printer.FontBold = False
 '		Printer.Write(TAB(5), "Aantal in de opgave opgenomen afnemers : ")
 '		Printer.FontBold = True
-'		Printer.Write(Dec(Lijn, MaskerSy(0)) & vbCrLf & vbCrLf)
+'		Printer.Write(Dec(Line, MaskerSy(0)) & vbCrLf & vbCrLf)
 '		Printer.FontBold = False
 '		Printer.Write(TAB(5), "Totaal omzetcijfers (belastingen niet inbegrepen) : EUR ")
 '		Printer.FontBold = True
@@ -501,27 +501,27 @@ End Class
 '		Dim T As Short
 
 '		For T = 0 To 8
-'			VeldTXT(T) = ""
+'			FieldText(T) = ""
 '		Next 
-'		VeldTXT(0) = "Totaal"
+'		FieldText(0) = "Totaal"
 '		If obMunt(0).Checked Then
-'			VeldTXT(7) = Dec(dTotaal, MaskerBEF)
-'			VeldTXT(8) = Dec(dBeTeWe, MaskerBEF)
+'			FieldText(7) = Dec(dTotaal, MaskerBEF)
+'			FieldText(8) = Dec(dBeTeWe, MaskerBEF)
 '		Else
-'			VeldTXT(7) = Dec(dTotaal, MaskerEUR)
-'			VeldTXT(8) = Dec(dBeTeWe, MaskerEUR)
+'			FieldText(7) = Dec(dTotaal, MaskerEUR)
+'			FieldText(8) = Dec(dBeTeWe, MaskerEUR)
 '		End If
 
 '		T = 0
 '		aa = ""
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState Then
-'				aa = aa & VeldTXT(T) & vbTab
+'				aa = aa & FieldText(T) & vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -599,37 +599,37 @@ End Class
 '	End Sub
 
 
-'	Private Sub InitVelden()
+'	Private Sub InitializeFields()
 '		Dim T As Short
 
-'		RapportVeld(0) = "Lijn"
-'		RapportTab(0) = 2
+'		ReportField(0) = "Line"
+'		ReportTab(0) = 2
 
-'		RapportVeld(1) = "Naam"
-'		RapportTab(1) = 9
+'		ReportField(1) = "Naam"
+'		ReportTab(1) = 9
 
-'		RapportVeld(2) = "Straat en Nummer"
-'		RapportTab(2) = 42
+'		ReportField(2) = "Straat en Nummer"
+'		ReportTab(2) = 42
 
-'		RapportVeld(3) = "P/C"
-'		RapportTab(3) = 67
+'		ReportField(3) = "P/C"
+'		ReportTab(3) = 67
 
-'		RapportVeld(4) = "Stad"
-'		RapportTab(4) = 72
+'		ReportField(4) = "Stad"
+'		ReportTab(4) = 72
 
-'		RapportVeld(5) = "LN"
-'		RapportTab(5) = 96
+'		ReportField(5) = "LN"
+'		ReportTab(5) = 96
 
-'		RapportVeld(6) = "BTW Nr."
-'		RapportTab(6) = 99
+'		ReportField(6) = "BTW Nr."
+'		ReportTab(6) = 99
 
-'		RapportVeld(7) = "Goederen"
-'		RapportTab(7) = 109
+'		ReportField(7) = "Goederen"
+'		ReportTab(7) = 109
 
-'		RapportVeld(8) = "BTW"
-'		RapportTab(8) = 119
+'		ReportField(8) = "BTW"
+'		ReportTab(8) = 119
 
-'		RapportTab(9) = 0
+'		ReportTab(9) = 0
 
 '		If chkAfdrukInVenster.CheckState Then
 '			Me.Hide()
@@ -640,7 +640,7 @@ End Class
 '			Xlog.X.Row = 0
 '			For T = 0 To 8
 '				Xlog.X.Col = T
-'				Xlog.X.Text = RapportVeld(T)
+'				Xlog.X.Text = ReportField(T)
 '			Next 
 '			Me.Show()
 '		End If
@@ -658,23 +658,23 @@ End Class
 '			Printer.CurrentY = 50
 '			Printer.Write(usrLicentieInfo)
 '		End If
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), psTekst(2))
-'		Printer.Write(TAB(108), "Pagina : " & Dec(PaginaTeller, "##########") & vbCrLf)
-'		Printer.Write(TAB(108), "Datum  : " & psTekst(0) & vbCrLf & vbCrLf)
-'		Printer.Write(TAB(1), UCase(psTekst(3)) & vbCrLf)
+'		Printer.Write(TAB(1), ReportText(2))
+'		Printer.Write(TAB(108), "Pagina : " & Dec(PageCounter, "##########") & vbCrLf)
+'		Printer.Write(TAB(108), "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), UCase(ReportText(3)) & vbCrLf)
 
-'		Printer.Write(TAB(1), Lijntje.Value & vbCrLf)
+'		Printer.Write(TAB(1), FullLine.Value & vbCrLf)
 
-'		Do While RapportTab(T) <> 0
-'			Printer.Write(TAB(RapportTab(T)), RapportVeld(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Write(TAB(ReportTab(T)), ReportField(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
 '		Loop 
-'		Printer.Write(TAB(1), Lijntje.Value & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), FullLine.Value & vbCrLf & vbCrLf)
 
 '	End Sub
 
@@ -819,14 +819,14 @@ End Class
 
 '		T = 0
 '		aa = ""
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState Then
-'				aa = aa & VeldTXT(T) & vbTab
+'				aa = aa & FieldText(T) & vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)

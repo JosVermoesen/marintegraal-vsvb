@@ -22,7 +22,7 @@ End Class
 '	Dim IndexKeuze As Short
 
 '	Dim aa As String
-'	Dim TLijnen As Short
+'	Dim TotalLines As Short
 
 '	Dim HoofdTitel As String
 '	Dim OnderTitel As String
@@ -78,13 +78,13 @@ End Class
 '		Dim BeginSleutel As String
 '		Dim EindSleutel As String
 '		Dim bModDummy As Short
-'		Dim Lijn As Short
+'		Dim Line As Short
 '		Dim DCBedrag As Integer
 '		Dim XX As Short
 
 '		aa = ""
-'		TLijnen = 0
-'		Lijn = 0
+'		TotalLines = 0
+'		Line = 0
 '		BeginSleutel = TekstInfo(0).Text
 '		EindSleutel = TekstInfo(1).Text
 
@@ -98,7 +98,7 @@ End Class
 '			rsLijst.MoveFirst()
 '			'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-'			PaginaTeller = 0
+'			PageCounter = 0
 '			If chkAfdrukInVenster.CheckState Then
 '			Else
 '				Printer = Printers(LijstPrinterNr)
@@ -140,7 +140,7 @@ End Class
 '		Exit Sub
 
 'PrintInfo: 
-'		Lijn = Lijn + 1
+'		Line = Line + 1
 '		PrintVelden()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -382,7 +382,7 @@ End Class
 '		Dim TabNu As Short
 '		Dim TabNext As Short
 
-'		If chkAfdrukInVenster.CheckState = 1 And PaginaTeller = 0 Then
+'		If chkAfdrukInVenster.CheckState = 1 And PageCounter = 0 Then
 '			Me.Hide()
 '			Xlog.Close()
 '			Xlog.Hide()
@@ -391,7 +391,7 @@ End Class
 '			Xlog.X.Row = 0
 '			For T = 0 To RapportVelden.Items.Count - 1
 '				RapportVelden.SelectedIndex = T
-'				RapportTab(T) = Val(Mid(RapportVelden.Text, 12, 3))
+'				ReportTab(T) = Val(Mid(RapportVelden.Text, 12, 3))
 '				Xlog.X.Col = T
 '				Xlog.X.Text = RTrim(Mid(RapportVelden.Text, 22))
 '				Xlog.X.set_ColWidth(T, 1860)
@@ -405,14 +405,14 @@ End Class
 '			Printer.CurrentY = 50
 '			Printer.Write(usrLicentieInfo)
 '		End If
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), HoofdTitel, TAB(108), "Pagina : " & Dec(PaginaTeller, "##########"))
+'		Printer.Write(TAB(1), HoofdTitel, TAB(108), "Pagina : " & Dec(PageCounter, "##########"))
 
-'		Printer.Write(TAB(108), "Datum  : " & Rdt.Value & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(108), "Datum  : " & MimGlobalDate.Value & vbCrLf & vbCrLf)
 '		Printer.Write(TAB(1), OnderTitel)
 
-'		Printer.Print(vbCrLf & Lijntje.Value)
+'		Printer.Print(vbCrLf & FullLine.Value)
 
 '		For T = 0 To RapportVelden.Items.Count - 1
 '			RapportVelden.SelectedIndex = T
@@ -420,7 +420,7 @@ End Class
 '			Printer.Write(TAB(TabNu), Mid(RapportVelden.Text, 22))
 '		Next 
 
-'		Printer.Write(vbCrLf & Lijntje.Value & vbCrLf & vbCrLf)
+'		Printer.Write(vbCrLf & FullLine.Value & vbCrLf & vbCrLf)
 
 '	End Sub
 
@@ -441,7 +441,7 @@ End Class
 '				Case "T"
 '					VeldInfo = RTrim(VB.Left(VeldInfo, Val(Mid(VB6.GetItemString(RapportVelden, T), 16, 3))))
 '				Case "D"
-'					VeldInfo = fDatumText(VeldInfo)
+'					VeldInfo = FunctionDateText(VeldInfo)
 '				Case "0" To "6"
 '					VeldInfo = Dec(Val(VeldInfo), MaskerSy(Val(VeldInfoSh)))
 '				Case Else

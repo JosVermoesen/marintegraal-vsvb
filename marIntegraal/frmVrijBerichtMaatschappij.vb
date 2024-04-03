@@ -55,7 +55,7 @@ End Class
 '				End If
 '				TelLijn = TelLijn + 1
 '				If Len(TekstLijn) > MaxLijn79 Then
-'					MsgBox("Lijn " & Str(TelLijn) & " bestaat uit " & Str(Len(TekstLijn)) & " Tekens. (max." & Str(MaxLijn79) & " per lijn toegelaten)")
+'					MsgBox("Line " & Str(TelLijn) & " bestaat uit " & Str(Len(TekstLijn)) & " Tekens. (max." & Str(MaxLijn79) & " per lijn toegelaten)")
 '					Exit Function
 '				End If
 '			Loop 
@@ -328,7 +328,7 @@ End Class
 '		Next 
 '		cbDocumentPrinterHier.SelectedIndex = dokumentPrinterNr
 
-'		PaginaTeller = 0
+'		PageCounter = 0
 '		KeuzeInfo(1).Items.Add("A: Produktie/uitgifte")
 '		KeuzeInfo(1).Items.Add("B: Boekhouding")
 '		KeuzeInfo(1).Items.Add("C: Schade")
@@ -559,7 +559,7 @@ End Class
 '		Dim FlFree As Short
 '		Dim Teller As Short
 
-'		Dim psTekst(50) As String
+'		Dim ReportText(50) As String
 '		Dim psX(50) As Single
 '		Dim psY(50) As Single
 '		Dim psFontSize(50) As Single
@@ -599,7 +599,7 @@ End Class
 '			Next 
 '			Teller = 0
 '			While Not EOF(FlFree)
-'				Input(FlFree, psTekst(Teller))
+'				Input(FlFree, ReportText(Teller))
 '				Input(FlFree, psX(Teller))
 '				Input(FlFree, psY(Teller))
 '				Input(FlFree, psFontSize(Teller))
@@ -619,7 +619,7 @@ End Class
 
 '		PsLokatie = 0
 '		Do While PsLokatie <= MaxPslokatie
-'			If psTekst(PsLokatie) <> "" Then
+'			If ReportText(PsLokatie) <> "" Then
 '				Printer.FontName = psFontName(PsLokatie)
 '				Printer.FontItalic = psFontItalic(PsLokatie)
 '				Printer.FontSize = psFontSize(PsLokatie)
@@ -629,7 +629,7 @@ End Class
 '			End If
 '			Printer.CurrentX = psX(PsLokatie)
 '			Printer.CurrentY = psY(PsLokatie)
-'			Printer.Write(psTekst(PsLokatie))
+'			Printer.Write(ReportText(PsLokatie))
 '			PsLokatie = PsLokatie + 1
 '		Loop 
 '		For T = 0 To 10
@@ -819,7 +819,7 @@ End Class
 '				End If
 '				TelLijn = TelLijn + 1
 '				If Len(TekstLijn) > MaxLijn79 Then
-'					MsgBox("Lijn " & Str(TelLijn) & " bestaat uit " & Str(Len(TekstLijn)) & " Tekens. (max." & Str(MaxLijn79) & " per lijn toegelaten)")
+'					MsgBox("Line " & Str(TelLijn) & " bestaat uit " & Str(Len(TekstLijn)) & " Tekens. (max." & Str(MaxLijn79) & " per lijn toegelaten)")
 '					Exit Sub
 '				End If
 '			Loop 

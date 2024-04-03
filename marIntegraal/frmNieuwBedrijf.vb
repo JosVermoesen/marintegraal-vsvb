@@ -155,7 +155,7 @@ End Class
 '		If Val(Boekjaar.Text) < 2020 And Val(Boekjaar.Text) > 2016 Then
 '			'ok
 '		Else
-'			Boekjaar.Text = VB.Right(Rdt.Value, 4)
+'			Boekjaar.Text = VB.Right(MimGlobalDate.Value, 4)
 '			Boekjaar.Focus()
 '			Beep()
 '		End If
@@ -199,7 +199,7 @@ End Class
 '		Left = 0
 
 '		BedrijfOpenen.Close()
-'		Boekjaar.Text = CStr(CDbl(VB.Right(Rdt.Value, 4)) + 1)
+'		Boekjaar.Text = CStr(CDbl(VB.Right(MimGlobalDate.Value, 4)) + 1)
 '		StatusPosition = 0
 
 '		BedrijfsNummer = VolgendBedrijf()

@@ -49,7 +49,7 @@ Public Class AVBoek
 			MaskHier = "########0"
 		End If
 
-		tbDatumDrukken.Text = Rdt
+		tbDatumDrukken.Text = MimGlobalDate
 			   
 		Select Case aIndex
 			Case FlLeverancier
@@ -239,7 +239,7 @@ End Class
 '			Printer.FontSize = 7.2
 '		End If
 '		PrintTitel()
-'		PrintTotaal()
+'		PrintTotal()
 
 '		Printer.Print()
 '		Printer.Print(TAB(2), "** CENTRALISATIE **")
@@ -515,10 +515,10 @@ End Class
 '				Tekst = FaktuurCreditnota(1).Text
 '		End Select
 
-'		psTekst(2) = LijstNaam & " " & Tekst & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
-'		psTekst(0) = TekstLijn(1).Text
-'		psTekst(3) = TekstLijn(0).Text
-'		InitVelden()
+'		ReportText(2) = LijstNaam & " " & Tekst & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(0) = TekstLijn(1).Text
+'		ReportText(3) = TekstLijn(0).Text
+'		InitializeFields()
 
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
@@ -572,7 +572,7 @@ End Class
 '		Ktrl = bOpen(FlDummy)
 '		Me.Refresh()
 
-'		PaginaTeller = 0
+'		PageCounter = 0
 '		If chkAfdrukInVenster.CheckState = 0 Then
 '			If Printer.Width > 12000 Then
 '				Printer.FontSize = 10
@@ -595,7 +595,7 @@ End Class
 '			DetailRekeningen()
 '			rsAVBoekHier.MoveNext()
 '		Loop 
-'		PrintTotaal()
+'		PrintTotal()
 '		CumulPrint()
 '		If chkAfdrukInVenster.CheckState = 0 Then
 '			Printer.NewPage()
@@ -750,169 +750,169 @@ End Class
 
 '	End Sub
 
-'	Private Sub InitVelden()
+'	Private Sub InitializeFields()
 '		Dim T As Short
 '		Dim VolgTab As Short
 
 '		RapportVeldNr(0) = 33
 '		RapportManier(0) = 0 'niks omwerken gewoon afdrukken
-'		RapportVeld(0) = "dokument"
-'		RapportTab(0) = 2
+'		ReportField(0) = "dokument"
+'		ReportTab(0) = 2
 
 '		RapportVeldNr(1) = 35
 '		RapportManier(1) = 5 'datum omwerken
-'		RapportVeld(1) = "Datum dok."
-'		RapportTab(1) = 14
+'		ReportField(1) = "Datum dok."
+'		ReportTab(1) = 14
 
 '		Select Case aIndex
 '			Case FlLeverancier
 '				RapportVeldNr(2) = 39
 '				RapportManier(2) = 0
-'				RapportVeld(2) = "Referte"
-'				RapportTab(2) = 25
+'				ReportField(2) = "Referte"
+'				ReportTab(2) = 25
 
 '				RapportVeldNr(3) = 46
 '				RapportManier(3) = 9 'geheel getal geformateerd
-'				RapportVeld(3) = "   VAK 81"
-'				RapportTab(3) = 46
+'				ReportField(3) = "   VAK 81"
+'				ReportTab(3) = 46
 
 '				RapportVeldNr(4) = 47
 '				RapportManier(4) = 9
-'				RapportVeld(4) = "   VAK 82"
-'				RapportTab(4) = 56
+'				ReportField(4) = "   VAK 82"
+'				ReportTab(4) = 56
 
 '				RapportVeldNr(5) = 48
 '				RapportManier(5) = 9
-'				RapportVeld(5) = "   VAK 83"
-'				RapportTab(5) = 66
+'				ReportField(5) = "   VAK 83"
+'				ReportTab(5) = 66
 
 '				RapportVeldNr(6) = 49
 '				RapportManier(6) = 9
-'				RapportVeld(6) = "   DERDEN"
-'				RapportTab(6) = 76
+'				ReportField(6) = "   DERDEN"
+'				ReportTab(6) = 76
 
 '				RapportVeldNr(7) = 50
 '				RapportManier(7) = 9
-'				RapportVeld(7) = "   VAK 84"
-'				RapportTab(7) = 86
+'				ReportField(7) = "   VAK 84"
+'				ReportTab(7) = 86
 
 '				RapportVeldNr(8) = 51
 '				RapportManier(8) = 9
-'				RapportVeld(8) = "   VAK 85"
-'				RapportTab(8) = 96
+'				ReportField(8) = "   VAK 85"
+'				ReportTab(8) = 96
 
 '				RapportVeldNr(9) = 52
 '				RapportManier(9) = 9
-'				RapportVeld(9) = "   VAK 86"
-'				RapportTab(9) = 106
+'				ReportField(9) = "   VAK 86"
+'				ReportTab(9) = 106
 
 '				RapportVeldNr(10) = 99
 '				RapportManier(10) = 1 'zoek flpartij kode+naam1
-'				RapportVeld(10) = "ID.Kode/Naam"
-'				RapportTab(10) = 2
+'				ReportField(10) = "ID.Kode/Naam"
+'				ReportTab(10) = 2
 
 '				RapportVeldNr(11) = 53
 '				RapportManier(11) = 9
-'				RapportVeld(11) = "   VAK 87"
-'				RapportTab(11) = 56
+'				ReportField(11) = "   VAK 87"
+'				ReportTab(11) = 56
 
 '				RapportVeldNr(12) = 54
 '				RapportManier(12) = 9
-'				RapportVeld(12) = "   VAK 88"
-'				RapportTab(12) = 66
+'				ReportField(12) = "   VAK 88"
+'				ReportTab(12) = 66
 
 '				RapportVeldNr(13) = 42
 '				RapportManier(13) = 9
-'				RapportVeld(13) = "   VAK 55"
-'				RapportTab(13) = 76
+'				ReportField(13) = "   VAK 55"
+'				ReportTab(13) = 76
 
 '				RapportVeldNr(14) = 43
 '				RapportManier(14) = 9
-'				RapportVeld(14) = "   VAK 56"
-'				RapportTab(14) = 86
+'				ReportField(14) = "   VAK 56"
+'				ReportTab(14) = 86
 
 '				RapportVeldNr(15) = 44
 '				RapportManier(15) = 9
-'				RapportVeld(15) = "   VAK 57"
-'				RapportTab(15) = 96
+'				ReportField(15) = "   VAK 57"
+'				ReportTab(15) = 96
 
 '				RapportVeldNr(16) = 45
 '				RapportManier(16) = 9
-'				RapportTab(16) = 106
+'				ReportTab(16) = 106
 
 '				Select Case Ar
 '					Case 1
-'						RapportVeld(16) = "   VAK 59"
+'						ReportField(16) = "   VAK 59"
 '					Case Else
-'						RapportVeld(16) = "   VAK 63"
+'						ReportField(16) = "   VAK 63"
 '				End Select
-'				RapportTab(17) = 0
+'				ReportTab(17) = 0
 '				tMaxVeld = 16
 
 '			Case FlKlant
 '				RapportVeldNr(2) = 55
 '				RapportManier(2) = 9 'geheel getal geformateerd
-'				RapportVeld(2) = "VAK 00"
-'				RapportTab(2) = 44
+'				ReportField(2) = "VAK 00"
+'				ReportTab(2) = 44
 
 '				RapportVeldNr(3) = 56
 '				RapportManier(3) = 9
-'				RapportVeld(3) = "VAK 01"
-'				RapportTab(3) = 55
+'				ReportField(3) = "VAK 01"
+'				ReportTab(3) = 55
 
 '				RapportVeldNr(4) = 57
 '				RapportManier(4) = 9
-'				RapportVeld(4) = "VAK 02"
-'				RapportTab(4) = 66
+'				ReportField(4) = "VAK 02"
+'				ReportTab(4) = 66
 
 '				RapportVeldNr(5) = 58
 '				RapportManier(5) = 9
-'				RapportVeld(5) = "VAK 03"
-'				RapportTab(5) = 77
+'				ReportField(5) = "VAK 03"
+'				ReportTab(5) = 77
 
 '				RapportVeldNr(6) = 59
 '				RapportManier(6) = 9
-'				RapportVeld(6) = "VAK 45"
-'				RapportTab(6) = 88
+'				ReportField(6) = "VAK 45"
+'				ReportTab(6) = 88
 
 '				RapportVeldNr(7) = 60
 '				RapportManier(7) = 9
-'				RapportVeld(7) = "VAK 46"
-'				RapportTab(7) = 99
+'				ReportField(7) = "VAK 46"
+'				ReportTab(7) = 99
 
 '				RapportVeldNr(8) = 61
 '				RapportManier(8) = 9
-'				RapportVeld(8) = "VAK 47"
-'				RapportTab(8) = 110
+'				ReportField(8) = "VAK 47"
+'				ReportTab(8) = 110
 
 '				RapportVeldNr(9) = 99
 '				RapportManier(9) = 1
-'				RapportVeld(9) = "ID.Kode/Naam"
-'				RapportTab(9) = 2
+'				ReportField(9) = "ID.Kode/Naam"
+'				ReportTab(9) = 2
 
 '				RapportVeldNr(10) = 62
 '				RapportManier(10) = 9
-'				RapportVeld(10) = "VAK 48"
-'				RapportTab(10) = 77
+'				ReportField(10) = "VAK 48"
+'				ReportTab(10) = 77
 
 
 '				RapportVeldNr(11) = 63
 '				RapportManier(11) = 9
-'				RapportVeld(11) = "VAK 49"
-'				RapportTab(11) = 88
+'				ReportField(11) = "VAK 49"
+'				ReportTab(11) = 88
 
 '				RapportVeldNr(12) = 64
 '				RapportManier(12) = 9
-'				RapportTab(12) = 99
+'				ReportTab(12) = 99
 
 '				Select Case Ar
 '					Case 12
-'						RapportVeld(12) = "VAK 54"
+'						ReportField(12) = "VAK 54"
 '					Case Else
-'						RapportVeld(12) = "VAK 64"
+'						ReportField(12) = "VAK 64"
 '				End Select
 '				tMaxVeld = 12
-'				RapportTab(13) = 0
+'				ReportTab(13) = 0
 '		End Select
 
 '		For T = 0 To 17
@@ -928,7 +928,7 @@ End Class
 '			Xlog.X.Row = 0
 '			For T = 0 To tMaxVeld
 '				Xlog.X.Col = T
-'				Xlog.X.Text = RapportVeld(T)
+'				Xlog.X.Text = ReportField(T)
 '			Next 
 '			Me.Show()
 '		End If
@@ -946,40 +946,40 @@ End Class
 '			Printer.CurrentY = 50
 '			Printer.Write(usrLicentieInfo)
 '		End If
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), psTekst(2), TAB(108), "Pagina : " & Dec(PaginaTeller, "##########"))
-'		Printer.Write(TAB(108), "Datum  : " & psTekst(0) & vbCrLf & vbCrLf)
-'		Printer.Write(TAB(1), UCase(psTekst(3)))
+'		Printer.Write(TAB(1), ReportText(2), TAB(108), "Pagina : " & Dec(PageCounter, "##########"))
+'		Printer.Write(TAB(108), "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), UCase(ReportText(3)))
 
-'		Printer.Print(vbCrLf & Lijntje.Value)
+'		Printer.Print(vbCrLf & FullLine.Value)
 
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(RapportVeld(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(ReportField(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
 '		Loop 
-'		Printer.Write(Lijntje.Value & vbCrLf & vbCrLf)
+'		Printer.Write(FullLine.Value & vbCrLf & vbCrLf)
 
 '	End Sub
 
-'	Private Sub PrintTotaal()
+'	Private Sub PrintTotal()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim VeldTekst As String
 '		Dim TotaalGrens As Integer
 
 '		If chkAfdrukInVenster.CheckState = 0 Then
-'			Printer.Write(vbCrLf & Lijntje.Value & vbCrLf)
+'			Printer.Write(vbCrLf & FullLine.Value & vbCrLf)
 '		End If
 
 '		aa = ""
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState = 0 Then
-'				Printer.Print(TAB(RapportTab(T)))
+'				Printer.Print(TAB(ReportTab(T)))
 '			End If
 '			Select Case RapportManier(T)
 '				Case 9
@@ -988,7 +988,7 @@ End Class
 '						aa = aa & VeldTekst & vbTab
 '					Else
 '						Printer.Write(VeldTekst)
-'						If RapportTab(T + 1) < RapportTab(T) Then
+'						If ReportTab(T + 1) < ReportTab(T) Then
 '							Printer.Write(vbCrLf)
 '						End If
 '					End If
@@ -1031,9 +1031,9 @@ End Class
 '		On Error Resume Next
 
 '		aa = ""
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState = 0 Then
-'				Printer.Print(TAB(RapportTab(T)))
+'				Printer.Print(TAB(ReportTab(T)))
 '			End If
 
 '			Select Case RapportManier(T)
@@ -1049,7 +1049,7 @@ End Class
 '					End If
 '				Case 5
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VeldTekst = fDatumText(RV(rsAVBoekHier, "v" & VB6.Format(RapportVeldNr(T), "000")))
+'					VeldTekst = FunctionDateText(RV(rsAVBoekHier, "v" & VB6.Format(RapportVeldNr(T), "000")))
 '				Case 9
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					VeldTekst = Dec(Val(RV(rsAVBoekHier, "v" & VB6.Format(RapportVeldNr(T), "000"))), MaskHier)
@@ -1061,7 +1061,7 @@ End Class
 
 '			If chkAfdrukInVenster.CheckState = 0 Then
 '				Printer.Write(VeldTekst)
-'				If RapportTab(T + 1) < RapportTab(T) Then
+'				If ReportTab(T + 1) < ReportTab(T) Then
 '					Printer.Write(vbCrLf)
 '				End If
 '			Else
@@ -1097,9 +1097,9 @@ End Class
 
 '		Select Case Index
 '			Case 1
-'				If DatumFout(TekstLijn(1).Text) Then
+'				If DateWrongFormat(TekstLijn(1).Text) Then
 '					Beep()
-'					TekstLijn(1).Text = Rdt.Value
+'					TekstLijn(1).Text = MimGlobalDate.Value
 '					TekstLijn(1).Focus()
 '				End If
 '			Case 3

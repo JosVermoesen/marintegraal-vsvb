@@ -25,8 +25,8 @@ End Class
 '	'UPGRADE_ISSUE: Declaration type not supported: Array of fixed-length strings. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="934BD4FF-1FF9-47BD-888F-D411E47E78FA"'
 '	Dim Voorkeurquick(10, 10) As String*5
 
-'	Dim psTekst(5) As String
-'	Dim VeldTXT(17) As String
+'	Dim ReportText(5) As String
+'	Dim FieldText(17) As String
 
 '	Dim aa As String
 '	Dim dTas As Double
@@ -34,31 +34,31 @@ End Class
 '	Dim tMaxVeld As Short
 
 
-'	Private Sub PrintTotaal()
+'	Private Sub PrintTotal()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
 '		For T = 0 To tMaxVeld
-'			VeldTXT(T) = ""
+'			FieldText(T) = ""
 '		Next 
-'		VeldTXT(1) = "Totaal :"
-'		VeldTXT(10) = Dec(dTas, Masker2002.Value)
+'		FieldText(1) = "Totaal :"
+'		FieldText(10) = Dec(dTas, Masker2002.Value)
 
 '		If chkAfdrukInVenster.CheckState Then
 '		Else
-'			Printer.Print(vbCrLf & Lijntje.Value)
+'			Printer.Print(vbCrLf & FullLine.Value)
 '		End If
 
 '		T = 0
 '		aa = ""
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState Then
-'				aa = aa & VeldTXT(T) & vbTab
+'				aa = aa & FieldText(T) & vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -113,14 +113,14 @@ End Class
 
 '		T = 0
 '		aa = ""
-'		Do While RapportTab(T) <> 0
+'		Do While ReportTab(T) <> 0
 '			If chkAfdrukInVenster.CheckState Then
-'				aa = aa & VeldTXT(T) & vbTab
+'				aa = aa & FieldText(T) & vbTab
 '			Else
-'				Printer.Print(TAB(RapportTab(T)))
-'				Printer.Write(VeldTXT(T))
+'				Printer.Print(TAB(ReportTab(T)))
+'				Printer.Write(FieldText(T))
 '			End If
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				If chkAfdrukInVenster.CheckState Then
 '				Else
 '					Printer.Write(vbCrLf)
@@ -154,25 +154,25 @@ End Class
 '			Printer.CurrentY = 50
 '			Printer.Write(usrLicentieInfo)
 '		End If
-'		PaginaTeller = PaginaTeller + 1
+'		PageCounter = PageCounter + 1
 '		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), psTekst(2), TAB(108), "Pagina : " & Dec(PaginaTeller, "##########"))
+'		Printer.Write(TAB(1), ReportText(2), TAB(108), "Pagina : " & Dec(PageCounter, "##########"))
 
-'		Printer.Write(TAB(108), "Datum  : " & psTekst(0) & vbCrLf & vbCrLf)
-'		Printer.Write(TAB(1), UCase(psTekst(3)))
+'		Printer.Write(TAB(108), "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
+'		Printer.Write(TAB(1), UCase(ReportText(3)))
 
-'		Printer.Print(vbCrLf & Lijntje.Value)
+'		Printer.Print(vbCrLf & FullLine.Value)
 
-'		Do While RapportTab(T) <> 0
-'			Printer.Print(TAB(RapportTab(T)))
-'			Printer.Write(RapportVeld(T))
-'			If RapportTab(T + 1) < RapportTab(T) Then
+'		Do While ReportTab(T) <> 0
+'			Printer.Print(TAB(ReportTab(T)))
+'			Printer.Write(ReportField(T))
+'			If ReportTab(T + 1) < ReportTab(T) Then
 '				Printer.Write(vbCrLf)
 '			End If
 '			T = T + 1
 '		Loop 
 
-'		Printer.Write(Lijntje.Value & vbCrLf & vbCrLf)
+'		Printer.Write(FullLine.Value & vbCrLf & vbCrLf)
 
 '		Exit Sub
 
@@ -514,7 +514,7 @@ End Class
 '			'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 '			Me.Enabled = False
-'			PaginaTeller = 0
+'			PageCounter = 0
 '			If chkAfdrukInVenster.CheckState = 0 Then
 '				Printer = Printers(LijstPrinterNr)
 '				On Error Resume Next
@@ -533,9 +533,9 @@ End Class
 '					Printer.FontSize = 7.2
 '				End If
 '			End If
-'			psTekst(0) = Rdt.Value
-'			psTekst(2) = Mid(cmbDokumentType.Text, 4) & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
-'			InitVelden()
+'			ReportText(0) = MimGlobalDate.Value
+'			ReportText(2) = Mid(cmbDokumentType.Text, 4) & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'			InitializeFields()
 '			PrintTitel()
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub AfschrijvingsLijnErBij
@@ -549,7 +549,7 @@ End Class
 '				End If
 '			Loop 
 '		End If
-'		PrintTotaal()
+'		PrintTotal()
 '		Printer.EndDoc()
 '		If bhKontrole = True Then
 '			AfschrijvingenLijstOk = False
@@ -583,35 +583,35 @@ End Class
 '		Else
 '			ipct = Val(vBibTekst(FlAllerlei, "#v082 #"))
 '			dbdrg = Val(vBibTekst(FlAllerlei, "#v084 #"))
-'			VeldTXT(4) = DatumJaarInvest
-'			VeldTXT(5) = Dec(dbdrg, Masker2002.Value)
-'			VeldTXT(7) = Dec(ipct, "#####")
+'			FieldText(4) = DatumJaarInvest
+'			FieldText(5) = Dec(dbdrg, Masker2002.Value)
+'			FieldText(7) = Dec(ipct, "#####")
 '			'investeringsrekening
-'			VeldTXT(3) = Trim(vBibTekst(FlAllerlei, "#v019 #"))
-'			bGet(FlRekening, 0, VeldTXT(3))
+'			FieldText(3) = Trim(vBibTekst(FlAllerlei, "#v019 #"))
+'			bGet(FlRekening, 0, FieldText(3))
 '			If Ktrl Then
-'				VeldTXT(0) = "Niet (meer) aanwezig..."
+'				FieldText(0) = "Niet (meer) aanwezig..."
 '			Else
 '				RecordToVeld(FlRekening)
-'				VeldTXT(0) = vBibTekst(FlRekening, "#v020 #")
+'				FieldText(0) = vBibTekst(FlRekening, "#v020 #")
 '			End If
 '			'afschrijvingsrekening
-'			VeldTXT(6) = Trim(vBibTekst(FlAllerlei, "#v087 #"))
-'			bGet(FlRekening, 0, VeldTXT(6))
+'			FieldText(6) = Trim(vBibTekst(FlAllerlei, "#v087 #"))
+'			bGet(FlRekening, 0, FieldText(6))
 '			If Ktrl Then
-'				VeldTXT(1) = "Niet (meer) aanwezig..."
+'				FieldText(1) = "Niet (meer) aanwezig..."
 '			Else
 '				RecordToVeld(FlRekening)
-'				VeldTXT(1) = vBibTekst(FlRekening, "#v020 #")
+'				FieldText(1) = vBibTekst(FlRekening, "#v020 #")
 '			End If
 '			'afschrijvingsKOSTrekening
-'			VeldTXT(9) = Trim(vBibTekst(FlAllerlei, "#v088 #"))
-'			bGet(FlRekening, 0, VeldTXT(9))
+'			FieldText(9) = Trim(vBibTekst(FlAllerlei, "#v088 #"))
+'			bGet(FlRekening, 0, FieldText(9))
 '			If Ktrl Then
-'				VeldTXT(2) = "Niet (meer) aanwezig..."
+'				FieldText(2) = "Niet (meer) aanwezig..."
 '			Else
 '				RecordToVeld(FlRekening)
-'				VeldTXT(2) = vBibTekst(FlRekening, "#v020 #")
+'				FieldText(2) = vBibTekst(FlRekening, "#v020 #")
 '			End If
 '			If bhKontrole Then
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
@@ -630,8 +630,8 @@ End Class
 '						Das = Val(VB6.Format(dbdrg / ipct, "000000000"))
 '					End If
 '				End If
-'				VeldTXT(8) = Dec(dRa, Masker2002.Value)
-'				VeldTXT(10) = Dec(Das, Masker2002.Value)
+'				FieldText(8) = Dec(dRa, Masker2002.Value)
+'				FieldText(10) = Dec(Das, Masker2002.Value)
 '			End If
 '			dTas = dTas + Das
 '			PrintVelden()
@@ -642,16 +642,16 @@ End Class
 
 'bhSPECIAAL: 
 '		'Investeringsrekening
-'		VeldTXT(3) = Trim(vBibTekst(FlAllerlei, "#v019 #"))
+'		FieldText(3) = Trim(vBibTekst(FlAllerlei, "#v019 #"))
 '		'Afschrijvingsrekening
-'		VeldTXT(6) = Trim(vBibTekst(FlAllerlei, "#v087 #"))
+'		FieldText(6) = Trim(vBibTekst(FlAllerlei, "#v087 #"))
 '		'AfschrijvingsKOSTrekening
-'		VeldTXT(9) = Trim(vBibTekst(FlAllerlei, "#v088 #"))
+'		FieldText(9) = Trim(vBibTekst(FlAllerlei, "#v088 #"))
 
 '		'Reeds boekhoudkundig afgeschreven kontroleren
 '		BedragBegin = 0
 '		Das = 0
-'		RekKontrole.Value = VeldTXT(6)
+'		RekKontrole.Value = FieldText(6)
 '		'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '		GoSub OverLOOPJournaal
 '		If Das <> 0 Then
@@ -659,8 +659,8 @@ End Class
 '		Else
 '			dRa = Val(vBibTekst(FlAllerlei, "#v085 #"))
 '		End If
-'		VeldTXT(8) = Dec(dRa, Masker2002.Value)
-'		VeldTXT(10) = Dec(Das, Masker2002.Value)
+'		FieldText(8) = Dec(dRa, Masker2002.Value)
+'		FieldText(10) = Dec(Das, Masker2002.Value)
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
 
@@ -701,43 +701,43 @@ End Class
 '		Return 
 
 '	End Function
-'	Private Sub InitVelden()
+'	Private Sub InitializeFields()
 '		Dim T As Short
 
 '		Select Case VB.Left(cmbDokumentType.Text, 2)
 '			Case "18"
-'				RapportVeld(0) = "Investeringsrekening"
-'				RapportTab(0) = 2
+'				ReportField(0) = "Investeringsrekening"
+'				ReportTab(0) = 2
 
-'				RapportVeld(1) = "Rekening Afschrijvingen"
-'				RapportTab(1) = 43
+'				ReportField(1) = "Rekening Afschrijvingen"
+'				ReportTab(1) = 43
 
-'				RapportVeld(2) = "Afschrijvingskosten Rekening"
-'				RapportTab(2) = 84
+'				ReportField(2) = "Afschrijvingskosten Rekening"
+'				ReportTab(2) = 84
 
-'				RapportVeld(3) = "Nummer"
-'				RapportTab(3) = 2
+'				ReportField(3) = "Nummer"
+'				ReportTab(3) = 2
 
-'				RapportVeld(4) = "AankpDatum"
-'				RapportTab(4) = 10
+'				ReportField(4) = "AankpDatum"
+'				ReportTab(4) = 10
 
-'				RapportVeld(5) = "Tot.Bedrag"
-'				RapportTab(5) = 21
+'				ReportField(5) = "Tot.Bedrag"
+'				ReportTab(5) = 21
 
-'				RapportVeld(6) = "Nummer"
-'				RapportTab(6) = 43
+'				ReportField(6) = "Nummer"
+'				ReportTab(6) = 43
 
-'				RapportVeld(7) = "Jaren"
-'				RapportTab(7) = 51
+'				ReportField(7) = "Jaren"
+'				ReportTab(7) = 51
 
-'				RapportVeld(8) = "Reeds afg."
-'				RapportTab(8) = 57
+'				ReportField(8) = "Reeds afg."
+'				ReportTab(8) = 57
 
-'				RapportVeld(9) = "Nummer"
-'				RapportTab(9) = 84
+'				ReportField(9) = "Nummer"
+'				ReportTab(9) = 84
 
-'				RapportVeld(10) = " Bedrag Af"
-'				RapportTab(10) = 92
+'				ReportField(10) = " Bedrag Af"
+'				ReportTab(10) = 92
 '				tMaxVeld = 10
 '			Case Else
 '				MsgBox("Stop, nog niets voorzien.")
@@ -752,7 +752,7 @@ End Class
 '			Xlog.X.Row = 0
 '			For T = 0 To tMaxVeld
 '				Xlog.X.Col = T
-'				Xlog.X.Text = RapportVeld(T)
+'				Xlog.X.Text = ReportField(T)
 '			Next 
 '			Me.Show()
 '		End If

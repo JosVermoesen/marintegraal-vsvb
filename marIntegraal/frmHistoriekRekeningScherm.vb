@@ -31,7 +31,7 @@ Public Class HistoriekRekeningScherm
         End With
 
         TxtLijnen.Text = "300" 'LaadTekst("HistoriekInScherm", "MaxLijnen")
-        tbVanTot.Text = fDatumText(mid(BoekjaarVanTot, 1, 8)) & " - " & fDatumText(Mid(BoekjaarVanTot, 9, 8))
+        tbVanTot.Text = FunctionDateText(mid(BoekjaarVanTot, 1, 8)) & " - " & FunctionDateText(Mid(BoekjaarVanTot, 9, 8))
 
         ' Set up the delays for the ToolTip.
         ' Force the ToolTip text to be displayed whether or not the form is active.
@@ -133,7 +133,7 @@ GetIt:
                 Dim dataVeld As String = rsJourHier.Fields("v033").Value.ToString 
                 Dim itemHier As New ListViewItem(dataVeld)
                 With itemHier.SubItems
-                    .Add (fDatumText(rsJourHier.Fields("v035").Value.ToString))
+                    .Add (FunctionDateText(rsJourHier.Fields("v035").Value.ToString))
                     .Add (rsJourHier.Fields("v038").Value.ToString)
                     .Add (rsJourHier.Fields("v067").Value.ToString)
                     .Add (Format(rsJourHier.Fields("dece068").Value, "#,##0.00"))
@@ -194,21 +194,21 @@ JournaalJump:
     Private Sub tbVanTot_Leave(sender As Object, e As EventArgs) Handles tbVanTot.Leave
 
         
-        If DatumFout(Mid(tbVanTot.Text, 14, 10)) Then
+        If DateWrongFormat(Mid(tbVanTot.Text, 14, 10)) Then
             MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !")
             If GansePeriode.CheckState Then
-                tbVanTot.Text = fDatumText(Mid(BoekjaarVanTot, 1, 8)) & " - " & fDatumText(Mid(BoekjaarVanTot, 9, 8))
+                tbVanTot.Text = FunctionDateText(Mid(BoekjaarVanTot, 1, 8)) & " - " & FunctionDateText(Mid(BoekjaarVanTot, 9, 8))
             Else
-                tbVanTot.Text = fDatumText(Mid(PeriodeVanTot, 1, 8)) & " - " & fDatumText(Mid(PeriodeVanTot, 9, 8))
+                tbVanTot.Text = FunctionDateText(Mid(PeriodeVanTot, 1, 8)) & " - " & FunctionDateText(Mid(PeriodeVanTot, 9, 8))
             End If
             tbVanTot.Focus()
             Exit Sub
         ElseIf Len(tbVanTot.Text) <> 23 Then 
             MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !")
             If GansePeriode.CheckState Then
-                tbVanTot.Text = fDatumText(Mid(BoekjaarVanTot, 1, 8)) & " - " & fDatumText(Mid(BoekjaarVanTot, 9, 8))
+                tbVanTot.Text = FunctionDateText(Mid(BoekjaarVanTot, 1, 8)) & " - " & FunctionDateText(Mid(BoekjaarVanTot, 9, 8))
             Else
-                tbVanTot.Text = fDatumText(Mid(PeriodeVanTot, 1, 8)) & " - " & fDatumText(Mid(PeriodeVanTot, 9, 8))
+                tbVanTot.Text = FunctionDateText(Mid(PeriodeVanTot, 1, 8)) & " - " & FunctionDateText(Mid(PeriodeVanTot, 9, 8))
             End If
             tbVanTot.Focus()
         Else

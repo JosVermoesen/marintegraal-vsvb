@@ -101,18 +101,18 @@ jump:
 
     End Function
 
-    Function oWaarde(ByRef dbWaarde As Object) As Object
+    Function ObjectValue(ByRef dbWaarde As Object) As Object
 
         'On Error Resume Next
         'UPGRADE_WARNING: IsEmpty was upgraded to IsNothing and has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
         'UPGRADE_WARNING: Use of Null/IsNull() detected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="2EED02CB-5C0E-4DC1-AE94-4FAA3A30F51A"'
         If IsDBNull(dbWaarde) Or IsNothing(dbWaarde) Then
-            'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            oWaarde = ""
+            'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            ObjectValue = ""
         Else
             'UPGRADE_WARNING: Couldn't resolve default property of object dbWaarde. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            'UPGRADE_WARNING: Couldn't resolve default property of object oWaarde. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            oWaarde = dbWaarde
+            'UPGRADE_WARNING: Couldn't resolve default property of object ObjectValue. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            ObjectValue = dbWaarde
         End If
 
     End Function

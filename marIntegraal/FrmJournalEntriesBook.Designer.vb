@@ -1,0 +1,238 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class FrmJournalEntriesBook
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.AutoPageBreak = New IDEALSoftware.VpeStandard.VpeControl()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.TextBoxPeriodFromTo = New System.Windows.Forms.TextBox()
+        Me.LabelPeriodFromTo = New System.Windows.Forms.Label()
+        Me.LabelProcessingDate = New System.Windows.Forms.Label()
+        Me.DateTimePickerProcessingDate = New System.Windows.Forms.DateTimePicker()
+        Me.LabelRecordLines = New System.Windows.Forms.Label()
+        Me.ButtonGenerateReport = New System.Windows.Forms.Button()
+        Me.ButtonClose = New System.Windows.Forms.Button()
+        Me.TextBoxRecordLines = New System.Windows.Forms.TextBox()
+        Me.TextBoxMailToOption = New System.Windows.Forms.TextBox()
+        Me.LabelMailToOption = New System.Windows.Forms.Label()
+        Me.SuspendLayout
+        '
+        'AutoPageBreak
+        '
+        Me.AutoPageBreak.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.AutoPageBreak.DocFileReadOnly = false
+        Me.AutoPageBreak.EnableHelpRouting = false
+        Me.AutoPageBreak.EnablePrintSetupDialog = true
+        Me.AutoPageBreak.ExternalWindow = true
+        Me.AutoPageBreak.GridMode = IDEALSoftware.VpeStandard.GridMode.InForeground
+        Me.AutoPageBreak.GridVisible = false
+        Me.AutoPageBreak.Location = New System.Drawing.Point(13, 188)
+        Me.AutoPageBreak.Name = "AutoPageBreak"
+        Me.AutoPageBreak.PageFormat = IDEALSoftware.VpeStandard.PageFormat.A4
+        Me.AutoPageBreak.PageHeight = 29.7R
+        Me.AutoPageBreak.PageOrientation = IDEALSoftware.VpeStandard.PageOrientation.Portrait
+        Me.AutoPageBreak.PageScroller = true
+        Me.AutoPageBreak.PageScrollerTracking = true
+        Me.AutoPageBreak.PageWidth = 21R
+        Me.AutoPageBreak.PaperView = true
+        Me.AutoPageBreak.PreviewCtrl = IDEALSoftware.VpeStandard.PreviewCtrl.JumpTop
+        Me.AutoPageBreak.Rulers = true
+        Me.AutoPageBreak.RulersMeasure = IDEALSoftware.VpeStandard.RulersMeasure.Centimeter
+        Me.AutoPageBreak.Size = New System.Drawing.Size(96, 80)
+        Me.AutoPageBreak.StatusBar = true
+        Me.AutoPageBreak.StatusSegment = true
+        Me.AutoPageBreak.SwapFileName = Nothing
+        Me.AutoPageBreak.TabIndex = 6
+        Me.AutoPageBreak.TabStop = false
+        Me.AutoPageBreak.tbAbout = true
+        Me.AutoPageBreak.tbClose = true
+        Me.AutoPageBreak.tbGrid = false
+        Me.AutoPageBreak.tbHelp = true
+        Me.AutoPageBreak.tbMail = true
+        Me.AutoPageBreak.tbNavigate = true
+        Me.AutoPageBreak.tbOpen = true
+        Me.AutoPageBreak.tbPrint = true
+        Me.AutoPageBreak.tbSave = true
+        Me.AutoPageBreak.tbScale = true
+        Me.AutoPageBreak.Text = "Automatic Page Break Demo"
+        Me.AutoPageBreak.ToolBar = True
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(0, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 108
+        '
+        'TextBoxPeriodFromTo
+        '
+        Me.TextBoxPeriodFromTo.AcceptsReturn = True
+        Me.TextBoxPeriodFromTo.BackColor = System.Drawing.Color.White
+        Me.TextBoxPeriodFromTo.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.TextBoxPeriodFromTo.ForeColor = System.Drawing.Color.Black
+        Me.TextBoxPeriodFromTo.Location = New System.Drawing.Point(11, 35)
+        Me.TextBoxPeriodFromTo.MaxLength = 0
+        Me.TextBoxPeriodFromTo.Name = "TextBoxPeriodFromTo"
+        Me.TextBoxPeriodFromTo.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.TextBoxPeriodFromTo.Size = New System.Drawing.Size(270, 20)
+        Me.TextBoxPeriodFromTo.TabIndex = 1
+        AddHandler Me.TextBoxPeriodFromTo.Leave, AddressOf Me.TextBoxPeriodFromTo_Leave
+        '
+        'LabelPeriodFromTo
+        '
+        Me.LabelPeriodFromTo.AutoSize = True
+        Me.LabelPeriodFromTo.BackColor = System.Drawing.SystemColors.Control
+        Me.LabelPeriodFromTo.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.LabelPeriodFromTo.Location = New System.Drawing.Point(8, 16)
+        Me.LabelPeriodFromTo.Name = "LabelPeriodFromTo"
+        Me.LabelPeriodFromTo.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.LabelPeriodFromTo.Size = New System.Drawing.Size(84, 13)
+        Me.LabelPeriodFromTo.TabIndex = 0
+        Me.LabelPeriodFromTo.Text = "Selectie &Periode"
+        '
+        'LabelProcessingDate
+        '
+        Me.LabelProcessingDate.AutoSize = True
+        Me.LabelProcessingDate.BackColor = System.Drawing.SystemColors.Control
+        Me.LabelProcessingDate.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.LabelProcessingDate.Location = New System.Drawing.Point(10, 61)
+        Me.LabelProcessingDate.Name = "LabelProcessingDate"
+        Me.LabelProcessingDate.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.LabelProcessingDate.Size = New System.Drawing.Size(82, 13)
+        Me.LabelProcessingDate.TabIndex = 2
+        Me.LabelProcessingDate.Text = "Datu&m Drukken"
+        '
+        'DateTimePickerProcessingDate
+        '
+        Me.DateTimePickerProcessingDate.Location = New System.Drawing.Point(11, 77)
+        Me.DateTimePickerProcessingDate.Name = "DateTimePickerProcessingDate"
+        Me.DateTimePickerProcessingDate.Size = New System.Drawing.Size(176, 20)
+        Me.DateTimePickerProcessingDate.TabIndex = 3
+        '
+        'LabelRecordLines
+        '
+        Me.LabelRecordLines.AutoSize = True
+        Me.LabelRecordLines.Location = New System.Drawing.Point(295, 16)
+        Me.LabelRecordLines.Name = "LabelRecordLines"
+        Me.LabelRecordLines.Size = New System.Drawing.Size(68, 13)
+        Me.LabelRecordLines.TabIndex = 102
+        Me.LabelRecordLines.Text = "Aantal Lijnen"
+        '
+        'ButtonGenerateReport
+        '
+        Me.ButtonGenerateReport.Enabled = False
+        Me.ButtonGenerateReport.Location = New System.Drawing.Point(207, 78)
+        Me.ButtonGenerateReport.Name = "ButtonGenerateReport"
+        Me.ButtonGenerateReport.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonGenerateReport.TabIndex = 4
+        Me.ButtonGenerateReport.Text = "Af&drukken"
+        Me.ButtonGenerateReport.UseVisualStyleBackColor = True
+        AddHandler Me.ButtonGenerateReport.Click, AddressOf Me.ButtonGenerateReport_Click
+        '
+        'ButtonClose
+        '
+        Me.ButtonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.ButtonClose.Location = New System.Drawing.Point(288, 78)
+        Me.ButtonClose.Name = "ButtonClose"
+        Me.ButtonClose.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonClose.TabIndex = 104
+        Me.ButtonClose.TabStop = False
+        Me.ButtonClose.Text = "Sluiten"
+        Me.ButtonClose.UseVisualStyleBackColor = True
+        AddHandler Me.ButtonClose.Click, AddressOf Me.ButtonClose_Click
+        '
+        'TextBoxRecordLines
+        '
+        Me.TextBoxRecordLines.Location = New System.Drawing.Point(288, 35)
+        Me.TextBoxRecordLines.Name = "TextBoxRecordLines"
+        Me.TextBoxRecordLines.ReadOnly = True
+        Me.TextBoxRecordLines.Size = New System.Drawing.Size(75, 20)
+        Me.TextBoxRecordLines.TabIndex = 105
+        Me.TextBoxRecordLines.TabStop = False
+        Me.TextBoxRecordLines.Text = "0"
+        Me.TextBoxRecordLines.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'TextBoxMailToOption
+        '
+        Me.TextBoxMailToOption.AcceptsReturn = True
+        Me.TextBoxMailToOption.BackColor = System.Drawing.Color.White
+        Me.TextBoxMailToOption.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.TextBoxMailToOption.ForeColor = System.Drawing.Color.Black
+        Me.TextBoxMailToOption.Location = New System.Drawing.Point(14, 126)
+        Me.TextBoxMailToOption.MaxLength = 0
+        Me.TextBoxMailToOption.Name = "TextBoxMailToOption"
+        Me.TextBoxMailToOption.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.TextBoxMailToOption.Size = New System.Drawing.Size(349, 20)
+        Me.TextBoxMailToOption.TabIndex = 106
+        Me.TextBoxMailToOption.Text = "josvermoesen@outlook.be"
+        '
+        'LabelMailToOption
+        '
+        Me.LabelMailToOption.AutoSize = True
+        Me.LabelMailToOption.Location = New System.Drawing.Point(12, 110)
+        Me.LabelMailToOption.Name = "LabelMailToOption"
+        Me.LabelMailToOption.Size = New System.Drawing.Size(91, 13)
+        Me.LabelMailToOption.TabIndex = 107
+        Me.LabelMailToOption.Text = "Default mailadres:"
+        '
+        'FrmJournalEntriesBook
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.ButtonClose
+        Me.ClientSize = New System.Drawing.Size(380, 158)
+        Me.ControlBox = false
+        Me.Controls.Add(Me.LabelMailToOption)
+        Me.Controls.Add(Me.TextBoxMailToOption)
+        Me.Controls.Add(Me.TextBoxRecordLines)
+        Me.Controls.Add(Me.ButtonClose)
+        Me.Controls.Add(Me.ButtonGenerateReport)
+        Me.Controls.Add(Me.LabelRecordLines)
+        Me.Controls.Add(Me.DateTimePickerProcessingDate)
+        Me.Controls.Add(Me.TextBoxPeriodFromTo)
+        Me.Controls.Add(Me.LabelPeriodFromTo)
+        Me.Controls.Add(Me.LabelProcessingDate)
+        Me.Controls.Add(Me.AutoPageBreak)
+        Me.Controls.Add(Me.Button1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.MaximizeBox = false
+        Me.Name = "FrmJournalEntriesBook"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "Diverse Postenboek"
+        Me.TopMost = true
+        Me.ResumeLayout(false)
+        Me.PerformLayout
+
+End Sub
+    Friend WithEvents AutoPageBreak As IDEALSoftware.VpeStandard.VpeControl
+    Friend WithEvents Button1 As Button
+    Public WithEvents TextBoxPeriodFromTo As TextBox
+    Public WithEvents LabelPeriodFromTo As Label
+    Public WithEvents LabelProcessingDate As Label
+    Friend WithEvents DateTimePickerProcessingDate As DateTimePicker
+    Friend WithEvents LabelRecordLines As Label
+    Friend WithEvents ButtonGenerateReport As Button
+    Friend WithEvents ButtonClose As Button
+    Friend WithEvents TextBoxRecordLines As TextBox
+    Public WithEvents TextBoxMailToOption As TextBox
+    Friend WithEvents LabelMailToOption As Label
+End Class

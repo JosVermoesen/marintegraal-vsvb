@@ -182,7 +182,7 @@ End Class
 '				End If
 
 '			Case 2
-'				If DatumFout(TekstInfo(2).Text) Then
+'				If DateWrongFormat(TekstInfo(2).Text) Then
 '					TekstInfo(2).Text = CType(KwijtingBoeken.Controls("TekstInfo"), Object)(0).Text
 '					Beep()
 '					TekstInfo(2).Focus()

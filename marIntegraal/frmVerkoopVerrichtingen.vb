@@ -367,9 +367,9 @@ MaskAantal:
         Err.Clear()
         On Error Resume Next
 
-        datumdocMTextbox.Text = Rdt
+        datumdocMTextbox.Text = MimGlobalDate
         If Err.Number Then MsgBox("Landinstellingen voor België voorzien a.u.b.  Het programma wordt hierna beëindigd.", MsgBoxStyle.Critical) : End
-        vervaldagMTextBox.Text = Rdt
+        vervaldagMTextBox.Text = MimGlobalDate
         mgrklantenrekMTextBox.Text = KlantRekening
         LblExBtw.Text = ""
         LblInBtw.Text = ""
@@ -476,8 +476,8 @@ MaskAantal:
             CreditNota.Checked = False
             Vr = 11
             dokumentSleutel = SleutelDok(Vr)
-            datumdocMTextbox.Text = Rdt
-            vervaldagMTextBox.Text = Rdt
+            datumdocMTextbox.Text = MimGlobalDate
+            vervaldagMTextBox.Text = MimGlobalDate
             Text = vSet("Ctrl+F2 Verkoopverrichting", 28) & "(" & dokumentSleutel & ")"
             chkZonderRelatie.Visible = False
         ElseIf Bestelbon.Checked Then
@@ -577,7 +577,7 @@ MaskAantal:
                     LaatsteWAS = adoBibTekst(rsDetail.Fields("Memo"), "#v033 #")
                     dataveld = adoBibTekst(rsDetail.Fields("Memo"), "#v033 #")
                     Dim itemHier As New ListViewItem(dataVeld)
-                    dataVeld = fDatumText(adoBibTekst(rsDetail.Fields("Memo"), "#v035 #"))
+                    dataVeld = FunctionDateText(adoBibTekst(rsDetail.Fields("Memo"), "#v035 #"))
                     itemHier.SubItems.Add(dataVeld)
                     If adoBibTekst(rsDetail.Fields("Memo"), "#vEUR #") = "EUR" Then
                         dataVeld = Format(CDbl(adoBibTekst(rsDetail.Fields("Memo"), "#v137 #")), "#,##0.00")
@@ -647,8 +647,8 @@ MaskAantal:
         Dim docInEur As String
         TekstInfo3.Text = dokumentSleutel
         Medekontraktant.CheckState = Val(adoBibTekst(rsDetail.Fields("Memo"), "#v135 #"))
-        datumdocMTextbox.Text = fDatumText(adoBibTekst(rsDetail.Fields("Memo"), "#v035 #"))
-        vervaldagMTextBox.Text = fDatumText(adoBibTekst(rsDetail.Fields("Memo"), "#v036 #"))
+        datumdocMTextbox.Text = FunctionDateText(adoBibTekst(rsDetail.Fields("Memo"), "#v035 #"))
+        vervaldagMTextBox.Text = FunctionDateText(adoBibTekst(rsDetail.Fields("Memo"), "#v036 #"))
         mgrklantenrekMTextBox.Text = adoBibTekst(rsDetail.Fields("Memo"), "#v136 #")
         Text = Mid(Text, 1, 28) & "(" & dokumentSleutel & ")"
         docInEur = adoBibTekst(rsDetail.Fields("Memo"), "#vEUR #")
@@ -707,7 +707,7 @@ MaskAantal:
         Dim T As Short
         Dim bVak As Short
         Dim maskerMULTI As String
-        maskerMULTI = MaskerEURBH
+        maskerMULTI = MaskEURBH
         For T = 0 To 3
             BTWBasis(T) = 0
             BTWBedrag(T) = 0
@@ -724,11 +724,11 @@ MaskAantal:
                     bVak = Val(Mid(aa, 88, 1))
                     If bVak = 6 Then
                         If cmdSwitch.Text = "Ingave in EUR" Then
-                            BTWBasis(0) = BTWBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)) * Euro, MaskerEURBH))
-                            BTWEuroBasis(0) = BTWEuroBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)), MaskerEURBH))
+                            BTWBasis(0) = BTWBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)) * Euro, MaskEURBH))
+                            BTWEuroBasis(0) = BTWEuroBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)), MaskEURBH))
                         Else
-                            BTWBasis(0) = BTWBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)), MaskerEURBH))
-                            BTWEuroBasis(0) = BTWEuroBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)) / Euro, MaskerEURBH))
+                            BTWBasis(0) = BTWBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)), MaskEURBH))
+                            BTWEuroBasis(0) = BTWEuroBasis(0) + Val(Dec(Val(Mid(aa, 62, 12)) / Euro, MaskEURBH))
                         End If
                     Else
                         If cmdSwitch.Text = "Ingave in EUR" Then
@@ -737,14 +737,14 @@ MaskAantal:
                                 maskerMULTI = "############"
                             End If
                             BTWBasis(bVak) = BTWBasis(bVak) + Val(Dec(Val(Mid(aa, 62, 12)) * Euro, maskerMULTI))
-                            BTWEuroBasis(bVak) = BTWEuroBasis(bVak) + Val(Dec(Val(Mid(aa, 62, 12)), MaskerEURBH))
+                            BTWEuroBasis(bVak) = BTWEuroBasis(bVak) + Val(Dec(Val(Mid(aa, 62, 12)), MaskEURBH))
                         Else
                             If BTWBasis(bVak) <> 0 Then
                                 maskerMULTI = "############"
                                 BTWBasis(bVak) = Val(Dec(BTWBasis(bVak), maskerMULTI))
                             End If
                             BTWBasis(bVak) = BTWBasis(Val(Mid(aa, 88, 1))) + Val(Dec(Val(Mid(aa, 62, 12)), maskerMULTI))
-                            BTWEuroBasis(bVak) = BTWEuroBasis(Val(Mid(aa, 88, 1))) + Val(Dec(Val(Mid(aa, 62, 12)) / Euro, MaskerEURBH))
+                            BTWEuroBasis(bVak) = BTWEuroBasis(Val(Mid(aa, 88, 1))) + Val(Dec(Val(Mid(aa, 62, 12)) / Euro, MaskEURBH))
                         End If
                     End If
             End Select
@@ -759,11 +759,11 @@ MaskAantal:
         Dim Teller As Short
         On Error Resume Next
         For Teller = 1 To 3
-            BTWBedrag(Teller) = Val(Dec((BTWBasis(Teller)) * Val(Mid(fmarBoxText("002", "2", Format(Teller)), 4, 4)) / 100, MaskerEURBH))
+            BTWBedrag(Teller) = Val(Dec((BTWBasis(Teller)) * Val(Mid(fmarBoxText("002", "2", Format(Teller)), 4, 4)) / 100, MaskEURBH))
             BTWIn = BTWIn + BTWBasis(Teller) + BTWBedrag(Teller)
             BTWEx = BTWEx + BTWBasis(Teller)
 
-            BTWEuroBedrag(Teller) = Val(Dec(BTWEuroBasis(Teller) * Val(Mid(fmarBoxText("002", "2", Format(Teller)), 4, 4)) / 100, MaskerEURBH))
+            BTWEuroBedrag(Teller) = Val(Dec(BTWEuroBasis(Teller) * Val(Mid(fmarBoxText("002", "2", Format(Teller)), 4, 4)) / 100, MaskEURBH))
             BtwEuroIn = BtwEuroIn + BTWEuroBasis(Teller) + BTWEuroBedrag(Teller)
             BtwEuroEx = BtwEuroEx + BTWEuroBasis(Teller)
             If cmdSwitch.Text = "Ingave in BEF" Then
