@@ -233,10 +233,10 @@
     <Compile Include="frmBoeking.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDiversePosten.Designer.vb">
-      <DependentUpon>frmDiversePosten.vb</DependentUpon>
+    <Compile Include="FrmJournalEntryInput.Designer.vb">
+      <DependentUpon>FrmJournalEntryInput.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDiversePosten.vb">
+    <Compile Include="FrmJournalEntryInput.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDokHistoriek.Designer.vb">
@@ -492,8 +492,8 @@
     <EmbeddedResource Include="frmBoeking.resx">
       <DependentUpon>frmBoeking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDiversePosten.resx">
-      <DependentUpon>frmDiversePosten.vb</DependentUpon>
+    <EmbeddedResource Include="FrmJournalEntryInput.resx">
+      <DependentUpon>FrmJournalEntryInput.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDokHistoriek.resx">
       <DependentUpon>frmDokHistoriek.vb</DependentUpon>

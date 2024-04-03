@@ -25,6 +25,7 @@ Public Class FrmJournalEntriesBook
         DateTimePickerProcessingDate.Text = MimGlobalDate
         PeriodFromChosen = Mid(PeriodeVanTot, 1, 8)
         PeriodToChosen = Mid(PeriodeVanTot, 9)
+        CheckRecordSet()
     End Sub
 
     Private Sub CheckRecordSet()

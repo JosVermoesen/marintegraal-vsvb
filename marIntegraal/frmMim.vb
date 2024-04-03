@@ -217,7 +217,7 @@ Public Class Mim
 
 
     Private Sub DiversePostenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DiversePostenToolStripMenuItem.Click
-        Dim DiversePosten As New frmDiversePosten
+        Dim DiversePosten As New FrmJournalEntryInput
         DiversePosten.MdiParent = Me
         DiversePostenToolStripMenuItem.Enabled = False
         DiversePosten.Show()

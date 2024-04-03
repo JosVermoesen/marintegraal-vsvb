@@ -1,19 +1,19 @@
 ﻿Option Strict Off
 Option Explicit On
-Public Class frmDiversePosten
+Public Class FrmJournalEntryInput
     Dim totaalDCBedrag As Double
 
-    Private Sub frmDiversePosten_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmJournalEntryInput_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Top = 0
         Left = 0
-        SoortBoeking.Items.Add("0: Diverse post")
-        SoortBoeking.Items.Add("1: Afschrijvingspost Eindejaar")
-        SoortBoeking.Items.Add("2: Beginbalans")
+        ComboBoxBookType.Items.Add("0: Diverse post")
+        ComboBoxBookType.Items.Add("1: Afschrijvingspost Eindejaar")
+        ComboBoxBookType.Items.Add("2: Beginbalans")
         'SoortBoeking.AddItem "9: Gebruikerssjabloon"
-        DatumVerwerking.Value = frmBJPERDAT.DatumVerwerking.Value
-        Schoon.PerformClick()
+        DateTimePickerBookingDate.Value = frmBJPERDAT.DatumVerwerking.Value
+        ButtonEraseAll.PerformClick()
         If XLogKey = "SchrijfAF!" Then
-            SoortBoeking.SelectedIndex = 1
+            ComboBoxBookType.SelectedIndex = 1
         End If
     End Sub
 
@@ -26,14 +26,14 @@ Public Class frmDiversePosten
         Boeking.Close()
         Boeking.Hide()
 
-        For T = 0 To JournaalPost.Items.Count - 1
-            Msg = JournaalPost.Items.Item(T)
+        For T = 0 To ListBoxJournalEntries.Items.Count - 1
+            Msg = ListBoxJournalEntries.Items.Item(T)
             rsJournaal.AddNew()
             rsJournaal.Fields("v041").Value = "0"
-            rsJournaal.Fields("v066").Value = Format(DatumVerwerking.Value, "yyyyMMdd") 'Boekdatum
-            rsJournaal.Fields("v033").Value = "D0" & Format(DatumVerwerking.Value, "yyyyMMdd") 'dokument
-            rsJournaal.Fields("v035").Value = Format(DatumVerwerking.Value, "yyyyMMdd") 'dokumentdatum
-            rsJournaal.Fields("v067").Value = Mid(Omschrijving.Text, 1, 35) 'Omschrijving
+            rsJournaal.Fields("v066").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'Boekdatum
+            rsJournaal.Fields("v033").Value = "D0" & Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokument
+            rsJournaal.Fields("v035").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokumentdatum
+            rsJournaal.Fields("v067").Value = Mid(TextBoxDescription.Text, 1, 35) 'Omschrijving
             rsJournaal.Fields("v019").Value = Mid(Msg, 1, 7) 'Rekening
             rsJournaal.Fields("v068").Value = Mid(Msg, 50, 12) 'Bedrag
             rsJournaal.Fields("dece068").Value = Val(Mid(Msg, 50, 12)) 'Bedrag
@@ -44,10 +44,10 @@ Public Class frmDiversePosten
             ElseIf Mid(msg, 63, 7) <> "       " Then
                 rsJournaal.AddNew()
                 rsJournaal.Fields("v041").Value = "0"
-                rsJournaal.Fields("v066").Value = Format(DatumVerwerking.Value, "yyyyMMdd") 'Boekdatum
-                rsJournaal.Fields("v033").Value = "D0" & Format(DatumVerwerking.Value, "yyyyMMdd") 'dokument
-                rsJournaal.Fields("v035").Value = Format(DatumVerwerking.Value, "yyyyMMdd") 'dokumentdatum
-                rsJournaal.Fields("v067").Value = Mid(Omschrijving.Text, 1, 35) 'Omschrijving
+                rsJournaal.Fields("v066").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'Boekdatum
+                rsJournaal.Fields("v033").Value = "D0" & Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokument
+                rsJournaal.Fields("v035").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokumentdatum
+                rsJournaal.Fields("v067").Value = Mid(TextBoxDescription.Text, 1, 35) 'Omschrijving
 
                 rsJournaal.Fields("v019").Value = Mid(Msg, 63, 7) 'Rekening
                 rsJournaal.Fields("v068").Value = Str(-Val(Mid(Msg, 50, 12))) 'Bedrag
@@ -76,24 +76,24 @@ Public Class frmDiversePosten
 
     End Function
 
-    Private Sub SoortBoeking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SoortBoeking.SelectedIndexChanged
-        Select Case Mid(SoortBoeking.Text, 1, 1)
+    Private Sub SoortBoeking_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxBookType.SelectedIndexChanged
+        Select Case Mid(ComboBoxBookType.Text, 1, 1)
             Case "0"
             Case Else
-                Msg = SoortBoeking.Text & " aktiveren !" & vbCrLf & vbCrLf
+                Msg = ComboBoxBookType.Text & " aktiveren !" & vbCrLf & vbCrLf
                 Msg = Msg & "Bent U zeker ?"
                 Ktrl = MsgBox(Msg, 292)
                 If Ktrl = 6 Then
-                    Select Case Mid(SoortBoeking.Text, 1, 1)
+                    Select Case Mid(ComboBoxBookType.Text, 1, 1)
                         Case "1"
                             'If AfschrijfBoeking() Then
                             'Else
-                                Schoon.PerformClick()
+                                ButtonEraseAll.PerformClick()
                             'End If
                         Case "2"
                             'If BoekBeginBalans() Then
                             'Else
-                                Schoon.PerformClick()
+                                ButtonEraseAll.PerformClick()
                             'End If
                         Case "9"
                             'BoekUserDef()
@@ -101,54 +101,54 @@ Public Class frmDiversePosten
                             MsgBox("stop")
                     End Select
                 Else
-                    Schoon.PerformClick()
+                    ButtonEraseAll.PerformClick()
                     Exit Sub
                 End If
         End Select
     End Sub
 
-    Private Sub Schoon_Click(sender As Object, e As EventArgs) Handles Schoon.Click
+    Private Sub Schoon_Click(sender As Object, e As EventArgs) Handles ButtonEraseAll.Click
         OpKuisVolgendeLijn()
-        Afsluiten.Enabled = False
-        Omschrijving.Text = ""
-        Saldo.Text = "0"
-        JournaalPost.Items.Clear()
-        SoortBoeking.Enabled = True
-        SoortBoeking.SelectedIndex = 0
-        Sluiten.Enabled = True
-        dKeuze.Enabled = True
-        cKeuze.Enabled = True
-        Bedrag.Visible = True
-        RekeningNummer.Visible = True
-        TRvlag.Enabled = True
-        SoortBoeking.Focus()
+        ButtonPostEntries.Enabled = False
+        TextBoxDescription.Text = ""
+        LabelSoldeAmount.Text = "0"
+        ListBoxJournalEntries.Items.Clear()
+        ComboBoxBookType.Enabled = True
+        ComboBoxBookType.SelectedIndex = 0
+        ButtonClose.Enabled = True
+        RadioButtonChoiseDebit.Enabled = True
+        RadioButtonChoiseCredit.Enabled = True
+        TextBoxAmount.Visible = True
+        TextBoxLedgerAccount.Visible = True
+        CheckBoxDCFlag.Enabled = True
+        ComboBoxBookType.Focus()
     End Sub
 
     Private Sub OpKuisVolgendeLijn()
-        TRvlag.Checked = False
+        CheckBoxDCFlag.Checked = False
         TRaanUit()
-        RekeningNummer.Text = ""
-        NaamRekening.Text = ""
-        Bedrag.Text = ""
-        Tegenrekening.Text = ""
-        NaamTegenRekening.Text = ""
-        dKeuze.Checked = True
-        VolgendeLijn.Enabled = False
+        TextBoxLedgerAccount.Text = ""
+        LabelLedgerAccountName.Text = ""
+        TextBoxAmount.Text = ""
+        TextBoxOffsetAccount.Text = ""
+        LabelOffsetAccountName.Text = ""
+        RadioButtonChoiseDebit.Checked = True
+        ButtonAddLine.Enabled = False
     End Sub
 
     Private Sub TRaanUit()
-        If TRvlag.Checked Then
-            Tegenrekening.Visible = True
-            NaamTegenRekening.Visible = True
+        If CheckBoxDCFlag.Checked Then
+            TextBoxOffsetAccount.Visible = True
+            LabelOffsetAccountName.Visible = True
         Else
-            Tegenrekening.Visible = False
-            NaamTegenRekening.Visible = False
+            TextBoxOffsetAccount.Visible = False
+            LabelOffsetAccountName.Visible = False
         End If
     End Sub
 
-    Private Sub Sluiten_Click(sender As Object, e As EventArgs) Handles Sluiten.Click
-        If JournaalPost.Items.Count Then
-            Msg = Format(JournaalPost.Items.Count) & " Journaallijnen negeren.  Bent U zeker ?"
+    Private Sub Sluiten_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
+        If ListBoxJournalEntries.Items.Count Then
+            Msg = Format(ListBoxJournalEntries.Items.Count) & " Journaallijnen negeren.  Bent U zeker ?"
             Ktrl = MsgBox(Msg, 292, "Inbreng Journaalpost")
             If Ktrl <> 6 Then
                 Exit Sub
@@ -158,93 +158,93 @@ Public Class frmDiversePosten
         Close()
     End Sub
 
-    Private Sub SoortBoeking_KeyPress(sender As Object, e As KeyPressEventArgs) Handles SoortBoeking.KeyPress
-        If e.KeyChar = vbCr Then Omschrijving.Focus()
+    Private Sub SoortBoeking_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBoxBookType.KeyPress
+        If e.KeyChar = vbCr Then TextBoxDescription.Focus()
     End Sub
 
-    Private Sub Omschrijving_Enter(sender As Object, e As EventArgs) Handles Omschrijving.Enter
-        SoortBoeking.Enabled = False
+    Private Sub Omschrijving_Enter(sender As Object, e As EventArgs) Handles TextBoxDescription.Enter
+        ComboBoxBookType.Enabled = False
     End Sub
 
     Sub DCKeuzeCheck(toetsString As String)
         Select Case toetsString
             Case "D", "+"
-                dKeuze.Checked = True
-                RekeningNummer.Focus()
+                RadioButtonChoiseDebit.Checked = True
+                TextBoxLedgerAccount.Focus()
             Case "C", "-"
-                cKeuze.Checked = True
-                RekeningNummer.Focus()
+                RadioButtonChoiseCredit.Checked = True
+                TextBoxLedgerAccount.Focus()
             Case "T", "/"
-                TRvlag.Checked = Not TRvlag.Checked
+                CheckBoxDCFlag.Checked = Not CheckBoxDCFlag.Checked
                 TRaanUit()
-                RekeningNummer.Focus()
+                TextBoxLedgerAccount.Focus()
         End Select
     End Sub
 
-    Private Sub dKeuze_KeyPress(sender As Object, e As KeyPressEventArgs) Handles dKeuze.KeyPress
+    Private Sub dKeuze_KeyPress(sender As Object, e As KeyPressEventArgs) Handles RadioButtonChoiseDebit.KeyPress
         Dim keyString As String = UCase(e.KeyChar)
         DCKeuzeCheck(e.KeyChar)
     End Sub
 
-    Private Sub cKeuze_KeyPress(sender As Object, e As KeyPressEventArgs) Handles cKeuze.KeyPress
+    Private Sub cKeuze_KeyPress(sender As Object, e As KeyPressEventArgs) Handles RadioButtonChoiseCredit.KeyPress
         Dim keyString As String = UCase(e.KeyChar)
         DCKeuzeCheck(e.KeyChar)
     End Sub
 
-    Private Sub Omschrijving_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Omschrijving.KeyPress
+    Private Sub Omschrijving_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBoxDescription.KeyPress
         If e.KeyChar = vbCr Then System.Windows.Forms.SendKeys.Send("{TAB}")
     End Sub
 
-    Private Sub TRvlag_CheckStateChanged(sender As Object, e As EventArgs) Handles TRvlag.CheckStateChanged
+    Private Sub TRvlag_CheckStateChanged(sender As Object, e As EventArgs) Handles CheckBoxDCFlag.CheckStateChanged
         TRaanUit()
     End Sub
 
-    Private Sub RekeningNummer_KeyDown(sender As Object, e As KeyEventArgs) Handles RekeningNummer.KeyDown
+    Private Sub RekeningNummer_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBoxLedgerAccount.KeyDown
         If e.KeyCode = 17 Then
-            If okRekeningen(RekeningNummer, NaamRekening) Then
+            If okRekeningen(TextBoxLedgerAccount, LabelLedgerAccountName) Then
                 System.Windows.Forms.SendKeys.Send("{TAB}")
             Else
-                RekeningNummer.Focus()
+                TextBoxLedgerAccount.Focus()
             End If
         End If
     End Sub
 
-    Private Sub RekeningNummer_LostFocus(sender As Object, e As EventArgs) Handles RekeningNummer.LostFocus
-        If Trim(RekeningNummer.Text) = "" Then
+    Private Sub RekeningNummer_LostFocus(sender As Object, e As EventArgs) Handles TextBoxLedgerAccount.LostFocus
+        If Trim(TextBoxLedgerAccount.Text) = "" Then
         Else
-            bGet(FlRekening, 0, RekeningNummer.Text)
+            bGet(FlRekening, 0, TextBoxLedgerAccount.Text)
             If Ktrl Then
-                RekeningNummer.Focus()
+                TextBoxLedgerAccount.Focus()
                 Beep()
             Else
                 RecordToVeld(FlRekening)
-                RekeningNummer.Text = vBibTekst(FlRekening, "#v019 #")
-                NaamRekening.Text = vBibTekst(FlRekening, "#v020 #")
+                TextBoxLedgerAccount.Text = vBibTekst(FlRekening, "#v019 #")
+                LabelLedgerAccountName.Text = vBibTekst(FlRekening, "#v020 #")
             End If
         End If
     End Sub
 
-    Private Sub Tegenrekening_KeyDown(sender As Object, e As KeyEventArgs) Handles Tegenrekening.KeyDown
+    Private Sub Tegenrekening_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBoxOffsetAccount.KeyDown
         If e.KeyCode = 17 Then
-            If okRekeningen(Tegenrekening, NaamTegenRekening) Then
+            If okRekeningen(TextBoxOffsetAccount, LabelOffsetAccountName) Then
                 System.Windows.Forms.SendKeys.Send("{TAB}")
             Else
-                Tegenrekening.Focus()
+                TextBoxOffsetAccount.Focus()
             End If
         End If
     End Sub
 
-    Private Sub Tegenrekening_LostFocus(sender As Object, e As EventArgs) Handles Tegenrekening.LostFocus
-        If Trim(Tegenrekening.Text) = "" Then
+    Private Sub Tegenrekening_LostFocus(sender As Object, e As EventArgs) Handles TextBoxOffsetAccount.LostFocus
+        If Trim(TextBoxOffsetAccount.Text) = "" Then
         Else
-            bGet(FlRekening, 0, Tegenrekening.Text)
+            bGet(FlRekening, 0, TextBoxOffsetAccount.Text)
             If Ktrl Then
-                Tegenrekening.Focus()
+                TextBoxOffsetAccount.Focus()
                 Beep()
             Else
                 RecordToVeld(FlRekening)
-                Tegenrekening.Text = vBibTekst(FlRekening, "#v019 #")
-                NaamTegenRekening.Text = vBibTekst(FlRekening, "#v020 #")
+                TextBoxOffsetAccount.Text = vBibTekst(FlRekening, "#v019 #")
+                LabelOffsetAccountName.Text = vBibTekst(FlRekening, "#v020 #")
             End If
         End If
     End Sub
@@ -264,74 +264,74 @@ Public Class frmDiversePosten
         End If
     End Function
 
-    Private Sub Bedrag_Enter(sender As Object, e As EventArgs) Handles Bedrag.Enter
-        If Val(Saldo.Text) = 0 Then
-            Afsluiten.Enabled = True
+    Private Sub Bedrag_Enter(sender As Object, e As EventArgs) Handles TextBoxAmount.Enter
+        If Val(LabelSoldeAmount.Text) = 0 Then
+            ButtonPostEntries.Enabled = True
         Else
-            Afsluiten.Enabled = False
+            ButtonPostEntries.Enabled = False
         End If
     End Sub
 
-    Private Sub Bedrag_TextChanged(sender As Object, e As EventArgs) Handles Bedrag.TextChanged
-        If Bedrag.Text <> "" Then
-            VolgendeLijn.Enabled = True
-            AcceptButton = VolgendeLijn
+    Private Sub Bedrag_TextChanged(sender As Object, e As EventArgs) Handles TextBoxAmount.TextChanged
+        If TextBoxAmount.Text <> "" Then
+            ButtonAddLine.Enabled = True
+            AcceptButton = ButtonAddLine
         Else
-            VolgendeLijn.Enabled = False
+            ButtonAddLine.Enabled = False
         End If
     End Sub
 
-    Private Sub VolgendeLijn_Click(sender As Object, e As EventArgs) Handles VolgendeLijn.Click
+    Private Sub VolgendeLijn_Click(sender As Object, e As EventArgs) Handles ButtonAddLine.Click
         Dim LijnText As String
-        If RTrim(RekeningNummer.Text) = "" Then
+        If RTrim(TextBoxLedgerAccount.Text) = "" Then
             Beep()
-            RekeningNummer.Focus()
+            TextBoxLedgerAccount.Focus()
             Exit Sub
-        ElseIf Val(Bedrag.Text) = 0 Then
+        ElseIf Val(TextBoxAmount.Text) = 0 Then
             Beep()
-            Bedrag.Focus()
+            TextBoxAmount.Focus()
             Exit Sub
-        ElseIf TRvlag.CheckState Then
-            If RTrim(Tegenrekening.Text) = "" Then
+        ElseIf CheckBoxDCFlag.CheckState Then
+            If RTrim(TextBoxOffsetAccount.Text) = "" Then
                 Beep()
-                Tegenrekening.Focus()
+                TextBoxOffsetAccount.Focus()
                 Exit Sub
             End If
         End If
-        totaalDCBedrag = Val(Bedrag.Text)
-        If dKeuze.Checked Then
-        ElseIf TRvlag.Checked Then
+        totaalDCBedrag = Val(TextBoxAmount.Text)
+        If RadioButtonChoiseDebit.Checked Then
+        ElseIf CheckBoxDCFlag.Checked Then
         Else
             'kan alleen nog creditering zijn (zonder tegenrekening)
             totaalDCBedrag = -totaalDCBedrag
         End If
-        LijnText = vSet((RekeningNummer.Text), 7) & " " & vSet((NaamRekening.Text), 40) & " " & Dec(totaalDCBedrag, MaskEURBH) & " "
-        If TRvlag.CheckState Then
-            LijnText = LijnText & vSet((Tegenrekening.Text), 7)
+        LijnText = vSet((TextBoxLedgerAccount.Text), 7) & " " & vSet((LabelLedgerAccountName.Text), 40) & " " & Dec(totaalDCBedrag, MaskEURBH) & " "
+        If CheckBoxDCFlag.CheckState Then
+            LijnText = LijnText & vSet((TextBoxOffsetAccount.Text), 7)
         Else
             LijnText = LijnText & Space(7)
         End If
-        JournaalPost.Items.Add(LijnText)
+        ListBoxJournalEntries.Items.Add(LijnText)
         checkDCStatus()
         OpKuisVolgendeLijn()
-        dKeuze.Focus()
+        RadioButtonChoiseDebit.Focus()
     End Sub
 
     Sub checkDCStatus()
         totaalDCBedrag = 0
-        For t = 0 To JournaalPost.Items.Count - 1
-            Msg = JournaalPost.Items.Item(t)
+        For t = 0 To ListBoxJournalEntries.Items.Count - 1
+            Msg = ListBoxJournalEntries.Items.Item(t)
             If Trim(Mid(Msg, 63)) <> "" Then
             Else
                 totaalDCBedrag = totaalDCBedrag + Val(Mid(Msg, 50, 12))
             End If
         Next
-        Saldo.Text = Dec(totaalDCBedrag, MaskEURBH)
-        If Val(Saldo.Text) = 0 Then
-            Afsluiten.Enabled = True
-            AcceptButton = Afsluiten
+        LabelSoldeAmount.Text = Dec(totaalDCBedrag, MaskEURBH)
+        If Val(LabelSoldeAmount.Text) = 0 Then
+            ButtonPostEntries.Enabled = True
+            AcceptButton = ButtonPostEntries
         Else
-            Afsluiten.Enabled = False
+            ButtonPostEntries.Enabled = False
         End If
     End Sub
 
@@ -673,24 +673,24 @@ Public Class frmDiversePosten
 
     'End Sub
 
-    Private Sub Afsluiten_Click(sender As Object, e As EventArgs) Handles Afsluiten.Click
-        If Trim(Omschrijving.Text) = "" Then
+    Private Sub Afsluiten_Click(sender As Object, e As EventArgs) Handles ButtonPostEntries.Click
+        If Trim(TextBoxDescription.Text) = "" Then
             MsgBox("Omschrijving mag niet leeg zijn, ook géén spaties...", MsgBoxStyle.Information)
-            Omschrijving.Focus()
+            TextBoxDescription.Focus()
             Exit Sub
         End If
-        If Not DatumKtrl(Format(DatumVerwerking.Value, "dd/MM/yyyy"), TekstPeriode) Then
+        If Not DatumKtrl(Format(DateTimePickerBookingDate.Value, "dd/MM/yyyy"), TekstPeriode) Then
             Beep()
             frmBJPERDAT.WindowState = FormWindowState.Normal
             frmBJPERDAT.Focus()
-            DatumVerwerking.Focus()
+            DateTimePickerBookingDate.Focus()
             Exit Sub
-        ElseIf JournaalPost.Items.Count = 0 Then
+        ElseIf ListBoxJournalEntries.Items.Count = 0 Then
             Beep()
             Exit Sub
         End If
 
-        Ktrl = MsgBox("Journaalpost bestaande uit" & Str(JournaalPost.Items.Count) & " Lijnen wegboeken.  Bent U zeker ?", 292)
+        Ktrl = MsgBox("Journaalpost bestaande uit" & Str(ListBoxJournalEntries.Items.Count) & " Lijnen wegboeken.  Bent U zeker ?", 292)
         If Ktrl = 6 Then
             bBegin()
             'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
@@ -699,7 +699,7 @@ Public Class frmDiversePosten
                 bAbort()
                 Me.Activate()
             Else
-                Select Case Mid(SoortBoeking.Text, 1, 1)
+                Select Case Mid(ComboBoxBookType.Text, 1, 1)
                     Case "1"
                         'EindeAfschrijving()
                     Case "2"
@@ -709,7 +709,7 @@ Public Class frmDiversePosten
                         MsgBox("Stop")
                 End Select
                 bEnd()
-                Schoon.PerformClick()
+                ButtonEraseAll.PerformClick()
             End If
 
 
