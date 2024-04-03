@@ -184,7 +184,7 @@ OpnieuwEdit:
     End Function
 
 
-    Sub bAbort()
+    Sub TransAbort()
 
         On Error Resume Next
         Err.Clear()
@@ -197,7 +197,7 @@ OpnieuwEdit:
 
     End Sub
 
-    Sub bBegin()
+    Sub TransBegin()
 
         On Error Resume Next
         Err.Clear()

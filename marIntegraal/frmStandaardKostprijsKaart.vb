@@ -291,7 +291,7 @@ End Class
 
 'BijwerkenVanStock: 
 '		dKtrlCumul = 0 : dKtrlBEF = 0 : dKtrlEUR = 0
-'		bBegin()
+'		TransBegin()
 '		For Teller = 1 To grdProduktDetail.Rows - 2
 '			grdProduktDetail.Row = Teller
 '			grdProduktDetail.Col = 0
@@ -329,7 +329,7 @@ End Class
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub SKPKUpdate
 '			ElseIf KtrlBox = MsgBoxResult.No Then 
-'				bAbort()
+'				TransAbort()
 '			ElseIf KtrlBox = MsgBoxResult.Cancel Then 
 '				GoTo StelDEVraag
 '			Else

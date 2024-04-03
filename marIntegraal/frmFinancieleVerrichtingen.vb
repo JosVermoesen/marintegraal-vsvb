@@ -151,9 +151,9 @@ End Class
 '		End If
 '		Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel : " & UCase(VB.Left(vBibTekst(FlRekening, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000"))
 '		If Ktrl = MsgBoxResult.Yes Then
-'			bBegin()
+'			TransBegin()
 '			If WegBoekFout() Then
-'				bAbort()
+'				TransAbort()
 '				Exit Sub
 '			Else
 '				bEnd()

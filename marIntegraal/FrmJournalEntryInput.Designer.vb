@@ -33,7 +33,7 @@ Partial Class FrmJournalEntryInput
         Me.ButtonClose = New System.Windows.Forms.Button()
         Me.ButtonEraseAll = New System.Windows.Forms.Button()
         Me.TextBoxAmount = New System.Windows.Forms.TextBox()
-        Me.ButtonPostEntries = New System.Windows.Forms.Button()
+        Me.ButtonBookEntries = New System.Windows.Forms.Button()
         Me.ListBoxJournalEntries = New System.Windows.Forms.ListBox()
         Me.LabelOffsetAccountName = New System.Windows.Forms.Label()
         Me.LabelLedgerAccountName = New System.Windows.Forms.Label()
@@ -203,19 +203,19 @@ Partial Class FrmJournalEntryInput
         Me.TextBoxAmount.Size = New System.Drawing.Size(88, 20)
         Me.TextBoxAmount.TabIndex = 11
         '
-        'ButtonPostEntries
+        'ButtonBookEntries
         '
-        Me.ButtonPostEntries.BackColor = System.Drawing.SystemColors.Control
-        Me.ButtonPostEntries.Cursor = System.Windows.Forms.Cursors.Default
-        Me.ButtonPostEntries.Enabled = False
-        Me.ButtonPostEntries.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.ButtonPostEntries.Location = New System.Drawing.Point(322, 104)
-        Me.ButtonPostEntries.Name = "ButtonPostEntries"
-        Me.ButtonPostEntries.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ButtonPostEntries.Size = New System.Drawing.Size(73, 21)
-        Me.ButtonPostEntries.TabIndex = 38
-        Me.ButtonPostEntries.Text = "Boeken"
-        Me.ButtonPostEntries.UseVisualStyleBackColor = False
+        Me.ButtonBookEntries.BackColor = System.Drawing.SystemColors.Control
+        Me.ButtonBookEntries.Cursor = System.Windows.Forms.Cursors.Default
+        Me.ButtonBookEntries.Enabled = False
+        Me.ButtonBookEntries.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ButtonBookEntries.Location = New System.Drawing.Point(322, 104)
+        Me.ButtonBookEntries.Name = "ButtonBookEntries"
+        Me.ButtonBookEntries.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ButtonBookEntries.Size = New System.Drawing.Size(73, 21)
+        Me.ButtonBookEntries.TabIndex = 38
+        Me.ButtonBookEntries.Text = "Boeken"
+        Me.ButtonBookEntries.UseVisualStyleBackColor = False
         '
         'ListBoxJournalEntries
         '
@@ -416,7 +416,7 @@ Partial Class FrmJournalEntryInput
         Me.Controls.Add(Me.ButtonClose)
         Me.Controls.Add(Me.ButtonEraseAll)
         Me.Controls.Add(Me.TextBoxAmount)
-        Me.Controls.Add(Me.ButtonPostEntries)
+        Me.Controls.Add(Me.ButtonBookEntries)
         Me.Controls.Add(Me.ListBoxJournalEntries)
         Me.Controls.Add(Me.LabelOffsetAccountName)
         Me.Controls.Add(Me.LabelLedgerAccountName)
@@ -452,7 +452,7 @@ Partial Class FrmJournalEntryInput
     Public WithEvents ButtonClose As Button
     Public WithEvents ButtonEraseAll As Button
     Public WithEvents TextBoxAmount As TextBox
-    Public WithEvents ButtonPostEntries As Button
+    Public WithEvents ButtonBookEntries As Button
     Public WithEvents ListBoxJournalEntries As ListBox
     Public WithEvents LabelOffsetAccountName As Label
     Public WithEvents LabelLedgerAccountName As Label

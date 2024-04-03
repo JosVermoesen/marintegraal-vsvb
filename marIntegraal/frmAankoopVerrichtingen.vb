@@ -223,15 +223,15 @@ End Class
 '		Ktrl = bOpen(FlRekening)
 '		Ktrl = bOpen(FlJournaal)
 '		Ktrl = bOpen(Fldokument)
-'		bBegin()
+'		TransBegin()
 '		If WegBoekFout() Then
-'			bAbort()
+'			TransAbort()
 '			Me.Activate()
 '			Exit Sub
 '		Else
 '			bEnd()
 '			If Ktrl Then
-'				bAbort()
+'				TransAbort()
 '				Exit Sub
 '			End If
 '			If AankoopFlg = 1 And sIsIntraFlg.Value = "1" Then

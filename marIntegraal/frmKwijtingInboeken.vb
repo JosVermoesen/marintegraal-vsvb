@@ -156,9 +156,9 @@ End Class
 '		Ktrl = bOpen(FlRekening)
 '		Ktrl = bOpen(FlJournaal)
 '		Ktrl = bOpen(Fldokument)
-'		bBegin()
+'		TransBegin()
 '		If WegBoekFout() Then
-'			bAbort()
+'			TransAbort()
 '			Exit Sub
 '		Else
 '			bEnd()

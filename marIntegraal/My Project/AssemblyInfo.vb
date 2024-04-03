@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Boekhoudpakket naar Belgisch recht")>
 <Assembly: AssemblyCompany("Vsoft Administratieve Software")>
 <Assembly: AssemblyProduct("marIntegraal Community")>
-<Assembly: AssemblyCopyright("Copyright © 2017 Vermoesen Beheer")>
+<Assembly: AssemblyCopyright("Copyright © 2024 Vermoesen Beheer")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
