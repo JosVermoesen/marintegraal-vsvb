@@ -47,14 +47,14 @@ Public Class HistoriekRekeningScherm
         
         tbRekening.Text = ""
         Try
-            tbRekening.Text = trim(BasisB(FlRekening).codeTextBox.Text )
+            tbRekening.Text = trim(BasisB(FlLedgerAccount).codeTextBox.Text )
         Catch ex As Exception
             
         End Try
 
         If tbRekening.Text= "" Then
         Else
-            Me.Text = "Historiek (" & RTrim(vBibTekst(FlRekening, "#v020 #")) & ")"
+            Me.Text = "Historiek (" & RTrim(vBibTekst(FlLedgerAccount, "#v020 #")) & ")"
             btnSearch.PerformClick 
         End If		
 
@@ -93,12 +93,12 @@ Public Class HistoriekRekeningScherm
         Tot = RekeningNummer & Mid(tbVanTot.Text, 20, 4) & Mid(tbVanTot.Text, 17, 2) & Mid(tbVanTot.Text, 14, 2)
 
 GetIt: 
-        bGet(FlRekening, 0, RekeningNummer)
+        MsJetGet(FlLedgerAccount, 0, RekeningNummer)
         If Ktrl Then
             Me.Text = "Historiek"
         Else
-            RecordToVeld(FlRekening)
-            Me.Text = "Historiek (" & Trim(rsMAR(FlRekening).Fields("v020").Value) & ")"
+            RecordToVeld(FlLedgerAccount)
+            Me.Text = "Historiek (" & Trim(rsMAR(FlLedgerAccount).Fields("v020").Value) & ")"
             lvJournaalDetail.Visible = False
             Me.Refresh()
         End If
@@ -120,12 +120,12 @@ GetIt:
             tbRekening.Text = rsJourHier.Fields("v019").Value
             Mid(Van, 1, 7) = Mid(rsJourHier.Fields("v070").Value, 1, 7)
             Mid(Tot, 1, 7) = Mid(rsJourHier.Fields("v070").Value, 1, 7)
-            bGet(FlRekening, 0, rsJourHier.Fields("v019").Value.ToString)
+            MsJetGet(FlLedgerAccount, 0, rsJourHier.Fields("v019").Value.ToString)
             If Ktrl Then
                 Me.Text = "Historiek"
             Else
-                RecordToVeld(FlRekening)
-                Me.Text = "Historiek (" & Trim(rsMAR(FlRekening).Fields("v020").Value) & ")"
+                RecordToVeld(FlLedgerAccount)
+                Me.Text = "Historiek (" & Trim(rsMAR(FlLedgerAccount).Fields("v020").Value) & ")"
             End If
             rsJourHier.MoveFirst 
             Do While Not rsJourHier.EOF
@@ -177,8 +177,8 @@ JournaalJump:
     Private Sub tbRekening_KeyDown(sender As Object, e As KeyEventArgs) Handles tbRekening.KeyDown
         
         If e.KeyCode = 17 Then
-            SharedFl = FlRekening 
-            sharedIndex = 0
+            SharedFl = FlLedgerAccount 
+            SharedIndex = 0
             GridText = tbRekening.Text
             XLogKey = ""
             SqlSearch.ShowDialog()

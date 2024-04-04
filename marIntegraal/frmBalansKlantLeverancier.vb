@@ -470,7 +470,7 @@ End Class
 '		End If
 
 '		If Selektie(5).CheckState = 1 And FlPartij = FlLeverancier Then
-'			bGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
+'			MsJetGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
 '			If Ktrl Then
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '				Return 
@@ -515,7 +515,7 @@ End Class
 
 '		If Trim(vBibTekst(Fldokument, "#v034 #")) <> KopBuf Then
 '			dTnt = 0
-'			bGet(aIndex, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
+'			MsJetGet(aIndex, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
 '			KopBuf = Trim(vBibTekst(Fldokument, "#v034 #"))
 '			FieldText(0) = RTrim(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12))
 '			If Ktrl Then
@@ -527,7 +527,7 @@ End Class
 '			SnelHelpPrint(FieldText(0), blLogging)
 '		End If
 
-'		bGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
+'		MsJetGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
 '		If Ktrl Or ChkFinancieelDetail.CheckState = 0 Then
 '			'Er zijn geen journalen voor dit dokument !
 '			'Verwittigen via afdruk laatste blz.
@@ -576,7 +576,7 @@ End Class
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
 '		Else
-'			bGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
+'			MsJetGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
 '		End If
 '		dTnt = dTnt + dTOT
 '		ReedsMetBetalingen = False
@@ -688,7 +688,7 @@ End Class
 
 'TotaalBETAALD: 
 '		drb = 0
-'		bGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
+'		MsJetGet(FlJournaal, 1, vBibTekst(Fldokument, "#v033 #"))
 '		If Ktrl Then
 '			MsgBox("onlogische situatie")
 '		Else
@@ -868,21 +868,21 @@ End Class
 '			End If
 '			BetalingenVoorNa(0).Items.Clear()
 '			BetalingenVoorNa(1).Items.Clear()
-'			bGetOrGreater(FlRekening, 0, vSet(String99(Lees, FlPartij + 8), 7))
+'			bGetOrGreater(FlLedgerAccount, 0, vSet(String99(Lees, FlPartij + 8), 7))
 '			If Ktrl Then
 '				MsgBox("onlogika")
 '			Else
-'				RecordToVeld(FlRekening)
-'				Do While KeyBuf(FlRekening) <= GroepSelektie
-'					GroepRekening4 = KeyBuf(FlRekening)
-'					SnelHelpPrint("Journalen boekjaar voor rek. " & KeyBuf(FlRekening) & " worden gekontroleerd.  Ogenblik a.u.b.", blLogging)
+'				RecordToVeld(FlLedgerAccount)
+'				Do While KeyBuf(FlLedgerAccount) <= GroepSelektie
+'					GroepRekening4 = KeyBuf(FlLedgerAccount)
+'					SnelHelpPrint("Journalen boekjaar voor rek. " & KeyBuf(FlLedgerAccount) & " worden gekontroleerd.  Ogenblik a.u.b.", blLogging)
 '					AantalInGroep = AantalInGroep + 1
 '					If bhEuro Then
-'						TotaalBedragGroep = TotaalBedragGroep + Val(vBibTekst(FlRekening, "#e" & VB6.Format(22 + AktiefBoekjaar, "000") & " #"))
+'						TotaalBedragGroep = TotaalBedragGroep + Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + AktiefBoekjaar, "000") & " #"))
 '					Else
-'						TotaalBedragGroep = TotaalBedragGroep + Val(vBibTekst(FlRekening, "#v" & VB6.Format(22 + AktiefBoekjaar, "000") & " #"))
+'						TotaalBedragGroep = TotaalBedragGroep + Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + AktiefBoekjaar, "000") & " #"))
 '					End If
-'					bGetOrGreater(FlJournaal, 0, vSet(KeyBuf(FlRekening), 7) & PeriodFromChosen.Value)
+'					bGetOrGreater(FlJournaal, 0, vSet(KeyBuf(FlLedgerAccount), 7) & PeriodFromChosen.Value)
 '					If Ktrl Then
 '						MsgBox("Geen journalen voor deze periode...")
 '					Else
@@ -892,7 +892,7 @@ End Class
 '							Exit Do
 '						End If
 '						Do While VB.Right(KeyBuf(FlJournaal), 8) <= PeriodToChosen.Value
-'							SnelHelpPrint("Alle journalen voor rekening " & KeyBuf(FlRekening) & " worden gekontroleerd.  Bezig aan :" & VB.Right(KeyBuf(FlJournaal), 8), blLogging)
+'							SnelHelpPrint("Alle journalen voor rekening " & KeyBuf(FlLedgerAccount) & " worden gekontroleerd.  Bezig aan :" & VB.Right(KeyBuf(FlJournaal), 8), blLogging)
 '							'UPGRADE_ISSUE: DoEvents does not return a value. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="8D115264-E27F-4472-A684-865A00B5E826"'
 '							XDoEvents = System.Windows.Forms.Application.DoEvents()
 '							If Trim(vBibTekst(FlJournaal, "#v033 #")) = "" Or VB.Left(vBibTekst(FlJournaal, "#v033 #"), 1) = "D" Then
@@ -901,7 +901,7 @@ End Class
 
 '								BedragZonderdokument = BedragZonderdokument + Val(vBibTekst(FlJournaal, "#v068 #"))
 '							ElseIf RTrim(vBibTekst(FlJournaal, "#v038 #")) <> "" Then 
-'								bGet(Fldokument, 0, vBibTekst(FlJournaal, "#v033 #"))
+'								MsJetGet(Fldokument, 0, vBibTekst(FlJournaal, "#v033 #"))
 '								If Ktrl Then
 '								Else
 '									RecordToVeld(Fldokument)
@@ -962,11 +962,11 @@ End Class
 '							End If
 '						Loop 
 '					End If
-'					bNext(FlRekening)
-'					If Ktrl Or KeyBuf(FlRekening) > GroepSelektie Then
+'					bNext(FlLedgerAccount)
+'					If Ktrl Or KeyBuf(FlLedgerAccount) > GroepSelektie Then
 '						Exit Do
 '					Else
-'						RecordToVeld(FlRekening)
+'						RecordToVeld(FlLedgerAccount)
 '					End If
 '				Loop 
 '			End If

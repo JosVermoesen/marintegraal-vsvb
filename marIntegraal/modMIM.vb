@@ -263,9 +263,9 @@ ErrorOpvang:
         FlIndexIs(FlLeverancier, 0) = "A110 " : FlIndexLen(FlLeverancier, 0) = 12 : FLIndexCaption(FlLeverancier, 0) = "Nummer"
         FlIndexIs(FlLeverancier, 1) = "A100 " : FlIndexLen(FlLeverancier, 1) = 10 : FLIndexCaption(FlLeverancier, 1) = "Bedrijfsnaam"
 
-        FlAantalIndexen(FlRekening) = 1
-        FlIndexIs(FlRekening, 0) = "v019 " : FlIndexLen(FlRekening, 0) = 7 : FLIndexCaption(FlRekening, 0) = "RekeningNummer"
-        FlIndexIs(FlRekening, 1) = "v020 " : FlIndexLen(FlRekening, 1) = 10 : FLIndexCaption(FlRekening, 1) = "Omschrijving"
+        FlAantalIndexen(FlLedgerAccount) = 1
+        FlIndexIs(FlLedgerAccount, 0) = "v019 " : FlIndexLen(FlLedgerAccount, 0) = 7 : FLIndexCaption(FlLedgerAccount, 0) = "RekeningNummer"
+        FlIndexIs(FlLedgerAccount, 1) = "v020 " : FlIndexLen(FlLedgerAccount, 1) = 10 : FLIndexCaption(FlLedgerAccount, 1) = "Omschrijving"
 
         FlAantalIndexen(FlProdukt) = 1
         FlIndexIs(FlProdukt, 0) = "v102 " : FlIndexLen(FlProdukt, 0) = 13 : FLIndexCaption(FlProdukt, 0) = "Artikelkode EAN"
@@ -357,7 +357,7 @@ EenFoutBijINLaden:
         Dim DummySleutel As String
 
         DummySleutel = "s" & Format(NummerSleutel, "000") & " "
-        bGet(FlTeller, 0, DummySleutel)
+        MsJetGet(FlTeller, 0, DummySleutel)
         If Ktrl Then
             If BAModus = 1 Then
 
@@ -502,7 +502,7 @@ EenFoutBijINLaden:
                 LogTekst = "BIB voor Klanten"
             Case FlLeverancier
                 LogTekst = "BIB voor Leveranciers"
-            Case FlRekening
+            Case FlLedgerAccount
                 LogTekst = "BIB voor Algemene Rekeningen"
             Case FlProdukt
                 LogTekst = "BIB voor Artikels/Diensten"

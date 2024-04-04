@@ -31,7 +31,7 @@ Public Class frmBasisFiche
     End Sub
     Private Sub FicheNaarRecord()
 
-        bGet(hierFl, 0, vSet(codeTextBox.Text, FlIndexLen(hierFl, 0)))
+        MsJetGet(hierFl, 0, vSet(codeTextBox.Text, FlIndexLen(hierFl, 0)))
         If Ktrl = 0 Then
             bUpdate(hierFl, 0)
         Else
@@ -121,9 +121,9 @@ Public Class frmBasisFiche
 
         SharedFl = hierFl
         If codeTextBox.Text <> "" Then
-            sharedIndex = 0
+            SharedIndex = 0
         ElseIf codeTextBox.Text = lastKey Then
-            sharedIndex = Val(Mid(sorteringComboBox.Text, 2))
+            SharedIndex = Val(Mid(sorteringComboBox.Text, 2))
         End If
 
         GridText = codeTextBox.Text
@@ -163,20 +163,20 @@ Public Class frmBasisFiche
 
         teZoeken = Trim(codeTextBox.Text)
         If TeZoeken = "" Then Beep() : Exit Sub
-        bGet(hierFl, 0, teZoeken)
+        MsJetGet(hierFl, 0, teZoeken)
         If Ktrl = 0 Then
             RecordNaarFiche()
         Else
             NieuweFiche()
             codeTextBox.Text = teZoeken
         End If
-        'If Fl = FlRekening Then DbKontrole((TekstInfo(0).Text), FlRekening)
+        'If Fl = FlLedgerAccount Then DbKontrole((TekstInfo(0).Text), FlLedgerAccount)
 
         If InsertFlag(hierFl) = 1 Then 'nieuwe fiche
             Select Case hierFl
                 Case FlKlant, FlLeverancier
                     vBib(hierFl, codeTextBox.Text, "A110") 'Klant/Levnummer
-                Case FlRekening
+                Case FlLedgerAccount
                     vBib(hierFl, codeTextBox.Text, "v019") 'Rekeningnummer
                 Case Else
                     MsgBox("Stop")

@@ -30,8 +30,8 @@ End Class
 '		Dim RekeningNaam As New VB6.FixedLengthString(40)
 '		Dim RekeningTest2 As String
 
-'		TekstInfo(3).Text = vBibTekst(FlRekening, "#v019 #")
-'		RekeningTest2 = RTrim(vBibTekst(FlRekening, "#v019 #"))
+'		TekstInfo(3).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'		RekeningTest2 = RTrim(vBibTekst(FlLedgerAccount, "#v019 #"))
 '		TekstInfo(0).Text = Mid(GridText, 1, 10)
 '		TekstInfo(1).Text = Dec(Val(Mid(GridText, 11, 12)), MaskEURBH)
 '		TLBRecord(FlAllerlei) = ""
@@ -51,23 +51,23 @@ End Class
 '		Else
 '			RekeningTest.Value = RekeningTest2
 '			TekstInfo(4).Text = RekeningTest.Value
-'			bGet(FlRekening, 0, RekeningTest.Value)
+'			MsJetGet(FlLedgerAccount, 0, RekeningTest.Value)
 '			If Ktrl Then
-'				RekeningNaam.Value = vBibTekst(FlRekening, "#v020 #")
+'				RekeningNaam.Value = vBibTekst(FlLedgerAccount, "#v020 #")
 '				Msg = "Afschrijving op " & RTrim(RekeningNaam.Value) & vbCrLf
 '				Msg = Msg & "Rekeningnr. : " & RekeningTest.Value & " bestaat nog niet." & vbCrLf & vbCrLf
 '				Msg = Msg & "Wordt hierna automatisch aangemaakt..."
 '				MsgBox(Msg, 0, "Aanmaak afschrijfrekening")
 
-'				TLBRecord(FlRekening) = ""
-'				vBib(FlRekening, RekeningTest.Value, "v019")
-'				vBib(FlRekening, "Afschrijving op " & RTrim(RekeningNaam.Value), "v020")
-'				vBib(FlRekening, "O", "v032")
-'				bInsert(FlRekening, 0)
+'				TLBRecord(FlLedgerAccount) = ""
+'				vBib(FlLedgerAccount, RekeningTest.Value, "v019")
+'				vBib(FlLedgerAccount, "Afschrijving op " & RTrim(RekeningNaam.Value), "v020")
+'				vBib(FlLedgerAccount, "O", "v032")
+'				bInsert(FlLedgerAccount, 0)
 '			End If
 '		End If
 
-'		bGet(FlAllerlei, 1, vSet("18" & RekeningTest.Value, 20))
+'		MsJetGet(FlAllerlei, 1, vSet("18" & RekeningTest.Value, 20))
 '		NietAanwezig = Ktrl
 '		If Ktrl Then
 '			TekstInfo(6).Text = ""

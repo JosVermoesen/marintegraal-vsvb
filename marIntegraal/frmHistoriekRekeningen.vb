@@ -180,12 +180,12 @@ End Class
 '		End If
 '		Line = 0
 '		RecordToVeld(FlJournaal)
-'		bGet(FlRekening, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
+'		MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
 '		If Ktrl Then
 '			SubTitelTekst = vSet(vBibTekst(FlJournaal, "#v019 #"), 7) & " rekening reeds vernietigd..."
 '		Else
-'			RecordToVeld(FlRekening)
-'			SubTitelTekst = vBibTekst(FlRekening, "#v019 #") & " " & vBibTekst(FlRekening, "#v020 #")
+'			RecordToVeld(FlLedgerAccount)
+'			SubTitelTekst = vBibTekst(FlLedgerAccount, "#v019 #") & " " & vBibTekst(FlLedgerAccount, "#v020 #")
 '			SnelHelpPrint(SubTitelTekst, blLogging)
 '			ReportText(3) = SubTitelTekst
 '		End If
@@ -204,7 +204,7 @@ End Class
 '		FieldText(4) = vBibTekst(FlJournaal, "#v038 #")
 '		FieldText(7) = vBibTekst(FlJournaal, "#v069 #")
 '		If RTrim(FieldText(3)) <> "" Then
-'			bGet(Fldokument, 0, FieldText(3))
+'			MsJetGet(Fldokument, 0, FieldText(3))
 '			If Ktrl Then
 '				FieldText(8) = FieldText(3)
 '			Else
@@ -482,12 +482,12 @@ End Class
 '				Select Case KeyCode
 '					Case 17
 '						aIndex = 0
-'						SharedFl = FlRekening
+'						SharedFl = FlLedgerAccount
 '						GridText = TekstLijn(Index).Text
 '						SqlSearch.ShowDialog()
 '						If Ktrl = 0 Then
-'							TekstLijn(Index).Text = vBibTekst(FlRekening, "#v019 #")
-'							SnelHelpPrint(vBibTekst(FlRekening, "#v020 #"), blLogging)
+'							TekstLijn(Index).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'							SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v020 #"), blLogging)
 '						End If
 '				End Select
 '		End Select
@@ -505,12 +505,12 @@ End Class
 '					TekstLijn(1).Focus()
 '				End If
 '			Case 2
-'				bGetOrGreater(FlRekening, 0, vSet(TekstLijn(2).Text, 7))
+'				bGetOrGreater(FlLedgerAccount, 0, vSet(TekstLijn(2).Text, 7))
 '				If Ktrl Then
 '				Else
-'					RecordToVeld(FlRekening)
-'					TekstLijn(2).Text = vBibTekst(FlRekening, "#v019 #")
-'					SnelHelpPrint(vBibTekst(FlRekening, "#v020 #"), blLogging)
+'					RecordToVeld(FlLedgerAccount)
+'					TekstLijn(2).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'					SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v020 #"), blLogging)
 '				End If
 '		End Select
 

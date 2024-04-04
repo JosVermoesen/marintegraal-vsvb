@@ -150,7 +150,7 @@ End Class
 '			System.Windows.Forms.Application.DoEvents()
 '		End If
 
-'		bGet(FlLeverancier, 0, vSet(VB.Left(KeuzeInfo(6).Text, 2) & VB.Left(KeuzeInfo(0).Text, 4), 12))
+'		MsJetGet(FlLeverancier, 0, vSet(VB.Left(KeuzeInfo(6).Text, 2) & VB.Left(KeuzeInfo(0).Text, 4), 12))
 '		If Ktrl Then
 '			MsgBox("stop")
 '		Else
@@ -528,7 +528,7 @@ End Class
 '		'check voor faxnummer & email
 '		OpzoekSleutel = "27" & VB.Left(KeuzeInfo(2).Text, 3) & VB.Left(KeuzeInfo(0).Text, 4)
 '		If Len(OpzoekSleutel) = 9 Then
-'			bGet(FlAllerlei, 1, OpzoekSleutel)
+'			MsJetGet(FlAllerlei, 1, OpzoekSleutel)
 '			If Ktrl Then
 '				Me.lFax.Text = ""
 '				Me.lMail.Text = ""
@@ -927,7 +927,7 @@ End Class
 '		If VB.Left(KeuzeInfo(2).Text, 3) <> VB.Left(vBibTekst(FlPolis, "#v223 #"), 3) Then
 '			MsgBox("Takkode van deze polis onbekend.  Verbeter a.u.b. !")
 '		End If
-'		bGet(FlAllerlei, 1, vSet("25" & vBibTekst(FlPolis, "#A010 #") & vBibTekst(FlPolis, "#A000 #"), 20))
+'		MsJetGet(FlAllerlei, 1, vSet("25" & vBibTekst(FlPolis, "#A010 #") & vBibTekst(FlPolis, "#A000 #"), 20))
 '		If Ktrl Then
 '			'niks
 '		Else

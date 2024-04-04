@@ -10,10 +10,10 @@ Public Class KeuzeVSF
         OptieTxt = GridText
         NTBoxLijst.Items.Clear()
         ZoekTekst = "NTKB2"
-        If sharedIndex >= 1000 Then
-            ZoekTekst = ZoekTekst & Format(sharedIndex - 1000, "000")
+        If SharedIndex >= 1000 Then
+            ZoekTekst = ZoekTekst & Format(SharedIndex - 1000, "000")
         Else
-            ZoekTekst = ZoekTekst & "9" & Format(sharedIndex, "00")
+            ZoekTekst = ZoekTekst & "9" & Format(SharedIndex, "00")
         End If
         Keuze = -1
         X = ZoekEnPlaats((NTBoxLijst), ZoekTekst, Aantallijnen, Keuze, GridText)

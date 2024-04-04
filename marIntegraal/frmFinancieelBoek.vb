@@ -65,7 +65,7 @@ End Class
 '		InfoScherm.X.Col = 7
 '		InfoScherm.X.Text = "vsfRecord"
 
-'		bGet(FlJournaal, 2, vSet(DeString, 8))
+'		MsJetGet(FlJournaal, 2, vSet(DeString, 8))
 '		If Ktrl Then
 '			Beep()
 '			MsgBox("Geen journaallijnen voor " & DeString)
@@ -134,12 +134,12 @@ End Class
 '		End If
 '		A = FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) & vbTab
 '		A = A & vBibTekst(FlJournaal, "#v019 #") & vbTab
-'		bGet(FlRekening, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
+'		MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
 '		If Ktrl Then
 '			A = A & "//" & vbTab
 '		Else
-'			RecordToVeld(FlRekening)
-'			A = A & vBibTekst(FlRekening, "#v020 #") & vbTab
+'			RecordToVeld(FlLedgerAccount)
+'			A = A & vBibTekst(FlLedgerAccount, "#v020 #") & vbTab
 '		End If
 '		A = A & rsMAR(FlJournaal).Fields("v068").Value & vbTab
 '		A = A & rsMAR(FlJournaal).Fields("v067").Value & vbTab
@@ -193,12 +193,12 @@ End Class
 '		bClose(FlDummy)
 '		bFirst(FlDummy, 0)
 '		RecordToVeld(FlDummy)
-'		bGet(FlRekening, 0, VB.Left(FVT(FlDummy, 0), 7))
+'		MsJetGet(FlLedgerAccount, 0, VB.Left(FVT(FlDummy, 0), 7))
 '		If Ktrl Then
 '			RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '		Else
-'			RecordToVeld(FlRekening)
-'			RekeningNaam.Value = vBibTekst(FlRekening, "#v020 #")
+'			RecordToVeld(FlLedgerAccount)
+'			RekeningNaam.Value = vBibTekst(FlLedgerAccount, "#v020 #")
 '		End If
 '		Tabul = 0
 '		Printer.Write(TAB(Tabul + 2), Dec(Val(vBibTekst(FlDummy, "#v013 #")), "####") & " x " & vSet(vBibTekst(FlDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(vBibTekst(FlDummy, "#v068 #")), MaskEURBH))
@@ -209,12 +209,12 @@ End Class
 '				Exit Do
 '			End If
 '			RecordToVeld(FlDummy)
-'			bGet(FlRekening, 0, VB.Left(FVT(FlDummy, 0), 7))
+'			MsJetGet(FlLedgerAccount, 0, VB.Left(FVT(FlDummy, 0), 7))
 '			If Ktrl Then
 '				RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '			Else
-'				RecordToVeld(FlRekening)
-'				RekeningNaam.Value = vBibTekst(FlRekening, "#v020 #")
+'				RecordToVeld(FlLedgerAccount)
+'				RekeningNaam.Value = vBibTekst(FlLedgerAccount, "#v020 #")
 '			End If
 '			If Tabul = 0 Then
 '				Tabul = 59
@@ -381,7 +381,7 @@ End Class
 '		Exit Sub
 
 'DetailPrintJournaal: 
-'		bGet(FlJournaal, 2, VB.Left(UittrekselsLijst.Text, 8))
+'		MsJetGet(FlJournaal, 2, VB.Left(UittrekselsLijst.Text, 8))
 '		If Ktrl Or KeyBuf(FlJournaal) <> VB.Left(UittrekselsLijst.Text, 8) Then
 '			Beep()
 '			MsgBox("onlogische situatie")
@@ -420,12 +420,12 @@ End Class
 
 '		FieldText(0) = ""
 '		FieldText(1) = vBibTekst(FlJournaal, "#v019 #")
-'		bGet(FlRekening, 0, vSet(FieldText(1), 7))
+'		MsJetGet(FlLedgerAccount, 0, vSet(FieldText(1), 7))
 '		If Ktrl Then
 '			FieldText(2) = "Reeds vernietigd..."
 '		Else
-'			RecordToVeld(FlRekening)
-'			FieldText(2) = vBibTekst(FlRekening, "#v020 #")
+'			RecordToVeld(FlLedgerAccount)
+'			FieldText(2) = vBibTekst(FlLedgerAccount, "#v020 #")
 '		End If
 '		FieldText(3) = vBibTekst(FlJournaal, "#v067 #")
 '		DCBedrag = Val(vBibTekst(FlJournaal, "#v068 #"))
@@ -457,7 +457,7 @@ End Class
 
 'DetailCumul: 
 'StartPunt: 
-'		bGet(FlDummy, 0, vSet(DeRekening.Value, 20))
+'		MsJetGet(FlDummy, 0, vSet(DeRekening.Value, 20))
 '		If Ktrl Then
 '			TLBRecord(FlDummy) = ""
 '			vBib(FlDummy, DeRekening.Value, "v089")
@@ -537,12 +537,12 @@ End Class
 
 '		bClose(FlJournaal)
 '		For T = 0 To 9
-'			bGet(FlRekening, 0, RekeningNummer(T))
+'			MsJetGet(FlLedgerAccount, 0, RekeningNummer(T))
 '			If Ktrl Then
 '				A = RekeningNummer(T) & Chr(124) & "Niet aanwezig. Setup Boekjaar!"
 '			Else
-'				RecordToVeld(FlRekening)
-'				A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlRekening, "#v020 #"))
+'				RecordToVeld(FlLedgerAccount)
+'				A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlLedgerAccount, "#v020 #"))
 '			End If
 '			bFirst(FlJournaal, 0)
 '			bGetOrGreater(FlJournaal, 0, RekeningNummer(T) & PeriodFromChosen.Value)
@@ -785,12 +785,12 @@ End Class
 '					PeriodToChosen.Value = Mid(TekstLijn(0).Text, 20, 4) & Mid(TekstLijn(0).Text, 17, 2) & Mid(TekstLijn(0).Text, 14, 2)
 '					KeuzeInfo(0).Items.Clear()
 '					For T = 0 To 9
-'						bGet(FlRekening, 0, RekeningNummer(T))
+'						MsJetGet(FlLedgerAccount, 0, RekeningNummer(T))
 '						If Ktrl Then
 '							A = RekeningNummer(T) & Chr(124) & "Niet aanwezig. Setup Boekjaar!"
 '						Else
-'							RecordToVeld(FlRekening)
-'							A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlRekening, "#v020 #"))
+'							RecordToVeld(FlLedgerAccount)
+'							A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlLedgerAccount, "#v020 #"))
 '						End If
 '						bFirst(FlJournaal, 0)
 '						bGetOrGreater(FlJournaal, 0, RekeningNummer(T) & PeriodFromChosen.Value)

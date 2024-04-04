@@ -193,7 +193,7 @@ End Class
 
 '	Private Sub FicheNaarRecord()
 
-'		bGet(FlAllerlei, 1, vSet(vBibTekst(FlAllerlei, "#" & FlIndexIs(FlAllerlei, 1) & "#"), FlIndexLen(FlAllerlei, 1)))
+'		MsJetGet(FlAllerlei, 1, vSet(vBibTekst(FlAllerlei, "#" & FlIndexIs(FlAllerlei, 1) & "#"), FlIndexLen(FlAllerlei, 1)))
 '		If Ktrl = 0 Then
 '			Msg = "Gegevens bestaande fiche wijzigen.  Bent U zeker ?"
 '			KtrlBox = MsgBox(Msg, 292)
@@ -419,7 +419,7 @@ End Class
 '		Select Case Index
 '			Case 0
 '				If TekstInfo(0).Text = Space(Len(TekstInfo(0).Text)) Then Exit Sub
-'				bGet(FlAllerlei, 1, VB.Left(cmbDokumentType.Text, 2) & vSet(TekstInfo(0).Text, 18))
+'				MsJetGet(FlAllerlei, 1, VB.Left(cmbDokumentType.Text, 2) & vSet(TekstInfo(0).Text, 18))
 '				If Ktrl = 0 Then
 '					RecordNaarFiche()
 '					InsertFlag(FlAllerlei) = 0
@@ -588,30 +588,30 @@ End Class
 '			FieldText(7) = Dec(ipct, "#####")
 '			'investeringsrekening
 '			FieldText(3) = Trim(vBibTekst(FlAllerlei, "#v019 #"))
-'			bGet(FlRekening, 0, FieldText(3))
+'			MsJetGet(FlLedgerAccount, 0, FieldText(3))
 '			If Ktrl Then
 '				FieldText(0) = "Niet (meer) aanwezig..."
 '			Else
-'				RecordToVeld(FlRekening)
-'				FieldText(0) = vBibTekst(FlRekening, "#v020 #")
+'				RecordToVeld(FlLedgerAccount)
+'				FieldText(0) = vBibTekst(FlLedgerAccount, "#v020 #")
 '			End If
 '			'afschrijvingsrekening
 '			FieldText(6) = Trim(vBibTekst(FlAllerlei, "#v087 #"))
-'			bGet(FlRekening, 0, FieldText(6))
+'			MsJetGet(FlLedgerAccount, 0, FieldText(6))
 '			If Ktrl Then
 '				FieldText(1) = "Niet (meer) aanwezig..."
 '			Else
-'				RecordToVeld(FlRekening)
-'				FieldText(1) = vBibTekst(FlRekening, "#v020 #")
+'				RecordToVeld(FlLedgerAccount)
+'				FieldText(1) = vBibTekst(FlLedgerAccount, "#v020 #")
 '			End If
 '			'afschrijvingsKOSTrekening
 '			FieldText(9) = Trim(vBibTekst(FlAllerlei, "#v088 #"))
-'			bGet(FlRekening, 0, FieldText(9))
+'			MsJetGet(FlLedgerAccount, 0, FieldText(9))
 '			If Ktrl Then
 '				FieldText(2) = "Niet (meer) aanwezig..."
 '			Else
-'				RecordToVeld(FlRekening)
-'				FieldText(2) = vBibTekst(FlRekening, "#v020 #")
+'				RecordToVeld(FlLedgerAccount)
+'				FieldText(2) = vBibTekst(FlLedgerAccount, "#v020 #")
 '			End If
 '			If bhKontrole Then
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'

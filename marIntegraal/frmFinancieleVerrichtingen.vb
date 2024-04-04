@@ -121,21 +121,21 @@ End Class
 '			Exit Sub
 '		End If
 
-'		bGet(FlRekening, 0, VB.Left(KeuzeInfo(0).Text, 7))
+'		MsJetGet(FlLedgerAccount, 0, VB.Left(KeuzeInfo(0).Text, 7))
 '		If Ktrl Then
 '			MsgBox("onlogische situatie")
 '			Exit Sub
 '		Else
-'			RecordToVeld(FlRekening)
+'			RecordToVeld(FlLedgerAccount)
 '		End If
-'		bGet(FlJournaal, 2, UCase(VB.Left(vBibTekst(FlRekening, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000"))
+'		MsJetGet(FlJournaal, 2, UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000"))
 '		If Ktrl Then
 '			MsgBox("Dit zou het eerste uittreksel binnen het WERKELIJK jaar moeten zijn...  Kontroleer eventueel")
 '		Else
 '			RecordToVeld(FlJournaal)
 '			If vBibTekst(FlJournaal, "#v066 #") > VB6.Format(Datum.Value, "yyyymmdd") Then
 '				Msg = "Er zijn reeds uittreksels met een hogere datum !" & vbCrLf & vbCrLf
-'				Msg = Msg & "Laatste uittreksel nr. " & UCase(VB.Left(vBibTekst(FlRekening, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000") & " dateert van : " & FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) & vbCrLf & vbCrLf
+'				Msg = Msg & "Laatste uittreksel nr. " & UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000") & " dateert van : " & FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) & vbCrLf & vbCrLf
 '				Msg = Msg & "Vervolg.  Bent U zeker ?"
 '				Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel afsluiten")
 '				If Ktrl = MsgBoxResult.No Then
@@ -149,16 +149,16 @@ End Class
 '		Else
 '			Msg = "Datum uittreksel " & Datum.Value & " en bekomen eindsaldo BEF " & LabelInfo(13).Text & vbCrLf & vbCrLf & "Hierna wordt de boekhouding bijgewerkt.  Bent U zeker ?"
 '		End If
-'		Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel : " & UCase(VB.Left(vBibTekst(FlRekening, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000"))
+'		Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel : " & UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000"))
 '		If Ktrl = MsgBoxResult.Yes Then
 '			TransBegin()
 '			If WegBoekFout() Then
 '				TransAbort()
 '				Exit Sub
 '			Else
-'				bEnd()
+'				TransCommit()
 '				DummySleutel.Value = "s" & VB6.Format(RecNummer(KeuzeInfo(0).SelectedIndex), "000")
-'				bGet(FlTeller, 0, DummySleutel.Value)
+'				MsJetGet(FlTeller, 0, DummySleutel.Value)
 '				If Ktrl Then
 '					MsgBox("TellerStop " & DummySleutel.Value & ".  kontakteer R&&Vsoft")
 '				Else
@@ -176,7 +176,7 @@ End Class
 '				End If
 
 '				DummySleutel.Value = "s101"
-'				bGet(FlTeller, 0, DummySleutel.Value)
+'				MsJetGet(FlTeller, 0, DummySleutel.Value)
 '				If Ktrl Then
 '					MsgBox("TellerStop.  Versiekonflikt !  Kontakteer R&&Vsoft")
 '				Else
@@ -415,12 +415,12 @@ End Class
 '		Uittreksel(9) = LTrim(RTrim(String99(Lees, 218)))
 
 '		For T = 0 To 9
-'			bGet(FlRekening, 0, RekeningNummer(T))
+'			MsJetGet(FlLedgerAccount, 0, RekeningNummer(T))
 '			If Ktrl Then
 '				A = "Niet aanwezig. Installeer via Setup Boekjaar."
 '			Else
-'				RecordToVeld(FlRekening)
-'				A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlRekening, "#v020 #"))
+'				RecordToVeld(FlLedgerAccount)
+'				A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlLedgerAccount, "#v020 #"))
 '			End If
 '			KeuzeInfo(0).Items.Add(A)
 '			If DefaultRekening.Value = RekeningNummer(T) Then
@@ -444,24 +444,24 @@ End Class
 '					Case Else
 '						LabelInfo(11).Text = Str(Val(Uittreksel(KeuzeInfo(0).SelectedIndex)) + 1)
 '				End Select
-'				bGet(FlRekening, 0, vSet(KeuzeInfo(0).Text, 7))
+'				MsJetGet(FlLedgerAccount, 0, vSet(KeuzeInfo(0).Text, 7))
 '				If Ktrl Then
 '				Else
-'					RecordToVeld(FlRekening)
+'					RecordToVeld(FlLedgerAccount)
 '					If BeginBalans = 1 Then
 '						If bhEuro Then
-'							lblInfo(0).Text = VB6.Format(Val(vBibTekst(FlRekening, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							lblInfo(0).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							LabelInfo(12).Text = VB6.Format(CDbl(lblInfo(0).Text) * Euro, "#,##0.00")
 '						Else
-'							LabelInfo(12).Text = VB6.Format(Val(vBibTekst(FlRekening, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							LabelInfo(12).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							lblInfo(0).Text = VB6.Format(CDbl(LabelInfo(12).Text) / Euro, "#,##0.00")
 '						End If
 '					Else
 '						If bhEuro Then
-'							lblInfo(0).Text = VB6.Format(Val(vBibTekst(FlRekening, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(vBibTekst(FlRekening, "#e" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							lblInfo(0).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							LabelInfo(12).Text = VB6.Format(System.Math.Round(CDbl(lblInfo(0).Text) * Euro), "#,##0.00")
 '						Else
-'							LabelInfo(12).Text = VB6.Format(Val(vBibTekst(FlRekening, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(vBibTekst(FlRekening, "#v" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							LabelInfo(12).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							lblInfo(0).Text = VB6.Format(CDbl(LabelInfo(12).Text) / Euro, "#,##0.00")
 '						End If
 '					End If
@@ -563,7 +563,7 @@ End Class
 
 '		Select Case Mid(ReferteTxt, 8, 1)
 '			Case "0"
-'				bGet(FlKlant, 0, Mid(ReferteTxt, 4, 4) & Mid(ReferteTxt, 9, 2))
+'				MsJetGet(FlKlant, 0, Mid(ReferteTxt, 4, 4) & Mid(ReferteTxt, 9, 2))
 '				If Ktrl Then
 '					'het is geen klant, probeer als leveranciersreferte...
 '				Else
@@ -709,12 +709,12 @@ End Class
 '		vBib(FlJournaal, VB6.Format(Datum.Value, "yyyymmdd"), "v066")
 '		vBib(FlJournaal, VB6.Format(Datum.Value, "yyyymmdd"), "v035")
 
-'		bGet(FlRekening, 0, VB.Left(KeuzeInfo(0).Text, 7))
+'		MsJetGet(FlLedgerAccount, 0, VB.Left(KeuzeInfo(0).Text, 7))
 '		If Ktrl Then
 '			Exit Function
 '		Else
-'			RecordToVeld(FlRekening)
-'			dokumentSleutel.Value = UCase(VB.Left(vBibTekst(FlRekening, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000")
+'			RecordToVeld(FlLedgerAccount)
+'			dokumentSleutel.Value = UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000")
 '		End If
 '		vBib(FlJournaal, dokumentSleutel.Value, "v038")
 '		If bhEuro Then
@@ -742,7 +742,7 @@ End Class
 '				vBib(FlJournaal, " ", "v033")
 '				vBib(FlJournaal, " ", "v034")
 '			Else
-'				bGet(Fldokument, 0, Mid(FinancieelDetail.Text, 2, 11))
+'				MsJetGet(Fldokument, 0, Mid(FinancieelDetail.Text, 2, 11))
 '				If Ktrl Then
 '					Exit Function
 '				Else

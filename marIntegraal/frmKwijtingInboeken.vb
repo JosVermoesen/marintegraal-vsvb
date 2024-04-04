@@ -153,7 +153,7 @@ End Class
 '			Exit Sub
 '		End If
 
-'		Ktrl = bOpen(FlRekening)
+'		Ktrl = bOpen(FlLedgerAccount)
 '		Ktrl = bOpen(FlJournaal)
 '		Ktrl = bOpen(Fldokument)
 '		TransBegin()
@@ -161,7 +161,7 @@ End Class
 '			TransAbort()
 '			Exit Sub
 '		Else
-'			bEnd()
+'			TransCommit()
 '			SS99(VB.Right(dokumentSleutel.Value, 5), 121)
 '			'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			If Dir(AssurnetLokatie & "AS1.RCV") <> "" Then
@@ -412,7 +412,7 @@ End Class
 '				Else
 '					beheersforfait = 0
 '				End If
-'				bGet(FlPolis, 0, Trim(arrayGridCols(0)))
+'				MsJetGet(FlPolis, 0, Trim(arrayGridCols(0)))
 '				If Ktrl Then
 '					MsgBox("logicafout", MsgBoxStyle.Critical)
 '				Else
@@ -537,7 +537,7 @@ End Class
 '			Select Case VB.Left(vBibTekst(FlPolis, "#vs97 #"), 1)
 '				Case "0", "7", "9"
 '				Case Else
-'					bGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+'					MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
 '					If Ktrl Then
 '						Dummy.Value = "KlantLink onmogelijk !!! Kontroleer !!!"
 '					Else
@@ -563,7 +563,7 @@ End Class
 '				Select Case VB.Left(vBibTekst(FlPolis, "#vs97 #"), 1)
 '					Case "0", "7", "9"
 '					Case Else
-'						bGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+'						MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
 '						If Ktrl Then
 '							Dummy.Value = "KlantLink onmogelijk !!! Kontroleer !!!"
 '						Else
@@ -584,27 +584,27 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				bGet(FlLeverancier, 0, vSet("CO" & VB.Left(KeuzeInfo(0).Text, 4), 12))
+'				MsJetGet(FlLeverancier, 0, vSet("CO" & VB.Left(KeuzeInfo(0).Text, 4), 12))
 '				If Ktrl Then
 '					'MsgBox "stop"
 '				Else
 '					RecordToVeld(FlLeverancier)
 '				End If
-'				bGet(FlRekening, 0, vSet(vBibTekst(FlLeverancier, "#v016 #"), 7))
+'				MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlLeverancier, "#v016 #"), 7))
 '				If Ktrl Then
 '					MsgBox("stop voor rekening aan te maken!")
-'					TLBRecord(FlRekening) = ""
-'					vBib(FlRekening, "700" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
-'					vBib(FlRekening, vBibTekst(FlLeverancier, "#A100 #"), "v020")
-'					bInsert(FlRekening, 0)
-'					TLBRecord(FlRekening) = ""
-'					vBib(FlRekening, "440" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
-'					vBib(FlRekening, vBibTekst(FlLeverancier, "#A100 #"), "v020")
-'					'FVT(FlRekening, 0) = "440" + Left(KeuzeInfo(0).Text, 4)
-'					'FVT(FlRekening, 1) = FVT(FlLeverancier, 1)
-'					bInsert(FlRekening, 0)
-'					vBib(FlLeverancier, vBibTekst(FlRekening, "#v019 #"), "v016")
-'					'FVT(FlLeverancier, 16) = FVT(FlRekening, 0)
+'					TLBRecord(FlLedgerAccount) = ""
+'					vBib(FlLedgerAccount, "700" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
+'					vBib(FlLedgerAccount, vBibTekst(FlLeverancier, "#A100 #"), "v020")
+'					bInsert(FlLedgerAccount, 0)
+'					TLBRecord(FlLedgerAccount) = ""
+'					vBib(FlLedgerAccount, "440" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
+'					vBib(FlLedgerAccount, vBibTekst(FlLeverancier, "#A100 #"), "v020")
+'					'FVT(FlLedgerAccount, 0) = "440" + Left(KeuzeInfo(0).Text, 4)
+'					'FVT(FlLedgerAccount, 1) = FVT(FlLeverancier, 1)
+'					bInsert(FlLedgerAccount, 0)
+'					vBib(FlLeverancier, vBibTekst(FlLedgerAccount, "#v019 #"), "v016")
+'					'FVT(FlLeverancier, 16) = FVT(FlLedgerAccount, 0)
 '					bUpdate(FlLeverancier, 0)
 '					LabelInfo(2).Text = vBibTekst(FlLeverancier, "#v016 #")
 '				Else
@@ -836,7 +836,7 @@ End Class
 
 '			PolisDetail.Row = T
 '			PolisDetail.Col = 0
-'			bGet(FlPolis, 0, vSet((PolisDetail.Text), 12))
+'			MsJetGet(FlPolis, 0, vSet((PolisDetail.Text), 12))
 '			If Ktrl Then
 '				MsgBox("Polisnummer " & PolisDetail.Text & vbCrLf & vbCrLf & "niet te vinden !")
 '				WegBoekFout = True
@@ -844,7 +844,7 @@ End Class
 '				Exit Function
 '			Else
 '				RecordToVeld(FlPolis)
-'				bGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
+'				MsJetGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
 '				If Ktrl Then
 '					MsgBox("Klantnummer " & vBibTekst(FlPolis, "#A110 #") & " in lijn " & Str(PolisDetail.Row) & vbCrLf & vbCrLf & "niet te vinden !")
 '					WegBoekFout = True
@@ -1126,7 +1126,7 @@ End Class
 '		Dim BetalingStr As String
 
 '		BeheersKost = True
-'		bGet(Fldokument, 2, PolisNummer)
+'		MsJetGet(Fldokument, 2, PolisNummer)
 '		On Error Resume Next
 '		BetalingStr = Trim(rsMAR(Fldokument).Fields("v038").Value)
 '		If VB.Left(rsMAR(FlPolis).Fields("vs97").Value, 1) = "2" Then

@@ -41,7 +41,7 @@ Public Class SqlSearch
             TelOrde = TelTot + 1
         Loop
 
-        bGet(FlAllerlei, 1, "29" & Sleuteltje)
+        MsJetGet(FlAllerlei, 1, "29" & Sleuteltje)
         If Ktrl Then
             MsgBox("InitSQL")
         Else
@@ -151,8 +151,8 @@ InitSQL:
             Dim sortveldString As String = Trim(FlIndexIs(SharedFl, T))
             sorteringComboBox.Items.Add("+" & sortveldString & "; " & FLIndexCaption(SharedFl, T))
         Next
-        If sharedIndex Then
-            sorteringComboBox.SelectedIndex = sharedIndex
+        If SharedIndex Then
+            sorteringComboBox.SelectedIndex = SharedIndex
         Else
             sorteringComboBox.SelectedIndex = 0
         End If
@@ -186,7 +186,7 @@ InitSQL:
                 datPrimaryRS.Close()
             End If
 
-            bGet(SharedFl, 0, XLogKey)
+            MsJetGet(SharedFl, 0, XLogKey)
             If Ktrl Then
                 Beep()
                 txtTeZoeken.Focus()

@@ -33,7 +33,7 @@ Module ModLibs
     Public Const FlAllerlei As Short = 0
     Public Const FlKlant As Short = 1
     Public Const FlLeverancier As Short = 2
-    Public Const FlRekening As Short = 3
+    Public Const FlLedgerAccount As Short = 3
     Public Const FlProdukt As Short = 4
     Public Const FlPolis As Short = 5
     Public Const Fldokument As Short = 6
@@ -144,7 +144,7 @@ Module ModLibs
     Public SharedScanFl As Short
     Public Ktrl As Short
     Public KtrlLong As Integer
-    Public sharedIndex As Integer
+    Public SharedIndex As Integer
     Public AktieveFiche As Short
 
     Public blMilieu As Boolean

@@ -109,7 +109,7 @@ End Class
 '				Else
 '					RecordToVeld(FlKlant)
 '					TekstInfo(1).Text = vBibTekst(FlKlant, "#A100 #")
-'					bGet(FlPolis, 1, vBibTekst(FlKlant, "#A110 #"))
+'					MsJetGet(FlPolis, 1, vBibTekst(FlKlant, "#A110 #"))
 '					If Ktrl Or vSet(KeyBuf(FlPolis), 12) <> vSet(vBibTekst(FlKlant, "#A110 #"), 12) Then
 '						MsgBox("Geen polissen voor deze klant te vinden !!")
 '						TekstInfo(1).Text = "-"
@@ -150,7 +150,7 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				bGet(FlPolis, 0, vSet(TekstInfo(0).Text, 12))
+'				MsJetGet(FlPolis, 0, vSet(TekstInfo(0).Text, 12))
 '				If Ktrl Then
 '					CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
 '					TekstInfo(1).Focus()
@@ -160,7 +160,7 @@ End Class
 '					RecordToVeld(FlPolis)
 '					If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) = vBibTekst(FlPolis, "#A010 #") Then
 '						TekstInfo(0).Text = vBibTekst(FlPolis, "#A000 #")
-'						bGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+'						MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
 '						If Ktrl Then
 '							TekstInfo(1).Text = "KlantLink onmogelijk !!! Kontroleer !!!"
 '							CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False

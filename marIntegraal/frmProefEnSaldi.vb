@@ -143,13 +143,13 @@ End Class
 '				End If
 '			End If
 
-'			bGet(FlRekening, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
+'			MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
 '			If Ktrl Then
 '				FieldText(3) = "-"
 '			Else
-'				RecordToVeld(FlRekening)
-'				FieldText(3) = vBibTekst(FlRekening, "#v020 #")
-'				SnelHelpPrint(vBibTekst(FlRekening, "#v019 #") & " " & vBibTekst(FlRekening, "#v020 #") & " " & FieldText(3), blLogging)
+'				RecordToVeld(FlLedgerAccount)
+'				FieldText(3) = vBibTekst(FlLedgerAccount, "#v020 #")
+'				SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v019 #") & " " & vBibTekst(FlLedgerAccount, "#v020 #") & " " & FieldText(3), blLogging)
 '			End If
 '			FieldText(0) = VB6.Format(Line, "00000")
 '			FieldText(1) = FunctionDateText(vBibTekst(FlJournaal, "#v066 #"))
@@ -297,14 +297,14 @@ End Class
 
 '			CumTotaalD = 0
 '			CumTotaalC = 0
-'			bGet(FlRekening, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
+'			MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
 '			FieldText(0) = vBibTekst(FlJournaal, "#v019 #")
 '			If Ktrl Then
 '				FieldText(1) = "Rekening reeds vernietigd..."
 '				FieldText(2) = ""
 '			Else
-'				RecordToVeld(FlRekening)
-'				FieldText(1) = vBibTekst(FlRekening, "#v020 #")
+'				RecordToVeld(FlLedgerAccount)
+'				FieldText(1) = vBibTekst(FlLedgerAccount, "#v020 #")
 
 '				If bhEuro Then
 '					rkVeldje = "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"
@@ -312,7 +312,7 @@ End Class
 '					rkVeldje = "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"
 '				End If
 
-'				FieldText(2) = Str(Val(vBibTekst(FlRekening, rkVeldje)))
+'				FieldText(2) = Str(Val(vBibTekst(FlLedgerAccount, rkVeldje)))
 '				Select Case Val(FieldText(2))
 '					Case Is < 0
 '						FieldText(2) = "CS:" & Dec(System.Math.Abs(Val(FieldText(2))), Masker2002.Value)
@@ -323,7 +323,7 @@ End Class
 '		End If
 '		VorigeSleutel.Value = KeyBuf(FlJournaal)
 '		FieldText(3) = MaandTekst(Val(Mid(KeyBuf(FlJournaal), 12, 2)))
-'		SnelHelpPrint(vBibTekst(FlRekening, "#v019 #") & " " & vBibTekst(FlRekening, "#v020 #") & " " & Trim(FieldText(3)) & " " & Mid(KeyBuf(FlJournaal), 8, 4), blLogging)
+'		SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v019 #") & " " & vBibTekst(FlLedgerAccount, "#v020 #") & " " & Trim(FieldText(3)) & " " & Mid(KeyBuf(FlJournaal), 8, 4), blLogging)
 
 '		'UPGRADE_WARNING: Use of Null/IsNull() detected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="2EED02CB-5C0E-4DC1-AE94-4FAA3A30F51A"'
 '		If IsDbNull(rsMAR(FlJournaal).Fields("dece068").Value) Then
@@ -350,25 +350,25 @@ End Class
 '		Else
 '			rkVeldje = "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"
 '		End If
-'		If System.Math.Abs(CumTotaalD + CumTotaalC) - System.Math.Abs(Val(vBibTekst(FlRekening, rkVeldje))) = 0 Then
+'		If System.Math.Abs(CumTotaalD + CumTotaalC) - System.Math.Abs(Val(vBibTekst(FlLedgerAccount, rkVeldje))) = 0 Then
 '		Else
 '			Msg = "KontroleStop bijwerking rekeningsaldo !!" & vbCrLf & vbCrLf
-'			Msg = Msg & "Rekening : " & KeyBuf(FlRekening) & vbCrLf
+'			Msg = Msg & "Rekening : " & KeyBuf(FlLedgerAccount) & vbCrLf
 '			If bhEuro Then
-'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(vBibTekst(FlRekening, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
+'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
 '			Else
-'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(vBibTekst(FlRekening, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
+'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
 '			End If
 '			MsgBox(Msg & vbCrLf & vbCrLf & "Na deze P&S, nogmaals opnieuw P&S a.u.b. samenstellen", MsgBoxStyle.Exclamation)
 
-'			KontroleLijst = KontroleLijst & vBibTekst(FlRekening, "#v020 #") & " " & Dec(CumTotaalD + CumTotaalC, "#########.00") & " " & Dec(Val(vBibTekst(FlRekening, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#########.00") & vbCrLf
+'			KontroleLijst = KontroleLijst & vBibTekst(FlLedgerAccount, "#v020 #") & " " & Dec(CumTotaalD + CumTotaalC, "#########.00") & " " & Dec(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#########.00") & vbCrLf
 '			If bhEuro Then
-'				vBib(FlRekening, Str(CumTotaalD + CumTotaalC), "e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
-'				rsMAR(FlRekening).Fields("dece" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000")).Value = CumTotaalD + CumTotaalC
+'				vBib(FlLedgerAccount, Str(CumTotaalD + CumTotaalC), "e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
+'				rsMAR(FlLedgerAccount).Fields("dece" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000")).Value = CumTotaalD + CumTotaalC
 '			Else
-'				vBib(FlRekening, Str(CumTotaalD + CumTotaalC), "v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
+'				vBib(FlLedgerAccount, Str(CumTotaalD + CumTotaalC), "v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
 '			End If
-'			bUpdate(FlRekening, 0)
+'			bUpdate(FlLedgerAccount, 0)
 '		End If
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 

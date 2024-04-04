@@ -316,7 +316,7 @@ End Class
 
 '		tempo = Split(txtMilieu.Text, ";")
 '		For TelTot = 0 To UBound(tempo)
-'			bGet(FlProdukt, 0, tempo(TelTot))
+'			MsJetGet(FlProdukt, 0, tempo(TelTot))
 '			If Ktrl = 0 Then
 '				MsgBox(Trim(tempo(TelTot)) & " aanwezig", MsgBoxStyle.Information)
 '				TelOK = TelOK + 1
@@ -673,11 +673,11 @@ End Class
 '					Case "L"
 '						SharedFl = FlLeverancier
 '					Case "R"
-'						SharedFl = FlRekening
+'						SharedFl = FlLedgerAccount
 '					Case Else
 '						MsgBox("nog niks")
 '				End Select
-'				bGet(SharedFl, 0, TxtInfo(Index).Text)
+'				MsJetGet(SharedFl, 0, TxtInfo(Index).Text)
 '				If Ktrl Then
 '					MsgBox(TxtInfo(Index).Text & " bestaat niet (meer) !")
 '				Else
@@ -707,7 +707,7 @@ End Class
 '				Case "L"
 '					SharedFl = FlLeverancier
 '				Case "R"
-'					SharedFl = FlRekening
+'					SharedFl = FlLedgerAccount
 '				Case Else
 '					MsgBox("nog niks")
 '			End Select
@@ -755,7 +755,7 @@ End Class
 '		TxtInfo(Index).BackColor = System.Drawing.ColorTranslator.FromOle(&HFFFFFF)
 '		Select Case Index
 '			Case 0
-'				bGet(FlProdukt, 0, TxtInfo(0).Text)
+'				MsJetGet(FlProdukt, 0, TxtInfo(0).Text)
 '				If Ktrl Then
 '					Sleuteltje = TxtInfo(0).Text
 '					Schoon()

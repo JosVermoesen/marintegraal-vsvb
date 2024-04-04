@@ -199,7 +199,7 @@ End Class
 
 '			dTnt1 = 0
 '			dTnt2 = 0
-'			bGet(FlKlant, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
+'			MsJetGet(FlKlant, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
 '			KopBuf = vBibTekst(Fldokument, "#v034 #")
 '			FieldText(0) = Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12)
 '			If Ktrl Then

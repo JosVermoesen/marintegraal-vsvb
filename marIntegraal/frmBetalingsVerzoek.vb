@@ -292,7 +292,7 @@ Public Class BetalingsVerzoek
 		Dim NettoPremie As Decimal
 		Dim Commissie As Decimal
 
-		bGet(FlAllerlei, 1, "25" & vSet(Maatschappij, 4) & PolisNummer)
+		MsJetGet(FlAllerlei, 1, "25" & vSet(Maatschappij, 4) & PolisNummer)
 		If Ktrl Then
 			CommissieCheck = 0
 		Else
@@ -360,7 +360,7 @@ Public Class BetalingsVerzoek
 				'select beperken tot: A110, vs97, v164
 				getClient = policiesRS.Fields("A110").Value
 
-				bGet(FlKlant, 0, getClient)
+				MsJetGet(FlKlant, 0, getClient)
 				If Ktrl Then
 					Dummy = "KlantLink onmogelijk !!! Kontroleer !!!"
 				Else
@@ -412,7 +412,7 @@ Public Class BetalingsVerzoek
 				Dim strA000 As String = policiesRS.Fields("A000").Value
 				Dim strB010 As String = policiesRS.Fields("B010").Value
 
-				'bGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
+				'MsJetGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
 				comPercentage = CommissieCheck(strA010, strA000)
 				TaksEnKost = 0
 				If Ktrl Then
@@ -520,7 +520,7 @@ Public Class BetalingsVerzoek
 			sharedTotaal = Val(lvPolicesDetail.items.Item(T).SubItems(2).Text )
 			sharedvsfTB2 = lvPolicesDetail.items.Item(T).SubItems(6).Text 
 			
-			bGet(FlPolis, 0, PolisNummer)
+			MsJetGet(FlPolis, 0, PolisNummer)
 			If Ktrl Then
 				MsgBox("Stop")
 			Else
@@ -530,7 +530,7 @@ Public Class BetalingsVerzoek
 			'TotaalBEF = 0
 			TotaalEUR = 0
 
-			bGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+			MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
 			If Ktrl Then
 				MsgBox("stop")
 			Else
@@ -538,14 +538,14 @@ Public Class BetalingsVerzoek
 			End If
 
 			KlantNummer = vBibTekst(FlKlant, "#A110 #")
-			bGet(FlLeverancier, 0, "CO" & vBibTekst(FlPolis, "#A010 #"))
+			MsJetGet(FlLeverancier, 0, "CO" & vBibTekst(FlPolis, "#A010 #"))
 			If Ktrl Then
 				Beep()
 			Else
 				RecordToVeld(FlLeverancier)
 			End If
 
-			bGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
+			MsJetGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
 			IndexBM = "  --  "
 			TaksEnKost = 0
 			If Ktrl Then

@@ -192,7 +192,7 @@ End Class
 
 'StelSamen: 
 '		RecordToVeld(FlDummy)
-'		bGet(aIndex, 0, vBibTekst(FlDummy, "#v034 #"))
+'		MsJetGet(aIndex, 0, vBibTekst(FlDummy, "#v034 #"))
 '		If Ktrl Then
 '			FieldText(0) = "--"
 '		Else
@@ -289,7 +289,7 @@ End Class
 '				GoSub VoegErBij
 '			End If
 '			dTnt = 0
-'			bGet(aIndex, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
+'			MsJetGet(aIndex, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
 '			KopBuf = vBibTekst(Fldokument, "#v034 #")
 '			TLBRecord(FlDummy) = ""
 '			'0

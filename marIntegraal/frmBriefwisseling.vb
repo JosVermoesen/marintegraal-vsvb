@@ -1062,7 +1062,7 @@ End Class
 '		XDoEvents = System.Windows.Forms.Application.DoEvents()
 '		Select Case Briefwisseling(0).Checked
 '			Case True
-'				bGet(FlPartij, 0, vSet(VanTot(2).Text, 12))
+'				MsJetGet(FlPartij, 0, vSet(VanTot(2).Text, 12))
 '				If Ktrl Then
 '					MsgBox("Partij '" & Trim(VanTot(2).Text) & "' niet gevonden.  Gelieve klant of leveranciers nogmaals te SELECTeren en opnieuw proberen afdrukken a.u.b.")
 '				Else
@@ -1288,7 +1288,7 @@ End Class
 '		XDoEvents = System.Windows.Forms.Application.DoEvents()
 '		Select Case Briefwisseling(0).Checked
 '			Case True
-'				bGet(FlPartij, 0, vSet(VanTot(2).Text, 12))
+'				MsJetGet(FlPartij, 0, vSet(VanTot(2).Text, 12))
 '				If Ktrl Then
 '					MsgBox("Partij '" & Trim(VanTot(2).Text) & "' niet gevonden.  Gelieve klant of leveranciers nogmaals te SELECTeren en opnieuw proberen afdrukken a.u.b.")
 '				Else

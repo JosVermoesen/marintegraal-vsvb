@@ -60,7 +60,7 @@ End Class
 '	'UPGRADE_WARNING: Event cmbSelect.SelectedIndexChanged may fire when form is initialized. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="88B12AE1-6DE0-48A0-86F1-60C0686C026A"'
 '	Private Sub cmbSelect_SelectedIndexChanged(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmbSelect.SelectedIndexChanged
 
-'		bGet(FlAllerlei, 1, "29" & cmbSelect.Text)
+'		MsJetGet(FlAllerlei, 1, "29" & cmbSelect.Text)
 '		If Ktrl Then
 '		Else
 '			RecordToVeld(FlAllerlei)
@@ -97,7 +97,7 @@ End Class
 '		Dim Shift As Short = eventArgs.KeyData \ &H10000
 
 '		If KeyCode = 46 Then
-'			bGet(FlAllerlei, 1, "29" & cmbSelect.Text)
+'			MsJetGet(FlAllerlei, 1, "29" & cmbSelect.Text)
 '			If Ktrl Or VB.Left(KeyBuf(FlAllerlei), 2) <> "29" Then
 '			ElseIf MsgBox("Bestaande definitie '" & cmbSelect.Text & "' verwijderen ?", MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2) = MsgBoxResult.Yes Then 
 '				RecordToVeld(FlAllerlei)
@@ -285,7 +285,7 @@ End Class
 
 '	Private Sub cmdSelectWegschrijven_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdSelectWegschrijven.Click
 
-'		bGet(FlAllerlei, 1, "29" & cmbSelect.Text)
+'		MsJetGet(FlAllerlei, 1, "29" & cmbSelect.Text)
 '		If Ktrl Or VB.Left(KeyBuf(FlAllerlei), 2) <> "29" Then
 '			'Als nieuw bijvoegen
 '			TLBRecord(FlAllerlei) = ""

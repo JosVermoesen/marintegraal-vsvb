@@ -134,14 +134,14 @@ Public Class xLog
             Select Case Mid(xCode, 2, 2)
                 Case "K ", "L ", "LC", "R ", "R3", "R4", "R6", "R7"
                     'If EventArgs.KeyCode <> 17 Then Exit Sub
-                    sharedIndex = 0
+                    SharedIndex = 0
                     Select Case Mid(xCode, 2, 1)
                         Case "K"
                             SharedFl = FlKlant
                         Case "L"
                             SharedFl = FlLeverancier
                         Case "R"
-                            SharedFl = FlRekening
+                            SharedFl = FlLedgerAccount
                         Case Else
                             MsgBox("nog niks")
                     End Select
@@ -199,9 +199,9 @@ Public Class xLog
                 Case "0" To "9"
                     BoxType = 1
             End Select
-            sharedIndex = Val(Mid(xCode, 1, 3))
+            SharedIndex = Val(Mid(xCode, 1, 3))
             If BoxType = 1 Then
-                sharedIndex = sharedIndex + 1000
+                SharedIndex = SharedIndex + 1000
             End If
             DummyText = xText
             GridText = DummyText

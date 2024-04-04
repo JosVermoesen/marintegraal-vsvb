@@ -18,7 +18,7 @@ Module modDataBaseRoutines
                 'vBib(Fl, "BEF", "vs03") 'Munteenheid ISO kode
                 'End If
                 vBib(Fl, "1", "vs07") 'exemplaren dokumenten
-            Case FlRekening
+            Case FlLedgerAccount
                 vBib(Fl, "O", "v032") 'Budgetcode
         End Select
         Return True
@@ -264,7 +264,7 @@ OpnieuwEdit:
     End Sub
 
 
-    Sub bEnd()
+    Sub TransCommit()
 
         On Error Resume Next
         adntDB.CommitTrans()
@@ -302,7 +302,7 @@ OpnieuwEdit:
 
     End Sub
 
-    Sub bGet(ByRef Fl As Short, ByRef fIndex As Short, ByRef fSleutel As String)
+    Sub MsJetGet(ByRef Fl As Short, ByRef fIndex As Short, ByRef fSleutel As String)
 
         On Error Resume Next
         bClose(Fl)
@@ -446,21 +446,21 @@ opnieuwGOG:
             If Ktrl Then
                 MsgBox("bInsert journaal stopkode " & Str(Ktrl))
             Else
-                bGet(FlRekening, 0, Left(FVT(FlJournaal, 0), 7))
+                MsJetGet(FlLedgerAccount, 0, Left(FVT(FlJournaal, 0), 7))
                 If Ktrl Then
                     MsgBox("Rekening " & Left(FVT(FlJournaal, 0), 7) & " niet te vinden." & vbCrLf & "Eerst SETUPrekening inbrengen a.u.b. !")
                     dKtrlCumul = dKtrlCumul + 99
                     Exit Sub
                 ElseIf AktiefBoekjaar Then
-                    RecordToVeld(FlRekening)
-                    vBib(FlRekening, Str(Val(vBibTekst(FlRekening, "#e023 #")) + Val(vBibTekst(FlJournaal, "#v068 #"))), "e023")
-                    rsMAR(FlRekening).Fields("dece023").Value = rsMAR(FlRekening).Fields("dece023").Value + rsMAR(FlJournaal).Fields("dece068").Value
+                    RecordToVeld(FlLedgerAccount)
+                    vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e023 #")) + Val(vBibTekst(FlJournaal, "#v068 #"))), "e023")
+                    rsMAR(FlLedgerAccount).Fields("dece023").Value = rsMAR(FlLedgerAccount).Fields("dece023").Value + rsMAR(FlJournaal).Fields("dece068").Value
                 Else
-                    RecordToVeld(FlRekening)
-                    vBib(FlRekening, Str(Val(vBibTekst(FlRekening, "#e022 #")) + Val(vBibTekst(FlJournaal, "#v068 #"))), "e022")
-                    rsMAR(FlRekening).Fields("dece022").Value = rsMAR(FlRekening).Fields("dece022").Value + rsMAR(FlJournaal).Fields("dece068").Value
+                    RecordToVeld(FlLedgerAccount)
+                    vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e022 #")) + Val(vBibTekst(FlJournaal, "#v068 #"))), "e022")
+                    rsMAR(FlLedgerAccount).Fields("dece022").Value = rsMAR(FlLedgerAccount).Fields("dece022").Value + rsMAR(FlJournaal).Fields("dece068").Value
                 End If
-                bUpdate(FlRekening, 0)
+                bUpdate(FlLedgerAccount, 0)
             End If
         End If
         Select Case Ktrl
@@ -681,7 +681,7 @@ AccesErrorInsert:
                 RecordLijn = RecordLijn & "KLANTEN "
             Case FlLeverancier
                 RecordLijn = RecordLijn & "LEVERANC"
-            Case FlRekening
+            Case FlLedgerAccount
                 RecordLijn = RecordLijn & "REKENING"
             Case FlProdukt
                 RecordLijn = RecordLijn & "PRODUKT "
@@ -777,7 +777,7 @@ AccesErrorInsert:
         Else
             LockHold = True
         End If
-        bGet(FlTeller, 0, TlString)
+        MsJetGet(FlTeller, 0, TlString)
 
         If Ktrl = 99 Then
         ElseIf Ktrl Then
@@ -1017,26 +1017,26 @@ TeleBibError:
 
         rsJournaal.Fields("v070").Value = vSet(rsJournaal.Fields("v019").Value, 7) + rsJournaal.Fields("v066").Value
 
-        bGet(FlRekening, 0, rsJournaal.Fields("v019").Value)
+        MsJetGet(FlLedgerAccount, 0, rsJournaal.Fields("v019").Value)
         If Ktrl Then
             MsgBox("Rekening " + rsJournaal.Fields("v019").Value + " niet te vinden." + vbCrLf + "Eerst SETUPrekening inbrengen a.u.b. !")
             dKtrlCumul = dKtrlCumul + 99
             Exit Function
         ElseIf AktiefBoekjaar Then
-            RecordToVeld(FlRekening)
+            RecordToVeld(FlLedgerAccount)
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            vBib(FlRekening, Str(Val(vBibTekst(FlRekening, "#e023 #")) + Val(RV(rsJournaal, "v068"))), "e023")
+            vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e023 #")) + Val(RV(rsJournaal, "v068"))), "e023")
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJournaal, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            rsMAR(FlRekening).Fields("dece023").Value = rsMAR(FlRekening).Fields("dece023").Value + RV(rsJournaal, "dece068")
+            rsMAR(FlLedgerAccount).Fields("dece023").Value = rsMAR(FlLedgerAccount).Fields("dece023").Value + RV(rsJournaal, "dece068")
         Else
-            RecordToVeld(FlRekening)
+            RecordToVeld(FlLedgerAccount)
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            vBib(FlRekening, Str(Val(vBibTekst(FlRekening, "#e022 #")) + Val(RV(rsJournaal, "v068"))), "e022")
+            vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e022 #")) + Val(RV(rsJournaal, "v068"))), "e022")
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJournaal, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            rsMAR(FlRekening).Fields("dece022").Value = rsMAR(FlRekening).Fields("dece022").Value + RV(rsJournaal, "dece068")
+            rsMAR(FlLedgerAccount).Fields("dece022").Value = rsMAR(FlLedgerAccount).Fields("dece022").Value + RV(rsJournaal, "dece068")
         End If
-        rsMAR(FlRekening).Fields("dnnsync").Value = False
-        bUpdate(FlRekening, 0)
+        rsMAR(FlLedgerAccount).Fields("dnnsync").Value = False
+        bUpdate(FlLedgerAccount, 0)
         Err.Clear()
         On Error Resume Next
         rsJournaal.Update()

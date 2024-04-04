@@ -114,7 +114,7 @@ End Class
 '		For Teller = 1 To grdProduktDetail.Rows - 2
 '			grdProduktDetail.Row = Teller
 '			grdProduktDetail.Col = 0
-'			bGet(FlProdukt, 0, (grdProduktDetail.Text))
+'			MsJetGet(FlProdukt, 0, (grdProduktDetail.Text))
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
@@ -134,7 +134,7 @@ End Class
 '		For Teller = 1 To grdProduktDetail.Rows - 2
 '			grdProduktDetail.Row = Teller
 '			grdProduktDetail.Col = 0
-'			bGet(FlProdukt, 0, (grdProduktDetail.Text))
+'			MsJetGet(FlProdukt, 0, (grdProduktDetail.Text))
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
@@ -254,7 +254,7 @@ End Class
 '		For Teller = 1 To grdProduktDetail.Rows - 2
 '			grdProduktDetail.Row = Teller
 '			grdProduktDetail.Col = 0
-'			bGet(FlProdukt, 0, (grdProduktDetail.Text))
+'			MsJetGet(FlProdukt, 0, (grdProduktDetail.Text))
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
@@ -295,7 +295,7 @@ End Class
 '		For Teller = 1 To grdProduktDetail.Rows - 2
 '			grdProduktDetail.Row = Teller
 '			grdProduktDetail.Col = 0
-'			bGet(FlProdukt, 0, (grdProduktDetail.Text))
+'			MsJetGet(FlProdukt, 0, (grdProduktDetail.Text))
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
@@ -344,7 +344,7 @@ End Class
 '		Exit Sub
 
 'SKPKUpdate: 
-'		bGet(FlProdukt, 0, (CmdSProdukt.Text))
+'		MsJetGet(FlProdukt, 0, (CmdSProdukt.Text))
 '		If Ktrl Then
 '			MsgBox("Onlogische situatie!")
 '		Else
@@ -361,7 +361,7 @@ End Class
 '		End If
 '		vBib(FlProdukt, Dec(Aantalv119, MaskerEUR), "v119")
 '		bUpdate(FlProdukt, 0)
-'		bEnd()
+'		TransCommit()
 '		SS99(VB.Right(dokumentSleutel.Value, 5), 188)
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -459,7 +459,7 @@ End Class
 '		Dim itmX As System.Windows.Forms.ListViewItem
 '		Do While Not rsKPK.EOF
 '			cmdSchoon_Click(cmdSchoon, New System.EventArgs())
-'			bGet(FlProdukt, 0, Mid(rsKPK.Fields("v005").Value, 3))
+'			MsJetGet(FlProdukt, 0, Mid(rsKPK.Fields("v005").Value, 3))
 '			If Ktrl Then
 '			Else
 '				RecordToVeld(FlProdukt)
@@ -472,7 +472,7 @@ End Class
 '				Do While GridText <> ""
 '					'UPGRADE_WARNING: Couldn't resolve default property of object AAA. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					AAA = Mid(GridText, 1, InStr(GridText, vbTab) - 1)
-'					bGet(FlProdukt, 0, (AAA))
+'					MsJetGet(FlProdukt, 0, (AAA))
 '					If Ktrl Then
 '					Else
 '						RecordToVeld(FlProdukt)
@@ -582,7 +582,7 @@ End Class
 '			Msg = "11" & VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1)
 '			X = adoGet(FlAllerlei, 1, "=", Msg)
 '			If Not X Then MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
-'			bGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
+'			MsJetGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
 '			Else
@@ -600,7 +600,7 @@ End Class
 '				Do While GridText <> ""
 '					'UPGRADE_WARNING: Couldn't resolve default property of object AAA. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					AAA = Mid(GridText, 1, InStr(GridText, vbTab) - 1)
-'					bGet(FlProdukt, 0, (AAA))
+'					MsJetGet(FlProdukt, 0, (AAA))
 '					If Ktrl Then
 '					Else
 '						RecordToVeld(FlProdukt)
@@ -621,7 +621,7 @@ End Class
 '					GridText = Mid(GridText, InStr(GridText, vbCrLf) + 2)
 '				Loop 
 '				X = MaakTotaal
-'				bGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
+'				MsJetGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
 '				If Ktrl Then
 '					MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
 '				Else
@@ -682,7 +682,7 @@ End Class
 
 '	Private Sub cmdVerbruik_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdVerbruik.Click
 
-'		bGet(FlProdukt, 0, (LblProduktInfo.Text))
+'		MsJetGet(FlProdukt, 0, (LblProduktInfo.Text))
 '		If Ktrl Then
 '			MsgBox("onlogica")
 '		Else
@@ -702,7 +702,7 @@ End Class
 '		Msg = Msg & "Bent U zeker ?"
 '		KtrlBox = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Wegschrijven")
 '		If KtrlBox = MsgBoxResult.Yes Then
-'			bGet(FlAllerlei, 1, vSet("11" & CmdSProdukt.Text, 20))
+'			MsJetGet(FlAllerlei, 1, vSet("11" & CmdSProdukt.Text, 20))
 '			If Ktrl Then
 '			Else
 '				Do 
@@ -732,7 +732,7 @@ End Class
 '			Msg = Msg & "Bent U zeker ?"
 '			KtrlBox = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1, "Prijzen bijwerken")
 '			If KtrlBox = MsgBoxResult.Yes Then
-'				bGet(FlProdukt, 0, (CmdSProdukt.Text))
+'				MsJetGet(FlProdukt, 0, (CmdSProdukt.Text))
 '				If Ktrl Then
 '					MsgBox("onlogische situatie")
 '				Else
@@ -832,7 +832,7 @@ End Class
 '			TotaalAankoopNieuw = 0
 '			TotaalVerkoopNieuw = 0
 
-'			bGet(FlProdukt, 0, Mid(rsKPK.Fields("v005").Value, 3))
+'			MsJetGet(FlProdukt, 0, Mid(rsKPK.Fields("v005").Value, 3))
 '			If Ktrl Then
 '			Else
 '				RecordToVeld(FlProdukt)
@@ -934,13 +934,13 @@ End Class
 '			Msg = "11" & VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1)
 '			X = adoGet(FlAllerlei, 1, "=", Msg)
 '			If Not X Then MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
-'			bGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
+'			MsJetGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
 '			Else
 '				RecordToVeld(FlProdukt)
 '				X = LijstInstal
-'				bGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
+'				MsJetGet(FlProdukt, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
 '				RecordToVeld(FlProdukt)
 '				vBib(FlProdukt, Dec(TotaalVerkoopNieuw, "#######.000000"), "e112")
 '				vBib(FlProdukt, Dec(TotaalAankoopNieuw, "#######.000000"), "e113")
@@ -1054,7 +1054,7 @@ End Class
 '		LblProduktInfo.Text = vBibTekst(FlProdukt, "#v102 #") & vbCrLf & vBibTekst(FlProdukt, "#v105 #")
 '		CmdSProdukt.Text = vBibTekst(FlProdukt, "#v102 #")
 
-'		bGet(FlAllerlei, 1, vSet("11" & CmdSProdukt.Text, 20))
+'		MsJetGet(FlAllerlei, 1, vSet("11" & CmdSProdukt.Text, 20))
 '		NietAanwezig = Ktrl
 '		GrdProduktIsGewijzigd = False
 
@@ -1090,7 +1090,7 @@ End Class
 'VoegLijnERBij: 
 '		GridText = vBibTekst(FlAllerlei, "#v214 #")
 '		Do While GridText <> ""
-'			bGet(FlProdukt, 0, Mid(GridText, 1, InStr(GridText, vbTab) - 1))
+'			MsJetGet(FlProdukt, 0, Mid(GridText, 1, InStr(GridText, vbTab) - 1))
 '			If Ktrl Then
 '				aa = Mid(GridText, 1, InStr(GridText, vbTab) - 1) & vbTab
 '				aa = aa & "Niet meer aanwezig !!" & vbTab
@@ -1174,7 +1174,7 @@ End Class
 '		kpkProductOMS = vBibTekst(FlProdukt, "#v105 #")
 '		kpkProductNR = vBibTekst(FlProdukt, "#v102 #")
 
-'		bGet(FlAllerlei, 1, vSet("11" & kpkProductNR, 20))
+'		MsJetGet(FlAllerlei, 1, vSet("11" & kpkProductNR, 20))
 '		NietAanwezig = Ktrl
 '		GrdProduktIsGewijzigd = False
 
@@ -1202,7 +1202,7 @@ End Class
 'VoegLijnERBij2: 
 '		GridText = vBibTekst(FlAllerlei, "#v214 #")
 '		Do While GridText <> ""
-'			bGet(FlProdukt, 0, Mid(GridText, 1, InStr(GridText, vbTab) - 1))
+'			MsJetGet(FlProdukt, 0, Mid(GridText, 1, InStr(GridText, vbTab) - 1))
 '			If Ktrl Then
 '				aa = Mid(GridText, 1, InStr(GridText, vbTab) - 1) & vbTab
 '				aa = aa & "Niet meer aanwezig !!" & vbTab

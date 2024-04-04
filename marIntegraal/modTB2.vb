@@ -800,7 +800,7 @@ TLBError:
         '			MsgBox("ONMOGELIJKE SITUATIE")
         '		End If
 
-        '		bGet(FlPolis, 0, PolisNummer.Value)
+        '		MsJetGet(FlPolis, 0, PolisNummer.Value)
         '		If Ktrl Then
         '			MsgBox("polis niet aanwezig. EDIFACT nieuw nog in te brengen !!!", MsgBoxStyle.Critical)
         '			TLBRecord(FlPolis) = ""
@@ -847,7 +847,7 @@ TLBError:
         '				bUpdate(FlPolis, 0)
         '			End If
         '			As2TelebibIn.UserInfo(2).Text = Str(Val(As2TelebibIn.UserInfo(2).Text) + 1)
-        '			bGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
+        '			MsJetGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
         '			If Ktrl Then
         '				Dummy.Value = "Verbeter !!! " & TempoNaamKlant
         '			Else
@@ -870,7 +870,7 @@ TLBError:
         '		Return 
 
         'ruTeleBibKTRL: 
-        '		bGet(FlAllerlei, 1, "25" & Maatschappij & PolisNummer.Value)
+        '		MsJetGet(FlAllerlei, 1, "25" & Maatschappij & PolisNummer.Value)
         '		If Ktrl Then
         '			TLBRecord(FlAllerlei) = ""
         '		Else
@@ -1314,7 +1314,7 @@ TLBError:
         '					BedragPremie = Dec(Bedrag0, MaskerHier)
         '					'MsgBox "Totaal premie werd meegegeven: " & BedragPremie
         '				End If
-        '				bGet(FlPolis, 0, PolisNummer.Value)
+        '				MsJetGet(FlPolis, 0, PolisNummer.Value)
         '				If Ktrl Then
         '					MsgBox("polis niet aanwezig. EDIFACT nieuw nog in te brengen !!!", MsgBoxStyle.Critical)
         '					TLBRecord(FlPolis) = ""
@@ -1366,7 +1366,7 @@ TLBError:
         '						bUpdate(FlPolis, 0)
         '					End If
         '					'As2TelebibIn.UserInfo(2).Caption = Str$(Val(As2TelebibIn.UserInfo(2).Caption) + 1)
-        '					bGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
+        '					MsJetGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
         '					If Ktrl Then
         '						Dummy.Value = "Verbeter !!! " & TempoNaamKlant
         '					Else
@@ -1376,7 +1376,7 @@ TLBError:
         '				End If
 
         '				'GoSub TeleBibKTRL
-        '				bGet(FlAllerlei, 1, "25" & Maatschappij & PolisNummer.Value)
+        '				MsJetGet(FlAllerlei, 1, "25" & Maatschappij & PolisNummer.Value)
         '				If Ktrl Then
         '					TLBRecord(FlAllerlei) = ""
         '				Else

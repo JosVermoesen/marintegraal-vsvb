@@ -67,7 +67,7 @@ End Class
 '		Dim dummykey As String
 
 '		dummykey = TekstInfo(3).Text
-'		bGet(FlProdukt, 0, vSet(TekstInfo(3).Text, 13))
+'		MsJetGet(FlProdukt, 0, vSet(TekstInfo(3).Text, 13))
 '		frmProduktFiche.Close()
 '		'UPGRADE_ISSUE: Load statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B530EFF2-3132-48F8-B8BC-D88AF543D321"'
 '		Load(frmProduktFiche)
@@ -179,13 +179,13 @@ End Class
 '			TekstInfo(5).Text = Dec(Val(TekstInfo(5).Text), "#####0.000")
 '			If TekstInfo(0).Text = Space(Len(TekstInfo(0).Text)) Then
 '			Else
-'				bGet(FlRekening, 0, vSet(TekstInfo(0).Text, 7))
+'				MsJetGet(FlLedgerAccount, 0, vSet(TekstInfo(0).Text, 7))
 '				If Ktrl Then
 '					MsgBox("OnlogicaStop")
 '				Else
-'					RecordToVeld(FlRekening)
-'					TekstInfo(0).Text = vBibTekst(FlRekening, "#v019 #")
-'					TekstInfo(1).Text = vBibTekst(FlRekening, "#v020 #")
+'					RecordToVeld(FlLedgerAccount)
+'					TekstInfo(0).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'					TekstInfo(1).Text = vBibTekst(FlLedgerAccount, "#v020 #")
 '					TekstInfo(2).TabIndex = 0
 '				End If
 '			End If
@@ -312,7 +312,7 @@ End Class
 '			Case 17
 '				Select Case Index
 '					Case 0
-'						SharedFl = FlRekening
+'						SharedFl = FlLedgerAccount
 '						aIndex = 0
 '						GridText = TekstInfo(0).Text
 '						SqlSearch.ShowDialog()
@@ -320,9 +320,9 @@ End Class
 '							TekstInfo(1).Text = ""
 '							Ok.Enabled = False
 '						Else
-'							RecordToVeld(FlRekening)
-'							TekstInfo(0).Text = vBibTekst(FlRekening, "#v019 #")
-'							TekstInfo(1).Text = vBibTekst(FlRekening, "#v020 #")
+'							RecordToVeld(FlLedgerAccount)
+'							TekstInfo(0).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'							TekstInfo(1).Text = vBibTekst(FlLedgerAccount, "#v020 #")
 '							Ok.Enabled = True
 '							TekstInfo(2).Focus()
 '						End If
@@ -338,14 +338,14 @@ End Class
 '							RecordToVeld(FlProdukt)
 '							TekstInfo(3).Text = vBibTekst(FlProdukt, "#v102 #")
 '							TekstInfo(4).Text = vBibTekst(FlProdukt, "#v105 #")
-'							bGet(FlRekening, 0, vSet(vBibTekst(FlProdukt, "#v116 #"), 7))
+'							MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlProdukt, "#v116 #"), 7))
 '							If Ktrl Then
 '								TekstInfo(1).Text = ""
 '								Ok.Enabled = False
 '							Else
-'								RecordToVeld(FlRekening)
-'								TekstInfo(0).Text = vBibTekst(FlRekening, "#v019 #")
-'								TekstInfo(1).Text = vBibTekst(FlRekening, "#v020 #")
+'								RecordToVeld(FlLedgerAccount)
+'								TekstInfo(0).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'								TekstInfo(1).Text = vBibTekst(FlLedgerAccount, "#v020 #")
 '								Ok.Enabled = True
 '							End If
 '						End If
@@ -387,18 +387,18 @@ End Class
 '		Select Case Index
 '			Case 0
 '				If CTRLFlag = True Then Exit Sub
-'				bGet(FlRekening, 0, vSet(TekstInfo(0).Text, 7))
+'				MsJetGet(FlLedgerAccount, 0, vSet(TekstInfo(0).Text, 7))
 '				If Ktrl Then
 '					TekstInfo(0).Text = ""
 '					TekstInfo(1).Text = ""
 '				Else
-'					RecordToVeld(FlRekening)
-'					TekstInfo(0).Text = vBibTekst(FlRekening, "#v019 #")
-'					TekstInfo(1).Text = vBibTekst(FlRekening, "#v020 #")
+'					RecordToVeld(FlLedgerAccount)
+'					TekstInfo(0).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'					TekstInfo(1).Text = vBibTekst(FlLedgerAccount, "#v020 #")
 '				End If
 '			Case 3
 '				If CTRLFlag = True Then Exit Sub
-'				bGet(FlProdukt, 0, vSet(TekstInfo(3).Text, 13))
+'				MsJetGet(FlProdukt, 0, vSet(TekstInfo(3).Text, 13))
 '				If Ktrl Then
 '					KtrlBox = MsgBox("Code " & TekstInfo(3).Text & " bestaat niet." & vbCr & "Nieuw produkt aanmaken", MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2)
 '					If KtrlBox = MsgBoxResult.No Then
@@ -418,14 +418,14 @@ End Class
 '					RecordToVeld(FlProdukt)
 '					TekstInfo(3).Text = vBibTekst(FlProdukt, "#v102 #")
 '					TekstInfo(4).Text = vBibTekst(FlProdukt, "#v105 #")
-'					bGet(FlRekening, 0, vSet(vBibTekst(FlProdukt, "#v116 #"), 7))
+'					MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlProdukt, "#v116 #"), 7))
 '					If Ktrl Then
 '						TekstInfo(1).Text = ""
 '						Ok.Enabled = False
 '					Else
-'						RecordToVeld(FlRekening)
-'						TekstInfo(0).Text = vBibTekst(FlRekening, "#v019 #")
-'						TekstInfo(1).Text = vBibTekst(FlRekening, "#v020 #")
+'						RecordToVeld(FlLedgerAccount)
+'						TekstInfo(0).Text = vBibTekst(FlLedgerAccount, "#v019 #")
+'						TekstInfo(1).Text = vBibTekst(FlLedgerAccount, "#v020 #")
 '						Ok.Enabled = True
 '					End If
 '				End If

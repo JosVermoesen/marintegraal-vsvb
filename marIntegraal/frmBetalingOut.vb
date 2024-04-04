@@ -323,7 +323,7 @@ End Class
 '			Mid(goString2.Value, 112, 1) = "0" 'code chequekost 1= opdrgever, 2= begunstig.
 '			Print(FlHier, goString2.Value & vbNewLine)
 '			goString1.Value = "" : goString2.Value = ""
-'			bGet(Fldokument, 0, grdDokumentDetail.get_TextMatrix(volgNr, 2))
+'			MsJetGet(Fldokument, 0, grdDokumentDetail.get_TextMatrix(volgNr, 2))
 '			RecordToVeld(Fldokument)
 '			vBib(Fldokument, "0", "rvDM")
 '			bUpdate(Fldokument, 0)
@@ -642,7 +642,7 @@ End Class
 
 '		'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		aa = vBibTekst(Fldokument, "#v034 #") & vbTab
-'		bGet(Fl, 0, Mid(vBibTekst(Fldokument, "#v034 #"), 2))
+'		MsJetGet(Fl, 0, Mid(vBibTekst(Fldokument, "#v034 #"), 2))
 '		If Ktrl Then
 '			'UPGRADE_WARNING: Couldn't resolve default property of object aa. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '			aa = aa & "Is verwijderd" & vbTab
@@ -734,7 +734,7 @@ End Class
 '			dtpMemoDatum.Enabled = False
 '			tbBedrag.Enabled = False
 '		Else
-'			bGet(FlLeverancier, 0, Mid(grdDokumentDetail.get_TextMatrix(grdDokumentDetail.Row, 0), 2))
+'			MsJetGet(FlLeverancier, 0, Mid(grdDokumentDetail.get_TextMatrix(grdDokumentDetail.Row, 0), 2))
 '			If Ktrl Then
 '				MsgBox("Breng leverancier opnieuw in via fiches a.u.b.", MsgBoxStyle.Critical)
 '			Else

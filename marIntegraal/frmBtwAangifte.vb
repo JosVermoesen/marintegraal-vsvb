@@ -341,7 +341,7 @@ End Class
 '		PeriodeMax = BJPERDAT.PeriodeBoekjaar.Items.Count + 1
 '		Do While PeriodeMax > BJPERDAT.PeriodeBoekjaar.SelectedIndex + 1
 '			PeriodeSleutel.Value = "17" & BJPERDAT.Boekjaar.Text & VB6.Format(PeriodeMax, "00")
-'			bGet(FlAllerlei, 1, PeriodeSleutel.Value)
+'			MsJetGet(FlAllerlei, 1, PeriodeSleutel.Value)
 '			If Ktrl Then
 '				TLBRecord(FlAllerlei) = ""
 '				vBib(FlAllerlei, (BJPERDAT.Boekjaar.Text), "v090")
@@ -372,7 +372,7 @@ End Class
 '			Exit Sub
 '		Else
 '			PeriodeSleutel.Value = "17" & BJPERDAT.Boekjaar.Text & VB6.Format(BJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")
-'			bGet(FlAllerlei, 1, PeriodeSleutel.Value)
+'			MsJetGet(FlAllerlei, 1, PeriodeSleutel.Value)
 '			If Ktrl Then
 '				TLBRecord(FlAllerlei) = ""
 '				vBib(FlAllerlei, (BJPERDAT.Boekjaar.Text), "v090")
@@ -414,7 +414,7 @@ End Class
 '		Dim lblBEFVak As Short
 
 '		btwVakken = ""
-'		bGet(FlAllerlei, 1, vSet("17" & strJaar & strPeriode, 20))
+'		MsJetGet(FlAllerlei, 1, vSet("17" & strJaar & strPeriode, 20))
 '		If Ktrl Then
 '			Beep()
 '			'UPGRADE_WARNING: Couldn't resolve default property of object Me.SSTab1. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'

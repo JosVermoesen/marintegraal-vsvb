@@ -169,7 +169,7 @@ End Class
 '					AankoopOptie(0).Checked = True
 '			End Select
 '			Me.Text = "Ctrl+F1 Direkte aankoopverrichting (" & dokumentSleutel.Value & ")"
-'			bGet(Fldokument, 0, dokumentSleutel.Value)
+'			MsJetGet(Fldokument, 0, dokumentSleutel.Value)
 '			If Ktrl = 0 Then
 '				MsgBox("Document " & dokumentSleutel.Value & " is reeds aanwezig..." & vbCr & vbCr & "Controleer eventueel uw tellerbestand voor het active boekjaar.  Indien U zopas wisselde van boekjaar met het aankoopvenster open, mag U (na controle) deze melding negeren..." & vbCr & vbCr & "NIET BOEKJAAR GEWISSELD ZOPAS ?  EERST UW TELLEBESTAND + PROEF- SALDI BALANS CONTROLEREN !!!", MsgBoxStyle.Exclamation)
 '			End If
@@ -220,7 +220,7 @@ End Class
 '				Exit Sub
 '		End Select
 
-'		Ktrl = bOpen(FlRekening)
+'		Ktrl = bOpen(FlLedgerAccount)
 '		Ktrl = bOpen(FlJournaal)
 '		Ktrl = bOpen(Fldokument)
 '		TransBegin()
@@ -229,7 +229,7 @@ End Class
 '			Me.Activate()
 '			Exit Sub
 '		Else
-'			bEnd()
+'			TransCommit()
 '			If Ktrl Then
 '				TransAbort()
 '				Exit Sub
@@ -337,7 +337,7 @@ End Class
 '			MsgBox("LogicaStop lengte rekeningnummer")
 '		Else
 '			'controle of de leverancier (nog) actief is en daarna wegschrijven
-'			bGet(FlLeverancier, 0, VB.Left(LeverancierInfo.Text, 12))
+'			MsJetGet(FlLeverancier, 0, VB.Left(LeverancierInfo.Text, 12))
 '			If Ktrl Then
 '				MsgBox("LogicaStop zoeken leveranciersfiche")
 '			Else
@@ -357,7 +357,7 @@ End Class
 
 '	Private Sub cmdSQLInfo_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdSQLInfo.Click
 
-'		bGet(FlLeverancier, 0, VB.Left(LeverancierInfo.Text, 12))
+'		MsJetGet(FlLeverancier, 0, VB.Left(LeverancierInfo.Text, 12))
 '		If Ktrl Then
 '			MsgBox("Onlogica.")
 '			cmdSQLInfo.Visible = False
@@ -602,7 +602,7 @@ End Class
 '		Next 
 
 '		sMuntLever.Value = UCase(vBibTekst(FlLeverancier, "#vs03 #"))
-'		bGet(FlAllerlei, 1, vSet("10" & sMuntLever.Value, 20))
+'		MsJetGet(FlAllerlei, 1, vSet("10" & sMuntLever.Value, 20))
 '		If Ktrl Then
 '			MsgBox("Dagkoers voor muntkode " & sMuntLever.Value & " niet te vinden !  Eerst aanmaken via gebruikersfiches a.u.b.")
 '			If bhEuro Then
@@ -682,7 +682,7 @@ End Class
 
 '		If VB.Left(vBibTekst(FlLeverancier, "#v162 #"), 3) = "440" Then
 '			TekstInfo(3).Text = vBibTekst(FlLeverancier, "#v162 #")
-'			bGet(FlRekening, 0, vSet(vBibTekst(FlLeverancier, "#v162 #"), 7))
+'			MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlLeverancier, "#v162 #"), 7))
 '			If Ktrl Then
 '				Beep()
 '				TekstInfo(3).Text = LeverancierRekening.Value
@@ -788,7 +788,7 @@ End Class
 '			'UPGRADE_WARNING: Lower bound of collection ListView1.SelectedItem has changed from 1 to 0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="A3B628A0-A810-4AE2-BFA2-9E7A29EB9AD0"'
 '			lvLeverancier = ListView1.FocusedItem.SubItems(1).Text
 '			SSTab1.SelectedIndex = 0
-'			bGet(FlLeverancier, 0, lvLeverancier)
+'			MsJetGet(FlLeverancier, 0, lvLeverancier)
 '			If Ktrl Then
 '				MsgBox("stop")
 '			Else
@@ -1055,11 +1055,11 @@ End Class
 '			Case 3, 10
 '				If KeyCode = 17 Then
 '					aIndex = 0
-'					SharedFl = FlRekening
+'					SharedFl = FlLedgerAccount
 '					GridText = Trim(TekstInfo(Index).Text)
 '					SqlSearch.ShowDialog()
 '					If Ktrl = 0 Then
-'						TekstInfo(Index).Text = vBibTekst(FlRekening, "#v019 #")
+'						TekstInfo(Index).Text = vBibTekst(FlLedgerAccount, "#v019 #")
 '					End If
 '				End If
 '		End Select
@@ -1146,7 +1146,7 @@ End Class
 '					TekstInfo(Index).Focus()
 '					Exit Sub
 '				End If
-'				bGet(FlRekening, 0, vSet(TekstInfo(Index).Text, 7))
+'				MsJetGet(FlLedgerAccount, 0, vSet(TekstInfo(Index).Text, 7))
 '				If Ktrl Then
 '					Beep()
 '					TekstInfo(Index).Text = LeverancierRekening.Value
@@ -1160,7 +1160,7 @@ End Class
 '					TekstInfo(Index).Focus()
 '					Exit Sub
 '				End If
-'				bGet(FlRekening, 0, vSet(TekstInfo(Index).Text, 7))
+'				MsJetGet(FlLedgerAccount, 0, vSet(TekstInfo(Index).Text, 7))
 '				If Ktrl Then
 '					Beep()
 '					TekstInfo(Index).Text = rbtwVAK(4)
@@ -1229,7 +1229,7 @@ End Class
 '		Dim DVT99 As String
 '		Dim LokRekening As New VB6.FixedLengthString(7)
 
-'		bGet(FlLeverancier, 0, VB.Left(LeverancierInfo.Text, 12))
+'		MsJetGet(FlLeverancier, 0, VB.Left(LeverancierInfo.Text, 12))
 '		If Ktrl Then
 '			WegBoekFout = True
 '			Exit Function
@@ -1270,7 +1270,7 @@ End Class
 '			AankoopDetail.SelectedIndex = T
 '			LokRekening.Value = VB.Left(AankoopDetail.Text, 7)
 '			vBib(FlJournaal, LokRekening.Value, "v019")
-'			bGet(FlRekening, 0, LokRekening.Value)
+'			MsJetGet(FlLedgerAccount, 0, LokRekening.Value)
 '			If Ktrl Then
 '				WegBoekFout = True
 '				Exit Function
@@ -1290,7 +1290,7 @@ End Class
 '			vBib(FlJournaal, "", "v102")
 '			If Len(AankoopDetail.Text) > 62 Then
 
-'				bGet(FlProdukt, 0, Mid(AankoopDetail.Text, 63, 13))
+'				MsJetGet(FlProdukt, 0, Mid(AankoopDetail.Text, 63, 13))
 '				If Ktrl Then
 '					MsgBox("Onverwacht situatie")
 '					WegBoekFout = True

@@ -17,7 +17,79 @@ Public Class FrmJournalEntryInput
         End If
     End Sub
 
-    Private Sub TRaanUit()
+    'Fuctions
+    Private Function BookingError() As Boolean
+        Dim T As Short
+
+        BookingError = False
+        dKtrlCumul = 0 : dKtrlBEF = 0 : dKtrlEUR = 0
+
+        Boeking.Close()
+        Boeking.Hide()
+
+        For T = 0 To ListBoxJournalEntries.Items.Count - 1
+            Msg = ListBoxJournalEntries.Items.Item(T)
+            rsJournaal.AddNew()
+            rsJournaal.Fields("v041").Value = "0"
+            rsJournaal.Fields("v066").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'Boekdatum
+            rsJournaal.Fields("v033").Value = "D0" & Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokument
+            rsJournaal.Fields("v035").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokumentdatum
+            rsJournaal.Fields("v067").Value = Mid(TextBoxDescription.Text, 1, 35) 'Omschrijving
+            rsJournaal.Fields("v019").Value = Mid(Msg, 1, 7) 'Rekening
+            rsJournaal.Fields("v068").Value = Mid(Msg, 50, 12) 'Bedrag
+            rsJournaal.Fields("dece068").Value = Val(Mid(Msg, 50, 12)) 'Bedrag
+            rsJournaal.Fields("v069").Value = Mid(Msg, 63, 7) 'TegenRekening
+            If Not adoJournaalOK() Then
+                BookingError = True
+                dKtrlCumul = 999
+            ElseIf Mid(Msg, 63, 7) <> "       " Then
+                rsJournaal.AddNew()
+                rsJournaal.Fields("v041").Value = "0"
+                rsJournaal.Fields("v066").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'Boekdatum
+                rsJournaal.Fields("v033").Value = "D0" & Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokument
+                rsJournaal.Fields("v035").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokumentdatum
+                rsJournaal.Fields("v067").Value = Mid(TextBoxDescription.Text, 1, 35) 'Omschrijving
+
+                rsJournaal.Fields("v019").Value = Mid(Msg, 63, 7) 'Rekening
+                rsJournaal.Fields("v068").Value = Str(-Val(Mid(Msg, 50, 12))) 'Bedrag
+                rsJournaal.Fields("dece068").Value = -Val(Mid(Msg, 50, 12)) 'Bedrag
+                rsJournaal.Fields("v069").Value = Mid(Msg, 1, 7) 'TegenRekening
+                If Not adoJournaalOK() Then
+                    BookingError = True
+                    dKtrlCumul = 999
+                End If
+            End If
+        Next
+
+        If dKtrlCumul Then
+            MsgBox("Fout bij vierkantskontrole journaal." & vbCrLf & vbCrLf & "Deze verrichting wordt genegeerd.")
+            Boeking.cmdBoeken.Enabled = False
+            Boeking.ShowDialog()
+            BookingError = True
+        ElseIf JournaalLocked = True Then
+            Boeking.cmdBoeken.Enabled = False
+            Boeking.ShowDialog()
+            BookingError = True
+        Else
+            Boeking.ShowDialog()
+            If dKtrlCumul Then BookingError = True
+        End If
+
+    End Function
+
+    Private Sub CleanUpNextLine()
+        CheckBoxDCFlag.Checked = False
+        ToggleOffsetAccount()
+        TextBoxLedgerAccount.Text = ""
+        LabelLedgerAccountName.Text = ""
+        TextBoxAmount.Text = ""
+        TextBoxOffsetAccount.Text = ""
+        LabelOffsetAccountName.Text = ""
+        DebitChoosen.Checked = True
+        ButtonAddLine.Enabled = False
+    End Sub
+
+    Private Sub ToggleOffsetAccount()
         If CheckBoxDCFlag.Checked Then
             TextBoxOffsetAccount.Visible = True
             LabelOffsetAccountName.Visible = True
@@ -27,140 +99,35 @@ Public Class FrmJournalEntryInput
         End If
     End Sub
 
-    Private Sub Sluiten_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
-        If ListBoxJournalEntries.Items.Count Then
-            Msg = Format(ListBoxJournalEntries.Items.Count) & " Journaallijnen negeren.  Bent U zeker ?"
-            Ktrl = MsgBox(Msg, 292, "Inbreng Journaalpost")
-            If Ktrl <> 6 Then
-                Exit Sub
-            End If
-        End If
-        Mim.DiversePostenToolStripMenuItem.Enabled = True
-        Close()
-    End Sub
-
-    Private Sub SoortBoeking_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBoxBookType.KeyPress
-        If e.KeyChar = vbCr Then TextBoxDescription.Focus()
-    End Sub
-
-    Private Sub Omschrijving_Enter(sender As Object, e As EventArgs) Handles TextBoxDescription.Enter
-        ComboBoxBookType.Enabled = False
-    End Sub
-
-    Sub DCKeuzeCheck(toetsString As String)
-        Select Case toetsString
+    Sub DCChoiceCheck(KeyString As String)
+        Select Case KeyString
             Case "D", "+"
-                RadioButtonChoiseDebit.Checked = True
+                DebitChoosen.Checked = True
                 TextBoxLedgerAccount.Focus()
             Case "C", "-"
-                RadioButtonChoiseCredit.Checked = True
+                CreditChoosen.Checked = True
                 TextBoxLedgerAccount.Focus()
             Case "T", "/"
                 CheckBoxDCFlag.Checked = Not CheckBoxDCFlag.Checked
-                TRaanUit()
+                ToggleOffsetAccount()
                 TextBoxLedgerAccount.Focus()
         End Select
     End Sub
 
-    Private Sub dKeuze_KeyPress(sender As Object, e As KeyPressEventArgs) Handles RadioButtonChoiseDebit.KeyPress
-        Dim keyString As String = UCase(e.KeyChar)
-        DCKeuzeCheck(e.KeyChar)
-    End Sub
-
-    Private Sub cKeuze_KeyPress(sender As Object, e As KeyPressEventArgs) Handles RadioButtonChoiseCredit.KeyPress
-        Dim keyString As String = UCase(e.KeyChar)
-        DCKeuzeCheck(e.KeyChar)
-    End Sub
-
-    Private Sub Omschrijving_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBoxDescription.KeyPress
-        If e.KeyChar = vbCr Then System.Windows.Forms.SendKeys.Send("{TAB}")
-    End Sub
-
-    Private Sub TRvlag_CheckStateChanged(sender As Object, e As EventArgs) Handles CheckBoxDCFlag.CheckStateChanged
-        TRaanUit()
-    End Sub
-
-    Private Sub RekeningNummer_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBoxLedgerAccount.KeyDown
-        If e.KeyCode = 17 Then
-            If okRekeningen(TextBoxLedgerAccount, LabelLedgerAccountName) Then
-                System.Windows.Forms.SendKeys.Send("{TAB}")
-            Else
-                TextBoxLedgerAccount.Focus()
-            End If
-        End If
-    End Sub
-
-    Private Sub RekeningNummer_LostFocus(sender As Object, e As EventArgs) Handles TextBoxLedgerAccount.LostFocus
-        If Trim(TextBoxLedgerAccount.Text) = "" Then
-        Else
-            bGet(FlRekening, 0, TextBoxLedgerAccount.Text)
-            If Ktrl Then
-                TextBoxLedgerAccount.Focus()
-                Beep()
-            Else
-                RecordToVeld(FlRekening)
-                TextBoxLedgerAccount.Text = vBibTekst(FlRekening, "#v019 #")
-                LabelLedgerAccountName.Text = vBibTekst(FlRekening, "#v020 #")
-            End If
-        End If
-    End Sub
-
-    Private Sub Tegenrekening_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBoxOffsetAccount.KeyDown
-        If e.KeyCode = 17 Then
-            If okRekeningen(TextBoxOffsetAccount, LabelOffsetAccountName) Then
-                System.Windows.Forms.SendKeys.Send("{TAB}")
-            Else
-                TextBoxOffsetAccount.Focus()
-            End If
-        End If
-    End Sub
-
-    Private Sub Tegenrekening_LostFocus(sender As Object, e As EventArgs) Handles TextBoxOffsetAccount.LostFocus
-        If Trim(TextBoxOffsetAccount.Text) = "" Then
-        Else
-            bGet(FlRekening, 0, TextBoxOffsetAccount.Text)
-            If Ktrl Then
-                TextBoxOffsetAccount.Focus()
-                Beep()
-            Else
-                RecordToVeld(FlRekening)
-                TextBoxOffsetAccount.Text = vBibTekst(FlRekening, "#v019 #")
-                LabelOffsetAccountName.Text = vBibTekst(FlRekening, "#v020 #")
-            End If
-        End If
-    End Sub
-
-    Function okRekeningen(rekTextBox As TextBox, rekLabel As Label) As Boolean
-        okRekeningen = False
-        SharedFl = FlRekening
-        sharedIndex = 0
+    Function LedgerAccountOk(rekTextBox As TextBox, rekLabel As Label) As Boolean
+        LedgerAccountOk = False
+        SharedFl = FlLedgerAccount
+        SharedIndex = 0
         GridText = rekTextBox.Text
         SqlSearch.ShowDialog()
         If Ktrl Then
             rekLabel.Text = ""
         Else
-            rekTextBox.Text = vBibTekst(FlRekening, "#v019 #")
-            rekLabel.Text = vBibTekst(FlRekening, "#v020 #")
-            okRekeningen = True
+            rekTextBox.Text = vBibTekst(FlLedgerAccount, "#v019 #")
+            rekLabel.Text = vBibTekst(FlLedgerAccount, "#v020 #")
+            LedgerAccountOk = True
         End If
     End Function
-
-    Private Sub Bedrag_Enter(sender As Object, e As EventArgs) Handles TextBoxAmount.Enter
-        If Val(LabelSoldeAmount.Text) = 0 Then
-            ButtonBookEntries.Enabled = True
-        Else
-            ButtonBookEntries.Enabled = False
-        End If
-    End Sub
-
-    Private Sub Bedrag_TextChanged(sender As Object, e As EventArgs) Handles TextBoxAmount.TextChanged
-        If TextBoxAmount.Text <> "" Then
-            ButtonAddLine.Enabled = True
-            AcceptButton = ButtonAddLine
-        Else
-            ButtonAddLine.Enabled = False
-        End If
-    End Sub
 
     Sub CheckDCStatus()
         TotalDCAmount = 0
@@ -180,7 +147,10 @@ Public Class FrmJournalEntryInput
         End If
     End Sub
 
-    Private Function BoekBeginBalans() As Object
+    Private Function BoekBeginBalans() As Boolean
+
+        Return False
+
         'Dim pHier As String
         'Dim Verwittigen As Boolean
 
@@ -203,37 +173,37 @@ Public Class FrmJournalEntryInput
         ''kontrole vanaf eerst 1 tot laatste 5
         'TotaalBalans = 0
 
-        ''If Not adoGet(FlRekening, 0, "=", XLogKey) Then
+        ''If Not adoGet(FlLedgerAccount, 0, "=", XLogKey) Then
         ''Else
-        ''    RekeningNummer = RV(rsMAR(FlRekening), "v019")
-        ''    NaamRekening = RV(rsMAR(FlRekening), "v020")
+        ''    RekeningNummer = RV(rsMAR(FlLedgerAccount), "v019")
+        ''    NaamRekening = RV(rsMAR(FlLedgerAccount), "v020")
 
-        'If Not adoGet(FlRekening, 0, ">=", vSet("1", 7)) Then
+        'If Not adoGet(FlLedgerAccount, 0, ">=", vSet("1", 7)) Then
         '    MsgBox("Geen rekeningen ???")
         '    'UPGRADE_WARNING: Couldn't resolve default property of object BoekBeginBalans. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
         '    BoekBeginBalans = False
         '    Exit Function
         '    'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        'ElseIf VB.Left(RV(rsMAR(FlRekening), "v019"), 1) < "6" Then
+        'ElseIf VB.Left(RV(rsMAR(FlLedgerAccount), "v019"), 1) < "6" Then
         '    If bhEuro Then
         '        'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        '        TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlRekening), "e" & VB6.Format(AktiefBoekjaar + 23, "000")))
+        '        TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlLedgerAccount), "e" & VB6.Format(AktiefBoekjaar + 23, "000")))
         '    Else
         '        'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        '        TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlRekening), "v" & VB6.Format(AktiefBoekjaar + 23, "000")))
+        '        TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlLedgerAccount), "v" & VB6.Format(AktiefBoekjaar + 23, "000")))
         '    End If
-        '    Do While Not rsMAR(FlRekening).EOF
-        '        rsMAR(FlRekening).MoveNext()
+        '    Do While Not rsMAR(FlLedgerAccount).EOF
+        '        rsMAR(FlLedgerAccount).MoveNext()
         '        'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        '        If VB.Left(RV(rsMAR(FlRekening), "v019"), 1) >= "6" Then
+        '        If VB.Left(RV(rsMAR(FlLedgerAccount), "v019"), 1) >= "6" Then
         '            Exit Do
         '        Else
         '            If bhEuro Then
         '                'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        '                TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlRekening), "e" & VB6.Format(AktiefBoekjaar + 23, "000")))
+        '                TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlLedgerAccount), "e" & VB6.Format(AktiefBoekjaar + 23, "000")))
         '            Else
         '                'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        '                TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlRekening), "v" & VB6.Format(AktiefBoekjaar + 23, "000")))
+        '                TotaalBalans = TotaalBalans + Val(RV(rsMAR(FlLedgerAccount), "v" & VB6.Format(AktiefBoekjaar + 23, "000")))
         '            End If
         '        End If
         '    Loop
@@ -241,29 +211,29 @@ Public Class FrmJournalEntryInput
 
         ''+ eerste 6 tot laatste 7
         'TotaalResultaat = 0
-        'bGetOrGreater(FlRekening, 0, vSet("6", 7))
+        'bGetOrGreater(FlLedgerAccount, 0, vSet("6", 7))
         'If Ktrl Then
         '    MsgBox("Geen rekeningen ???")
         '    'UPGRADE_WARNING: Couldn't resolve default property of object BoekBeginBalans. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
         '    BoekBeginBalans = False
         '    Exit Function
-        'ElseIf VB.Left(KeyBuf(FlRekening), 1) < "8" Then
-        '    RecordToVeld(FlRekening)
+        'ElseIf VB.Left(KeyBuf(FlLedgerAccount), 1) < "8" Then
+        '    RecordToVeld(FlLedgerAccount)
         '    If bhEuro Then
-        '        TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlRekening, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '        TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '    Else
-        '        TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlRekening, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '        TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '    End If
         '    Do
-        '        bNext(FlRekening)
-        '        If Ktrl Or VB.Left(KeyBuf(FlRekening), 1) > "7" Then
+        '        bNext(FlLedgerAccount)
+        '        If Ktrl Or VB.Left(KeyBuf(FlLedgerAccount), 1) > "7" Then
         '            Exit Do
         '        Else
-        '            RecordToVeld(FlRekening)
+        '            RecordToVeld(FlLedgerAccount)
         '            If bhEuro Then
-        '                TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlRekening, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '                TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '            Else
-        '                TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlRekening, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '                TotaalResultaat = TotaalResultaat + Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '            End If
         '        End If
         '    Loop
@@ -294,38 +264,38 @@ Public Class FrmJournalEntryInput
         'Dim dTotaalKtrl As Decimal
         'Dim dBedrag As Decimal
         'Dim TextLine As String
-        'bGetOrGreater(FlRekening, 0, vSet("1", 7))
+        'bGetOrGreater(FlLedgerAccount, 0, vSet("1", 7))
         'If Ktrl Then
         '    MsgBox("Geen rekeningen ???")
         '    'UPGRADE_WARNING: Couldn't resolve default property of object BoekBeginBalans. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
         '    BoekBeginBalans = False
         '    Exit Function
-        'ElseIf VB.Left(KeyBuf(FlRekening), 1) < "6" Then
-        '    RecordToVeld(FlRekening)
+        'ElseIf VB.Left(KeyBuf(FlLedgerAccount), 1) < "6" Then
+        '    RecordToVeld(FlLedgerAccount)
         '    If bhEuro Then
-        '        dBedrag = Val(vBibTekst(FlRekening, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '        dBedrag = Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '    Else
-        '        dBedrag = Val(vBibTekst(FlRekening, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '        dBedrag = Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '    End If
         '    dTotaalKtrl = dTotaalKtrl + dBedrag
         '    If dBedrag <> 0 Then
-        '        TextLine = vSet(vBibTekst(FlRekening, "#v019 #"), 7) & " " & vSet(vBibTekst(FlRekening, "#v020 #"), 40) & " " & Dec(dBedrag, MaskEURBH) & " " & vSet("", 7)
+        '        TextLine = vSet(vBibTekst(FlLedgerAccount, "#v019 #"), 7) & " " & vSet(vBibTekst(FlLedgerAccount, "#v020 #"), 40) & " " & Dec(dBedrag, MaskEURBH) & " " & vSet("", 7)
         '        JournaalPost.Items.Add(TextLine)
         '    End If
         '    Do
-        '        bNext(FlRekening)
-        '        If Ktrl Or VB.Left(KeyBuf(FlRekening), 1) >= "6" Then
+        '        bNext(FlLedgerAccount)
+        '        If Ktrl Or VB.Left(KeyBuf(FlLedgerAccount), 1) >= "6" Then
         '            Exit Do
         '        Else
-        '            RecordToVeld(FlRekening)
+        '            RecordToVeld(FlLedgerAccount)
         '            If bhEuro Then
-        '                dBedrag = Val(vBibTekst(FlRekening, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '                dBedrag = Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '            Else
-        '                dBedrag = Val(vBibTekst(FlRekening, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
+        '                dBedrag = Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(AktiefBoekjaar + 23, "000") & " #"))
         '            End If
         '            dTotaalKtrl = dTotaalKtrl + dBedrag
         '            If dBedrag <> 0 Then
-        '                TextLine = vSet(vBibTekst(FlRekening, "#v019 #"), 7) & " " & vSet(vBibTekst(FlRekening, "#v020 #"), 40) & " " & Dec(dBedrag, MaskEURBH) & " " & vSet("", 7)
+        '                TextLine = vSet(vBibTekst(FlLedgerAccount, "#v019 #"), 7) & " " & vSet(vBibTekst(FlLedgerAccount, "#v020 #"), 40) & " " & Dec(dBedrag, MaskEURBH) & " " & vSet("", 7)
         '                JournaalPost.Items.Add(TextLine)
         '            End If
         '        End If
@@ -427,11 +397,11 @@ Public Class FrmJournalEntryInput
         '            Return
         '        ElseIf Val(vBibTekst(FlAllerlei, "#v084 #")) = Val(vBibTekst(FlAllerlei, "#v085 #")) Then
         '            Msg = "Alles is afgeschreven voor " & vBibTekst(FlAllerlei, "#v087 #") & vbCrLf & vbCrLf & "Totaal : " & VB6.Format(Val(vBibTekst(FlAllerlei, "#v084 #")), MaskerSy(0)) & vbCrLf & vbCrLf
-        '            If Not adoGet(FlRekening, 0, "=", vBibTekst(FlAllerlei, "#v087 #")) Then
+        '            If Not adoGet(FlLedgerAccount, 0, "=", vBibTekst(FlAllerlei, "#v087 #")) Then
         '                Msg = Msg & "Rekening bestaat zelfs niet eens..."
         '            Else
         '                'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        '                Msg = Msg + RV(rsMAR(FlRekening), "v020")
+        '                Msg = Msg + RV(rsMAR(FlLedgerAccount), "v020")
         '            End If
         '            MsgBox(Msg)
         '            'FIXIT: Return has new meaning in Visual Basic .NET                                        FixIT90210ae-R9642-H1984
@@ -462,15 +432,15 @@ Public Class FrmJournalEntryInput
         '            End If
         '        End If
 
-        '        If Not adoGet(FlRekening, 0, "=", vBibTekst(FlAllerlei, "#v087 #")) Then
+        '        If Not adoGet(FlLedgerAccount, 0, "=", vBibTekst(FlAllerlei, "#v087 #")) Then
         '            OmschrijvingsLijn.Value = RTrim(OmschrijvingsLijn.Value) & " Afschr. op!!!"
         '        End If
-        '        If Not adoGet(FlRekening, 0, "=", vBibTekst(FlAllerlei, "#v088 #")) Then
+        '        If Not adoGet(FlLedgerAccount, 0, "=", vBibTekst(FlAllerlei, "#v088 #")) Then
         '            OmschrijvingsLijn.Value = RTrim(OmschrijvingsLijn.Value) & " Kostrekening !!"
         '        Else
         '            If OmschrijvingsLijn.Value = Space(40) Then
         '                'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        '                OmschrijvingsLijn.Value = "Ok, " + RV(rsMAR(FlRekening), "v020")
+        '                OmschrijvingsLijn.Value = "Ok, " + RV(rsMAR(FlLedgerAccount), "v020")
         '            End If
         '        End If
 
@@ -520,7 +490,9 @@ Public Class FrmJournalEntryInput
 
     End Function
 
-    Private Sub ComboBoxBookType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxBookType.SelectedIndexChanged
+
+    'Toolbox Subs
+    Private Sub ComboBoxBookType_SelectedIndexChanged(sender As Object, e As EventArgs)
 
         Select Case Mid(ComboBoxBookType.Text, 1, 1)
             Case "0"
@@ -588,7 +560,7 @@ Public Class FrmJournalEntryInput
                     Case Else
                         MsgBox("Stop")
                 End Select
-                bEnd()
+                TransCommit()
                 ButtonEraseAll.PerformClick()
             End If
         End If
@@ -614,7 +586,7 @@ Public Class FrmJournalEntryInput
             End If
         End If
         TotalDCAmount = Val(TextBoxAmount.Text)
-        If RadioButtonChoiseDebit.Checked Then
+        If DebitChoosen.Checked Then
         ElseIf CheckBoxDCFlag.Checked Then
         Else
             TotalDCAmount = -TotalDCAmount
@@ -628,7 +600,7 @@ Public Class FrmJournalEntryInput
         ListBoxJournalEntries.Items.Add(TextLine)
         CheckDCStatus()
         CleanUpNextLine()
-        RadioButtonChoiseDebit.Focus()
+        DebitChoosen.Focus()
 
     End Sub
 
@@ -642,8 +614,8 @@ Public Class FrmJournalEntryInput
         ComboBoxBookType.Enabled = True
         ComboBoxBookType.SelectedIndex = 0
         ButtonClose.Enabled = True
-        RadioButtonChoiseDebit.Enabled = True
-        RadioButtonChoiseCredit.Enabled = True
+        DebitChoosen.Enabled = True
+        CreditChoosen.Enabled = True
         TextBoxAmount.Visible = True
         TextBoxLedgerAccount.Visible = True
         CheckBoxDCFlag.Enabled = True
@@ -651,75 +623,112 @@ Public Class FrmJournalEntryInput
 
     End Sub
 
-    Private Function BookingError() As Boolean
-        Dim T As Short
-
-        BookingError = False
-        dKtrlCumul = 0 : dKtrlBEF = 0 : dKtrlEUR = 0
-
-        Boeking.Close()
-        Boeking.Hide()
-
-        For T = 0 To ListBoxJournalEntries.Items.Count - 1
-            Msg = ListBoxJournalEntries.Items.Item(T)
-            rsJournaal.AddNew()
-            rsJournaal.Fields("v041").Value = "0"
-            rsJournaal.Fields("v066").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'Boekdatum
-            rsJournaal.Fields("v033").Value = "D0" & Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokument
-            rsJournaal.Fields("v035").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokumentdatum
-            rsJournaal.Fields("v067").Value = Mid(TextBoxDescription.Text, 1, 35) 'Omschrijving
-            rsJournaal.Fields("v019").Value = Mid(Msg, 1, 7) 'Rekening
-            rsJournaal.Fields("v068").Value = Mid(Msg, 50, 12) 'Bedrag
-            rsJournaal.Fields("dece068").Value = Val(Mid(Msg, 50, 12)) 'Bedrag
-            rsJournaal.Fields("v069").Value = Mid(Msg, 63, 7) 'TegenRekening
-            If Not adoJournaalOK() Then
-                BookingError = True
-                dKtrlCumul = 999
-            ElseIf Mid(Msg, 63, 7) <> "       " Then
-                rsJournaal.AddNew()
-                rsJournaal.Fields("v041").Value = "0"
-                rsJournaal.Fields("v066").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'Boekdatum
-                rsJournaal.Fields("v033").Value = "D0" & Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokument
-                rsJournaal.Fields("v035").Value = Format(DateTimePickerBookingDate.Value, "yyyyMMdd") 'dokumentdatum
-                rsJournaal.Fields("v067").Value = Mid(TextBoxDescription.Text, 1, 35) 'Omschrijving
-
-                rsJournaal.Fields("v019").Value = Mid(Msg, 63, 7) 'Rekening
-                rsJournaal.Fields("v068").Value = Str(-Val(Mid(Msg, 50, 12))) 'Bedrag
-                rsJournaal.Fields("dece068").Value = -Val(Mid(Msg, 50, 12)) 'Bedrag
-                rsJournaal.Fields("v069").Value = Mid(Msg, 1, 7) 'TegenRekening
-                If Not adoJournaalOK() Then
-                    BookingError = True
-                    dKtrlCumul = 999
-                End If
-            End If
-        Next
-
-        If dKtrlCumul Then
-            MsgBox("Fout bij vierkantskontrole journaal." & vbCrLf & vbCrLf & "Deze verrichting wordt genegeerd.")
-            Boeking.cmdBoeken.Enabled = False
-            Boeking.ShowDialog()
-            BookingError = True
-        ElseIf JournaalLocked = True Then
-            Boeking.cmdBoeken.Enabled = False
-            Boeking.ShowDialog()
-            BookingError = True
-        Else
-            Boeking.ShowDialog()
-            If dKtrlCumul Then BookingError = True
-        End If
-
-    End Function
-
-    Private Sub CleanUpNextLine()
-        CheckBoxDCFlag.Checked = False
-        TRaanUit()
-        TextBoxLedgerAccount.Text = ""
-        LabelLedgerAccountName.Text = ""
-        TextBoxAmount.Text = ""
-        TextBoxOffsetAccount.Text = ""
-        LabelOffsetAccountName.Text = ""
-        RadioButtonChoiseDebit.Checked = True
-        ButtonAddLine.Enabled = False
+    Private Sub CheckBoxDCFlag_CheckStateChanged(sender As Object, e As EventArgs) Handles CheckBoxDCFlag.CheckStateChanged
+        ToggleOffsetAccount()
     End Sub
 
+    Private Sub ButtonClose_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
+        If ListBoxJournalEntries.Items.Count Then
+            Msg = Format(ListBoxJournalEntries.Items.Count) & " Journaallijnen negeren.  Bent U zeker ?"
+            Ktrl = MsgBox(Msg, 292, "Inbreng Journaalpost")
+            If Ktrl <> 6 Then
+                Exit Sub
+            End If
+        End If
+        Mim.DiversePostenToolStripMenuItem.Enabled = True
+        Close()
+    End Sub
+
+    Private Sub ComboBoxBookType_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBoxBookType.KeyPress
+        If e.KeyChar = vbCr Then TextBoxDescription.Focus()
+    End Sub
+
+    Private Sub ComboBoxBookType_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles ComboBoxBookType.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub DebitChoosen_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DebitChoosen.KeyPress
+        Dim keyString As String = UCase(e.KeyChar)
+        DCChoiceCheck(e.KeyChar)
+    End Sub
+
+    Private Sub CreditChoosen_KeyPress(sender As Object, e As KeyPressEventArgs) Handles CreditChoosen.KeyPress
+        Dim keyString As String = UCase(e.KeyChar)
+        DCChoiceCheck(e.KeyChar)
+    End Sub
+
+    Private Sub TextBoxDescription_Enter(sender As Object, e As EventArgs) Handles TextBoxDescription.Enter
+        ComboBoxBookType.Enabled = False
+    End Sub
+
+    Private Sub TextBoxDescription_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBoxDescription.KeyPress
+        If e.KeyChar = vbCr Then SendKeys.Send("{TAB}")
+    End Sub
+
+    Private Sub TextBoxAmount_TextChanged(sender As Object, e As EventArgs) Handles TextBoxAmount.TextChanged
+        If TextBoxAmount.Text <> "" Then
+            ButtonAddLine.Enabled = True
+            AcceptButton = ButtonAddLine
+        Else
+            ButtonAddLine.Enabled = False
+        End If
+    End Sub
+
+    Private Sub TextBoxAmount_Enter(sender As Object, e As EventArgs) Handles TextBoxAmount.Enter
+        If Val(LabelSoldeAmount.Text) = 0 Then
+            ButtonBookEntries.Enabled = True
+        Else
+            ButtonBookEntries.Enabled = False
+        End If
+    End Sub
+
+    Private Sub TextBoxLedgerAccount_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBoxLedgerAccount.KeyDown
+        If e.KeyCode = 17 Then
+            If LedgerAccountOk(TextBoxLedgerAccount, LabelLedgerAccountName) Then
+                SendKeys.Send("{TAB}")
+            Else
+                TextBoxLedgerAccount.Focus()
+            End If
+        End If
+    End Sub
+
+    Private Sub TextBoxLedgerAccount_Leave(sender As Object, e As EventArgs) Handles TextBoxLedgerAccount.Leave
+        If Trim(TextBoxLedgerAccount.Text) = "" Then
+        Else
+            MsJetGet(FlLedgerAccount, 0, TextBoxLedgerAccount.Text)
+            If Ktrl Then
+                TextBoxLedgerAccount.Focus()
+                Beep()
+            Else
+                RecordToVeld(FlLedgerAccount)
+                TextBoxLedgerAccount.Text = vBibTekst(FlLedgerAccount, "#v019 #")
+                LabelLedgerAccountName.Text = vBibTekst(FlLedgerAccount, "#v020 #")
+            End If
+        End If
+    End Sub
+
+    Private Sub TextBoxOffsetAccount_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBoxOffsetAccount.KeyDown
+        If e.KeyCode = 17 Then
+            If LedgerAccountOk(TextBoxOffsetAccount, LabelOffsetAccountName) Then
+                System.Windows.Forms.SendKeys.Send("{TAB}")
+            Else
+                TextBoxOffsetAccount.Focus()
+            End If
+        End If
+    End Sub
+
+    Private Sub TextBoxOffsetAccount_Leave(sender As Object, e As EventArgs) Handles TextBoxOffsetAccount.Leave
+        If Trim(TextBoxOffsetAccount.Text) = "" Then
+        Else
+            MsJetGet(FlLedgerAccount, 0, TextBoxOffsetAccount.Text)
+            If Ktrl Then
+                TextBoxOffsetAccount.Focus()
+                Beep()
+            Else
+                RecordToVeld(FlLedgerAccount)
+                TextBoxOffsetAccount.Text = vBibTekst(FlLedgerAccount, "#v019 #")
+                LabelOffsetAccountName.Text = vBibTekst(FlLedgerAccount, "#v020 #")
+            End If
+        End If
+    End Sub
 End Class

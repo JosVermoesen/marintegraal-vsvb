@@ -126,7 +126,7 @@ End Class
 '		aa = ""
 '		T = 0
 '		Do While TeleBibCode(T) <> Space(10)
-'			bGet(FlTeller, 0, Mid(TeleBibCode(T), 5, 5))
+'			MsJetGet(FlTeller, 0, Mid(TeleBibCode(T), 5, 5))
 '			If Ktrl Then
 '				CrText = ""
 '			Else
@@ -190,7 +190,7 @@ End Class
 '				Do While TeleBibCode(T) <> Space(10)
 '					Xlog.X.Row = T + 1
 '					CrText2 = Xlog.X.Text
-'					bGet(FlTeller, 0, Mid(TeleBibCode(T), 5, 5))
+'					MsJetGet(FlTeller, 0, Mid(TeleBibCode(T), 5, 5))
 '					If Ktrl Then
 '						TLBRecord(FlTeller) = ""
 '						vBib(FlTeller, Mid(TeleBibCode(T), 5, 5), "v071")

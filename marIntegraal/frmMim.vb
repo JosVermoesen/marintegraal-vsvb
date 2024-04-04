@@ -10,7 +10,7 @@ Public Class Mim
         Bestand(FlAllerlei) = "0000000.ONT" '00
         Bestand(FlKlant) = "0010000.ONT" '01
         Bestand(FlLeverancier) = "0020000.ONT" '02
-        Bestand(FlRekening) = "0030000.ONT" '03
+        Bestand(FlLedgerAccount) = "0030000.ONT" '03
         Bestand(FlProdukt) = "0040000.ONT" '04
         Bestand(FlJournaal) = "0600000.ONT" '05
         Bestand(Fldokument) = "0200000.ONT" '06
@@ -21,7 +21,7 @@ Public Class Mim
         bstNaam(FlAllerlei) = "Allerlei" '00
         bstNaam(FlKlant) = "Klanten" '01
         bstNaam(FlLeverancier) = "Leveranciers" '02
-        bstNaam(FlRekening) = "Rekeningen" '03
+        bstNaam(FlLedgerAccount) = "Rekeningen" '03
         bstNaam(FlProdukt) = "Produkten" '04
         bstNaam(FlJournaal) = "Journalen" '05
         bstNaam(Fldokument) = "dokumenten" '06

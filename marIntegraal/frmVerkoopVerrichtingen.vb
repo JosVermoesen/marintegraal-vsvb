@@ -190,7 +190,7 @@ MaskAantal:
                 Exit Sub
             End If
         End If
-        sharedIndex = 1
+        SharedIndex = 1
         SharedFl = FlKlant
         GridText = ""
         SqlSearch.ShowDialog()
@@ -317,7 +317,7 @@ MaskAantal:
         If Mid(RV(rsKlant, "v161"), 1, 3) = "400" Then
             Stop
             KlantRekening = RV(rsKlant, "v161")
-            If Not adoGet(FlRekening, 0, "=", KlantRekening) Then
+            If Not adoGet(FlLedgerAccount, 0, "=", KlantRekening) Then
                 Beep()
                 KlantRekening = String99(Lees, 9)
             End If
@@ -327,7 +327,7 @@ MaskAantal:
         mgrklantenrekMTextBox.Text = KlantRekening
         If Mid(RV(rsKlant, "v225"), 1, 2) = "70" Then
             DefaultVerkoop = RV(rsKlant, "v225")
-            If Not adoGet(FlRekening, 0, "=", DefaultVerkoop) Then
+            If Not adoGet(FlLedgerAccount, 0, "=", DefaultVerkoop) Then
                 Beep()
                 DefaultVerkoop = String99(Lees, 25)
             End If

@@ -25,8 +25,8 @@ Partial Class FrmJournalEntryInput
         Me.ComboBoxBookType = New System.Windows.Forms.ComboBox()
         Me.ButtonAddLine = New System.Windows.Forms.Button()
         Me.TextBoxDescription = New System.Windows.Forms.TextBox()
-        Me.RadioButtonChoiseDebit = New System.Windows.Forms.RadioButton()
-        Me.RadioButtonChoiseCredit = New System.Windows.Forms.RadioButton()
+        Me.DebitChoosen = New System.Windows.Forms.RadioButton()
+        Me.CreditChoosen = New System.Windows.Forms.RadioButton()
         Me.CheckBoxDCFlag = New System.Windows.Forms.CheckBox()
         Me.TextBoxLedgerAccount = New System.Windows.Forms.TextBox()
         Me.TextBoxOffsetAccount = New System.Windows.Forms.TextBox()
@@ -92,33 +92,33 @@ Partial Class FrmJournalEntryInput
         Me.TextBoxDescription.Size = New System.Drawing.Size(209, 20)
         Me.TextBoxDescription.TabIndex = 2
         '
-        'RadioButtonChoiseDebit
+        'DebitChoosen
         '
-        Me.RadioButtonChoiseDebit.BackColor = System.Drawing.SystemColors.Control
-        Me.RadioButtonChoiseDebit.Checked = True
-        Me.RadioButtonChoiseDebit.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadioButtonChoiseDebit.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.RadioButtonChoiseDebit.Location = New System.Drawing.Point(6, 19)
-        Me.RadioButtonChoiseDebit.Name = "RadioButtonChoiseDebit"
-        Me.RadioButtonChoiseDebit.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadioButtonChoiseDebit.Size = New System.Drawing.Size(88, 16)
-        Me.RadioButtonChoiseDebit.TabIndex = 4
-        Me.RadioButtonChoiseDebit.TabStop = True
-        Me.RadioButtonChoiseDebit.Text = "&Debiteren (+)"
-        Me.RadioButtonChoiseDebit.UseVisualStyleBackColor = False
+        Me.DebitChoosen.BackColor = System.Drawing.SystemColors.Control
+        Me.DebitChoosen.Checked = True
+        Me.DebitChoosen.Cursor = System.Windows.Forms.Cursors.Default
+        Me.DebitChoosen.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.DebitChoosen.Location = New System.Drawing.Point(6, 19)
+        Me.DebitChoosen.Name = "DebitChoosen"
+        Me.DebitChoosen.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DebitChoosen.Size = New System.Drawing.Size(88, 16)
+        Me.DebitChoosen.TabIndex = 4
+        Me.DebitChoosen.TabStop = True
+        Me.DebitChoosen.Text = "&Debiteren (+)"
+        Me.DebitChoosen.UseVisualStyleBackColor = False
         '
-        'RadioButtonChoiseCredit
+        'CreditChoosen
         '
-        Me.RadioButtonChoiseCredit.BackColor = System.Drawing.SystemColors.Control
-        Me.RadioButtonChoiseCredit.Cursor = System.Windows.Forms.Cursors.Default
-        Me.RadioButtonChoiseCredit.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.RadioButtonChoiseCredit.Location = New System.Drawing.Point(6, 36)
-        Me.RadioButtonChoiseCredit.Name = "RadioButtonChoiseCredit"
-        Me.RadioButtonChoiseCredit.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.RadioButtonChoiseCredit.Size = New System.Drawing.Size(85, 16)
-        Me.RadioButtonChoiseCredit.TabIndex = 5
-        Me.RadioButtonChoiseCredit.Text = "&Crediteren (-)"
-        Me.RadioButtonChoiseCredit.UseVisualStyleBackColor = False
+        Me.CreditChoosen.BackColor = System.Drawing.SystemColors.Control
+        Me.CreditChoosen.Cursor = System.Windows.Forms.Cursors.Default
+        Me.CreditChoosen.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.CreditChoosen.Location = New System.Drawing.Point(6, 36)
+        Me.CreditChoosen.Name = "CreditChoosen"
+        Me.CreditChoosen.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.CreditChoosen.Size = New System.Drawing.Size(85, 16)
+        Me.CreditChoosen.TabIndex = 5
+        Me.CreditChoosen.Text = "&Crediteren (-)"
+        Me.CreditChoosen.UseVisualStyleBackColor = False
         '
         'CheckBoxDCFlag
         '
@@ -390,8 +390,8 @@ Partial Class FrmJournalEntryInput
         'GroupBoxDCChoise
         '
         Me.GroupBoxDCChoise.Controls.Add(Me.CheckBoxDCFlag)
-        Me.GroupBoxDCChoise.Controls.Add(Me.RadioButtonChoiseCredit)
-        Me.GroupBoxDCChoise.Controls.Add(Me.RadioButtonChoiseDebit)
+        Me.GroupBoxDCChoise.Controls.Add(Me.CreditChoosen)
+        Me.GroupBoxDCChoise.Controls.Add(Me.DebitChoosen)
         Me.GroupBoxDCChoise.Location = New System.Drawing.Point(196, 46)
         Me.GroupBoxDCChoise.Name = "GroupBoxDCChoise"
         Me.GroupBoxDCChoise.Size = New System.Drawing.Size(111, 78)
@@ -444,8 +444,8 @@ Partial Class FrmJournalEntryInput
     Public WithEvents ComboBoxBookType As ComboBox
     Public WithEvents ButtonAddLine As Button
     Public WithEvents TextBoxDescription As TextBox
-    Public WithEvents RadioButtonChoiseDebit As RadioButton
-    Public WithEvents RadioButtonChoiseCredit As RadioButton
+    Public WithEvents DebitChoosen As RadioButton
+    Public WithEvents CreditChoosen As RadioButton
     Public WithEvents CheckBoxDCFlag As CheckBox
     Public WithEvents TextBoxLedgerAccount As TextBox
     Public WithEvents TextBoxOffsetAccount As TextBox

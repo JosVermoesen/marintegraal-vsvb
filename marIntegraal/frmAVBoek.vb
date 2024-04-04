@@ -78,7 +78,7 @@ Public Class AVBoek
 		PeriodeMax = frmBJPERDAT.PeriodeBoekjaar.Items.Count + 1
 		Do While PeriodeMax > frmBJPERDAT.PeriodeBoekjaar.SelectedIndex + 1
 			PeriodeSleutel = "17" & frmBJPERDAT.Boekjaar.Text & Format(PeriodeMax, "00")
-			bGet(FlAllerlei, 1, PeriodeSleutel)
+			MsJetGet(FlAllerlei, 1, PeriodeSleutel)
 			If Ktrl Then
 				TLBRecord(FlAllerlei) = ""
 				vBib(FlAllerlei, (frmBJPERDAT.Boekjaar.Text), "v090")
@@ -106,7 +106,7 @@ jump:
 			Exit Sub
 		Else
 			PeriodeSleutel = "17" & frmBJPERDAT.Boekjaar.Text & Format(frmBJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")
-			bGet(FlAllerlei, 1, PeriodeSleutel)
+			MsJetGet(FlAllerlei, 1, PeriodeSleutel)
 			If Ktrl Then
 				TLBRecord(FlAllerlei) = ""
 				vBib(FlAllerlei, (frmBJPERDAT.Boekjaar.Text), "v090")
@@ -248,12 +248,12 @@ End Class
 '		bClose(FlDummy)
 '		bFirst(FlDummy, 0)
 '		RecordToVeld(FlDummy)
-'		If Not adoGet(FlRekening, 0, "=", VB.Left(FVT(FlDummy, 0), 7)) Then
+'		If Not adoGet(FlLedgerAccount, 0, "=", VB.Left(FVT(FlDummy, 0), 7)) Then
 '			RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '		Else
-'			RecordToVeld(FlRekening)
+'			RecordToVeld(FlLedgerAccount)
 '			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'			RekeningNaam.Value = RV(rsMAR(FlRekening), "v020")
+'			RekeningNaam.Value = RV(rsMAR(FlLedgerAccount), "v020")
 '		End If
 '		Tabul = 0
 '		Printer.Write(TAB(Tabul + 2), Dec(Val(vBibTekst(FlDummy, "#v013 #")), "####") & " x " & vSet(vBibTekst(FlDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(vBibTekst(FlDummy, "#v068 #")), MaskHier))
@@ -264,11 +264,11 @@ End Class
 '				Exit Do
 '			End If
 '			RecordToVeld(FlDummy)
-'			If Not adoGet(FlRekening, 0, "=", VB.Left(FVT(FlDummy, 0), 7)) Then
+'			If Not adoGet(FlLedgerAccount, 0, "=", VB.Left(FVT(FlDummy, 0), 7)) Then
 '				RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '			Else
 '				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'				RekeningNaam.Value = RV(rsMAR(FlRekening), "v020")
+'				RekeningNaam.Value = RV(rsMAR(FlLedgerAccount), "v020")
 '			End If
 '			If Tabul = 0 Then
 '				Tabul = 56
@@ -346,11 +346,11 @@ End Class
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					RekeningNaam.Value = RV(rsJourHier, "v067")
 '				Else
-'					If Not adoGet(FlRekening, 0, "=", RV(rsJourHier, "v019")) Then
+'					If Not adoGet(FlLedgerAccount, 0, "=", RV(rsJourHier, "v019")) Then
 '						RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '					Else
 '						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'						RekeningNaam.Value = RV(rsMAR(FlRekening), "v020")
+'						RekeningNaam.Value = RV(rsMAR(FlLedgerAccount), "v020")
 '						If ForFait Then
 '							'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '							GoSub ForFaitBerekening
@@ -403,7 +403,7 @@ End Class
 'DetailCumul: 
 'StartPunt: 
 '		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		bGet(FlDummy, 0, RV(rsJourHier, "v019"))
+'		MsJetGet(FlDummy, 0, RV(rsJourHier, "v019"))
 '		If Ktrl Then
 '			TLBRecord(FlDummy) = ""
 '			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
@@ -424,17 +424,17 @@ End Class
 
 'ForFaitBerekening: 
 '		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'		If RTrim(RV(rsMAR(FlRekening), "v216")) <> "" Then
+'		If RTrim(RV(rsMAR(FlLedgerAccount), "v216")) <> "" Then
 '			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'			ForfaitNr = Val(RV(rsMAR(FlRekening), "v216"))
+'			ForfaitNr = Val(RV(rsMAR(FlLedgerAccount), "v216"))
 '			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '			BedragForfait(ForfaitNr) = BedragForfait(ForfaitNr) + RV(rsJourHier, "dece068")
 '			If PctForfait(ForfaitNr) = 0 Then
 '				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'				bGet(FlAllerlei, 1, vSet("21" + RV(rsMAR(FlRekening), "v216"), 20))
+'				MsJetGet(FlAllerlei, 1, vSet("21" + RV(rsMAR(FlLedgerAccount), "v216"), 20))
 '				If Ktrl Then
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					MsgBox("Forfaitaire Kode : " + RV(rsMAR(FlRekening), "v216") + " en waarde nog niet aanwezig.  Eerst inbrengen via diverse gebruikersfiches pér bedrijf a.u.b. !")
+'					MsgBox("Forfaitaire Kode : " + RV(rsMAR(FlLedgerAccount), "v216") + " en waarde nog niet aanwezig.  Eerst inbrengen via diverse gebruikersfiches pér bedrijf a.u.b. !")
 '				Else
 '					RecordToVeld(FlAllerlei)
 '					PctForfait(ForfaitNr) = Val(vBibTekst(FlAllerlei, "#v218 #"))
@@ -634,7 +634,7 @@ End Class
 '		Resume 
 
 'BTWAangifte: 
-'		bGet(FlAllerlei, 1, vSet("17" & BJPERDAT.Boekjaar.Text & VB6.Format(BJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00"), 20))
+'		MsJetGet(FlAllerlei, 1, vSet("17" & BJPERDAT.Boekjaar.Text & VB6.Format(BJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00"), 20))
 '		If Ktrl Then
 '			MsgBox("Stop")
 '		Else

@@ -14,7 +14,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\Jos\source\repos\JosVermoesen\mar\marintegraal-vsvb\Publish\</PublishUrl>
+    <PublishUrl>C:\Users\Jos\source\repos\JosVermoesen\mar\vss\marintegraal-vsvb\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -197,10 +197,10 @@
     <Compile Include="frmBtwAangifte.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmJournalEntriesBook.Designer.vb">
+    <Compile Include="Sheets\FrmJournalEntriesBook.Designer.vb">
       <DependentUpon>FrmJournalEntriesBook.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmJournalEntriesBook.vb">
+    <Compile Include="Sheets\FrmJournalEntriesBook.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmAankoopVerrichtingen.Designer.vb">
@@ -233,10 +233,10 @@
     <Compile Include="frmBoeking.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmJournalEntryInput.Designer.vb">
+    <Compile Include="Sheets\FrmJournalEntryInput.Designer.vb">
       <DependentUpon>FrmJournalEntryInput.vb</DependentUpon>
     </Compile>
-    <Compile Include="FrmJournalEntryInput.vb">
+    <Compile Include="Sheets\FrmJournalEntryInput.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDokHistoriek.Designer.vb">
@@ -474,7 +474,7 @@
     <EmbeddedResource Include="frmBtwAangifte.resx">
       <DependentUpon>frmBtwAangifte.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmJournalEntriesBook.resx">
+    <EmbeddedResource Include="Sheets\FrmJournalEntriesBook.resx">
       <DependentUpon>FrmJournalEntriesBook.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAankoopVerrichtingen.resx">
@@ -492,7 +492,7 @@
     <EmbeddedResource Include="frmBoeking.resx">
       <DependentUpon>frmBoeking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmJournalEntryInput.resx">
+    <EmbeddedResource Include="Sheets\FrmJournalEntryInput.resx">
       <DependentUpon>FrmJournalEntryInput.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDokHistoriek.resx">

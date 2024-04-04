@@ -32,7 +32,7 @@ Public Class KwijtingEdit
 	Private Sub tbPolisNummer_Leave(sender As Object, e As EventArgs) Handles tbPolisNummer.Leave
 
 		If tbPolisNummer.Text="" Then Exit Sub 
-		bGet(FlPolis, 0, vSet(tbPolisNummer.Text, 12))
+		MsJetGet(FlPolis, 0, vSet(tbPolisNummer.Text, 12))
 		If Ktrl Then
 			btnOK.Enabled= False
 			btnRefresh.Enabled = False 
@@ -42,7 +42,7 @@ Public Class KwijtingEdit
 		Else
 			RecordToVeld(FlPolis)
 			tbPolisNummer.Text = vBibTekst(FlPolis, "#A000 #")
-			bGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+			MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
 			If Ktrl Then
 				tbKlant.Text = "KlantLink onmogelijk !!! Kontroleer !!!"
 				btnOK.Enabled= False
@@ -116,7 +116,7 @@ Public Class KwijtingEdit
 			'select beperken tot: A110, vs97, v164
 			getClient = policiesRS.Fields("A110").Value
 
-			bGet(FlKlant, 0, getClient)
+			MsJetGet(FlKlant, 0, getClient)
 			If Ktrl Then
 				Dummy = "KlantLink onmogelijk !!! Kontroleer !!!"
 			Else
@@ -155,7 +155,7 @@ Public Class KwijtingEdit
 						Dim strA000 As String = policiesRS.Fields("A000").Value
 						Dim strB010 As String = policiesRS.Fields("B010").Value
 
-						'bGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
+						'MsJetGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
 						comPercentage = 0 'CommissieCheck(strA010, strA000)
 						TaksEnKost = 0
 						If Ktrl Then
@@ -284,7 +284,7 @@ End Class
 '				Else
 '					RecordToVeld(FlKlant)
 '					TekstInfo(1).Text = vBibTekst(FlKlant, "#A100 #")
-'					bGet(FlPolis, 1, vBibTekst(FlKlant, "#A110 #"))
+'					MsJetGet(FlPolis, 1, vBibTekst(FlKlant, "#A110 #"))
 '					If Ktrl Or vSet(KeyBuf(FlPolis), 12) <> vSet(vBibTekst(FlKlant, "#A110 #"), 12) Then
 '						MsgBox("Geen polissen voor deze klant te vinden !!")
 '						TekstInfo(1).Text = "-"

@@ -235,29 +235,29 @@ End Class
 '		End Select
 
 'Vooraan: 
-'		bFirst(FlRekening, 0)
-'		bGetOrGreater(FlRekening, 0, sminsl.Value)
+'		bFirst(FlLedgerAccount, 0)
+'		bGetOrGreater(FlLedgerAccount, 0, sminsl.Value)
 '		If Ktrl Then
 '			GoTo PrintAf
 '		Else
-'			If vSet(KeyBuf(FlRekening), 7) > smaxsl.Value Then
+'			If vSet(KeyBuf(FlLedgerAccount), 7) > smaxsl.Value Then
 '				GoTo PrintAf
 '			Else
-'				RecordToVeld(FlRekening)
+'				RecordToVeld(FlLedgerAccount)
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub TelOp
 '			End If
 '		End If
 
 '		Do 
-'			bNext(FlRekening)
+'			bNext(FlLedgerAccount)
 '			If Ktrl Then
 '				GoTo PrintAf
 '			Else
-'				If vSet(KeyBuf(FlRekening), 7) > smaxsl.Value Then
+'				If vSet(KeyBuf(FlLedgerAccount), 7) > smaxsl.Value Then
 '					GoTo PrintAf
 '				Else
-'					RecordToVeld(FlRekening)
+'					RecordToVeld(FlLedgerAccount)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub TelOp
 '				End If
@@ -267,11 +267,11 @@ End Class
 
 'TelOp: 
 '		If bhEuro Then
-'			dbdhbj = Val(vBibTekst(FlRekening, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
-'			dbdvbj = Val(vBibTekst(FlRekening, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
+'			dbdhbj = Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
+'			dbdvbj = Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
 '		Else
-'			dbdhbj = Val(vBibTekst(FlRekening, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
-'			dbdvbj = Val(vBibTekst(FlRekening, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
+'			dbdhbj = Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
+'			dbdvbj = Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
 '		End If
 '		dTOT = dTOT + dbdhbj
 '		dvtot = dvtot + dbdvbj
