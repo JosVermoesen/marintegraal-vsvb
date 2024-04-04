@@ -27,9 +27,9 @@ Public Class frmBedrijfOpenen
         vsfPro = False
         Err.Clear()
         On Error Resume Next
-        'dlbFolder.path = Lokatie
+        'dlbFolder.path = Location
         If Err.Number Then
-            MsgBox("Lokatie bedrijven onvindbaar.  Kontroleer manueel a.u.b.", MsgBoxStyle.Critical)
+            MsgBox("Location bedrijven onvindbaar.  Kontroleer manueel a.u.b.", MsgBoxStyle.Critical)
         Else
             KeuzeLijstVullen()
         End If
@@ -87,7 +87,7 @@ Public Class frmBedrijfOpenen
             verwijderenButton.Enabled = True
             onedriveButton.Enabled = True
         End If
-        Lokatie = locatieTextBox.Text & "\"
+        ModLibs.Location = locatieTextBox.Text & "\"
         'TODO: KeuzeLijstVullen()
     End Sub
 
@@ -105,7 +105,7 @@ Public Class frmBedrijfOpenen
             verwijderenButton.Enabled = True
             onedriveButton.Enabled = True
         End If
-        Lokatie = locatieTextBox.Text & "\"
+        ModLibs.Location = locatieTextBox.Text & "\"
         KeuzeLijstVullen()
     End Sub
 
@@ -121,7 +121,7 @@ Public Class frmBedrijfOpenen
 
         bedrijvenListView.Items.Clear()
 
-        MyPath = locatieTextBox.Text & "\" 'Lokatie ' Set the path.
+        MyPath = locatieTextBox.Text & "\" 'Location ' Set the path.
 
         Err.Clear()
         On Error Resume Next
@@ -173,11 +173,11 @@ Public Class frmBedrijfOpenen
 
     Private Sub StartAutoLoad()
 
-        BedrijfsLokatie = Lokatie & bedrijvenListView.FocusedItem.SubItems.Item(1).Text & "\"
+        LocationCompanyData = ModLibs.Location & bedrijvenListView.FocusedItem.SubItems.Item(1).Text & "\"
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
         Mim.Text = "marIntegraal.NET " & marVersion & " - [" & Trim(bedrijvenListView.FocusedItem.Text) & "]"
 
-        AutoLoadBedrijf(BJPERDAT:=frmBJPERDAT)
+        AutoLoadCompany(BYPERDAT:=frmBJPERDAT)
         sluitenButton.PerformClick()
 
     End Sub

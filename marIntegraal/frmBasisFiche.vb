@@ -6,7 +6,7 @@ Public Class frmBasisFiche
     Private Sub NieuweFiche()
         Dim xTMP As Integer
 
-        xTMP = adoBlankoRecord(hierFl)
+        xTMP = AdoNewRecord(hierFl)
 
         'codeTextBox.Text = ""
         InsertFlag(hierFl) = 1
@@ -24,18 +24,18 @@ Public Class frmBasisFiche
         Else
             RecordToVeld(hierFl)
         End If
-        lastKey = vBibTekst(hierFl, "#" & FlIndexIs(hierFl, 0) & "#")
+        lastKey = AdoGetField(hierFl, "#" & JetTableUseIndex(hierFl, 0) & "#")
         codeTextBox.Text = lastKey
         InsertFlag(Fl) = 0
 
     End Sub
     Private Sub FicheNaarRecord()
 
-        MsJetGet(hierFl, 0, vSet(codeTextBox.Text, FlIndexLen(hierFl, 0)))
+        JetGet(hierFl, 0, SetSpacing(codeTextBox.Text, FlIndexLen(hierFl, 0)))
         If Ktrl = 0 Then
             bUpdate(hierFl, 0)
         Else
-            bInsert(hierFl, 0)
+            JetInsert(hierFl, 0)
         End If
 
     End Sub
@@ -47,7 +47,7 @@ Public Class frmBasisFiche
         Else
             For T = 0 To FlAantalIndexen(hierFl)
                 Dim sortOmsString As String = Format(T, "00") & ":" & FLIndexCaption(hierFl, T)
-                Dim sortveldString As String = Trim(FlIndexIs(hierFl, T))
+                Dim sortveldString As String = Trim(JetTableUseIndex(hierFl, T))
                 sorteringComboBox.Items.Add(sortOmsString & " (" & sortveldString & ")")
             Next
             If sorteringComboBox.Items.Count > 0 Then
@@ -63,7 +63,7 @@ Public Class frmBasisFiche
     End Sub
     Private Sub topButton_Click(sender As Object, e As EventArgs) Handles topButton.Click
 
-        bFirst(hierFl, 0)
+        JetGetFirst(hierFl, 0)
         If Ktrl Then
             Beep()
             bewerkenButton.Enabled = False
@@ -163,21 +163,21 @@ Public Class frmBasisFiche
 
         teZoeken = Trim(codeTextBox.Text)
         If TeZoeken = "" Then Beep() : Exit Sub
-        MsJetGet(hierFl, 0, teZoeken)
+        JetGet(hierFl, 0, teZoeken)
         If Ktrl = 0 Then
             RecordNaarFiche()
         Else
             NieuweFiche()
             codeTextBox.Text = teZoeken
         End If
-        'If Fl = FlLedgerAccount Then DbKontrole((TekstInfo(0).Text), FlLedgerAccount)
+        'If Fl = TableOfLedgerAccounts Then DbKontrole((TekstInfo(0).Text), TableOfLedgerAccounts)
 
         If InsertFlag(hierFl) = 1 Then 'nieuwe fiche
             Select Case hierFl
-                Case FlKlant, FlLeverancier
-                    vBib(hierFl, codeTextBox.Text, "A110") 'Klant/Levnummer
-                Case FlLedgerAccount
-                    vBib(hierFl, codeTextBox.Text, "v019") 'Rekeningnummer
+                Case TableOfCustomers, TableOfSuppliers
+                    AdoInsertToRecord(hierFl, codeTextBox.Text, "A110") 'Klant/Levnummer
+                Case TableOfLedgerAccounts
+                    AdoInsertToRecord(hierFl, codeTextBox.Text, "v019") 'Rekeningnummer
                 Case Else
                     MsgBox("Stop")
             End Select

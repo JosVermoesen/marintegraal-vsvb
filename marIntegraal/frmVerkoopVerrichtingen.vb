@@ -106,12 +106,12 @@ Public Class frmVerkoopVerrichtingen
         sMunt = "BEF"
 
         For Tel = 16 To 19
-            rbtwVAK(Tel - 16) = String99(Lees, Tel)
-            rbtwVAK(Tel - 12) = String99(Lees, Tel + 6)
+            rbtwVAK(Tel - 16) = String99(Reading, Tel)
+            rbtwVAK(Tel - 12) = String99(Reading, Tel + 6)
         Next
 
 MaskAantal:
-        vkMaskAantal = String99(Lees, 300)
+        vkMaskAantal = String99(Reading, 300)
         If Len(Trim(vkMaskAantal)) <> 7 Then
             SS99("0000.00", 300)
             MsgBox("Masker voor aantal is ingesteld als '0000.00'  Wijzig via setup indien nodig.", MsgBoxStyle.Information)
@@ -119,15 +119,15 @@ MaskAantal:
         End If
         Mid(vkMaskAantal, 1, InStr(vkMaskAantal, ".") - 2) = New String("#", InStr(vkMaskAantal, ".") - 2)
 
-        'AantalEx.Value = String99(Lees, 185)
+        'AantalEx.Value = String99(Reading, 185)
 
-        KontaktPersoon = Val(String99(Lees, 201))
-        If Val(String99(Lees, 202)) = 1 Then
+        KontaktPersoon = Val(String99(Reading, 201))
+        If Val(String99(Reading, 202)) = 1 Then
             Overschrijvingsstrook.Checked = True
         Else
             Overschrijvingsstrook.Checked = False
         End If
-        If Val(String99(Lees, 203)) = 1 Then
+        If Val(String99(Reading, 203)) = 1 Then
             SteedsDrukken = True
         Else
             SteedsDrukken = False
@@ -136,16 +136,16 @@ MaskAantal:
         Dim X As Short
         Schoon()
 
-        If Mid(String99(Lees, 20), 1, 1) = "4" Then
+        If Mid(String99(Reading, 20), 1, 1) = "4" Then
             ForFait = 1
             MsgBox("Verkoopfakturatie voor forfaitair BTW SYSTEEM.")
             'TODO: TekstInfo(3).Visible = True
         Else
             ForFait = 0
         End If
-        KlantRekening = String99(Lees, 9)
+        KlantRekening = String99(Reading, 9)
         mgrklantenrekMTextBox.Text = KlantRekening
-        'If String99(Lees, 299) = "2" Then
+        'If String99(Reading, 299) = "2" Then
         'Me.cbPDF.CheckState = System.Windows.Forms.CheckState.Unchecked
         'Else
         cbPDF.Checked = True
@@ -191,7 +191,7 @@ MaskAantal:
             End If
         End If
         SharedIndex = 1
-        SharedFl = FlKlant
+        SharedFl = TableOfCustomers
         GridText = ""
         SqlSearch.ShowDialog()
         If Ktrl = 0 Then
@@ -288,19 +288,19 @@ MaskAantal:
             MsgBox("Landnummer is verplicht !")
             Exit Sub
         ElseIf RV(rsKlant, "v149") = "002" Then
-            KlantInfo.Text = vSet(RV(rsKlant, "A110"), 12) & "* Binnenland * " & Klantje
+            KlantInfo.Text = SetSpacing(RV(rsKlant, "A110"), 12) & "* Binnenland * " & Klantje
             VerkoopFLG = 0
             Medekontraktant.Enabled = True
         ElseIf InStr(SISO, RV(rsKlant, "v149")) Then
-            KlantInfo.Text = vSet(RV(rsKlant, "A110"), 12) & "* E.U. mét Btw-nummer * " & Klantje
+            KlantInfo.Text = SetSpacing(RV(rsKlant, "A110"), 12) & "* E.U. mét Btw-nummer * " & Klantje
             VerkoopFLG = 1
             Medekontraktant.Enabled = False
-            If vSet(RV(rsKlant, "A161"), 12) = Space(12) Then
-                KlantInfo.Text = vSet(RV(rsKlant, "A110"), 12) & "* E.U. geen Btw-nummer * " & Klantje
+            If SetSpacing(RV(rsKlant, "A161"), 12) = Space(12) Then
+                KlantInfo.Text = SetSpacing(RV(rsKlant, "A110"), 12) & "* E.U. geen Btw-nummer * " & Klantje
                 VerkoopFLG = 0
             End If
         Else
-            KlantInfo.Text = vSet(RV(rsKlant, "A110"), 12) & "* Uitvoer buiten E.U. *" & Klantje
+            KlantInfo.Text = SetSpacing(RV(rsKlant, "A110"), 12) & "* Uitvoer buiten E.U. *" & Klantje
             VerkoopFLG = 2
             Medekontraktant.Enabled = False
         End If
@@ -317,22 +317,22 @@ MaskAantal:
         If Mid(RV(rsKlant, "v161"), 1, 3) = "400" Then
             Stop
             KlantRekening = RV(rsKlant, "v161")
-            If Not adoGet(FlLedgerAccount, 0, "=", KlantRekening) Then
+            If Not adoGet(TableOfLedgerAccounts, 0, "=", KlantRekening) Then
                 Beep()
-                KlantRekening = String99(Lees, 9)
+                KlantRekening = String99(Reading, 9)
             End If
         Else
-            KlantRekening = String99(Lees, 9)
+            KlantRekening = String99(Reading, 9)
         End If
         mgrklantenrekMTextBox.Text = KlantRekening
         If Mid(RV(rsKlant, "v225"), 1, 2) = "70" Then
             DefaultVerkoop = RV(rsKlant, "v225")
-            If Not adoGet(FlLedgerAccount, 0, "=", DefaultVerkoop) Then
+            If Not adoGet(TableOfLedgerAccounts, 0, "=", DefaultVerkoop) Then
                 Beep()
-                DefaultVerkoop = String99(Lees, 25)
+                DefaultVerkoop = String99(Reading, 25)
             End If
         Else
-            DefaultVerkoop = String99(Lees, 25)
+            DefaultVerkoop = String99(Reading, 25)
         End If
         vervaldagMTextBox.Text = VValdag(datumdocMTextbox.Text, RV(rsKlant, "vs04"))
         IsErKlassement()
@@ -344,7 +344,7 @@ MaskAantal:
 
         Dim T As Short
 
-        TLBRecord(FlAllerlei) = ""
+        TLBRecord(TableOfVarious) = ""
         dokumentHistoriek = ""
         VerkoopDetail.Enabled = False
         Afsluiten.Enabled = False
@@ -355,7 +355,7 @@ MaskAantal:
         Klassement.Enabled = False
         'Klassement.Font = VB6.FontChangeBold(Klassement.Font, False)
         chkBTWBouw.CheckState = System.Windows.Forms.CheckState.Unchecked
-        BtwBouw = False
+        VatBobTheBuilders = False
         KlantInfo.Text = ""
         Annuleren.Enabled = True
         Medekontraktant.CheckState = System.Windows.Forms.CheckState.Unchecked
@@ -459,7 +459,7 @@ MaskAantal:
             If Annuleren.Enabled = False Then
                 MsgBox("U gaat naar een hogere modus met ingeladen dokument(en)." & vbCrLf & vbCrLf & "Indien dit niet de bedoeling was, onmiddellijk verkoopvenster sluiten en herbeginnen a.u.b.", MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation)
                 dokumentHistoriek = dokumentSleutel
-                TLBRecord(FlAllerlei) = ""
+                TLBRecord(TableOfVarious) = ""
                 Annuleren.Enabled = True
             End If
         End If
@@ -478,19 +478,19 @@ MaskAantal:
             dokumentSleutel = SleutelDok(Vr)
             datumdocMTextbox.Text = MimGlobalDate
             vervaldagMTextBox.Text = MimGlobalDate
-            Text = vSet("Ctrl+F2 Verkoopverrichting", 28) & "(" & dokumentSleutel & ")"
+            Text = SetSpacing("Ctrl+F2 Verkoopverrichting", 28) & "(" & dokumentSleutel & ")"
             chkZonderRelatie.Visible = False
         ElseIf Bestelbon.Checked Then
             dokumentType = "14" 'Bestelbon, Leveringsbon
             Vr = 73
             dokumentSleutel = SleutelDok(Vr)
-            Text = vSet("Ctrl+F2 Bestelling/levering", 28) & "(" & dokumentSleutel & ")"
+            Text = SetSpacing("Ctrl+F2 Bestelling/levering", 28) & "(" & dokumentSleutel & ")"
             chkZonderRelatie.Visible = True
         ElseIf Offerte.Checked Then
             dokumentType = "13" 'Offerte
             Vr = 59
             dokumentSleutel = SleutelDok(Vr)
-            Text = vSet("Ctrl+F2 Offerte", 28) & "(" & dokumentSleutel & ")"
+            Text = SetSpacing("Ctrl+F2 Offerte", 28) & "(" & dokumentSleutel & ")"
             chkZonderRelatie.Visible = True
         End If
         TekstInfo3.Text = dokumentSleutel
@@ -813,7 +813,7 @@ MaskAantal:
         Dim BestondReeds As Short
         Dim T As Short
         If dokumentType = "15" And Annuleren.Enabled = True Then
-            If Not DatumKtrl(datumdocMTextbox.Text, TekstPeriode) Then
+            If Not DatumKtrl(datumdocMTextbox.Text, PeriodAsText) Then
                 frmBJPERDAT.WindowState = FormWindowState.Normal
                 frmBJPERDAT.Focus()
                 datumdocMTextbox.Focus()
@@ -887,13 +887,13 @@ MaskAantal:
                 .Title = "dnnVerkoopDocument"
             End With
             pdfDrukAf()
-            Mim.Report.WriteDoc(BedrijfsLokatie & Format(Now, "YYYYMMDDHHMMSS") & "-dnnVerkoopDocumenten.pdf")
+            Mim.Report.WriteDoc(LocationCompanyData & Format(Now, "YYYYMMDDHHMMSS") & "-dnnVerkoopDocumenten.pdf")
             Mim.Report.MailSubject = pdfDOKUMENTTYPE & " " & dokumentSleutel
             Mim.Report.MailText = pdfDOKUMENTTYPE & " " & dokumentSleutel & " in bijlage."
-            If Not IsDBNull(rsMAR(FlKlant).Fields("e072").Value) Then
-                If rsMAR(FlKlant).Fields("e072").Value = "1" Then
+            If Not IsDBNull(rsMAR(TableOfCustomers).Fields("e072").Value) Then
+                If rsMAR(TableOfCustomers).Fields("e072").Value = "1" Then
                     'automatisch mail proberen
-                    Call Mim.Report.AddMailReceiver(rsMAR(FlKlant).Fields("v224").Value, VMAIL_TO)
+                    Call Mim.Report.AddMailReceiver(rsMAR(TableOfCustomers).Fields("v224").Value, VMAIL_TO)
                     Ktrl = Mim.Report.MailDoc
                     'Call Mim.Report.AddMailReceiver("[FAX: +32 53 781922]", VMAIL_TO)
                     'X = Mim.Report.AddMailAttachment("c:\data\report.vpe", "")
@@ -922,10 +922,10 @@ MaskAantal:
         Else
             pdfOVSStrook = 0
         End If
-        MeerLijn = Val(String99(Lees, 72))
+        MeerLijn = Val(String99(Reading, 72))
         Taal = RV(rsKlant, "A10C")
         FlTemp = FreeFile()
-        FileOpen(FlTemp, ProgrammaLokatie & "Def\f0" & Taal & ".def", OpenMode.Input)
+        FileOpen(FlTemp, ProgramLocation & "Def\f0" & Taal & ".def", OpenMode.Input)
         T = 0
         While Not EOF(FlTemp)
             Input(FlTemp, rft(T))
@@ -994,8 +994,8 @@ pdfKopBalk:
             .TextBold = True
         End With
         Mim.Report.PenSize = 0.01
-        pdfY = Mim.Report.PrintBox(1.5, pdfVsoftVanaf, UCase(pdfDOKUMENTTYPE))
-        pdfY = Mim.Report.Print(8.5, pdfVsoftVanaf, dokumentSleutel & " / " & Str(Pagina))
+        pdfY = Mim.Report.PrintBox(1.5, pdfVsoftFrom, UCase(pdfDOKUMENTTYPE))
+        pdfY = Mim.Report.Print(8.5, pdfVsoftFrom, dokumentSleutel & " / " & Str(Pagina))
         pdfY = Mim.Report.Print(1.5, pdfY, vbCrLf)
         If Trim(RV(rsKlant, "A161")) = "" Then
             rBTWstr = ""
@@ -1004,19 +1004,19 @@ pdfKopBalk:
         Else
             rBTWstr = RV(rsKlant, "v150") + RV(rsKlant, "A161")
         End If
-        pdfY = Mim.Report.PrintBox(1.5, pdfY, rft(1) & vbCrLf & vSet(RV(rsKlant, "A110"), 12) & " " & vSet(rBTWstr, 14) & " " & datumdocMTextbox.Text & " " & vervaldagMTextBox.Text)
+        pdfY = Mim.Report.PrintBox(1.5, pdfY, rft(1) & vbCrLf & SetSpacing(RV(rsKlant, "A110"), 12) & " " & SetSpacing(rBTWstr, 14) & " " & datumdocMTextbox.Text & " " & vervaldagMTextBox.Text)
         pdfY = Mim.Report.Print(1.5, pdfY, vbCrLf)
         If MeerLijn = 1 Then
             Mim.Report.SelectFont("Courier New", 7.2)
         Else
             Mim.Report.SelectFont("Courier New", 10)
         End If
-        If Mid(String99(Lees, 74), 1, 1) = "2" Then
+        If Mid(String99(Reading, 74), 1, 1) = "2" Then
             If MeerLijn = 1 Then
                 strMeerLijn = Space(Len(rft(2))) & " "
                 'OMSTab = Len(rft(2)) + 1
             End If
-        ElseIf Mid(String99(Lees, 75), 1, 1) = "2" Then
+        ElseIf Mid(String99(Reading, 75), 1, 1) = "2" Then
             strMeerLijn = Mid(rft(2), 1, 13) & Space(13) & " "
             If MeerLijn = 1 Then
                 'OMSTab = 14
@@ -1031,7 +1031,7 @@ pdfKopBalk:
                 strMeerLijn = strMeerLijn & vbCrLf
             End If
         End If
-        If Mid(String99(Lees, 76), 1, 1) = "2" Then
+        If Mid(String99(Reading, 76), 1, 1) = "2" Then
             Mid(rft(10), 63, 2) = "  "
         End If
         strMeerLijn = strMeerLijn & rft(10)
@@ -1067,13 +1067,13 @@ pdfKopBalk:
         For tSip = 0 To 4
             adresString = adresString & UCase(rSip(tSip)) & vbCrLf
         Next
-        ktrlHier = Mim.Report.Write(pdfadresXpos, pdfadresYpos, pdfadresXpos2, pdfadresYpos2, adresString)
+        ktrlHier = Mim.Report.Write(pdfAddressXpos, pdfAddressYpos, pdfAddressXpos2, pdfAddressYpos2, adresString)
     End Sub
     Sub pdfPrintUserDef(ByRef TypeEnTaal As String, ByRef pdfOVSStrook As Double)
         Dim pfcmd As Short
         Dim FlFree As Short
         Dim pdfCmd As String
-        If Dir(BedrijfsLokatie & "pdfDDEF" & TypeEnTaal & ".Txt") = "" Then
+        If Dir(LocationCompanyData & "pdfDDEF" & TypeEnTaal & ".Txt") = "" Then
             Beep()
             Exit Sub
         Else
@@ -1084,7 +1084,7 @@ pdfKopBalk:
                 .nBottomMargin = 29.8
             End With
             FlFree = FreeFile()
-            FileOpen(FlFree, BedrijfsLokatie & "pdfDDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
+            FileOpen(FlFree, LocationCompanyData & "pdfDDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
             Do While Not EOF(FlFree)
                 pdfCmd = LineInput(FlFree)
                 If Mid(pdfCmd, 1, 1) = "'" Then
@@ -1124,12 +1124,12 @@ pdfKopBalk:
             End If
             'TODO controle gridtext RIGHT!!!achteraan
             If Mid(GridText, Len(GridText)) = "0" Then
-                If Mid(String99(Lees, 74), 1, 1) = "2" Then
+                If Mid(String99(Reading, 74), 1, 1) = "2" Then
                     If MeerLijn = 1 Then
                         strMeerLijn = Space(Len(rft(2))) & " "
                     End If
-                ElseIf Mid(String99(Lees, 75), 1, 1) = "2" Then
-                    strMeerLijn = vSet(VeldInfo(0), 13)
+                ElseIf Mid(String99(Reading, 75), 1, 1) = "2" Then
+                    strMeerLijn = SetSpacing(VeldInfo(0), 13)
                     If MeerLijn = 1 Then
                         strMeerLijn = strMeerLijn & Space(13) & " "
                         pdfY = Mim.Report.Print(1.7, pdfY, strMeerLijn)
@@ -1140,17 +1140,17 @@ pdfKopBalk:
                 Else
                     If MeerLijn = 1 Then
                     Else
-                        pdfY = Mim.Report.Print(1.7, pdfY, vSet(VeldInfo(0), 13) & " " & Dec(dVeldInfo(2), "###0.0") & " " & vSet(Mid(fmarBoxText("004", Taal, VeldInfo(8)), 4, 5), 5) & " ")
+                        pdfY = Mim.Report.Print(1.7, pdfY, SetSpacing(VeldInfo(0), 13) & " " & Dec(dVeldInfo(2), "###0.0") & " " & SetSpacing(Mid(fmarBoxText("004", Taal, VeldInfo(8)), 4, 5), 5) & " ")
                     End If
                 End If
             End If
             If MeerLijn = 1 Then
-                strMeerLijn = vSet(VeldInfo(0), 13) & " " & Dec(dVeldInfo(2), "###0.0") & " " & vSet(Mid(fmarBoxText("004", Taal, VeldInfo(8)), 4, 5), 5) & " "
+                strMeerLijn = SetSpacing(VeldInfo(0), 13) & " " & Dec(dVeldInfo(2), "###0.0") & " " & SetSpacing(Mid(fmarBoxText("004", Taal, VeldInfo(8)), 4, 5), 5) & " "
             Else
                 strMeerLijn = ""
             End If
-            strMeerLijn = strMeerLijn & vSet(VeldInfo(1), 40) & " " & Dec(dVeldInfo(4) / dMuntK, "######0.000") & " " & Dec(dVeldInfo(6), vkMaskAantal) & " "
-            If Mid(String99(Lees, 76), 1, 1) = "2" Then
+            strMeerLijn = strMeerLijn & SetSpacing(VeldInfo(1), 40) & " " & Dec(dVeldInfo(4) / dMuntK, "######0.000") & " " & Dec(dVeldInfo(6), vkMaskAantal) & " "
+            If Mid(String99(Reading, 76), 1, 1) = "2" Then
                 strMeerLijn = strMeerLijn & "    "
             Else
                 strMeerLijn = strMeerLijn & Dec(dVeldInfo(5), "##0") & " "
@@ -1167,7 +1167,7 @@ pdfKopBalk:
             pdfY = Mim.Report.Print(1.7, pdfY, strMeerLijn)
 
 pdfKontroleLijn:
-            If pdfY >= pdfVsoftTot - 2.3 - pdfOVSStrook Then
+            If pdfY >= pdfVsoftTo - 2.3 - pdfOVSStrook Then
                 pdfOnderKant
                 pdfVoetTekst
                 MsgBox("stop voor nieuwe pdf pagina nog te verbeteren")
@@ -1176,10 +1176,10 @@ pdfKontroleLijn:
         Next
     End Sub
     Sub pdfOnderKant()
-        pdfY = Mim.Report.Print(1.5, pdfVsoftTot - 2.3 - pdfOVSStrook, vbCrLf)
+        pdfY = Mim.Report.Print(1.5, pdfVsoftTo - 2.3 - pdfOVSStrook, vbCrLf)
         Mim.Report.SelectFont("Courier New", 10)
         sy = "####0.00"
-        sy2 = MaskerEUR
+        sy2 = MaskEUR
         Mid(rft(5), 25, 4) = Mid(fmarBoxText("002", "2", "1"), 4, 4)
         Mid(rft(5), 35, 4) = Mid(fmarBoxText("002", "2", "2"), 4, 4)
         Mid(rft(5), 45, 4) = Mid(fmarBoxText("002", "2", "3"), 4, 4)
@@ -1228,14 +1228,14 @@ pdfKontroleLijn:
     End Sub
     Sub pdfOverschrijvingsstrook()
         On Error GoTo 0
-        If Dir(BedrijfsLokatie & ovsDefinitie) = "" Then
-            MsgBox(BedrijfsLokatie & ovsDefinitie & " niet te vinden !  Hierna wordt kladblok opgestart.  Breng uw eigen gegevens in a.u.b. !", 0, "Foutieve Installatie ?")
+        If Dir(LocationCompanyData & ovsDefinitie) = "" Then
+            MsgBox(LocationCompanyData & ovsDefinitie & " niet te vinden !  Hierna wordt kladblok opgestart.  Breng uw eigen gegevens in a.u.b. !", 0, "Foutieve Installatie ?")
             On Error Resume Next
-            X = Shell("notepad.exe " & BedrijfsLokatie & ovsDefinitie, 1)
+            X = Shell("notepad.exe " & LocationCompanyData & ovsDefinitie, 1)
             Exit Sub
         Else
             FlTemp = FreeFile()
-            FileOpen(FlTemp, BedrijfsLokatie & ovsDefinitie, OpenMode.Input)
+            FileOpen(FlTemp, LocationCompanyData & ovsDefinitie, OpenMode.Input)
             sSip(0) = LineInput(FlTemp)
             sSip(1) = LineInput(FlTemp)
             sSip(2) = LineInput(FlTemp)

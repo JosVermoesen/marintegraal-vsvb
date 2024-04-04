@@ -98,7 +98,7 @@ End Class
 
 '		If Index = 1 Then
 '			If KeyCode = 17 Then
-'				SharedFl = FlKlant
+'				SharedFl = TableOfCustomers
 '				aIndex = 1
 '				GridText = TekstInfo(1).Text
 '				SqlSearch.ShowDialog()
@@ -107,31 +107,31 @@ End Class
 '					CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
 '					Exit Sub
 '				Else
-'					RecordToVeld(FlKlant)
-'					TekstInfo(1).Text = vBibTekst(FlKlant, "#A100 #")
-'					MsJetGet(FlPolis, 1, vBibTekst(FlKlant, "#A110 #"))
-'					If Ktrl Or vSet(KeyBuf(FlPolis), 12) <> vSet(vBibTekst(FlKlant, "#A110 #"), 12) Then
+'					RecordToVeld(TableOfCustomers)
+'					TekstInfo(1).Text = AdoGetField(TableOfCustomers, "#A100 #")
+'					JetGet(TableOfContracts, 1, AdoGetField(TableOfCustomers, "#A110 #"))
+'					If Ktrl Or SetSpacing(KeyBuf(TableOfContracts), 12) <> SetSpacing(AdoGetField(TableOfCustomers, "#A110 #"), 12) Then
 '						MsgBox("Geen polissen voor deze klant te vinden !!")
 '						TekstInfo(1).Text = "-"
 '						CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
 '						Exit Sub
 '					Else
 '						Do 
-'							RecordToVeld(FlPolis)
-'							If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) = vBibTekst(FlPolis, "#A010 #") Then
-'								Msg = "Boeking voor polisnummer : " & vBibTekst(FlPolis, "#A000 #") & vbCrLf & vbCrLf
-'								Msg = Msg & vBibTekst(FlPolis, "#vs99 #") & vbCrLf
-'								Msg = Msg & vBibTekst(FlPolis, "#vs98 #") & vbCrLf & vbCrLf
+'							RecordToVeld(TableOfContracts)
+'							If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) = AdoGetField(TableOfContracts, "#A010 #") Then
+'								Msg = "Boeking voor polisnummer : " & AdoGetField(TableOfContracts, "#A000 #") & vbCrLf & vbCrLf
+'								Msg = Msg & AdoGetField(TableOfContracts, "#vs99 #") & vbCrLf
+'								Msg = Msg & AdoGetField(TableOfContracts, "#vs98 #") & vbCrLf & vbCrLf
 '								Msg = Msg & "Bent U zeker ?"
 '								KtrlBox = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2)
 '								If KtrlBox = MsgBoxResult.Yes Then
-'									TekstInfo(0).Text = vBibTekst(FlPolis, "#A000 #")
+'									TekstInfo(0).Text = AdoGetField(TableOfContracts, "#A000 #")
 '									TekstInfo(0).Focus()
 '									Exit Do
 '								End If
 '							End If
-'							bNext(FlPolis)
-'							If Ktrl Or vSet(KeyBuf(FlPolis), 12) <> vSet(vBibTekst(FlKlant, "#A110 #"), 12) Then
+'							bNext(TableOfContracts)
+'							If Ktrl Or SetSpacing(KeyBuf(TableOfContracts), 12) <> SetSpacing(AdoGetField(TableOfCustomers, "#A110 #"), 12) Then
 '								MsgBox("Geen polissen meer voor deze klant te vinden !!")
 '								TekstInfo(1).Text = "-"
 '								CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
@@ -150,33 +150,33 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				MsJetGet(FlPolis, 0, vSet(TekstInfo(0).Text, 12))
+'				JetGet(TableOfContracts, 0, SetSpacing(TekstInfo(0).Text, 12))
 '				If Ktrl Then
 '					CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
 '					TekstInfo(1).Focus()
 '					TekstInfo(0).Text = ""
 '					Exit Sub
 '				Else
-'					RecordToVeld(FlPolis)
-'					If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) = vBibTekst(FlPolis, "#A010 #") Then
-'						TekstInfo(0).Text = vBibTekst(FlPolis, "#A000 #")
-'						MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+'					RecordToVeld(TableOfContracts)
+'					If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) = AdoGetField(TableOfContracts, "#A010 #") Then
+'						TekstInfo(0).Text = AdoGetField(TableOfContracts, "#A000 #")
+'						JetGet(TableOfCustomers, 0, AdoGetField(TableOfContracts, "#A110 #"))
 '						If Ktrl Then
 '							TekstInfo(1).Text = "KlantLink onmogelijk !!! Kontroleer !!!"
 '							CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
 '						Else
-'							RecordToVeld(FlKlant)
-'							TekstInfo(1).Text = vBibTekst(FlKlant, "#A100 #")
+'							RecordToVeld(TableOfCustomers)
+'							TekstInfo(1).Text = AdoGetField(TableOfCustomers, "#A100 #")
 '							If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(1).Text, 1) = "1" Then
-'								'TekstInfo(2).Text = Format(Val(vBibTekst(FlPolis, "#v165 #")), "00") + "/" + Format(Val(vBibTekst(FlPolis, "#v164 #")), "00") + "/" + Right(KwijtingBoeken!TekstInfo(0).Text, 4)
-'								TekstInfo(2).Text = VB6.Format(Val(vBibTekst(FlPolis, "#v165 #")), "00") & "/" & VB.Right(CType(KwijtingBoeken.Controls("TekstInfo"), Object)(0).Text, 7)
+'								'TekstInfo(2).Text = Format(Val(AdoGetField(TableOfContracts, "#v165 #")), "00") + "/" + Format(Val(AdoGetField(TableOfContracts, "#v164 #")), "00") + "/" + Right(KwijtingBoeken!TekstInfo(0).Text, 4)
+'								TekstInfo(2).Text = VB6.Format(Val(AdoGetField(TableOfContracts, "#v165 #")), "00") & "/" & VB.Right(CType(KwijtingBoeken.Controls("TekstInfo"), Object)(0).Text, 7)
 '							Else
-'								TekstInfo(2).Text = CType(KwijtingBoeken.Controls("TekstInfo"), Object)(0).Text 'Format(Val(vBibTekst(FlPolis, "#v165 #")), "00") + "/" + Format(Val(vBibTekst(FlPolis, "#v164 #")), "00") + "/" + Right(KwijtingBoeken!TekstInfo(0).Text, 4)
+'								TekstInfo(2).Text = CType(KwijtingBoeken.Controls("TekstInfo"), Object)(0).Text 'Format(Val(AdoGetField(TableOfContracts, "#v165 #")), "00") + "/" + Format(Val(AdoGetField(TableOfContracts, "#v164 #")), "00") + "/" + Right(KwijtingBoeken!TekstInfo(0).Text, 4)
 '							End If
 '							Ok.Enabled = True
 '						End If
 '					Else
-'						MsgBox("Maatschappij : " & VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) & " <> " & vBibTekst(FlPolis, "#A010 #"))
+'						MsgBox("Maatschappij : " & VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) & " <> " & AdoGetField(TableOfContracts, "#A010 #"))
 '						TekstInfo(Index).Text = ""
 '					End If
 '				End If
@@ -189,9 +189,9 @@ End Class
 '				End If
 '			Case 3, 4
 '				If bhEuro Then
-'					TekstInfo(Index).Text = Dec(Val(TekstInfo(Index).Text), MaskerEUR)
+'					TekstInfo(Index).Text = Dec(Val(TekstInfo(Index).Text), MaskEUR)
 '				Else
-'					TekstInfo(Index).Text = Dec(Val(TekstInfo(Index).Text), MaskerBEF)
+'					TekstInfo(Index).Text = Dec(Val(TekstInfo(Index).Text), MaskBEF)
 '				End If
 '		End Select
 

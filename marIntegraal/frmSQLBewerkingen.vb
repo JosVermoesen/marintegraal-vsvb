@@ -60,18 +60,18 @@ End Class
 '	'UPGRADE_WARNING: Event cmbSelect.SelectedIndexChanged may fire when form is initialized. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="88B12AE1-6DE0-48A0-86F1-60C0686C026A"'
 '	Private Sub cmbSelect_SelectedIndexChanged(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmbSelect.SelectedIndexChanged
 
-'		MsJetGet(FlAllerlei, 1, "29" & cmbSelect.Text)
+'		JetGet(TableOfVarious, 1, "29" & cmbSelect.Text)
 '		If Ktrl Then
 '		Else
-'			RecordToVeld(FlAllerlei)
-'			If InStr(vBibTekst(FlAllerlei, "#v132 #"), "[Colwidth]") Then
-'				txtSQL.Text = VB.Left(vBibTekst(FlAllerlei, "#v132 #"), InStr(vBibTekst(FlAllerlei, "#v132 #"), "[Colwidth]") - 1)
+'			RecordToVeld(TableOfVarious)
+'			If InStr(AdoGetField(TableOfVarious, "#v132 #"), "[Colwidth]") Then
+'				txtSQL.Text = VB.Left(AdoGetField(TableOfVarious, "#v132 #"), InStr(AdoGetField(TableOfVarious, "#v132 #"), "[Colwidth]") - 1)
 '			Else
-'				txtSQL.Text = vBibTekst(FlAllerlei, "#v132 #")
+'				txtSQL.Text = AdoGetField(TableOfVarious, "#v132 #")
 '			End If
 
 '			On Error Resume Next
-'			Msg = Mid(vBibTekst(FlAllerlei, "#v132 #"), InStr(vBibTekst(FlAllerlei, "#v132 #"), "[Colwidth]") + 10)
+'			Msg = Mid(AdoGetField(TableOfVarious, "#v132 #"), InStr(AdoGetField(TableOfVarious, "#v132 #"), "[Colwidth]") + 10)
 '			If Msg = "" Then
 '				grdColWidth(0) = 0
 '			Else
@@ -97,11 +97,11 @@ End Class
 '		Dim Shift As Short = eventArgs.KeyData \ &H10000
 
 '		If KeyCode = 46 Then
-'			MsJetGet(FlAllerlei, 1, "29" & cmbSelect.Text)
-'			If Ktrl Or VB.Left(KeyBuf(FlAllerlei), 2) <> "29" Then
+'			JetGet(TableOfVarious, 1, "29" & cmbSelect.Text)
+'			If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then
 '			ElseIf MsgBox("Bestaande definitie '" & cmbSelect.Text & "' verwijderen ?", MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2) = MsgBoxResult.Yes Then 
-'				RecordToVeld(FlAllerlei)
-'				bDelete(FlAllerlei)
+'				RecordToVeld(TableOfVarious)
+'				Bdelete(TableOfVarious)
 '				SelectComboVullen()
 '			Else
 '				Exit Sub
@@ -133,15 +133,15 @@ End Class
 '		Dim RecordTeller As Integer
 '		Dim msgStringHier As String
 
-'		jetConnectSubHier = adoJetProvider & "Data Source=" & BedrijfsLokatie & "\marnt.mdv;" & "Persist Security Info=False"
+'		jetConnectSubHier = adoJetProvider & "Data Source=" & LocationCompanyData & "\marnt.mdv;" & "Persist Security Info=False"
 
 '		cnnSubHier = New ADODB.Connection
 '		cnnSubHier.Open(jetConnectSubHier)
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		If Dir(BedrijfsLokatie & "\marnt.mdb") <> "" Then
-'			Kill(BedrijfsLokatie & "\marnt.mdb")
+'		If Dir(LocationCompanyData & "\marnt.mdb") <> "" Then
+'			Kill(LocationCompanyData & "\marnt.mdb")
 '		End If
-'		If Not CopyFile(ProgrammaLokatie, BedrijfsLokatie, "marnt.mdb") Then
+'		If Not CopyFile(ProgramLocation, LocationCompanyData, "marnt.mdb") Then
 '			MsgBox("Stop" & vbCr & ErrorToString())
 '		End If
 
@@ -150,7 +150,7 @@ End Class
 '		Do While TQString <> ""
 '			sTBLName = Mid(TQString, 1, InStr(TQString, vbCr) - 1)
 '			TQString = Mid(TQString, InStr(TQString, vbCr) + 1)
-'			SQLstring = "SELECT * INTO [" & BedrijfsLokatie & "marnt.mdb].[" & sTBLName & "] FROM " & sTBLName
+'			SQLstring = "SELECT * INTO [" & LocationCompanyData & "marnt.mdb].[" & sTBLName & "] FROM " & sTBLName
 '			Err.Clear()
 '			On Error Resume Next
 '			SnelHelpPrint("Bezig aan tabel " & sTBLName, blLogging)
@@ -168,7 +168,7 @@ End Class
 '			System.Windows.Forms.Cursor.Current = vbNormal
 '		Loop 
 '		MsgBox("Einde backup database" & vbCr & vbCr & msgStringHier, MsgBoxStyle.Information)
-'		MsgBox("Backup nog op veilige plaats bewaren: " & BedrijfsLokatie & "marnt.mdb", MsgBoxStyle.Information)
+'		MsgBox("Backup nog op veilige plaats bewaren: " & LocationCompanyData & "marnt.mdb", MsgBoxStyle.Information)
 '		MsgBox("Hierna worden de belangrijkste indexen nog aangemaakt in de marnt.mdb database")
 '		MsgBox("Stop")
 
@@ -285,22 +285,22 @@ End Class
 
 '	Private Sub cmdSelectWegschrijven_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdSelectWegschrijven.Click
 
-'		MsJetGet(FlAllerlei, 1, "29" & cmbSelect.Text)
-'		If Ktrl Or VB.Left(KeyBuf(FlAllerlei), 2) <> "29" Then
+'		JetGet(TableOfVarious, 1, "29" & cmbSelect.Text)
+'		If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then
 '			'Als nieuw bijvoegen
-'			TLBRecord(FlAllerlei) = ""
+'			TLBRecord(TableOfVarious) = ""
 '			Msg = ""
 '			For TelTot = 0 To msfSQL.get_Cols() - 1
 '				Msg = Msg & VB6.Format(msfSQL.get_ColWidth(TelTot)) & vbTab
 '			Next 
 '			Msg = "[Colwidth]" & Msg
 '			Msg = txtSQL.Text & Msg
-'			vBib(FlAllerlei, Msg, "v132")
-'			vBib(FlAllerlei, (cmbSelect.Text), "v250")
-'			vBib(FlAllerlei, "29" & vBibTekst(FlAllerlei, "#v250 #"), "v005")
-'			bInsert(FlAllerlei, 1)
+'			AdoInsertToRecord(TableOfVarious, Msg, "v132")
+'			AdoInsertToRecord(TableOfVarious, (cmbSelect.Text), "v250")
+'			AdoInsertToRecord(TableOfVarious, "29" & AdoGetField(TableOfVarious, "#v250 #"), "v005")
+'			JetInsert(TableOfVarious, 1)
 '		ElseIf MsgBox("Bestaande definitie '" & cmbSelect.Text & "' overschrijven ?", MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2) = MsgBoxResult.Yes Then 
-'			RecordToVeld(FlAllerlei)
+'			RecordToVeld(TableOfVarious)
 '			Msg = ""
 '			For TelTot = 0 To msfSQL.get_Cols() - 1
 '				Msg = Msg & VB6.Format(msfSQL.get_ColWidth(TelTot)) & vbTab
@@ -308,10 +308,10 @@ End Class
 '			Msg = "[Colwidth]" & Msg
 '			Msg = txtSQL.Text & Msg
 
-'			vBib(FlAllerlei, Msg, "v132")
-'			vBib(FlAllerlei, (cmbSelect.Text), "v250")
-'			vBib(FlAllerlei, "29" & vBibTekst(FlAllerlei, "#v250 #"), "v005")
-'			bUpdate(FlAllerlei, 1)
+'			AdoInsertToRecord(TableOfVarious, Msg, "v132")
+'			AdoInsertToRecord(TableOfVarious, (cmbSelect.Text), "v250")
+'			AdoInsertToRecord(TableOfVarious, "29" & AdoGetField(TableOfVarious, "#v250 #"), "v005")
+'			bUpdate(TableOfVarious, 1)
 '		Else
 '			Exit Sub
 '		End If
@@ -355,7 +355,7 @@ End Class
 '		If MsgBox(Msg, MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2) = MsgBoxResult.Yes Then
 '			MsgBox("De bestanden worden gesloten.  U kan eveneens wijzigingen aan de structuur van tabellin in de database aanbrengen.  Het is aanbevolen straks het bedrijf opnieuw te openen", MsgBoxStyle.Information)
 '			allesGesloten = True
-'			bClose(99)
+'			JetTableClose(99)
 '		Else
 '			MsgBox("De bestanden worden niet gesloten.  U kan enkel de gegevens in de database bewerken.  U kan géén wijzigingen aan de structuur van tabellen in de database aanbrengen.", MsgBoxStyle.Information)
 '		End If
@@ -372,8 +372,8 @@ End Class
 '		adoLoadDatabase()
 
 'QueryNogEens: 
-'		bGetOrGreater(FlAllerlei, 1, "29")
-'		If Ktrl Or VB.Left(KeyBuf(FlAllerlei), 2) <> "29" Then
+'		JetGetOrGreater(TableOfVarious, 1, "29")
+'		If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then
 '			'Steek er een voorbeeld in
 '			Msg = "SELECT TOP 6" & vbCrLf
 '			Msg = Msg & "    v019 AS RekNr," & vbCrLf
@@ -386,11 +386,11 @@ End Class
 '			Msg = Msg & "    Rekeningen" & vbCrLf
 '			Msg = Msg & "ORDER BY" & vbCrLf
 '			Msg = Msg & "    v020 DESC"
-'			TLBRecord(FlAllerlei) = ""
-'			vBib(FlAllerlei, Msg, "v132")
-'			vBib(FlAllerlei, "Query voorbeeld", "v250")
-'			vBib(FlAllerlei, "29" & vBibTekst(FlAllerlei, "#v250 #"), "v005")
-'			bInsert(FlAllerlei, 1)
+'			TLBRecord(TableOfVarious) = ""
+'			AdoInsertToRecord(TableOfVarious, Msg, "v132")
+'			AdoInsertToRecord(TableOfVarious, "Query voorbeeld", "v250")
+'			AdoInsertToRecord(TableOfVarious, "29" & AdoGetField(TableOfVarious, "#v250 #"), "v005")
+'			JetInsert(TableOfVarious, 1)
 '			If Ktrl Then
 '			Else
 '				GoTo QueryNogEens
@@ -413,14 +413,14 @@ End Class
 '	Sub SelectComboVullen()
 
 '		cmbSelect.Items.Clear()
-'		bGetOrGreater(FlAllerlei, 1, "29")
-'		If Ktrl Or VB.Left(KeyBuf(FlAllerlei), 2) <> "29" Then
+'		JetGetOrGreater(TableOfVarious, 1, "29")
+'		If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then
 '		Else
 '			Do 
-'				RecordToVeld(FlAllerlei)
-'				cmbSelect.Items.Add(vBibTekst(FlAllerlei, "#v250 #"))
-'				bNext(FlAllerlei)
-'				If Ktrl Or VB.Left(KeyBuf(FlAllerlei), 2) <> "29" Then
+'				RecordToVeld(TableOfVarious)
+'				cmbSelect.Items.Add(AdoGetField(TableOfVarious, "#v250 #"))
+'				bNext(TableOfVarious)
+'				If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then
 '					Exit Do
 '				End If
 '			Loop 

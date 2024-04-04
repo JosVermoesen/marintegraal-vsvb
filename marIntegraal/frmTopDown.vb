@@ -74,7 +74,7 @@ End Class
 '		Dim dTnt As Decimal
 '		Dim Taal As String
 
-'		ktrlBoekjaar = BoekjaarVanTot.Value
+'		ktrlBoekjaar = BookyearFromTo.Value
 '		If obBoekjaar(2).Checked = True Then
 '			Mid(ktrlBoekjaar, 1, 4) = VB6.Format(Val(Mid(ktrlBoekjaar, 1, 4)) - 1, "0000")
 '		End If
@@ -93,11 +93,11 @@ End Class
 '		ReportText(3) = TekstLijn(0).Text
 '		InitializeFields()
 
-'		bGetOrGreater(Fldokument, 1, BeginSleutel.Value)
-'		If Ktrl Or UCase(vSet(KeyBuf(Fldokument), 13)) > UCase(EindSleutel.Value) Then
+'		JetGetOrGreater(TableOfInvoices, 1, BeginSleutel.Value)
+'		If Ktrl Or UCase(SetSpacing(KeyBuf(TableOfInvoices), 13)) > UCase(EindSleutel.Value) Then
 '			Beep()
 '			Exit Sub
-'		ElseIf VB.Left(KeyBuf(Fldokument), 1) <> VB.Left(BeginSleutel.Value, 1) Then 
+'		ElseIf VB.Left(KeyBuf(TableOfInvoices), 1) <> VB.Left(BeginSleutel.Value, 1) Then 
 '			Beep()
 '			Exit Sub
 '		Else
@@ -111,9 +111,9 @@ End Class
 '			'UPGRADE_ISSUE: DoEvents does not return a value. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="8D115264-E27F-4472-A684-865A00B5E826"'
 '			XDoEvents = System.Windows.Forms.Application.DoEvents()
 
-'			bClose(FlDummy)
+'			JetTableClose(TableDummy)
 '			ClearFlDummy()
-'			Ktrl = bOpen(FlDummy)
+'			Ktrl = JetTableOpen(TableDummy)
 
 '			PageCounter = 0
 '			If chkAfdrukInVenster.CheckState = 0 Then
@@ -134,18 +134,18 @@ End Class
 '				End If
 '			End If
 '			PrintTitel()
-'			RecordToVeld(Fldokument)
+'			RecordToVeld(TableOfInvoices)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub KontroleVoorwaarden
 '		End If
 
 '		Do 
-'			bNext(Fldokument)
+'			bNext(TableOfInvoices)
 '			System.Windows.Forms.Application.DoEvents()
-'			If Ktrl Or UCase(vSet(KeyBuf(Fldokument), 13)) > UCase(EindSleutel.Value) Then
+'			If Ktrl Or UCase(SetSpacing(KeyBuf(TableOfInvoices), 13)) > UCase(EindSleutel.Value) Then
 '				Exit Do
 '			End If
-'			RecordToVeld(Fldokument)
+'			RecordToVeld(TableOfInvoices)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub KontroleVoorwaarden
 '		Loop 
@@ -170,7 +170,7 @@ End Class
 '		Exit Sub
 
 'PrintDeLijst: 
-'		bFirst(FlDummy, 0)
+'		JetGetFirst(TableDummy, 0)
 '		If Ktrl Then
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
@@ -178,7 +178,7 @@ End Class
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub StelSamen
 '			Do 
-'				bNext(FlDummy)
+'				bNext(TableDummy)
 '				If Ktrl Then
 '					Exit Do
 '				Else
@@ -191,29 +191,29 @@ End Class
 '		Return 
 
 'StelSamen: 
-'		RecordToVeld(FlDummy)
-'		MsJetGet(aIndex, 0, vBibTekst(FlDummy, "#v034 #"))
+'		RecordToVeld(TableDummy)
+'		JetGet(aIndex, 0, AdoGetField(TableDummy, "#v034 #"))
 '		If Ktrl Then
 '			FieldText(0) = "--"
 '		Else
 '			RecordToVeld(aIndex)
-'			FieldText(0) = vBibTekst(aIndex, "#A10A #")
+'			FieldText(0) = AdoGetField(aIndex, "#A10A #")
 '		End If
 
-'		Taal = vBibTekst(aIndex, "#A10C #")
-'		If Val(vBibTekst(aIndex, "#A102 #")) = 0 Then
-'			FieldText(1) = Trim(Trim(vBibTekst(aIndex, "#A100 #")) & " " & vBibTekst(aIndex, "#A101 #"))
+'		Taal = AdoGetField(aIndex, "#A10C #")
+'		If Val(AdoGetField(aIndex, "#A102 #")) = 0 Then
+'			FieldText(1) = Trim(Trim(AdoGetField(aIndex, "#A100 #")) & " " & AdoGetField(aIndex, "#A101 #"))
 '		Else
-'			FieldText(1) = Trim(Mid(fmarBoxText("003", Taal, vBibTekst(aIndex, "#A102 #")), 4, 10)) & " " & Trim(Trim(vBibTekst(aIndex, "#A100 #")) & " " & vBibTekst(aIndex, "#A101 #"))
+'			FieldText(1) = Trim(Mid(fmarBoxText("003", Taal, AdoGetField(aIndex, "#A102 #")), 4, 10)) & " " & Trim(Trim(AdoGetField(aIndex, "#A100 #")) & " " & AdoGetField(aIndex, "#A101 #"))
 '		End If
-'		If Val(vBibTekst(aIndex, "#vs01 #")) = 0 Then
-'			FieldText(2) = Trim(Trim(vBibTekst(aIndex, "#A125 #")) & " " & vBibTekst(aIndex, "#A127 #"))
+'		If Val(AdoGetField(aIndex, "#vs01 #")) = 0 Then
+'			FieldText(2) = Trim(Trim(AdoGetField(aIndex, "#A125 #")) & " " & AdoGetField(aIndex, "#A127 #"))
 '		Else
-'			FieldText(2) = Trim(Mid(fmarBoxText("003", Taal, vBibTekst(aIndex, "#vs01 #")), 4, 10)) & " " & Trim(Trim(vBibTekst(aIndex, "#A125 #")) & " " & vBibTekst(aIndex, "#A127 #"))
+'			FieldText(2) = Trim(Mid(fmarBoxText("003", Taal, AdoGetField(aIndex, "#vs01 #")), 4, 10)) & " " & Trim(Trim(AdoGetField(aIndex, "#A125 #")) & " " & AdoGetField(aIndex, "#A127 #"))
 '		End If
-'		FieldText(3) = Trim(vBibTekst(aIndex, "#A104 #") & " " & vBibTekst(aIndex, "#A105 #") & " " & vBibTekst(aIndex, "#A106 #"))
-'		FieldText(4) = Trim(vBibTekst(aIndex, "#A109 #")) & "-" & Trim(vBibTekst(aIndex, "#A107 #")) & " " & Trim(vBibTekst(aIndex, "#A108 #"))
-'		FieldText(5) = vBibTekst(FlDummy, "#v037 #")
+'		FieldText(3) = Trim(AdoGetField(aIndex, "#A104 #") & " " & AdoGetField(aIndex, "#A105 #") & " " & AdoGetField(aIndex, "#A106 #"))
+'		FieldText(4) = Trim(AdoGetField(aIndex, "#A109 #")) & "-" & Trim(AdoGetField(aIndex, "#A107 #")) & " " & Trim(AdoGetField(aIndex, "#A108 #"))
+'		FieldText(5) = AdoGetField(TableDummy, "#v037 #")
 '		PrintVelden()
 '		If chkAfdrukInVenster.CheckState Then
 '		Else
@@ -232,19 +232,19 @@ End Class
 'KontroleVoorwaarden: 
 '		If obBoekjaar(1).Checked = True Then
 '			'Enkel dit JAAR
-'			If VB.Left(vBibTekst(Fldokument, "#v035 #"), 4) < VB.Left(BoekjaarVanTot.Value, 4) Then
+'			If VB.Left(AdoGetField(TableOfInvoices, "#v035 #"), 4) < VB.Left(BookyearFromTo.Value, 4) Then
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '				Return 
 '			End If
 '		ElseIf obBoekjaar(2).Checked = True Then 
 '			'Laatste 2 jaren
-'			If VB.Left(vBibTekst(Fldokument, "#v035 #"), 4) < VB.Left(ktrlBoekjaar, 4) Then
+'			If VB.Left(AdoGetField(TableOfInvoices, "#v035 #"), 4) < VB.Left(ktrlBoekjaar, 4) Then
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '				Return 
 '			End If
 '		ElseIf obBoekjaar(3).Checked = True Then 
 '			'een bepaalde maand in hoogste boekjaar!
-'			If Mid(vBibTekst(Fldokument, "#v035 #"), 1, 6) >= Mid(PeriodeVanTot.Value, 1, 6) And Mid(vBibTekst(Fldokument, "#v035 #"), 1, 6) <= Mid(PeriodeVanTot.Value, 9, 6) Then
+'			If Mid(AdoGetField(TableOfInvoices, "#v035 #"), 1, 6) >= Mid(PeriodFromTo.Value, 1, 6) And Mid(AdoGetField(TableOfInvoices, "#v035 #"), 1, 6) <= Mid(PeriodFromTo.Value, 9, 6) Then
 '				'Stop
 '			Else
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -254,58 +254,58 @@ End Class
 
 '		dTOT = 0
 '		Select Case aIndex
-'			Case FlKlant
-'				Select Case VB.Left(vBibTekst(Fldokument, "#v033 #"), 1)
+'			Case TableOfCustomers
+'				Select Case VB.Left(AdoGetField(TableOfInvoices, "#v033 #"), 1)
 '					Case "V"
 '						'For Teller = 55 To 63
-'						'dTot = dTot + Val(vBibTekst(Fldokument, "#v" + Format(Teller, "000") + " #"))
+'						'dTot = dTot + Val(AdoGetField(TableOfInvoices, "#v" + Format(Teller, "000") + " #"))
 '						'Next
-'						'dTot = dTot + Val(vBibTekst(Fldokument, "#v089 #"))
-'						dTOT = dTOT + Val(vBibTekst(Fldokument, "#v249 #"))
+'						'dTot = dTot + Val(AdoGetField(TableOfInvoices, "#v089 #"))
+'						dTOT = dTOT + Val(AdoGetField(TableOfInvoices, "#v249 #"))
 '					Case "Q"
-'						dTOT = dTOT + Val(vBibTekst(Fldokument, "#v249 #"))
+'						dTOT = dTOT + Val(AdoGetField(TableOfInvoices, "#v249 #"))
 '						'If chkSelektie(2).Value = 0 Then
-'						'    dTot = Val(vBibTekst(Fldokument, "#B010 #")) - Val(vBibTekst(Fldokument, "#B090 #"))
+'						'    dTot = Val(AdoGetField(TableOfInvoices, "#B010 #")) - Val(AdoGetField(TableOfInvoices, "#B090 #"))
 '						'Else
-'						'    dTot = Val(vBibTekst(Fldokument, "#B014 #")) - Val(vBibTekst(Fldokument, "#B094 #"))
+'						'    dTot = Val(AdoGetField(TableOfInvoices, "#B014 #")) - Val(AdoGetField(TableOfInvoices, "#B094 #"))
 '						'End If
 '				End Select
-'			Case FlLeverancier
-'				dTOT = dTOT + Val(vBibTekst(Fldokument, "#v249 #"))
+'			Case TableOfSuppliers
+'				dTOT = dTOT + Val(AdoGetField(TableOfInvoices, "#v249 #"))
 '				'dTot = 0
 '				'For Teller = 46 To 49
-'				'    dTot = dTot + Val(vBibTekst(Fldokument, "#v" + Format(Teller, "000") + " #"))
+'				'    dTot = dTot + Val(AdoGetField(TableOfInvoices, "#v" + Format(Teller, "000") + " #"))
 '				'Next
 '		End Select
 
-'		If Mid(vBibTekst(Fldokument, "#v033 #"), 2, 1) = "1" Then
+'		If Mid(AdoGetField(TableOfInvoices, "#v033 #"), 2, 1) = "1" Then
 '			dTOT = -dTOT
 '		End If
 
-'		If Trim(vBibTekst(Fldokument, "#v034 #")) <> Trim(KopBuf) Then
+'		If Trim(AdoGetField(TableOfInvoices, "#v034 #")) <> Trim(KopBuf) Then
 '			If KopBuf = Chr(0) Then
 '			Else
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub VoegErBij
 '			End If
 '			dTnt = 0
-'			MsJetGet(aIndex, 0, vSet(Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), 12))
-'			KopBuf = vBibTekst(Fldokument, "#v034 #")
-'			TLBRecord(FlDummy) = ""
+'			JetGet(aIndex, 0, SetSpacing(Mid(AdoGetField(TableOfInvoices, "#v034 #"), 2, 12), 12))
+'			KopBuf = AdoGetField(TableOfInvoices, "#v034 #")
+'			TLBRecord(TableDummy) = ""
 '			'0
-'			vBib(FlDummy, Mid(vBibTekst(Fldokument, "#v034 #"), 2, 12), "v034")
+'			AdoInsertToRecord(TableDummy, Mid(AdoGetField(TableOfInvoices, "#v034 #"), 2, 12), "v034")
 '			If Ktrl Then
-'				vBib(FlDummy, "* niet meer aanwezig *", "A100")
+'				AdoInsertToRecord(TableDummy, "* niet meer aanwezig *", "A100")
 '			Else
 '				RecordToVeld(aIndex)
 '				'1
-'				vBib(FlDummy, VB.Left(vBibTekst(aIndex, "#A100 #"), 35), "A100")
+'				AdoInsertToRecord(TableDummy, VB.Left(AdoGetField(aIndex, "#A100 #"), 35), "A100")
 '				'2
-'				vBib(FlDummy, VB.Left(RTrim(RTrim(vBibTekst(aIndex, "#A104 #")) & " " & RTrim(vBibTekst(aIndex, "#A105 #")) & " " & RTrim(vBibTekst(aIndex, "#A106 #"))), 30), "A104")
+'				AdoInsertToRecord(TableDummy, VB.Left(RTrim(RTrim(AdoGetField(aIndex, "#A104 #")) & " " & RTrim(AdoGetField(aIndex, "#A105 #")) & " " & RTrim(AdoGetField(aIndex, "#A106 #"))), 30), "A104")
 '				'3
-'				vBib(FlDummy, RTrim(vBibTekst(aIndex, "#A109 #")) & "-" & RTrim(vBibTekst(aIndex, "#A107 #")), "A109")
+'				AdoInsertToRecord(TableDummy, RTrim(AdoGetField(aIndex, "#A109 #")) & "-" & RTrim(AdoGetField(aIndex, "#A107 #")), "A109")
 '				'4
-'				vBib(FlDummy, VB.Left(RTrim(vBibTekst(aIndex, "#A108 #")), 30), "A108")
+'				AdoInsertToRecord(TableDummy, VB.Left(RTrim(AdoGetField(aIndex, "#A108 #")), 30), "A108")
 '			End If
 '		End If
 '		dTnt = dTnt + dTOT
@@ -317,16 +317,16 @@ End Class
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
 '		Else
-'			vBib(FlDummy, Dec(dTnt, MaskEURBH), "v037")
+'			AdoInsertToRecord(TableDummy, Dec(dTnt, MaskEURBH), "v037")
 '			If chkSelektie(1).CheckState = False Then
 '				'v089 = sorteren op kodenummer
-'				vBib(FlDummy, vBibTekst(FlDummy, "#v034 #"), "v089")
+'				AdoInsertToRecord(TableDummy, AdoGetField(TableDummy, "#v034 #"), "v089")
 '			Else
 '				'v089 = sorteren op jaaromzet
-'				vBib(FlDummy, Dec(999999999 - dTnt, "000000000000"), "v089")
+'				AdoInsertToRecord(TableDummy, Dec(999999999 - dTnt, "000000000000"), "v089")
 '			End If
-'			SnelHelpPrint(FVT(Fldokument, 1), blLogging)
-'			bInsert(FlDummy, 0)
+'			SnelHelpPrint(FVT(TableOfInvoices, 1), blLogging)
+'			JetInsert(TableDummy, 0)
 '			dttot = dttot + dTnt
 '		End If
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -334,9 +334,9 @@ End Class
 
 'OpenTabBestand: 
 '		FlTabBestand = FreeFile
-'		FileOpen(FlTabBestand, ProgrammaLokatie & "NTExport.TXT", OpenMode.Output)
+'		FileOpen(FlTabBestand, ProgramLocation & "NTExport.TXT", OpenMode.Output)
 '		Msg = "Bestand met scheidingstekens wordt aangemaakt als" & vbCr & vbCr
-'		Msg = Msg & ProgrammaLokatie & "NTExport.TXT"
+'		Msg = Msg & ProgramLocation & "NTExport.TXT"
 '		MsgBox(Msg, MsgBoxStyle.Information)
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -351,7 +351,7 @@ End Class
 '			FieldText(T) = ""
 '		Next 
 '		FieldText(0) = "Totaal"
-'		FieldText(5) = Dec(dttot, MaskerSy(0))
+'		FieldText(5) = Dec(dttot, MaskSy(0))
 
 '		T = 0
 '		aa = ""
@@ -419,9 +419,9 @@ End Class
 '		TekstLijn(1).Text = MimGlobalDate.Value
 
 '		Select Case aIndex
-'			Case FlKlant
+'			Case TableOfCustomers
 '				LijstNaam = "TopDown Klanten"
-'			Case FlLeverancier
+'			Case TableOfSuppliers
 '				LijstNaam = "TopDown Leveranciers"
 '		End Select
 

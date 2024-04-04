@@ -111,7 +111,7 @@ End Class
 '		Dim TempoTekst As String
 '		Dim DummySleutel As New VB6.FixedLengthString(5)
 
-'		If Not DatumKtrl(VB6.Format(Datum.Value, "dd/mm/yyyy"), TekstPeriode) Then
+'		If Not DatumKtrl(VB6.Format(Datum.Value, "dd/mm/yyyy"), PeriodAsText) Then
 '			Beep()
 '			Datum.Focus()
 '			Exit Sub
@@ -121,21 +121,21 @@ End Class
 '			Exit Sub
 '		End If
 
-'		MsJetGet(FlLedgerAccount, 0, VB.Left(KeuzeInfo(0).Text, 7))
+'		JetGet(TableOfLedgerAccounts, 0, VB.Left(KeuzeInfo(0).Text, 7))
 '		If Ktrl Then
 '			MsgBox("onlogische situatie")
 '			Exit Sub
 '		Else
-'			RecordToVeld(FlLedgerAccount)
+'			RecordToVeld(TableOfLedgerAccounts)
 '		End If
-'		MsJetGet(FlJournaal, 2, UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000"))
+'		JetGet(FlJournaal, 2, UCase(VB.Left(AdoGetField(TableOfLedgerAccounts, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000"))
 '		If Ktrl Then
 '			MsgBox("Dit zou het eerste uittreksel binnen het WERKELIJK jaar moeten zijn...  Kontroleer eventueel")
 '		Else
 '			RecordToVeld(FlJournaal)
-'			If vBibTekst(FlJournaal, "#v066 #") > VB6.Format(Datum.Value, "yyyymmdd") Then
+'			If AdoGetField(FlJournaal, "#v066 #") > VB6.Format(Datum.Value, "yyyymmdd") Then
 '				Msg = "Er zijn reeds uittreksels met een hogere datum !" & vbCrLf & vbCrLf
-'				Msg = Msg & "Laatste uittreksel nr. " & UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000") & " dateert van : " & FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) & vbCrLf & vbCrLf
+'				Msg = Msg & "Laatste uittreksel nr. " & UCase(VB.Left(AdoGetField(TableOfLedgerAccounts, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000") & " dateert van : " & FunctionDateText(AdoGetField(FlJournaal, "#v066 #")) & vbCrLf & vbCrLf
 '				Msg = Msg & "Vervolg.  Bent U zeker ?"
 '				Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel afsluiten")
 '				If Ktrl = MsgBoxResult.No Then
@@ -149,7 +149,7 @@ End Class
 '		Else
 '			Msg = "Datum uittreksel " & Datum.Value & " en bekomen eindsaldo BEF " & LabelInfo(13).Text & vbCrLf & vbCrLf & "Hierna wordt de boekhouding bijgewerkt.  Bent U zeker ?"
 '		End If
-'		Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel : " & UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000"))
+'		Ktrl = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2, "Uittreksel : " & UCase(VB.Left(AdoGetField(TableOfLedgerAccounts, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000"))
 '		If Ktrl = MsgBoxResult.Yes Then
 '			TransBegin()
 '			If WegBoekFout() Then
@@ -158,41 +158,41 @@ End Class
 '			Else
 '				TransCommit()
 '				DummySleutel.Value = "s" & VB6.Format(RecNummer(KeuzeInfo(0).SelectedIndex), "000")
-'				MsJetGet(FlTeller, 0, DummySleutel.Value)
+'				JetGet(TableOfCounters, 0, DummySleutel.Value)
 '				If Ktrl Then
 '					MsgBox("TellerStop " & DummySleutel.Value & ".  kontakteer R&&Vsoft")
 '				Else
-'					RecordToVeld(FlTeller)
+'					RecordToVeld(TableOfCounters)
 '					Fl99Record = Str(Val(LabelInfo(11).Text))
 '					If BAModus = 1 Then
-'						vBib(FlTeller, Fl99Record, "v217 ")
+'						AdoInsertToRecord(TableOfCounters, Fl99Record, "v217 ")
 '					Else
-'						vBib(FlTeller, Fl99Record, DummySleutel.Value)
+'						AdoInsertToRecord(TableOfCounters, Fl99Record, DummySleutel.Value)
 '					End If
-'					bUpdate(FlTeller, 0)
+'					bUpdate(TableOfCounters, 0)
 '					If Ktrl Then
 '						MsgBox("Update TellerStop " & DummySleutel.Value & ".  kontakteer R&&Vsoft")
 '					End If
 '				End If
 
 '				DummySleutel.Value = "s101"
-'				MsJetGet(FlTeller, 0, DummySleutel.Value)
+'				JetGet(TableOfCounters, 0, DummySleutel.Value)
 '				If Ktrl Then
 '					MsgBox("TellerStop.  Versiekonflikt !  Kontakteer R&&Vsoft")
 '				Else
-'					RecordToVeld(FlTeller)
+'					RecordToVeld(TableOfCounters)
 '					Fl99Record = VB.Left(KeuzeInfo(0).Text, 7)
 '					If BAModus = 1 Then
-'						vBib(FlTeller, Fl99Record, "v217 ")
+'						AdoInsertToRecord(TableOfCounters, Fl99Record, "v217 ")
 '					Else
-'						vBib(FlTeller, Fl99Record, DummySleutel.Value)
+'						AdoInsertToRecord(TableOfCounters, Fl99Record, DummySleutel.Value)
 '					End If
-'					bUpdate(FlTeller, 0)
+'					bUpdate(TableOfCounters, 0)
 '					If Ktrl Then
 '						MsgBox("UpdateStop Teller. kontakteer R&&Vsoft")
 '					End If
 '				End If
-'				bClose(FlTeller)
+'				JetTableClose(TableOfCounters)
 '				Me.Close()
 '				GridText = ""
 '			End If
@@ -246,14 +246,14 @@ End Class
 '		mfgLijst.set_ColWidth(5,  , 690)
 '		mfgLijst.set_ColWidth(6,  , 1155)
 
-'		zoekPath = BedrijfsLokatie & "coda\record*.*"
+'		zoekPath = LocationCompanyData & "coda\record*.*"
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		PathNu = Dir(zoekPath)
 '		Do While PathNu <> ""
 
 '			iOptelControle = 0
 '			FlFull = FreeFile
-'			FileOpen(FlFull, BedrijfsLokatie & "coda\" & PathNu, OpenMode.Input)
+'			FileOpen(FlFull, LocationCompanyData & "coda\" & PathNu, OpenMode.Input)
 '			Do While Not EOF(FlFull)
 '				strFull = LineInput(FlFull)
 '				Telhier = Telhier + 1
@@ -330,7 +330,7 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				If DatumKtrl(VB6.Format(Datum.Value, "dd/mm/yyyy"), TekstPeriode) Then
+'				If DatumKtrl(VB6.Format(Datum.Value, "dd/mm/yyyy"), PeriodAsText) Then
 '				Else
 '					BJPERDAT.WindowState = System.Windows.Forms.FormWindowState.Normal
 '					BJPERDAT.PeriodeBoekjaar.Focus()
@@ -368,59 +368,59 @@ End Class
 '		LabelInfo(2).Text = " dokument    " & "TegenR. " & "      Bedrag " & "Omschrijving                    " & "Fin. Kort."
 
 '		Datum.Value = MimGlobalDate.Value
-'		BeginBalans = Val(String99(Lees, 64))
+'		BeginBalans = Val(String99(Reading, 64))
 
-'		ToegestaneKorting.Value = String99(Lees, 28)
-'		BekomenKorting.Value = String99(Lees, 27)
-'		DefaultRekening.Value = String99(Lees, 101)
+'		ToegestaneKorting.Value = String99(Reading, 28)
+'		BekomenKorting.Value = String99(Reading, 27)
+'		DefaultRekening.Value = String99(Reading, 101)
 
 '		RecNummer(0) = 31
-'		RekeningNummer(0) = String99(Lees, 41)
-'		Uittreksel(0) = LTrim(RTrim(String99(Lees, 31)))
+'		RekeningNummer(0) = String99(Reading, 41)
+'		Uittreksel(0) = LTrim(RTrim(String99(Reading, 31)))
 
 '		RecNummer(1) = 32
-'		RekeningNummer(1) = String99(Lees, 42)
-'		Uittreksel(1) = LTrim(RTrim(String99(Lees, 32)))
+'		RekeningNummer(1) = String99(Reading, 42)
+'		Uittreksel(1) = LTrim(RTrim(String99(Reading, 32)))
 
 '		RecNummer(2) = 33
-'		RekeningNummer(2) = String99(Lees, 43)
-'		Uittreksel(2) = LTrim(RTrim(String99(Lees, 33)))
+'		RekeningNummer(2) = String99(Reading, 43)
+'		Uittreksel(2) = LTrim(RTrim(String99(Reading, 33)))
 
 '		RecNummer(3) = 34
-'		RekeningNummer(3) = String99(Lees, 44)
-'		Uittreksel(3) = LTrim(RTrim(String99(Lees, 34)))
+'		RekeningNummer(3) = String99(Reading, 44)
+'		Uittreksel(3) = LTrim(RTrim(String99(Reading, 34)))
 
 '		RecNummer(4) = 35
-'		RekeningNummer(4) = String99(Lees, 45)
-'		Uittreksel(4) = LTrim(RTrim(String99(Lees, 35)))
+'		RekeningNummer(4) = String99(Reading, 45)
+'		Uittreksel(4) = LTrim(RTrim(String99(Reading, 35)))
 
 '		RecNummer(5) = 38
-'		RekeningNummer(5) = String99(Lees, 39)
-'		Uittreksel(5) = LTrim(RTrim(String99(Lees, 38)))
+'		RekeningNummer(5) = String99(Reading, 39)
+'		Uittreksel(5) = LTrim(RTrim(String99(Reading, 38)))
 
 '		RecNummer(6) = 215
-'		RekeningNummer(6) = String99(Lees, 211)
-'		Uittreksel(6) = LTrim(RTrim(String99(Lees, 215)))
+'		RekeningNummer(6) = String99(Reading, 211)
+'		Uittreksel(6) = LTrim(RTrim(String99(Reading, 215)))
 
 '		RecNummer(7) = 216
-'		RekeningNummer(7) = String99(Lees, 212)
-'		Uittreksel(7) = LTrim(RTrim(String99(Lees, 216)))
+'		RekeningNummer(7) = String99(Reading, 212)
+'		Uittreksel(7) = LTrim(RTrim(String99(Reading, 216)))
 
 '		RecNummer(8) = 217
-'		RekeningNummer(8) = String99(Lees, 213)
-'		Uittreksel(8) = LTrim(RTrim(String99(Lees, 217)))
+'		RekeningNummer(8) = String99(Reading, 213)
+'		Uittreksel(8) = LTrim(RTrim(String99(Reading, 217)))
 
 '		RecNummer(9) = 218
-'		RekeningNummer(9) = String99(Lees, 214)
-'		Uittreksel(9) = LTrim(RTrim(String99(Lees, 218)))
+'		RekeningNummer(9) = String99(Reading, 214)
+'		Uittreksel(9) = LTrim(RTrim(String99(Reading, 218)))
 
 '		For T = 0 To 9
-'			MsJetGet(FlLedgerAccount, 0, RekeningNummer(T))
+'			JetGet(TableOfLedgerAccounts, 0, RekeningNummer(T))
 '			If Ktrl Then
 '				A = "Niet aanwezig. Installeer via Setup Boekjaar."
 '			Else
-'				RecordToVeld(FlLedgerAccount)
-'				A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlLedgerAccount, "#v020 #"))
+'				RecordToVeld(TableOfLedgerAccounts)
+'				A = RekeningNummer(T) & Chr(124) & RTrim(AdoGetField(TableOfLedgerAccounts, "#v020 #"))
 '			End If
 '			KeuzeInfo(0).Items.Add(A)
 '			If DefaultRekening.Value = RekeningNummer(T) Then
@@ -444,24 +444,24 @@ End Class
 '					Case Else
 '						LabelInfo(11).Text = Str(Val(Uittreksel(KeuzeInfo(0).SelectedIndex)) + 1)
 '				End Select
-'				MsJetGet(FlLedgerAccount, 0, vSet(KeuzeInfo(0).Text, 7))
+'				JetGet(TableOfLedgerAccounts, 0, SetSpacing(KeuzeInfo(0).Text, 7))
 '				If Ktrl Then
 '				Else
-'					RecordToVeld(FlLedgerAccount)
+'					RecordToVeld(TableOfLedgerAccounts)
 '					If BeginBalans = 1 Then
 '						If bhEuro Then
-'							lblInfo(0).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							lblInfo(0).Text = VB6.Format(Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							LabelInfo(12).Text = VB6.Format(CDbl(lblInfo(0).Text) * Euro, "#,##0.00")
 '						Else
-'							LabelInfo(12).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							LabelInfo(12).Text = VB6.Format(Val(AdoGetField(TableOfLedgerAccounts, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							lblInfo(0).Text = VB6.Format(CDbl(LabelInfo(12).Text) / Euro, "#,##0.00")
 '						End If
 '					Else
 '						If bhEuro Then
-'							lblInfo(0).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							lblInfo(0).Text = VB6.Format(Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							LabelInfo(12).Text = VB6.Format(System.Math.Round(CDbl(lblInfo(0).Text) * Euro), "#,##0.00")
 '						Else
-'							LabelInfo(12).Text = VB6.Format(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
+'							LabelInfo(12).Text = VB6.Format(Val(AdoGetField(TableOfLedgerAccounts, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")) + Val(AdoGetField(TableOfLedgerAccounts, "#v" & VB6.Format(23 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
 '							lblInfo(0).Text = VB6.Format(CDbl(LabelInfo(12).Text) / Euro, "#,##0.00")
 '						End If
 '					End If
@@ -537,7 +537,7 @@ End Class
 '		Dim DefaultKlanten As New VB6.FixedLengthString(7)
 
 '		SnelHelpPrint(" ", blLogging)
-'		DefaultKlanten.Value = String99(Lees, 9)
+'		DefaultKlanten.Value = String99(Reading, 9)
 
 '		Msg = "Breng mededeling in" & vbCrLf
 '		Msg = Msg & "met masker nnnnnnnnnnnn" & vbCrLf & vbCrLf
@@ -563,15 +563,15 @@ End Class
 
 '		Select Case Mid(ReferteTxt, 8, 1)
 '			Case "0"
-'				MsJetGet(FlKlant, 0, Mid(ReferteTxt, 4, 4) & Mid(ReferteTxt, 9, 2))
+'				JetGet(TableOfCustomers, 0, Mid(ReferteTxt, 4, 4) & Mid(ReferteTxt, 9, 2))
 '				If Ktrl Then
 '					'het is geen klant, probeer als leveranciersreferte...
 '				Else
-'					RecordToVeld(FlKlant)
+'					RecordToVeld(TableOfCustomers)
 '					Msg = "Breng bedrag in voor" & vbCr
 '					Msg = Msg & "totaal van " & VB.Left(ReferteTxt, 1) & " kwijtingen" & vbCr & vbCr
-'					Msg = Msg & "klant :" & vbCr & vbCr & RTrim(vBibTekst(FlKlant, "#A100 #") & " " & vBibTekst(FlKlant, "#A101 #")) & " " & RTrim(vBibTekst(FlKlant, "#A125 #") & " " & vBibTekst(FlKlant, "#A127 #")) & vbCr
-'					Msg = Msg & "Rekeningen:" & vBibTekst(FlKlant, "#A170 #") & " " & vBibTekst(FlKlant, "#v251 #")
+'					Msg = Msg & "klant :" & vbCr & vbCr & RTrim(AdoGetField(TableOfCustomers, "#A100 #") & " " & AdoGetField(TableOfCustomers, "#A101 #")) & " " & RTrim(AdoGetField(TableOfCustomers, "#A125 #") & " " & AdoGetField(TableOfCustomers, "#A127 #")) & vbCr
+'					Msg = Msg & "Rekeningen:" & AdoGetField(TableOfCustomers, "#A170 #") & " " & AdoGetField(TableOfCustomers, "#v251 #")
 '					dBedragTekst = Val(InputBox(Msg, "Totaal betaling"))
 '					If dBedragTekst = 0 Then
 '						Exit Sub
@@ -584,26 +584,26 @@ End Class
 '				MsgBox("Geen R&V Gestruktureerde mededeling.", MsgBoxStyle.Exclamation)
 '				Exit Sub
 '		End Select
-'		bGetOrGreater(Fldokument, 1, "K" & vBibTekst(FlKlant, "#A110 #"))
+'		JetGetOrGreater(TableOfInvoices, 1, "K" & AdoGetField(TableOfCustomers, "#A110 #"))
 '		If Ktrl Then
 '			Exit Sub
 '		Else
-'			RecordToVeld(Fldokument)
+'			RecordToVeld(TableOfInvoices)
 '		End If
 
 '		dBedragKtrl = 0
 '		DummyText = ""
-'		If vSet(KeyBuf(Fldokument), 13) <> vSet("K" & vBibTekst(FlKlant, "#A110 #"), 13) Then
+'		If SetSpacing(KeyBuf(TableOfInvoices), 13) <> SetSpacing("K" & AdoGetField(TableOfCustomers, "#A110 #"), 13) Then
 '			Exit Sub
 '		Else
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub LijnErBij
 '			Do 
-'				bNext(Fldokument)
-'				If Ktrl Or vSet(KeyBuf(Fldokument), 13) <> vSet("K" & vBibTekst(FlKlant, "#A110 #"), 13) Then
+'				bNext(TableOfInvoices)
+'				If Ktrl Or SetSpacing(KeyBuf(TableOfInvoices), 13) <> SetSpacing("K" & AdoGetField(TableOfCustomers, "#A110 #"), 13) Then
 '					Exit Do
 '				Else
-'					RecordToVeld(Fldokument)
+'					RecordToVeld(TableOfInvoices)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub LijnErBij
 '				End If
@@ -612,7 +612,7 @@ End Class
 '				Do While DummyText <> ""
 '					If Mid(DummyText, 13, 12) = Space(12) Then
 '					Else
-'						GridText = "+" & VB.Left(DummyText, 11) & Chr(124) & DefaultKlanten.Value & Chr(124) & Mid(DummyText, 13, 12) & Chr(124) & vSet(vBibTekst(FlKlant, "#A100 #"), 29) & Chr(124) & Space(12)
+'						GridText = "+" & VB.Left(DummyText, 11) & Chr(124) & DefaultKlanten.Value & Chr(124) & Mid(DummyText, 13, 12) & Chr(124) & SetSpacing(AdoGetField(TableOfCustomers, "#A100 #"), 29) & Chr(124) & Space(12)
 '						FinancieelDetail.Items.Insert(FinancieelDetail.Items.Count, GridText)
 '						If bhEuro Then
 '							lblInfo(1).Text = VB6.Format(CDbl(lblInfo(1).Text) + Val(Mid(GridText, 22, 12)), "#,##0.00")
@@ -637,15 +637,15 @@ End Class
 '		If dBedragKtrl = dBedragTekst Then 'totaal al betaald
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
-'		ElseIf Val(vBibTekst(Fldokument, "#v037 #")) = Val(vBibTekst(Fldokument, "#v249")) Then  'reeds VOLLEDIG betaald
+'		ElseIf Val(AdoGetField(TableOfInvoices, "#v037 #")) = Val(AdoGetField(TableOfInvoices, "#v249")) Then  'reeds VOLLEDIG betaald
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
-'		ElseIf VB.Left(vBibTekst(Fldokument, "#v033 #"), 1) <> "Q" Then  'voorlopig enkel kwitanties
+'		ElseIf VB.Left(AdoGetField(TableOfInvoices, "#v033 #"), 1) <> "Q" Then  'voorlopig enkel kwitanties
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
-'		ElseIf dBedragTekst = Val(rsMAR(Fldokument).Fields("v249").Value) Then 
-'			DummyText = DummyText & vBibTekst(Fldokument, "#v033 #") & Chr(124)
-'			dTotaal = Val(vBibTekst(Fldokument, "#v249")) - Val(vBibTekst(Fldokument, "#v037 #"))
+'		ElseIf dBedragTekst = Val(rsMAR(TableOfInvoices).Fields("v249").Value) Then 
+'			DummyText = DummyText & AdoGetField(TableOfInvoices, "#v033 #") & Chr(124)
+'			dTotaal = Val(AdoGetField(TableOfInvoices, "#v249")) - Val(AdoGetField(TableOfInvoices, "#v037 #"))
 '			DummyText = DummyText & Dec(dTotaal, MaskEURBH) & vbCrLf
 '			dBedragKtrl = dBedragKtrl + dTotaal
 '		Else
@@ -705,32 +705,32 @@ End Class
 '		frmBoeking.Hide()
 
 '		TLBRecord(FlJournaal) = ""
-'		vBib(FlJournaal, VB.Left(KeuzeInfo(0).Text, 7), "v019")
-'		vBib(FlJournaal, VB6.Format(Datum.Value, "yyyymmdd"), "v066")
-'		vBib(FlJournaal, VB6.Format(Datum.Value, "yyyymmdd"), "v035")
+'		AdoInsertToRecord(FlJournaal, VB.Left(KeuzeInfo(0).Text, 7), "v019")
+'		AdoInsertToRecord(FlJournaal, VB6.Format(Datum.Value, "yyyymmdd"), "v066")
+'		AdoInsertToRecord(FlJournaal, VB6.Format(Datum.Value, "yyyymmdd"), "v035")
 
-'		MsJetGet(FlLedgerAccount, 0, VB.Left(KeuzeInfo(0).Text, 7))
+'		JetGet(TableOfLedgerAccounts, 0, VB.Left(KeuzeInfo(0).Text, 7))
 '		If Ktrl Then
 '			Exit Function
 '		Else
-'			RecordToVeld(FlLedgerAccount)
-'			dokumentSleutel.Value = UCase(VB.Left(vBibTekst(FlLedgerAccount, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000")
+'			RecordToVeld(TableOfLedgerAccounts)
+'			dokumentSleutel.Value = UCase(VB.Left(AdoGetField(TableOfLedgerAccounts, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000")
 '		End If
-'		vBib(FlJournaal, dokumentSleutel.Value, "v038")
+'		AdoInsertToRecord(FlJournaal, dokumentSleutel.Value, "v038")
 '		If bhEuro Then
 '			BeginSaldo = CDbl(lblInfo(0).Text)
 '			EindSaldo = CDbl(lblInfo(1).Text)
 '			VerschilSaldo = EindSaldo - BeginSaldo
-'			vBib(FlJournaal, "Sld:" & Dec(CDbl(lblInfo(0).Text), MaskEURBH) & "/" & Dec(CDbl(lblInfo(1).Text), MaskEURBH), "v067")
-'			vBib(FlJournaal, Dec(VerschilSaldo, MaskerSy(2)), "v068")
+'			AdoInsertToRecord(FlJournaal, "Sld:" & Dec(CDbl(lblInfo(0).Text), MaskEURBH) & "/" & Dec(CDbl(lblInfo(1).Text), MaskEURBH), "v067")
+'			AdoInsertToRecord(FlJournaal, Dec(VerschilSaldo, MaskSy(2)), "v068")
 '		Else
-'			vBib(FlJournaal, "Sld : " & Dec(CDbl(LabelInfo(12).Text), MaskerSy(0)) & " - " & Dec(CDbl(LabelInfo(13).Text), MaskerSy(0)), "v067")
-'			vBib(FlJournaal, Dec(CDbl(LabelInfo(13).Text) - CDbl(LabelInfo(12).Text), MaskerSy(0)), "v068")
+'			AdoInsertToRecord(FlJournaal, "Sld : " & Dec(CDbl(LabelInfo(12).Text), MaskSy(0)) & " - " & Dec(CDbl(LabelInfo(13).Text), MaskSy(0)), "v067")
+'			AdoInsertToRecord(FlJournaal, Dec(CDbl(LabelInfo(13).Text) - CDbl(LabelInfo(12).Text), MaskSy(0)), "v068")
 '		End If
-'		bInsert(FlJournaal, 2)
+'		JetInsert(FlJournaal, 2)
 '		If Ktrl Then Exit Function
 
-'		vBib(FlJournaal, VB.Left(KeuzeInfo(0).Text, 7), "v069")
+'		AdoInsertToRecord(FlJournaal, VB.Left(KeuzeInfo(0).Text, 7), "v069")
 '		For T = 1 To FinancieelDetail.Items.Count
 '			FinancieelDetail.SelectedIndex = T - 1
 '			If VB.Left(FinancieelDetail.Text, 1) = "+" Then
@@ -739,60 +739,60 @@ End Class
 '				Ontvangst = False
 '			End If
 '			If Mid(FinancieelDetail.Text, 2, 11) = Space(11) Then
-'				vBib(FlJournaal, " ", "v033")
-'				vBib(FlJournaal, " ", "v034")
+'				AdoInsertToRecord(FlJournaal, " ", "v033")
+'				AdoInsertToRecord(FlJournaal, " ", "v034")
 '			Else
-'				MsJetGet(Fldokument, 0, Mid(FinancieelDetail.Text, 2, 11))
+'				JetGet(TableOfInvoices, 0, Mid(FinancieelDetail.Text, 2, 11))
 '				If Ktrl Then
 '					Exit Function
 '				Else
-'					RecordToVeld(Fldokument)
-'					vBib(FlJournaal, vBibTekst(Fldokument, "#v033 #"), "v033")
-'					vBib(FlJournaal, vBibTekst(Fldokument, "#v034 #"), "v034")
+'					RecordToVeld(TableOfInvoices)
+'					AdoInsertToRecord(FlJournaal, AdoGetField(TableOfInvoices, "#v033 #"), "v033")
+'					AdoInsertToRecord(FlJournaal, AdoGetField(TableOfInvoices, "#v034 #"), "v034")
 '				End If
 '			End If
 
 '			TotaalBedrag = Val(Mid(FinancieelDetail.Text, 22, 12))
-'			vBib(FlJournaal, Trim(Mid(FinancieelDetail.Text, 35, 29)), "v067")
+'			AdoInsertToRecord(FlJournaal, Trim(Mid(FinancieelDetail.Text, 35, 29)), "v067")
 '			If Val(Mid(FinancieelDetail.Text, 65, 12)) <> 0 Then
 '				FinKort = Val(Mid(FinancieelDetail.Text, 65, 12))
 '				TotaalBedrag = TotaalBedrag + FinKort
 '				Select Case Ontvangst
 '					Case True
-'						vBib(FlJournaal, Str(FinKort), "v068")
-'						vBib(FlJournaal, ToegestaneKorting.Value, "v019")
+'						AdoInsertToRecord(FlJournaal, Str(FinKort), "v068")
+'						AdoInsertToRecord(FlJournaal, ToegestaneKorting.Value, "v019")
 '					Case False
-'						vBib(FlJournaal, Str(-FinKort), "v068")
-'						vBib(FlJournaal, BekomenKorting.Value, "v019")
+'						AdoInsertToRecord(FlJournaal, Str(-FinKort), "v068")
+'						AdoInsertToRecord(FlJournaal, BekomenKorting.Value, "v019")
 '					Case Else
 '						MsgBox("Stop")
 '						Exit Function
 '				End Select
-'				bInsert(FlJournaal, 2)
+'				JetInsert(FlJournaal, 2)
 '				If Ktrl Then Exit Function
 '			End If
 
-'			vBib(FlJournaal, Mid(FinancieelDetail.Text, 14, 7), "v019")
+'			AdoInsertToRecord(FlJournaal, Mid(FinancieelDetail.Text, 14, 7), "v019")
 '			Select Case Ontvangst
 '				Case True
-'					vBib(FlJournaal, Str(-TotaalBedrag), "v068")
+'					AdoInsertToRecord(FlJournaal, Str(-TotaalBedrag), "v068")
 '				Case False
-'					vBib(FlJournaal, Str(TotaalBedrag), "v068")
+'					AdoInsertToRecord(FlJournaal, Str(TotaalBedrag), "v068")
 '				Case Else
 '					MsgBox("Stop")
 '					Exit Function
 '			End Select
-'			bInsert(FlJournaal, 2)
+'			JetInsert(FlJournaal, 2)
 '			If Ktrl Then Exit Function
-'			If LTrim(vBibTekst(FlJournaal, "#v033 #")) = "" Then
+'			If LTrim(AdoGetField(FlJournaal, "#v033 #")) = "" Then
 '			Else
-'				If XisEuroWisBEF = False Then
-'					vBib(Fldokument, Str(Val(vBibTekst(Fldokument, "#v037 #")) + TotaalBedrag), "v037")
+'				If XisEuroWasBEF = False Then
+'					AdoInsertToRecord(TableOfInvoices, Str(Val(AdoGetField(TableOfInvoices, "#v037 #")) + TotaalBedrag), "v037")
 '				Else
-'					vBib(Fldokument, Str(Val(vBibTekst(Fldokument, "#v037 #")) + System.Math.Round(TotaalBedrag / Euro, 2)), "v037")
+'					AdoInsertToRecord(TableOfInvoices, Str(Val(AdoGetField(TableOfInvoices, "#v037 #")) + System.Math.Round(TotaalBedrag / Euro, 2)), "v037")
 '				End If
-'				vBib(Fldokument, vBibTekst(FlJournaal, "#v038 #"), "v038")
-'				bUpdate(Fldokument, 0)
+'				AdoInsertToRecord(TableOfInvoices, AdoGetField(FlJournaal, "#v038 #"), "v038")
+'				bUpdate(TableOfInvoices, 0)
 '				If Ktrl Then Exit Function
 '			End If
 '		Next 

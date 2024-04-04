@@ -30,11 +30,11 @@ End Class
 '		Dim RekeningNaam As New VB6.FixedLengthString(40)
 '		Dim RekeningTest2 As String
 
-'		TekstInfo(3).Text = vBibTekst(FlLedgerAccount, "#v019 #")
-'		RekeningTest2 = RTrim(vBibTekst(FlLedgerAccount, "#v019 #"))
+'		TekstInfo(3).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
+'		RekeningTest2 = RTrim(AdoGetField(TableOfLedgerAccounts, "#v019 #"))
 '		TekstInfo(0).Text = Mid(GridText, 1, 10)
 '		TekstInfo(1).Text = Dec(Val(Mid(GridText, 11, 12)), MaskEURBH)
-'		TLBRecord(FlAllerlei) = ""
+'		TLBRecord(TableOfVarious) = ""
 
 '		Teller = Len(RekeningTest2)
 '		Do While Teller >= 0
@@ -51,23 +51,23 @@ End Class
 '		Else
 '			RekeningTest.Value = RekeningTest2
 '			TekstInfo(4).Text = RekeningTest.Value
-'			MsJetGet(FlLedgerAccount, 0, RekeningTest.Value)
+'			JetGet(TableOfLedgerAccounts, 0, RekeningTest.Value)
 '			If Ktrl Then
-'				RekeningNaam.Value = vBibTekst(FlLedgerAccount, "#v020 #")
+'				RekeningNaam.Value = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '				Msg = "Afschrijving op " & RTrim(RekeningNaam.Value) & vbCrLf
 '				Msg = Msg & "Rekeningnr. : " & RekeningTest.Value & " bestaat nog niet." & vbCrLf & vbCrLf
 '				Msg = Msg & "Wordt hierna automatisch aangemaakt..."
 '				MsgBox(Msg, 0, "Aanmaak afschrijfrekening")
 
-'				TLBRecord(FlLedgerAccount) = ""
-'				vBib(FlLedgerAccount, RekeningTest.Value, "v019")
-'				vBib(FlLedgerAccount, "Afschrijving op " & RTrim(RekeningNaam.Value), "v020")
-'				vBib(FlLedgerAccount, "O", "v032")
-'				bInsert(FlLedgerAccount, 0)
+'				TLBRecord(TableOfLedgerAccounts) = ""
+'				AdoInsertToRecord(TableOfLedgerAccounts, RekeningTest.Value, "v019")
+'				AdoInsertToRecord(TableOfLedgerAccounts, "Afschrijving op " & RTrim(RekeningNaam.Value), "v020")
+'				AdoInsertToRecord(TableOfLedgerAccounts, "O", "v032")
+'				JetInsert(TableOfLedgerAccounts, 0)
 '			End If
 '		End If
 
-'		MsJetGet(FlAllerlei, 1, vSet("18" & RekeningTest.Value, 20))
+'		JetGet(TableOfVarious, 1, SetSpacing("18" & RekeningTest.Value, 20))
 '		NietAanwezig = Ktrl
 '		If Ktrl Then
 '			TekstInfo(6).Text = ""
@@ -78,20 +78,20 @@ End Class
 '			TekstInfo(5).Text = "6300000"
 '			Versneld.CheckState = System.Windows.Forms.CheckState.Checked
 '		Else
-'			RecordToVeld(FlAllerlei)
-'			TekstInfo(2).Text = Dec(Val(vBibTekst(FlAllerlei, "#v082 #")), "###") 'lineair over aantal jaar
-'			TekstInfo(6).Text = (vBibTekst(FlAllerlei, "#v083 #")) 'datum vorige bewerking
-'			TekstInfo(7).Text = Dec(Val(vBibTekst(FlAllerlei, "#v084 #")), MaskEURBH) 'totaal vorige bewerkingen
-'			TekstInfo(8).Text = Dec(Val(vBibTekst(FlAllerlei, "#v085 #")), MaskEURBH) 'reeds afgeschreven
-'			Versneld.CheckState = Val(vBibTekst(FlAllerlei, "#v086 #")) 'versnelde afschrijving
-'			TekstInfo(4).Text = vBibTekst(FlAllerlei, "#v087 #")
-'			TekstInfo(5).Text = vBibTekst(FlAllerlei, "#v088 #")
+'			RecordToVeld(TableOfVarious)
+'			TekstInfo(2).Text = Dec(Val(AdoGetField(TableOfVarious, "#v082 #")), "###") 'lineair over aantal jaar
+'			TekstInfo(6).Text = (AdoGetField(TableOfVarious, "#v083 #")) 'datum vorige bewerking
+'			TekstInfo(7).Text = Dec(Val(AdoGetField(TableOfVarious, "#v084 #")), MaskEURBH) 'totaal vorige bewerkingen
+'			TekstInfo(8).Text = Dec(Val(AdoGetField(TableOfVarious, "#v085 #")), MaskEURBH) 'reeds afgeschreven
+'			Versneld.CheckState = Val(AdoGetField(TableOfVarious, "#v086 #")) 'versnelde afschrijving
+'			TekstInfo(4).Text = AdoGetField(TableOfVarious, "#v087 #")
+'			TekstInfo(5).Text = AdoGetField(TableOfVarious, "#v088 #")
 '			If TekstInfo(6).Text = TekstInfo(0).Text Then
 '				Msg = "Opgelet, laatste bijwerking op dezelfde dag" & vbCrLf
 '				Msg = Msg & "reeds aanwezig.  Vermijdt dubbele optellingen !" & vbCrLf & vbCrLf
 '				Msg = Msg & "Kies Sluiten indien U zopas de fiche reeds bijgewerkt hebt."
 '				MsgBox(Msg, 48, "Investeringsfiche éénzelfde datum")
-'			ElseIf Not DatumKtrl(TekstInfo(6).Text, TekstBoekjaar) Then 
+'			ElseIf Not DatumKtrl(TekstInfo(6).Text, BookyearAsText) Then 
 '				Msg = "Opgelet, U probeert een investeringsfiche" & vbCrLf
 '				Msg = Msg & "van een ander boekjaar bij te werken !" & vbCrLf & vbCrLf
 '				Msg = Msg & "Kies Sluiten en neem de juiste rekening."
@@ -104,7 +104,7 @@ End Class
 
 '	Private Sub InvesteringsFiche_FormClosed(ByVal eventSender As System.Object, ByVal eventArgs As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
 
-'		bClose(FlAllerlei)
+'		JetTableClose(TableOfVarious)
 
 '	End Sub
 
@@ -112,23 +112,23 @@ End Class
 '		Dim TempoTel As Short
 '		Dim Ktrl2 As Short
 
-'		vBib(FlAllerlei, (TekstInfo(3).Text), "v019")
-'		vBib(FlAllerlei, (TekstInfo(2).Text), "v082")
-'		vBib(FlAllerlei, (TekstInfo(0).Text), "v083")
-'		vBib(FlAllerlei, Dec(Val(TekstInfo(1).Text) + Val(TekstInfo(7).Text), MaskEURBH), "v084")
+'		AdoInsertToRecord(TableOfVarious, (TekstInfo(3).Text), "v019")
+'		AdoInsertToRecord(TableOfVarious, (TekstInfo(2).Text), "v082")
+'		AdoInsertToRecord(TableOfVarious, (TekstInfo(0).Text), "v083")
+'		AdoInsertToRecord(TableOfVarious, Dec(Val(TekstInfo(1).Text) + Val(TekstInfo(7).Text), MaskEURBH), "v084")
 '		'v085 TekstInfo(8).Text reeds afgeschreven mag niet gewijzigd worden
-'		vBib(FlAllerlei, VB6.Format(Versneld.CheckState, "0"), "v086")
-'		vBib(FlAllerlei, (TekstInfo(4).Text), "v087")
-'		vBib(FlAllerlei, (TekstInfo(5).Text), "v088")
-'		vBib(FlAllerlei, "18" & vBibTekst(FlAllerlei, "#v087 #"), "v005")
+'		AdoInsertToRecord(TableOfVarious, VB6.Format(Versneld.CheckState, "0"), "v086")
+'		AdoInsertToRecord(TableOfVarious, (TekstInfo(4).Text), "v087")
+'		AdoInsertToRecord(TableOfVarious, (TekstInfo(5).Text), "v088")
+'		AdoInsertToRecord(TableOfVarious, "18" & AdoGetField(TableOfVarious, "#v087 #"), "v005")
 '		Msg = "Informatielijn opslaan..." & vbCrLf
 '		Msg = Msg & "Bent U zeker ?"
 '		Ktrl2 = MsgBox(Msg, 292, "Fiche bijwerken/wegschrijven")
 '		If Ktrl2 = 6 Then
 '			If NietAanwezig Then
-'				bInsert(FlAllerlei, 1)
+'				JetInsert(TableOfVarious, 1)
 '			Else
-'				bUpdate(FlAllerlei, 1)
+'				bUpdate(TableOfVarious, 1)
 '			End If
 '			Me.Close()
 '		End If

@@ -95,7 +95,7 @@ Public Class BetalingsVerzoek
 
 		InstallMij()
 		
-		KontaktPersoon = Val(String99(Lees, 201))
+		KontaktPersoon = Val(String99(Reading, 201))
 		bClear.PerformClick  
 		
 	End Sub
@@ -193,12 +193,12 @@ Public Class BetalingsVerzoek
 		End If
 
 		TaalTekst = mid(cbLanguage.Text, 1, 1) & Mid(cbPaymentType.Text, 1, 1)
-		If Dir(BedrijfsLokatie & "kwijt" & TaalTekst & ".DEF") = "" Then
+		If Dir(LocationCompanyData & "kwijt" & TaalTekst & ".DEF") = "" Then
 			tbInfoTekst.Text = ""
 		Else
 			TempoFL = FreeFile
 			tbInfoTekst.Text = ""
-			FileOpen(TempoFL, BedrijfsLokatie & "kwijt" & TaalTekst & ".DEF", OpenMode.Input)
+			FileOpen(TempoFL, LocationCompanyData & "kwijt" & TaalTekst & ".DEF", OpenMode.Input)
 			aa = ""
 			CRLFTeller = 0
 			Do While Not EOF(TempoFL)
@@ -278,7 +278,7 @@ Public Class BetalingsVerzoek
 			Exit Sub 			
 		End If
 
-		Msg = "Kwijtingen " & Msg2 & " met vervaldag voor de" & vbCrLf & Mid(PeriodeVanTot, 5, 2) & "e maand inladen ?"
+		Msg = "Kwijtingen " & Msg2 & " met vervaldag voor de" & vbCrLf & Mid(PeriodFromTo, 5, 2) & "e maand inladen ?"
 		Ktrl = MsgBox(Msg, 292)
 		If Ktrl = MsgBoxResult.Yes Then
 			InsertTermijn()
@@ -292,13 +292,13 @@ Public Class BetalingsVerzoek
 		Dim NettoPremie As Decimal
 		Dim Commissie As Decimal
 
-		MsJetGet(FlAllerlei, 1, "25" & vSet(Maatschappij, 4) & PolisNummer)
+		JetGet(TableOfVarious, 1, "25" & SetSpacing(Maatschappij, 4) & PolisNummer)
 		If Ktrl Then
 			CommissieCheck = 0
 		Else
-			RecordToVeld(FlAllerlei)
-			NettoPremie = Val(vBibTekst(FlAllerlei, "#B013 #"))
-			Commissie = Val(vBibTekst(FlAllerlei, "#B014 #"))
+			RecordToVeld(TableOfVarious)
+			NettoPremie = Val(AdoGetField(TableOfVarious, "#B013 #"))
+			Commissie = Val(AdoGetField(TableOfVarious, "#B014 #"))
 			If NettoPremie = 0 Then
 				CommissieCheck = 0
 			Else
@@ -333,7 +333,7 @@ Public Class BetalingsVerzoek
 				PostOfBezoek = "2"
 		End Select
 
-		ZoekMaand = Mid(PeriodeVanTot, 5, 2)
+		ZoekMaand = Mid(PeriodFromTo, 5, 2)
 
 		' Create a invoice recordset using the provided collection
 		invoicesRS = New ADODB.Recordset With {
@@ -360,12 +360,12 @@ Public Class BetalingsVerzoek
 				'select beperken tot: A110, vs97, v164
 				getClient = policiesRS.Fields("A110").Value
 
-				MsJetGet(FlKlant, 0, getClient)
+				JetGet(TableOfCustomers, 0, getClient)
 				If Ktrl Then
 					Dummy = "KlantLink onmogelijk !!! Kontroleer !!!"
 				Else
-					RecordToVeld(FlKlant)
-					Dummy = Trim(vBibTekst(FlKlant, "#A100 #") & " " & vBibTekst(FlKlant, "#A101 #"))
+					RecordToVeld(TableOfCustomers)
+					Dummy = Trim(AdoGetField(TableOfCustomers, "#A100 #") & " " & AdoGetField(TableOfCustomers, "#A101 #"))
 				End If
 
 				getPolice = policiesRS.Fields("A000").Value
@@ -392,8 +392,8 @@ Public Class BetalingsVerzoek
 						End If
 						strV035 =  invoicesRS.Fields("v035").Value
 
-						'If Val(vBibTekst(Fldokument, "#B010 #")) = Val(vBibTekst(FlPolis, "#B010 #")) And VB.Left(vBibTekst(Fldokument, "#v035 #"), 6) = VB.Left(PeriodeVanTot.Value, 6) Then
-						If dbBA010 = dbBB010 And mid(strV035, 1, 6) = mid(PeriodeVanTot, 1, 6) Then
+						'If Val(AdoGetField(TableOfInvoices, "#B010 #")) = Val(AdoGetField(TableOfContracts, "#B010 #")) And VB.Left(AdoGetField(TableOfInvoices, "#v035 #"), 6) = VB.Left(PeriodFromTo.Value, 6) Then
+						If dbBA010 = dbBB010 And mid(strV035, 1, 6) = mid(PeriodFromTo, 1, 6) Then
 							Ktrl2 = 0
 							Exit Do
 						End If
@@ -412,14 +412,14 @@ Public Class BetalingsVerzoek
 				Dim strA000 As String = policiesRS.Fields("A000").Value
 				Dim strB010 As String = policiesRS.Fields("B010").Value
 
-				'MsJetGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
+				'JetGet(TableOfVarious, 1, "25" & SetSpacing(AdoGetField(TableOfContracts, "#A010 #"), 4) & AdoGetField(TableOfContracts, "#A000 #"))
 				comPercentage = CommissieCheck(strA010, strA000)
 				TaksEnKost = 0
 				If Ktrl Then
 				Else
-					RecordToVeld(FlAllerlei)
-					If Val(strB010) = Val(vBibTekst(FlAllerlei, "#B010 #")) Then
-						TaksEnKost = Val(vBibTekst(FlAllerlei, "#B011 #"))
+					RecordToVeld(TableOfVarious)
+					If Val(strB010) = Val(AdoGetField(TableOfVarious, "#B010 #")) Then
+						TaksEnKost = Val(AdoGetField(TableOfVarious, "#B011 #"))
 					End If
 				End If
 
@@ -428,7 +428,7 @@ Public Class BetalingsVerzoek
 						'hier bijvoegen enkel voor geselecteerde maatschappij
 						Dim dataVeld As String = policiesRS.Fields("A000").Value
 						Dim itemHier As New ListViewItem(dataVeld)
-						Dim vervaldagHier As String = Mid(policiesRS.Fields("v165").Value, 1, 2) & "/" & Mid(policiesRS.Fields("v164").Value, 1, 2) & "/" & Mid(PeriodeVanTot, 1, 4)
+						Dim vervaldagHier As String = Mid(policiesRS.Fields("v165").Value, 1, 2) & "/" & Mid(policiesRS.Fields("v164").Value, 1, 2) & "/" & Mid(PeriodFromTo, 1, 4)
 
 						With itemHier.SubItems
 							.Add (vervaldagHier)
@@ -444,7 +444,7 @@ Public Class BetalingsVerzoek
 					'hier bijvoegen voor alle maatschappijen
 					Dim dataVeld As String = policiesRS.Fields("A000").Value
 					Dim itemHier As New ListViewItem(dataVeld)
-					Dim vervaldagHier As String = Mid(policiesRS.Fields("v165").Value, 1, 2) & "/" & Mid(policiesRS.Fields("v164").Value, 1, 2) & "/" & Mid(PeriodeVanTot, 1, 4)
+					Dim vervaldagHier As String = Mid(policiesRS.Fields("v165").Value, 1, 2) & "/" & Mid(policiesRS.Fields("v164").Value, 1, 2) & "/" & Mid(PeriodFromTo, 1, 4)
 
 					With itemHier.SubItems
 						.Add (vervaldagHier)
@@ -520,43 +520,43 @@ Public Class BetalingsVerzoek
 			sharedTotaal = Val(lvPolicesDetail.items.Item(T).SubItems(2).Text )
 			sharedvsfTB2 = lvPolicesDetail.items.Item(T).SubItems(6).Text 
 			
-			MsJetGet(FlPolis, 0, PolisNummer)
+			JetGet(TableOfContracts, 0, PolisNummer)
 			If Ktrl Then
 				MsgBox("Stop")
 			Else
-				RecordToVeld(FlPolis)'				
+				RecordToVeld(TableOfContracts)'				
 			End If
 			teldetail = 0
 			'TotaalBEF = 0
 			TotaalEUR = 0
 
-			MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+			JetGet(TableOfCustomers, 0, AdoGetField(TableOfContracts, "#A110 #"))
 			If Ktrl Then
 				MsgBox("stop")
 			Else
-				RecordToVeld(FlKlant)
+				RecordToVeld(TableOfCustomers)
 			End If
 
-			KlantNummer = vBibTekst(FlKlant, "#A110 #")
-			MsJetGet(FlLeverancier, 0, "CO" & vBibTekst(FlPolis, "#A010 #"))
+			KlantNummer = AdoGetField(TableOfCustomers, "#A110 #")
+			JetGet(TableOfSuppliers, 0, "CO" & AdoGetField(TableOfContracts, "#A010 #"))
 			If Ktrl Then
 				Beep()
 			Else
-				RecordToVeld(FlLeverancier)
+				RecordToVeld(TableOfSuppliers)
 			End If
 
-			MsJetGet(FlAllerlei, 1, "25" & vSet(vBibTekst(FlPolis, "#A010 #"), 4) & vBibTekst(FlPolis, "#A000 #"))
+			JetGet(TableOfVarious, 1, "25" & SetSpacing(AdoGetField(TableOfContracts, "#A010 #"), 4) & AdoGetField(TableOfContracts, "#A000 #"))
 			IndexBM = "  --  "
 			TaksEnKost = 0
 			If Ktrl Then
 			Else
-				RecordToVeld(FlAllerlei)
-				If Val(vBibTekst(FlPolis, "#B010 #")) = Val(vBibTekst(FlAllerlei, "#B010 #")) Then
-					TaksEnKost = Val(vBibTekst(FlAllerlei, "#B011 #"))
-					BrutoPremie = Val(vBibTekst(FlAllerlei, "#B013 #"))
+				RecordToVeld(TableOfVarious)
+				If Val(AdoGetField(TableOfContracts, "#B010 #")) = Val(AdoGetField(TableOfVarious, "#B010 #")) Then
+					TaksEnKost = Val(AdoGetField(TableOfVarious, "#B011 #"))
+					BrutoPremie = Val(AdoGetField(TableOfVarious, "#B013 #"))
 				End If
-				If mid(vBibTekst(FlPolis, "#v223 #"), 1, 1) = "5" Then
-					CrText = vBibTekst(FlAllerlei, "#5315 #")
+				If mid(AdoGetField(TableOfContracts, "#v223 #"), 1, 1) = "5" Then
+					CrText = AdoGetField(TableOfVarious, "#5315 #")
 					'BM voor huidige premie BA
 					If Trim(CrText) = "" Then
 					Else
@@ -564,7 +564,7 @@ Public Class BetalingsVerzoek
 					End If
 				Else
 					'controle aanwezigheid index
-					CrText = vBibTekst(FlAllerlei, "#AW.R #")
+					CrText = AdoGetField(TableOfVarious, "#AW.R #")
 					On Error Resume Next
 					If CDbl(CrText) > 99 Then
 						IndexBM = CrText
@@ -574,34 +574,34 @@ Public Class BetalingsVerzoek
 				End If
 			End If
 
-			SDLijn(teldetail) = vSet(vBibTekst(FlLeverancier, "#A100 #"), 25) & " "
-			SDLijn(teldetail) = SDLijn(teldetail) & vSet(vBibTekst(FlPolis, "#vs99 #"), 30) & " "
+			SDLijn(teldetail) = SetSpacing(AdoGetField(TableOfSuppliers, "#A100 #"), 25) & " "
+			SDLijn(teldetail) = SDLijn(teldetail) & SetSpacing(AdoGetField(TableOfContracts, "#vs99 #"), 30) & " "
 			SDLijn(teldetail) = SDLijn(teldetail) & IndexBM & vbCrLf
-			'SDLijn(teldetail) = SDLijn(teldetail) & vSet(Mid(fmarBoxText("914", "2", vBibTekst(FlPolis, "#A325 #")), 4), 14)
-			If Val(vBibTekst(FlPolis, "#A325 #")) > 7 Then
+			'SDLijn(teldetail) = SDLijn(teldetail) & SetSpacing(Mid(fmarBoxText("914", "2", AdoGetField(TableOfContracts, "#A325 #")), 4), 14)
+			If Val(AdoGetField(TableOfContracts, "#A325 #")) > 7 Then
 				isDOM = True
 			Else
 				isDOM = False
 			End If
 
-			If IsDbNull(rsMAR(FlPolis).Fields("e069").Value) Then
-				BedragEUR = Val(rsMAR(FlPolis).Fields("B010").Value)
+			If IsDbNull(rsMAR(TableOfContracts).Fields("e069").Value) Then
+				BedragEUR = Val(rsMAR(TableOfContracts).Fields("B010").Value)
 			Else
-				BedragEUR = Val(rsMAR(FlPolis).Fields("B010").Value) + Val(rsMAR(FlPolis).Fields("e069").Value)
+				BedragEUR = Val(rsMAR(TableOfContracts).Fields("B010").Value) + Val(rsMAR(TableOfContracts).Fields("e069").Value)
 			End If
 			'BedragBEF = System.Math.Round(BedragEUR * Euro)
-			datKwijting = vSet(Mid(vBibTekst(FlPolis, "#AW_2 #"), 7, 2), 2) & "/" & vSet(vBibTekst(FlPolis, "#v164 #"), 2) & "/" & mid(MimGlobalDate, 7, 4)
+			datKwijting = SetSpacing(Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2), 2) & "/" & SetSpacing(AdoGetField(TableOfContracts, "#v164 #"), 2) & "/" & mid(MimGlobalDate, 7, 4)
 
-			'SDLijn(teldetail) = SDLijn(teldetail) & Dec(BedragBEF, MaskerSy(0)) & vbCrLf 'Premie in BEF
-			SDLijn(teldetail) = SDLijn(teldetail) & vSet(vBibTekst(FlPolis, "#A000 #"), 12) & Space(14)
-			SDLijn(teldetail) = SDLijn(teldetail) & vSet(vBibTekst(FlPolis, "#vs98 #"), 30) & " "
+			'SDLijn(teldetail) = SDLijn(teldetail) & Dec(BedragBEF, MaskSy(0)) & vbCrLf 'Premie in BEF
+			SDLijn(teldetail) = SDLijn(teldetail) & SetSpacing(AdoGetField(TableOfContracts, "#A000 #"), 12) & Space(14)
+			SDLijn(teldetail) = SDLijn(teldetail) & SetSpacing(AdoGetField(TableOfContracts, "#vs98 #"), 30) & " "
 			SDLijn(teldetail) = SDLijn(teldetail) & datKwijting
-			'SDLijn(teldetail) = SDLijn(teldetail) & "              " & Dec(BedragEUR, MaskerEUR) 'Premie in EUR
+			'SDLijn(teldetail) = SDLijn(teldetail) & "              " & Dec(BedragEUR, MaskEUR) 'Premie in EUR
 
 			'TotaalBEF = TotaalBEF + BedragBEF
 			TotaalEUR = TotaalEUR + BedragEUR
 
-			ReferteTxt = "+++" & Format(teldetail + 1) & Format(Val(vBibTekst(FlPolis, "#v164 #")), "00") & "/" & Mid(KlantNummer, 1, 4) & "/0" & Mid(KlantNummer, 5, 2) & "xx+++"
+			ReferteTxt = "+++" & Format(teldetail + 1) & Format(Val(AdoGetField(TableOfContracts, "#v164 #")), "00") & "/" & Mid(KlantNummer, 1, 4) & "/0" & Mid(KlantNummer, 5, 2) & "xx+++"
 			dPip = Val(Mid(ReferteTxt, 4, 3) & Mid(ReferteTxt, 8, 4) & Mid(ReferteTxt, 13, 3))
 			Mid(ReferteTxt, 16, 2) = Format(dPip - Int(dPip / 97) * 97, "00")
 			If Mid(ReferteTxt, 16, 2) = "00" Then
@@ -616,7 +616,7 @@ Public Class BetalingsVerzoek
 		Next
 
 		Cursor.Current = Cursors.Default 
-		Mim.Report.WriteDoc(BedrijfsLokatie & Format(Now, "YYYYMMDDHHMMSS") & "-dnnInning4Brokers.pdf")
+		Mim.Report.WriteDoc(LocationCompanyData & Format(Now, "YYYYMMDDHHMMSS") & "-dnnInning4Brokers.pdf")
 		'Mim.Report.CloseDoc()
 		Mim.Report.Preview()
 
@@ -629,7 +629,7 @@ Public Class BetalingsVerzoek
 		
 		pdfOVSStrook = 8.2
 		ovsDefinitie = "FORM-IBAN.TXT"
-		Taal = "2"  'vBibTekst(FlKlant, "#A10C #")
+		Taal = "2"  'AdoGetField(TableOfCustomers, "#A10C #")
 		
 		pdfKopBALK()
 		pdfDetailLijnen()
@@ -650,22 +650,22 @@ Public Class BetalingsVerzoek
 		
 KopBalk: 
 		dokumentType = mid(cbPaymentType.Text, 4)
-		If Val(vBibTekst(FlKlant, "#A102 #")) = 0 Then
-			rSip(0) = vBibTekst(FlKlant, "#A100 #") & " " & vBibTekst(FlKlant, "#A101 #")
+		If Val(AdoGetField(TableOfCustomers, "#A102 #")) = 0 Then
+			rSip(0) = AdoGetField(TableOfCustomers, "#A100 #") & " " & AdoGetField(TableOfCustomers, "#A101 #")
 		Else
-			rSip(0) = Mid(fmarBoxText("003", Taal, vBibTekst(FlKlant, "#A102 #")), 4, 10) & " " & vBibTekst(FlKlant, "#A100 #") & " " & vBibTekst(FlKlant, "#A101 #")
+			rSip(0) = Mid(fmarBoxText("003", Taal, AdoGetField(TableOfCustomers, "#A102 #")), 4, 10) & " " & AdoGetField(TableOfCustomers, "#A100 #") & " " & AdoGetField(TableOfCustomers, "#A101 #")
 		End If
 		If KontaktPersoon = 1 Then
-			If Val(vBibTekst(FlKlant, "#vs01 #")) = 0 Then
-				rSip(1) = vBibTekst(FlKlant, "#A125 #") & " " & vBibTekst(FlKlant, "#A127 #")
+			If Val(AdoGetField(TableOfCustomers, "#vs01 #")) = 0 Then
+				rSip(1) = AdoGetField(TableOfCustomers, "#A125 #") & " " & AdoGetField(TableOfCustomers, "#A127 #")
 			Else
-				rSip(1) = Mid(fmarBoxText("003", Taal, vBibTekst(FlKlant, "#vs01 #")), 4, 10) & " " & vBibTekst(FlKlant, "#A125 #") & " " & vBibTekst(FlKlant, "#A127 #")
+				rSip(1) = Mid(fmarBoxText("003", Taal, AdoGetField(TableOfCustomers, "#vs01 #")), 4, 10) & " " & AdoGetField(TableOfCustomers, "#A125 #") & " " & AdoGetField(TableOfCustomers, "#A127 #")
 			End If
 		Else
 			rSip(1) = ""
 		End If
-		rSip(2) = vBibTekst(FlKlant, "#A104 #") & " " & vBibTekst(FlKlant, "#A105 #") & " " & vBibTekst(FlKlant, "#A106 #")
-		rSip(4) = vBibTekst(FlKlant, "#A109 #") & " " & vBibTekst(FlKlant, "#A107 #") & " " & vBibTekst(FlKlant, "#A108 #")
+		rSip(2) = AdoGetField(TableOfCustomers, "#A104 #") & " " & AdoGetField(TableOfCustomers, "#A105 #") & " " & AdoGetField(TableOfCustomers, "#A106 #")
+		rSip(4) = AdoGetField(TableOfCustomers, "#A109 #") & " " & AdoGetField(TableOfCustomers, "#A107 #") & " " & AdoGetField(TableOfCustomers, "#A108 #")
 
 		With Mim.Report
 			.SelectFont("Courier New", 7.2)
@@ -676,10 +676,10 @@ KopBalk:
 		pdfPrintKopTekst()
 
 		Mim.Report.PenSize = 0.01
-		pdfY = Mim.Report.PrintBox(0.7, pdfVsoftVanaf, UCase(dokumentType))
+		pdfY = Mim.Report.PrintBox(0.7, pdfVsoftFrom, UCase(dokumentType))
 
 		Mim.Report.TextBold = False
-		pdfY = Mim.Report.Print(10, pdfVsoftVanaf, Format(Now, "dddd dd MMM yyyy") & vbCrLf & vbCrLf)
+		pdfY = Mim.Report.Print(10, pdfVsoftFrom, Format(Now, "dddd dd MMM yyyy") & vbCrLf & vbCrLf)
 '		
 		Mim.Report.SelectFont("Courier New", 8)
 
@@ -705,7 +705,7 @@ PrintKopTekst:
 		For tSip = 0 To 4
 			adresString = adresString & UCase(rSip(tSip)) & vbCrLf
 		Next 
-		ktrlHier = Mim.Report.Write(pdfadresXpos, pdfadresYpos, pdfadresXpos2, pdfadresYpos2, adresString)
+		ktrlHier = Mim.Report.Write(pdfAddressXpos, pdfAddressYpos, pdfAddressXpos2, pdfAddressYpos2, adresString)
 
 	End Sub
 
@@ -713,7 +713,7 @@ PrintKopTekst:
 		Dim pfcmd As Short
 		Dim FlFree As Short
 		Dim pdfCmd As String
-		If Dir(BedrijfsLokatie & "pdfDDEF" & TypeEnTaal & ".Txt") = "" Then
+		If Dir(LocationCompanyData & "pdfDDEF" & TypeEnTaal & ".Txt") = "" Then
 			Beep()
 			Exit Sub
 		Else
@@ -724,7 +724,7 @@ PrintKopTekst:
 				.nBottomMargin = 29.8
 			End With
 			FlFree = FreeFile()
-			FileOpen(FlFree, BedrijfsLokatie & "pdfDDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
+			FileOpen(FlFree, LocationCompanyData & "pdfDDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
 			Do While Not EOF(FlFree)
 				pdfCmd = LineInput(FlFree)
 				If Mid(pdfCmd, 1, 1) = "'" Then
@@ -772,25 +772,25 @@ DetailLijnen:
 		pdfY = Mim.Report.Print(0.8, pdfY, " ")
 		tmpPdfY = pdfY 
 
-		tmpMsg = "Handelspremie:                   " + Dec(Val(vBibTekst(FlAllerlei, "#B010 #"))-Val(vBibTekst(FlAllerlei, "#B011 #")), mid(MaskerEUR, 3)) + vbCrLf 
-		If Val(vBibTekst(FlAllerlei, "#v401 #"))+Val(vBibTekst(FlAllerlei, "#v402 #")) = 0 Then
+		tmpMsg = "Handelspremie:                   " + Dec(Val(AdoGetField(TableOfVarious, "#B010 #"))-Val(AdoGetField(TableOfVarious, "#B011 #")), mid(MaskEUR, 3)) + vbCrLf 
+		If Val(AdoGetField(TableOfVarious, "#v401 #"))+Val(AdoGetField(TableOfVarious, "#v402 #")) = 0 Then
 			tmpMsg = tmpMsg + " > acquisitiekost niet meegedeeld" + vbCrLf + " > administratiekost niet meegedeeld" + vbCrLf 
-			tmpMsg = tmpMsg + " > Splitsingskost" + Dec(Val(vBibTekst(FlAllerlei, "#v400 #")), mid(MaskerEUR, 4)) + vbCrLf
+			tmpMsg = tmpMsg + " > Splitsingskost" + Dec(Val(AdoGetField(TableOfVarious, "#v400 #")), mid(MaskEUR, 4)) + vbCrLf
 		Else
-			tmpMsg = tmpMsg + " > Acquisitiekost" + Dec(Val(vBibTekst(FlAllerlei, "#v401 #")), mid(MaskerEUR, 4)) + vbCrLf
-			tmpMsg = tmpMsg + " > Administratie " + Dec(Val(vBibTekst(FlAllerlei, "#v402 #")), mid(MaskerEUR, 4)) + vbCrLf
-			tmpMsg = tmpMsg + " > Splitsingskost" + Dec(Val(vBibTekst(FlAllerlei, "#v400 #")), mid(MaskerEUR, 4)) + vbCrLf
+			tmpMsg = tmpMsg + " > Acquisitiekost" + Dec(Val(AdoGetField(TableOfVarious, "#v401 #")), mid(MaskEUR, 4)) + vbCrLf
+			tmpMsg = tmpMsg + " > Administratie " + Dec(Val(AdoGetField(TableOfVarious, "#v402 #")), mid(MaskEUR, 4)) + vbCrLf
+			tmpMsg = tmpMsg + " > Splitsingskost" + Dec(Val(AdoGetField(TableOfVarious, "#v400 #")), mid(MaskEUR, 4)) + vbCrLf
 		End If
 
 		tmpMsg = tmpMsg + vbCrLf 
-		tmpMsg = tmpMsg + "Taksen:                          " + Dec(Val(vBibTekst(FlAllerlei, "#B011 #")), mid(MaskerEUR, 3)) + vbCrLf
+		tmpMsg = tmpMsg + "Taksen:                          " + Dec(Val(AdoGetField(TableOfVarious, "#B011 #")), mid(MaskEUR, 3)) + vbCrLf
 		tmpMsg = tmpMsg + vbCrLf 
-		tmpMsg = tmpMsg + "Premie Subtotaal:                " + Dec(Val(vBibTekst(FlAllerlei, "#B010 #")), mid(MaskerEUR, 3)) + vbCrLf
-		tmpMsg = tmpMsg + "Makelaarfee:                     " + Dec(TotaalEUR - Val(vBibTekst(FlAllerlei, "#B010 #")), mid(MaskerEUR, 3)) + vbCrLf
+		tmpMsg = tmpMsg + "Premie Subtotaal:                " + Dec(Val(AdoGetField(TableOfVarious, "#B010 #")), mid(MaskEUR, 3)) + vbCrLf
+		tmpMsg = tmpMsg + "Makelaarfee:                     " + Dec(TotaalEUR - Val(AdoGetField(TableOfVarious, "#B010 #")), mid(MaskEUR, 3)) + vbCrLf
 		Mim.Report.TextBold = True 
 		pdfY = Mim.Report.PrintBox(12.8, pdfY, tmpMsg)
 
-		tmpMsg = "Totaal factuur:                  " + Dec(TotaalEUR, mid(MaskerEUR, 3)) + vbCrLf
+		tmpMsg = "Totaal factuur:                  " + Dec(TotaalEUR, mid(MaskEUR, 3)) + vbCrLf
 		Mim.Report.TextBold = True 
 		pdfY = Mim.Report.PrintBox(12.8, pdfY, tmpMsg)
 			   
@@ -827,14 +827,14 @@ InfoTekst:
 
 Overschrijvingsstrook: 
 		On Error GoTo 0
-		If Dir(BedrijfsLokatie & ovsDefinitie) = "" Then
-			MsgBox(BedrijfsLokatie & ovsDefinitie & " niet te vinden !  Hierna wordt kladblok opgestart.  Breng uw eigen gegevens in a.u.b. !", 0, "Foutieve Installatie ?")
+		If Dir(LocationCompanyData & ovsDefinitie) = "" Then
+			MsgBox(LocationCompanyData & ovsDefinitie & " niet te vinden !  Hierna wordt kladblok opgestart.  Breng uw eigen gegevens in a.u.b. !", 0, "Foutieve Installatie ?")
 			On Error Resume Next
-			X = Shell("notepad.exe " & BedrijfsLokatie & ovsDefinitie, 1)
+			X = Shell("notepad.exe " & LocationCompanyData & ovsDefinitie, 1)
 			exit sub
 		Else
 			FlTemp = FreeFile
-			FileOpen(FlTemp, BedrijfsLokatie & ovsDefinitie, OpenMode.Input)
+			FileOpen(FlTemp, LocationCompanyData & ovsDefinitie, OpenMode.Input)
 			sSip(0) = LineInput(FlTemp)
 			sSip(1) = LineInput(FlTemp)
 			sSip(2) = LineInput(FlTemp)
@@ -1094,12 +1094,12 @@ End Class
 '					Afsluiten.Enabled = True
 '					TaalTekst.Value = VB.Left(KeuzeInfo(1).Text, 1) & VB.Left(KeuzeInfo(0).Text, 1)
 '					'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'					If Dir(BedrijfsLokatie & "kwijt" & TaalTekst.Value & ".DEF") = "" Then
+'					If Dir(LocationCompanyData & "kwijt" & TaalTekst.Value & ".DEF") = "" Then
 '						TekstInfo(1).Text = ""
 '					Else
 '						TempoFL = FreeFile
 '						TekstInfo(1).Text = ""
-'						FileOpen(TempoFL, BedrijfsLokatie & "kwijt" & TaalTekst.Value & ".DEF", OpenMode.Input)
+'						FileOpen(TempoFL, LocationCompanyData & "kwijt" & TaalTekst.Value & ".DEF", OpenMode.Input)
 '						aa = ""
 '						CRLFTeller = 0
 '						Do While Not EOF(TempoFL)
@@ -1119,12 +1119,12 @@ End Class
 '				TaalTekst.Value = VB.Left(KeuzeInfo(1).Text, 1) & VB.Left(KeuzeInfo(0).Text, 1)
 
 '				'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'				If Dir(BedrijfsLokatie & "kwijt" & TaalTekst.Value & ".DEF") = "" Then
+'				If Dir(LocationCompanyData & "kwijt" & TaalTekst.Value & ".DEF") = "" Then
 '					TekstInfo(1).Text = ""
 '				Else
 '					TempoFL = FreeFile
 '					TekstInfo(1).Text = ""
-'					FileOpen(TempoFL, BedrijfsLokatie & "kwijt" & TaalTekst.Value & ".DEF", OpenMode.Input)
+'					FileOpen(TempoFL, LocationCompanyData & "kwijt" & TaalTekst.Value & ".DEF", OpenMode.Input)
 '					aa = ""
 '					CRLFTeller = 0
 '					Do While Not EOF(TempoFL)
@@ -1233,7 +1233,7 @@ End Class
 '		Dim TempoFL As Integer
 
 '		TempoFL = FreeFile
-'		FileOpen(TempoFL, BedrijfsLokatie & "kwijt" & VB.Left(KeuzeInfo(1).Text, 1) & VB.Left(KeuzeInfo(0).Text, 1) & ".DEF", OpenMode.Output)
+'		FileOpen(TempoFL, LocationCompanyData & "kwijt" & VB.Left(KeuzeInfo(1).Text, 1) & VB.Left(KeuzeInfo(0).Text, 1) & ".DEF", OpenMode.Output)
 '		PrintLine(TempoFL, TekstInfo(1).Text)
 '		FileClose(TempoFL)
 

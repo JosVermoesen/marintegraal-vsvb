@@ -170,9 +170,9 @@ End Class
 '		On Error Resume Next
 '		'ChDrive Left(Drive1.Drive, 1)
 '		If Err.Number Then MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Kontroleer eerst a.u.b. !") : Exit Sub
-'		Mid(Lokatie, 1, 2) = Mid(Drive1.Drive, 1, 2)
+'		Mid(Location, 1, 2) = Mid(Drive1.Drive, 1, 2)
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		A = Dir(Lokatie & "*.*")
+'		A = Dir(Location & "*.*")
 '		If Err.Number Then MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Kontroleer eerst a.u.b. !") : Exit Sub
 '		If A = "" Then MsgBox("Kontroleer eerst het opslagmedium a.u.b. via bedrijf openen !") : Exit Sub
 
@@ -215,8 +215,8 @@ End Class
 '		CmbBedrijfsType.Items.Add("9: Gezinshuishouding")
 '		CmbBedrijfsType.SelectedIndex = 0
 
-'		Bestand(FlTeller) = "00.ONT" '09
-'		bstNaam(FlTeller) = "jr" & Me.Boekjaar.Text
+'		Bestand(TableOfCounters) = "00.ONT" '09
+'		JetTableName(TableOfCounters) = "jr" & Me.Boekjaar.Text
 
 '	End Sub
 
@@ -241,12 +241,12 @@ End Class
 '		End If
 
 '		TotalNeeded = 38024
-'		destpath = Lokatie & BedrijfsNummer
+'		destpath = Location & BedrijfsNummer
 '		If Not CreatePath(destpath) Then
 '			MsgBox("foutmelding bij aanmaak " & destpath)
 '		End If
 
-'		BedrijfsLokatie = Lokatie & BedrijfsNummer & "\"
+'		LocationCompanyData = Location & BedrijfsNummer & "\"
 
 '		PeriodesMaken()
 '		LabelMaken()
@@ -263,10 +263,10 @@ End Class
 
 
 
-'		jetConnect = adoJetProvider & "Data Source=" & BedrijfsLokatie & "\marnt.mdv;" & "Persist Security Info=False"
+'		jetConnect = adoJetProvider & "Data Source=" & LocationCompanyData & "\marnt.mdv;" & "Persist Security Info=False"
 
 '		On Error Resume Next
-'		bClose(99)
+'		JetTableClose(99)
 
 '		Dim cat As New ADOX.Catalog
 '		Dim tbl As New ADOX.Table
@@ -274,9 +274,9 @@ End Class
 
 '		'Open the catalog.
 '		cat.let_ActiveConnection(jetConnect)
-'		bstNaam(FlTeller) = "jr" & Me.Boekjaar.Text
+'		JetTableName(TableOfCounters) = "jr" & Me.Boekjaar.Text
 
-'		tbl.Name = bstNaam(FlTeller)
+'		tbl.Name = JetTableName(TableOfCounters)
 '		tbl.Columns.Append("v071", ADOX.DataTypeEnum.adVarWChar, 5)
 '		tbl.Columns.Append("v217", ADOX.DataTypeEnum.adVarWChar, 30)
 
@@ -303,10 +303,10 @@ End Class
 '		adntDB = New ADODB.Connection
 
 '		adntDB.Open(jetConnect)
-'		ntDB = NTRuimte.OpenDatabase(BedrijfsLokatie & "marnt.MDV", False, False)
+'		ntDB = NTRuimte.OpenDatabase(LocationCompanyData & "marnt.MDV", False, False)
 '		X = InitBestanden
 '		X = InstallTellers
-'		bClose(99)
+'		JetTableClose(99)
 '		adntDB.Close()
 '		'UPGRADE_NOTE: Object adntDB may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
 '		adntDB = Nothing
@@ -326,7 +326,7 @@ End Class
 '	Private Sub LabelMaken()
 
 '		FlN = FreeFile
-'		FileOpen(FlN, Lokatie & BedrijfsNummer & "/marnt.txt", OpenMode.Output)
+'		FileOpen(FlN, Location & BedrijfsNummer & "/marnt.txt", OpenMode.Output)
 '		PrintLine(FlN, BedrijfsNaam.Text)
 '		FileClose(FlN)
 
@@ -354,7 +354,7 @@ End Class
 '		VanafJaar = Val(VB.Right(Van, 4))
 
 '		Fl = FreeFile
-'		FileOpen(Fl, ProgrammaLokatie & "9999.oct", OpenMode.Random, , , 4)
+'		FileOpen(Fl, ProgramLocation & "9999.oct", OpenMode.Random, , , 4)
 '		A.Value = "0"
 '		'UPGRADE_WARNING: Put was upgraded to FilePut and has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		FilePut(Fl, A.Value, 1)
@@ -367,9 +367,9 @@ End Class
 '		FileClose(Fl)
 
 '		Fl = FreeFile
-'		FileOpen(Fl, Lokatie & BedrijfsNummer & "/def00.oct", OpenMode.Random, , , 16)
+'		FileOpen(Fl, Location & BedrijfsNummer & "/def00.oct", OpenMode.Random, , , 16)
 '		For T = 1 To aantalmaanden
-'			b.Value = VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand, "00") & "01" & VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand, "00") & VB6.Format(DagenInMaand(VanafMaand), "00")
+'			b.Value = VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand, "00") & "01" & VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand, "00") & VB6.Format(DaysInAMonth(VanafMaand), "00")
 '			If VanafMaand = 12 And T < aantalmaanden Then
 '				VanafMaand = 1
 '				VanafJaar = VanafJaar + 1
@@ -385,7 +385,7 @@ End Class
 '			'UPGRADE_WARNING: Put was upgraded to FilePut and has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			FilePut(Fl, b.Value, t2)
 '		Next 
-'		b.Value = VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand - 1, "00") & VB6.Format(DagenInMaand(VanafMaand - 1), "00") & VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand - 1, "00") & VB6.Format(DagenInMaand(VanafMaand - 1), "00")
+'		b.Value = VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand - 1, "00") & VB6.Format(DaysInAMonth(VanafMaand - 1), "00") & VB6.Format(VanafJaar, "0000") & VB6.Format(VanafMaand - 1, "00") & VB6.Format(DaysInAMonth(VanafMaand - 1), "00")
 '		'UPGRADE_WARNING: Put was upgraded to FilePut and has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		FilePut(Fl, b.Value, 99)
 '		FileClose(Fl)
@@ -403,7 +403,7 @@ End Class
 '		For T = 1 To 999
 '			On Error Resume Next
 '			'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'			EerstVolgendIs = Dir(Lokatie & VB6.Format(T, "000") & "\")
+'			EerstVolgendIs = Dir(Location & VB6.Format(T, "000") & "\")
 '			If Err.Number = 76 Or EerstVolgendIs = "" Then
 '				VolgendBedrijf = VB6.Format(T, "000")
 '				Exit Function

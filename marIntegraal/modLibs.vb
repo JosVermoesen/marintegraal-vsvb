@@ -29,68 +29,68 @@ Module ModLibs
     Public gnodDBNode2 As System.Windows.Forms.TreeNode 'backup of current database node i
 
     'marNT constanten
-    Public Const AFl As Short = 9
-    Public Const FlAllerlei As Short = 0
-    Public Const FlKlant As Short = 1
-    Public Const FlLeverancier As Short = 2
-    Public Const FlLedgerAccount As Short = 3
-    Public Const FlProdukt As Short = 4
-    Public Const FlPolis As Short = 5
-    Public Const Fldokument As Short = 6
+    Public Const NumberOfTables As Short = 9
+    Public Const TableOfVarious As Short = 0
+    Public Const TableOfCustomers As Short = 1
+    Public Const TableOfSuppliers As Short = 2
+    Public Const TableOfLedgerAccounts As Short = 3
+    Public Const TableOfProductsAndServices As Short = 4
+    Public Const TableOfContracts As Short = 5
+    Public Const TableOfInvoices As Short = 6
     Public Const FlJournaal As Short = 7
-    Public Const FlDummy As Short = 8
-    Public Const FlTeller As Short = 9
-    Public Const FlAsLog As Short = 10
+    Public Const TableDummy As Short = 8
+    Public Const TableOfCounters As Short = 9
+    Public Const TableOfAsLog As Short = 10
 
-    Public Const TekstPeriode As Short = 0
-    Public Const TekstBoekjaar As Short = 1
-    Public Const SleutelPeriode As Short = 2
-    Public Const SleutelBoekjaar As Short = 3
+    Public Const PeriodAsText As Short = 0
+    Public Const BookyearAsText As Short = 1
+    Public Const PeriodeAsKey As Short = 2
+    Public Const BookyearAsKey As Short = 3
     Public Const SISO As String = "001*002*002*003*004*005*006*007*008*009*010*011*030*032*038*046*053*054*055*060*061*063*064*091*600*"
     Public Const maxTeleBib As Short = 150
     Public Const maxIndex As Short = 5
     Public Const maxPLUS As Short = 6
-    Public Const Lees As Boolean = True
-    Public Const LeesLock As Boolean = False
+    Public Const Reading As Boolean = True
+    Public Const ReadingLock As Boolean = False
 
-    Public Const MaskerEURX As String = "######0.0000"
+    Public Const MaskEURX As String = "######0.0000"
     Public Const MaskEURBH As String = "########0.00"
 
-    Public Const MaskerBEF As String = "##########"
-    Public Const MaskerEUR As String = "######0.00"
+    Public Const MaskBEF As String = "##########"
+    Public Const MaskEUR As String = "######0.00"
 
     Public Const Euro As Double = 40.3399
-    Public Const BelgischeFrank As Short = 1
+    Public Const BelgianFrank As Short = 1
 
     <VBFixedString(16)> Public A As String
     <VBFixedString(4)> Public aa As String
     <VBFixedString(30)> Public AAA As String
 
-    Public MaskerSy(8) As String
-    Public Masker2002 As String 'VB6.FixedLengthString(10)
+    Public MaskSy(8) As String
+    Public Mask2002 As String 'VB6.FixedLengthString(10)
     Public vsfPro As Boolean
 
     Public SysVar(6) As String
-    Public FileNr(AFl) As Short
-    Public TLBRecord(AFl) As String
-    Public KeyBuf(AFl) As String
-    Public Bestand(AFl) As String
-    Public KeyIndex(AFl) As Short
-    Public InsertFlag(AFl) As Short
+    Public FileNr(NumberOfTables) As Short
+    Public TLBRecord(NumberOfTables) As String
+    Public KeyBuf(NumberOfTables) As String
+    Public Bestand(NumberOfTables) As String
+    Public KeyIndex(NumberOfTables) As Short
+    Public InsertFlag(NumberOfTables) As Short
     Public FlAantalIndexen(10) As Short
-    Public FlIndexIs(AFl, 10) As String
-    Public FlIndexLen(AFl, 10) As Short
-    Public FLIndexCaption(AFl, 10) As String
+    Public JetTableUseIndex(NumberOfTables, 10) As String
+    Public FlIndexLen(NumberOfTables, 10) As Short
+    Public FLIndexCaption(NumberOfTables, 10) As String
     Public ListIDX(5, 10) As String
-    Public FVT(AFl, 10) As String
-    Public aIndex As Integer 
-    Public DagenInMaand(12) As Short
+    Public FVT(NumberOfTables, 10) As String
+    Public aIndex As Integer
+    Public DaysInAMonth(12) As Short
     'UPGRADE_ISSUE: Declaration type not supported: Array of fixed-length strings. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="934BD4FF-1FF9-47BD-888F-D411E47E78FA"'
-    Public MaandTekst(12) As String '*9
+    Public MonthText(12) As String '*9
     Public SetUpRecNum(25) As Short
 
-    Public PrinterStuurkodes(2) As Short
-    Public BladLengte(2) As Short
+    Public EscCodesPrinter(2) As Short
+    Public PaperLength(2) As Short
     Public PrinterINI(2) As String
     Public ReportField(23) As String
     Public ReportTab(23) As Short
@@ -123,19 +123,19 @@ Module ModLibs
     Public bModus As Short
     Public TelTot As Short
 
-    Public PeriodeVanTot As String ' New VB6.FixedLengthString(16)
-    Public BoekjaarVanTot As String 'New VB6.FixedLengthString(16)
-    Public AktiefBoekjaar As Short
+    Public PeriodFromTo As String ' New VB6.FixedLengthString(16)
+    Public BookyearFromTo As String 'New VB6.FixedLengthString(16)
+    Public ActiveBookyear As Short
     Public MimGlobalDate As String 'New VB6.FixedLengthString(10)
-    Public BtwBouw As Boolean
+    Public VatBobTheBuilders As Boolean
     Public DirecteVerkoopString As String
 
-    Public BedrijfsLokatie As String
-    Public NetDataLokatie As String
-    Public ProgrammaLokatie As String
-    Public Lokatie As String
-    Public AssurnetLokatie As String
-    Public FolderMijndokumenten As String
+    Public LocationCompanyData As String
+    Public LocationNetData As String
+    Public ProgramLocation As String
+    Public Location As String
+    Public LocationAsWeb As String
+    Public LocationMyDocuments As String
 
     Public ProducentNummer As String 'New VB6.FixedLengthString(8)
     Public Eigenaar As String 'New VB6.FixedLengthString(8)
@@ -192,7 +192,7 @@ Module ModLibs
     Public SQLConnect As String
 
     Public XDoEvents As Short
-    Public bstNaam(9) As String
+    Public JetTableName(9) As String
     Public AddNewStatus(9) As Short
     'UPGRADE_ISSUE: Declaration type not supported: Array of fixed-length strings. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="934BD4FF-1FF9-47BD-888F-D411E47E78FA"'
     Public vBC(9, 200) As String '*4
@@ -200,7 +200,7 @@ Module ModLibs
 
     Public TestEuroModus As Boolean
     Public bhEuro As Boolean
-    Public XisEuroWisBEF As Boolean
+    Public XisEuroWasBEF As Boolean
 
     Public TimerTijd As Date
     Public RetVal As Object
@@ -215,18 +215,18 @@ Module ModLibs
     'UPGRADE_WARNING: Lower bound of array BasisB was changed from 1 to 0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
     'UPGRADE_WARNING: Arrays can't be declared with New. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="CC9D3AE5-6B95-4B43-91C7-28276302A5E8"'
     Public BasisB(3) As frmBasisFiche
-    Public JumpVenster As Object
+    Public JumpForm As Object
 
     Public fs As Scripting.FileSystemObject
 
-    Public KasTicketTotaal As Decimal
-    Public KasTotaal As Decimal
-    Public KasBetalingBEF As Decimal
-    Public KasBetalingEUR As Decimal
-    Public KasTerugEUR As Decimal
+    Public CashRegisterTicketTotal As Decimal
+    Public CashRegisterTotal As Decimal
+    Public CashRegisterPayingBEF As Decimal
+    Public CashRegisterPayingEUR As Decimal
+    Public CashRegisterBackEUR As Decimal
 
-    Public KasTotaalBEF As Decimal
-    Public KasTotaalEUR As Decimal
+    Public CashRegisterTotalBEF As Decimal
+    Public CashRegisterTotalEUR As Decimal
 
     Public DecimalKTRL As Boolean
 
@@ -237,10 +237,10 @@ Module ModLibs
     Public usrMailAdres As String
     Public usrPW As String
 
-    Public pdfVsoftVanaf As Double
-    Public pdfVsoftTot As Double
-    Public pdfadresXpos As Double
-    Public pdfadresYpos As Double
-    Public pdfadresXpos2 As Double
-    Public pdfadresYpos2 As Double
+    Public pdfVsoftFrom As Double
+    Public pdfVsoftTo As Double
+    Public pdfAddressXpos As Double
+    Public pdfAddressYpos As Double
+    Public pdfAddressXpos2 As Double
+    Public pdfAddressYpos2 As Double
 End Module

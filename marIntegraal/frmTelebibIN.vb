@@ -276,7 +276,7 @@ Public Class TelebibIN
 			KtrlBox = DoTheGBO()
 		Next
 
-		Mim.Report.WriteDoc(ProgrammaLokatie & Format(Now, "YYYYMMDDHHMMSS") & "-ASWEB_EDI.pdf")
+		Mim.Report.WriteDoc(ProgramLocation & Format(Now, "YYYYMMDDHHMMSS") & "-ASWEB_EDI.pdf")
 		Mim.Report.Preview()
 		'!Mim.Report.CloseDoc
 
@@ -332,7 +332,7 @@ ASWEBeinde:
 			Mim.Report.PageBreak()
 			KtrlBox = DoTheGBO()
 		Next
-		Mim.Report.WriteDoc(ProgrammaLokatie & Format(Now, "YYYYMMDDHHMMSS") & "-GBO_EDI.pdf")
+		Mim.Report.WriteDoc(ProgramLocation & Format(Now, "YYYYMMDDHHMMSS") & "-GBO_EDI.pdf")
 		Mim.Report.Preview()
 		'!Mim.Report.CloseDoc
 
@@ -444,14 +444,14 @@ GBOeinde:
 		
 		Dim posSTR As Integer 
 		
-		TLBRecord(FlAllerlei) = ""
-		vBib(FlAllerlei, vSet("L" & "CO" & XEHCODE, 13), "v004")
-		vBib(FlAllerlei, XEHCODE, "A010")
-		vBib(FlAllerlei, "E1", "v400")
-		vBib(FlAllerlei, vSet("30" & XEHCODE & "E1", 20), "v005")
-		vBib(FlAllerlei, (RichTextBox1.Text), "v132")
+		TLBRecord(TableOfVarious) = ""
+		AdoInsertToRecord(TableOfVarious, SetSpacing("L" & "CO" & XEHCODE, 13), "v004")
+		AdoInsertToRecord(TableOfVarious, XEHCODE, "A010")
+		AdoInsertToRecord(TableOfVarious, "E1", "v400")
+		AdoInsertToRecord(TableOfVarious, SetSpacing("30" & XEHCODE & "E1", 20), "v005")
+		AdoInsertToRecord(TableOfVarious, (RichTextBox1.Text), "v132")
 		'rsmar(flallerlei)("A000")= djfkddk
-		'rsMAR(FlAllerlei).Update
+		'rsMAR(TableOfVarious).Update
 
 		rsTB2.AddNew()
 		rsTB2.Fields("Mij").Value = XEHCODE 
@@ -524,7 +524,7 @@ GBOeinde:
 			rsTB2.Fields("status").Value = "0"
 		End If
 		rsTB2.Update()
-		bInsert(FlAllerlei, 1)
+		JetInsert(TableOfVarious, 1)
 		'MsgBox "Stop"
 		If Ktrl Then
 			MsgBox(ErrorToString())

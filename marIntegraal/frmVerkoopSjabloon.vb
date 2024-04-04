@@ -51,11 +51,11 @@ End Class
 '			Case True
 '				BsType.Value = "A999999"
 '			Case Else
-'				BsType.Value = "K" & VB.Left(FVT(FlKlant, 0), 6)
+'				BsType.Value = "K" & VB.Left(FVT(TableOfCustomers, 0), 6)
 '		End Select
 
 '		FlX = FreeFile
-'		FileOpen(FlX, BedrijfsLokatie & BsType.Value & VB.Left(SjabloonLijst.Text, 1) & ".SJB", OpenMode.Input)
+'		FileOpen(FlX, LocationCompanyData & BsType.Value & VB.Left(SjabloonLijst.Text, 1) & ".SJB", OpenMode.Input)
 '		BsTekst = LineInput(FlX)
 '		Do While Not EOF(FlX)
 '			BsTekst = LineInput(FlX)
@@ -97,16 +97,16 @@ End Class
 '				Case 0
 '					BsType.Value = "A999999"
 '				Case Else
-'					BsType.Value = "K" & VB.Left(FVT(FlKlant, 0), 6)
+'					BsType.Value = "K" & VB.Left(FVT(TableOfCustomers, 0), 6)
 '			End Select
 
 '			For T = 0 To 9
 '				'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'				If Dir(BedrijfsLokatie & BsType.Value & VB6.Format(T, "0") & ".SJB") = "" Then
+'				If Dir(LocationCompanyData & BsType.Value & VB6.Format(T, "0") & ".SJB") = "" Then
 '					SjabloonLijst.Items.Add(VB6.Format(T, "0") & ": " & Space(40))
 '				Else
 '					FlX = FreeFile
-'					FileOpen(FlX, BedrijfsLokatie & BsType.Value & VB6.Format(T, "0") & ".SJB", OpenMode.Input)
+'					FileOpen(FlX, LocationCompanyData & BsType.Value & VB6.Format(T, "0") & ".SJB", OpenMode.Input)
 '					Input(FlX, BsTekst.Value)
 '					FileClose(FlX)
 '					SjabloonLijst.Items.Add(VB6.Format(T, "0") & ": " & BsTekst.Value)
@@ -147,11 +147,11 @@ End Class
 '			Case True
 '				BsType.Value = "A999999"
 '			Case Else
-'				BsType.Value = "K" & VB.Left(FVT(FlKlant, 0), 6)
+'				BsType.Value = "K" & VB.Left(FVT(TableOfCustomers, 0), 6)
 '		End Select
 
 '		FlX = FreeFile
-'		FileOpen(FlX, BedrijfsLokatie & BsType.Value & VB.Left(SjabloonLijst.Text, 1) & ".SJB", OpenMode.Output)
+'		FileOpen(FlX, LocationCompanyData & BsType.Value & VB.Left(SjabloonLijst.Text, 1) & ".SJB", OpenMode.Output)
 '		PrintLine(FlX, BsTekst.Value)
 '		Do While GridText <> ""
 '			LeftPos = InStr(GridText, Chr(13))

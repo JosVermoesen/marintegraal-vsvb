@@ -64,7 +64,7 @@ Public Class xLog
             If GridText = "" Then
             Else
                 tijdelijk = Mid(GridText, 1, InStr(GridText, ":") - 1)
-                vBib(flHier, tijdelijk, Mid(codeString, 5, 5))
+                AdoInsertToRecord(flHier, tijdelijk, Mid(codeString, 5, 5))
                 ArrangeDeckChairs(flHier)
             End If
             ' X_KeyDownEvent(X, New AxMSFlexGridLib.DMSFlexGridEvents_KeyDownEvent(17, 0))
@@ -93,7 +93,7 @@ Public Class xLog
             tijdelijk = vsfInputBox(Msg, omsString, inputString, "")
             If inputString = tijdelijk Then
             Else
-                vBib(flHier, tijdelijk, Mid(codeString, 5, 5))
+                AdoInsertToRecord(flHier, tijdelijk, Mid(codeString, 5, 5))
                 ArrangeDeckChairs(flHier)
             End If
             'If X.Row < X.Rows - 1 Then
@@ -137,18 +137,18 @@ Public Class xLog
                     SharedIndex = 0
                     Select Case Mid(xCode, 2, 1)
                         Case "K"
-                            SharedFl = FlKlant
+                            SharedFl = TableOfCustomers
                         Case "L"
-                            SharedFl = FlLeverancier
+                            SharedFl = TableOfSuppliers
                         Case "R"
-                            SharedFl = FlLedgerAccount
+                            SharedFl = TableOfLedgerAccounts
                         Case Else
                             MsgBox("nog niks")
                     End Select
                     GridText = ""
                     If Mid(xCode, 3, 2) <> "  " Then
                         If DummyText <> "" Then
-                            If SharedFl = FlLeverancier And Mid(xCode, 3, 2) = "CO" Then
+                            If SharedFl = TableOfSuppliers And Mid(xCode, 3, 2) = "CO" Then
                                 GridText = "CO" & DummyText
                             Else
                                 GridText = DummyText
@@ -161,7 +161,7 @@ Public Class xLog
                     End If
                     SqlSearch.ShowDialog()
                     If Ktrl = 0 Then
-                        If SharedFl = FlLeverancier And Mid(xCode, 3, 2) = "CO" Then
+                        If SharedFl = TableOfSuppliers And Mid(xCode, 3, 2) = "CO" Then
                             resultString = Trim(Mid(FVT(SharedFl, 0), 3)) 'X.Text = RTrim(Mid(FVT(SharedFl, 0), 3))
                         Else
                             resultString = FVT(SharedFl, 0) 'X.Text = FVT(SharedFl, 0)

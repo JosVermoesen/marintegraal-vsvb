@@ -65,7 +65,7 @@ End Class
 '		InfoScherm.X.Col = 7
 '		InfoScherm.X.Text = "vsfRecord"
 
-'		MsJetGet(FlJournaal, 2, vSet(DeString, 8))
+'		JetGet(FlJournaal, 2, SetSpacing(DeString, 8))
 '		If Ktrl Then
 '			Beep()
 '			MsgBox("Geen journaallijnen voor " & DeString)
@@ -118,28 +118,28 @@ End Class
 
 'VolgendeLijn: 
 '		RecordToVeld(FlJournaal)
-'		If vSet(vBibTekst(FlJournaal, "#v019 #"), 7) = VB.Left(KeuzeInfo(0).Text, 7) Then
+'		If SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7) = VB.Left(KeuzeInfo(0).Text, 7) Then
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
-'		ElseIf FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) <> Mid(UittrekselsLijst.Text, 12, 10) Then 
+'		ElseIf FunctionDateText(AdoGetField(FlJournaal, "#v066 #")) <> Mid(UittrekselsLijst.Text, 12, 10) Then 
 '			If Not JournaalManueelVlag Then
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '				Return 
 '			End If
-'		ElseIf RTrim(vBibTekst(FlJournaal, "#v019 #")) <> "" Then 
-'			If vSet(vBibTekst(FlJournaal, "#v069 #"), 7) <> VB.Left(KeuzeInfo(0).Text, 7) Then
+'		ElseIf RTrim(AdoGetField(FlJournaal, "#v019 #")) <> "" Then 
+'			If SetSpacing(AdoGetField(FlJournaal, "#v069 #"), 7) <> VB.Left(KeuzeInfo(0).Text, 7) Then
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '				Return 
 '			End If
 '		End If
-'		A = FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) & vbTab
-'		A = A & vBibTekst(FlJournaal, "#v019 #") & vbTab
-'		MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
+'		A = FunctionDateText(AdoGetField(FlJournaal, "#v066 #")) & vbTab
+'		A = A & AdoGetField(FlJournaal, "#v019 #") & vbTab
+'		JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7))
 '		If Ktrl Then
 '			A = A & "//" & vbTab
 '		Else
-'			RecordToVeld(FlLedgerAccount)
-'			A = A & vBibTekst(FlLedgerAccount, "#v020 #") & vbTab
+'			RecordToVeld(TableOfLedgerAccounts)
+'			A = A & AdoGetField(TableOfLedgerAccounts, "#v020 #") & vbTab
 '		End If
 '		A = A & rsMAR(FlJournaal).Fields("v068").Value & vbTab
 '		A = A & rsMAR(FlJournaal).Fields("v067").Value & vbTab
@@ -190,38 +190,38 @@ End Class
 '		Printer.Print(TAB(2), "** CENTRALISATIE **")
 '		Printer.Print("")
 
-'		bClose(FlDummy)
-'		bFirst(FlDummy, 0)
-'		RecordToVeld(FlDummy)
-'		MsJetGet(FlLedgerAccount, 0, VB.Left(FVT(FlDummy, 0), 7))
+'		JetTableClose(TableDummy)
+'		JetGetFirst(TableDummy, 0)
+'		RecordToVeld(TableDummy)
+'		JetGet(TableOfLedgerAccounts, 0, VB.Left(FVT(TableDummy, 0), 7))
 '		If Ktrl Then
 '			RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '		Else
-'			RecordToVeld(FlLedgerAccount)
-'			RekeningNaam.Value = vBibTekst(FlLedgerAccount, "#v020 #")
+'			RecordToVeld(TableOfLedgerAccounts)
+'			RekeningNaam.Value = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '		End If
 '		Tabul = 0
-'		Printer.Write(TAB(Tabul + 2), Dec(Val(vBibTekst(FlDummy, "#v013 #")), "####") & " x " & vSet(vBibTekst(FlDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(vBibTekst(FlDummy, "#v068 #")), MaskEURBH))
+'		Printer.Write(TAB(Tabul + 2), Dec(Val(AdoGetField(TableDummy, "#v013 #")), "####") & " x " & SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(AdoGetField(TableDummy, "#v068 #")), MaskEURBH))
 
 '		Do 
-'			bNext(FlDummy)
+'			bNext(TableDummy)
 '			If Ktrl Then
 '				Exit Do
 '			End If
-'			RecordToVeld(FlDummy)
-'			MsJetGet(FlLedgerAccount, 0, VB.Left(FVT(FlDummy, 0), 7))
+'			RecordToVeld(TableDummy)
+'			JetGet(TableOfLedgerAccounts, 0, VB.Left(FVT(TableDummy, 0), 7))
 '			If Ktrl Then
 '				RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '			Else
-'				RecordToVeld(FlLedgerAccount)
-'				RekeningNaam.Value = vBibTekst(FlLedgerAccount, "#v020 #")
+'				RecordToVeld(TableOfLedgerAccounts)
+'				RekeningNaam.Value = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '			End If
 '			If Tabul = 0 Then
 '				Tabul = 59
-'				Printer.Write(TAB(Tabul + 2), Dec(Val(vBibTekst(FlDummy, "#v013 #")), "####") & " x " & vSet(vBibTekst(FlDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(vBibTekst(FlDummy, "#v068 #")), MaskEURBH) & vbCrLf)
+'				Printer.Write(TAB(Tabul + 2), Dec(Val(AdoGetField(TableDummy, "#v013 #")), "####") & " x " & SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(AdoGetField(TableDummy, "#v068 #")), MaskEURBH) & vbCrLf)
 '			Else
 '				Tabul = 0
-'				Printer.Write(TAB(Tabul + 2), Dec(Val(vBibTekst(FlDummy, "#v013 #")), "####") & " x " & vSet(vBibTekst(FlDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(vBibTekst(FlDummy, "#v068 #")), MaskEURBH))
+'				Printer.Write(TAB(Tabul + 2), Dec(Val(AdoGetField(TableDummy, "#v013 #")), "####") & " x " & SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(AdoGetField(TableDummy, "#v068 #")), MaskEURBH))
 '			End If
 '		Loop 
 '		Exit Sub
@@ -298,9 +298,9 @@ End Class
 '			Exit Sub
 '		Else
 '			InitializeFields()
-'			bClose(FlDummy)
+'			JetTableClose(TableDummy)
 '			ClearFlDummy()
-'			Ktrl = bOpen(FlDummy)
+'			Ktrl = JetTableOpen(TableDummy)
 
 '			'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
@@ -381,7 +381,7 @@ End Class
 '		Exit Sub
 
 'DetailPrintJournaal: 
-'		MsJetGet(FlJournaal, 2, VB.Left(UittrekselsLijst.Text, 8))
+'		JetGet(FlJournaal, 2, VB.Left(UittrekselsLijst.Text, 8))
 '		If Ktrl Or KeyBuf(FlJournaal) <> VB.Left(UittrekselsLijst.Text, 8) Then
 '			Beep()
 '			MsgBox("onlogische situatie")
@@ -405,30 +405,30 @@ End Class
 
 'PrintInfo: 
 '		RecordToVeld(FlJournaal)
-'		If vSet(vBibTekst(FlJournaal, "#v019 #"), 7) = VB.Left(KeuzeInfo(0).Text, 7) Then
+'		If SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7) = VB.Left(KeuzeInfo(0).Text, 7) Then
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
-'		ElseIf FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) <> Mid(UittrekselsLijst.Text, 12, 10) Then 
+'		ElseIf FunctionDateText(AdoGetField(FlJournaal, "#v066 #")) <> Mid(UittrekselsLijst.Text, 12, 10) Then 
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
-'		ElseIf RTrim(vBibTekst(FlJournaal, "#v019 #")) <> "" Then 
-'			If vSet(vBibTekst(FlJournaal, "#v069 #"), 7) <> VB.Left(KeuzeInfo(0).Text, 7) Then
+'		ElseIf RTrim(AdoGetField(FlJournaal, "#v019 #")) <> "" Then 
+'			If SetSpacing(AdoGetField(FlJournaal, "#v069 #"), 7) <> VB.Left(KeuzeInfo(0).Text, 7) Then
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '				Return 
 '			End If
 '		End If
 
 '		FieldText(0) = ""
-'		FieldText(1) = vBibTekst(FlJournaal, "#v019 #")
-'		MsJetGet(FlLedgerAccount, 0, vSet(FieldText(1), 7))
+'		FieldText(1) = AdoGetField(FlJournaal, "#v019 #")
+'		JetGet(TableOfLedgerAccounts, 0, SetSpacing(FieldText(1), 7))
 '		If Ktrl Then
 '			FieldText(2) = "Reeds vernietigd..."
 '		Else
-'			RecordToVeld(FlLedgerAccount)
-'			FieldText(2) = vBibTekst(FlLedgerAccount, "#v020 #")
+'			RecordToVeld(TableOfLedgerAccounts)
+'			FieldText(2) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '		End If
-'		FieldText(3) = vBibTekst(FlJournaal, "#v067 #")
-'		DCBedrag = Val(vBibTekst(FlJournaal, "#v068 #"))
+'		FieldText(3) = AdoGetField(FlJournaal, "#v067 #")
+'		DCBedrag = Val(AdoGetField(FlJournaal, "#v068 #"))
 '		Select Case DCBedrag
 '			Case Is < 0
 '				TotalCredit = TotalCredit + DCBedrag
@@ -439,7 +439,7 @@ End Class
 '				FieldText(4) = Dec(DCBedrag, MaskEURBH)
 '				FieldText(5) = ""
 '		End Select
-'		FieldText(6) = vBibTekst(FlJournaal, "#v033 #")
+'		FieldText(6) = AdoGetField(FlJournaal, "#v033 #")
 '		DeRekening.Value = FieldText(1)
 '		HetBedrag = DCBedrag
 '		'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
@@ -457,19 +457,19 @@ End Class
 
 'DetailCumul: 
 'StartPunt: 
-'		MsJetGet(FlDummy, 0, vSet(DeRekening.Value, 20))
+'		JetGet(TableDummy, 0, SetSpacing(DeRekening.Value, 20))
 '		If Ktrl Then
-'			TLBRecord(FlDummy) = ""
-'			vBib(FlDummy, DeRekening.Value, "v089")
-'			vBib(FlDummy, "0", "v013")
-'			vBib(FlDummy, "0", "v068")
-'			bInsert(FlDummy, 0)
+'			TLBRecord(TableDummy) = ""
+'			AdoInsertToRecord(TableDummy, DeRekening.Value, "v089")
+'			AdoInsertToRecord(TableDummy, "0", "v013")
+'			AdoInsertToRecord(TableDummy, "0", "v068")
+'			JetInsert(TableDummy, 0)
 '			GoTo StartPunt
 '		Else
-'			RecordToVeld(FlDummy)
-'			vBib(FlDummy, Str(Val(vBibTekst(FlDummy, "#v013 #")) + 1), "v013")
-'			vBib(FlDummy, Str(Val(vBibTekst(FlDummy, "#v068 #")) + HetBedrag), "v068")
-'			bUpdate(FlDummy, 0)
+'			RecordToVeld(TableDummy)
+'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v013 #")) + 1), "v013")
+'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v068 #")) + HetBedrag), "v068")
+'			bUpdate(TableDummy, 0)
 '		End If
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -500,52 +500,52 @@ End Class
 '		End If
 '		chkAfdrukLiggend_CheckStateChanged(chkAfdrukLiggend, New System.EventArgs())
 
-'		TekstLijn(0).Text = FunctionDateText(VB.Left(BoekjaarVanTot.Value, 8)) & " - " & FunctionDateText(VB.Right(BoekjaarVanTot.Value, 8))
+'		TekstLijn(0).Text = FunctionDateText(VB.Left(BookyearFromTo.Value, 8)) & " - " & FunctionDateText(VB.Right(BookyearFromTo.Value, 8))
 '		TekstLijn(1).Text = MimGlobalDate.Value
-'		PeriodFromChosen.Value = VB.Left(BoekjaarVanTot.Value, 8)
-'		PeriodToChosen.Value = VB.Right(BoekjaarVanTot.Value, 8)
+'		PeriodFromChosen.Value = VB.Left(BookyearFromTo.Value, 8)
+'		PeriodToChosen.Value = VB.Right(BookyearFromTo.Value, 8)
 
 '		RecNummer(0) = 31
-'		RekeningNummer(0) = String99(Lees, 41)
+'		RekeningNummer(0) = String99(Reading, 41)
 
 '		RecNummer(1) = 32
-'		RekeningNummer(1) = String99(Lees, 42)
+'		RekeningNummer(1) = String99(Reading, 42)
 
 '		RecNummer(2) = 33
-'		RekeningNummer(2) = String99(Lees, 43)
+'		RekeningNummer(2) = String99(Reading, 43)
 
 '		RecNummer(3) = 34
-'		RekeningNummer(3) = String99(Lees, 44)
+'		RekeningNummer(3) = String99(Reading, 44)
 
 '		RecNummer(4) = 35
-'		RekeningNummer(4) = String99(Lees, 45)
+'		RekeningNummer(4) = String99(Reading, 45)
 
 '		RecNummer(5) = 38
-'		RekeningNummer(5) = String99(Lees, 39)
+'		RekeningNummer(5) = String99(Reading, 39)
 
 '		RecNummer(6) = 215
-'		RekeningNummer(6) = String99(Lees, 211)
+'		RekeningNummer(6) = String99(Reading, 211)
 
 '		RecNummer(7) = 216
-'		RekeningNummer(7) = String99(Lees, 212)
+'		RekeningNummer(7) = String99(Reading, 212)
 
 '		RecNummer(8) = 217
-'		RekeningNummer(8) = String99(Lees, 213)
+'		RekeningNummer(8) = String99(Reading, 213)
 
 '		RecNummer(9) = 218
-'		RekeningNummer(9) = String99(Lees, 214)
+'		RekeningNummer(9) = String99(Reading, 214)
 
-'		bClose(FlJournaal)
+'		JetTableClose(FlJournaal)
 '		For T = 0 To 9
-'			MsJetGet(FlLedgerAccount, 0, RekeningNummer(T))
+'			JetGet(TableOfLedgerAccounts, 0, RekeningNummer(T))
 '			If Ktrl Then
 '				A = RekeningNummer(T) & Chr(124) & "Niet aanwezig. Setup Boekjaar!"
 '			Else
-'				RecordToVeld(FlLedgerAccount)
-'				A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlLedgerAccount, "#v020 #"))
+'				RecordToVeld(TableOfLedgerAccounts)
+'				A = RekeningNummer(T) & Chr(124) & RTrim(AdoGetField(TableOfLedgerAccounts, "#v020 #"))
 '			End If
-'			bFirst(FlJournaal, 0)
-'			bGetOrGreater(FlJournaal, 0, RekeningNummer(T) & PeriodFromChosen.Value)
+'			JetGetFirst(FlJournaal, 0)
+'			JetGetOrGreater(FlJournaal, 0, RekeningNummer(T) & PeriodFromChosen.Value)
 '			If Ktrl Then
 '			Else
 '				If KeyBuf(FlJournaal) > RekeningNummer(T) & PeriodToChosen.Value Then
@@ -598,8 +598,8 @@ End Class
 '			Case 0
 '				UittrekselsLijst.Visible = False
 '				UittrekselsLijst.Items.Clear()
-'				bFirst(FlJournaal, 0)
-'				bGetOrGreater(FlJournaal, 0, VB.Left(KeuzeInfo(0).Text, 7) & PeriodFromChosen.Value)
+'				JetGetFirst(FlJournaal, 0)
+'				JetGetOrGreater(FlJournaal, 0, VB.Left(KeuzeInfo(0).Text, 7) & PeriodFromChosen.Value)
 '				If Ktrl Or KeyBuf(FlJournaal) > VB.Left(KeuzeInfo(0).Text, 7) & PeriodToChosen.Value Then
 '					MsgBox("onlogische situatie")
 '					GoTo EindeClick
@@ -633,16 +633,16 @@ End Class
 
 'VoegErBij: 
 '		RecordToVeld(FlJournaal)
-'		If Len(vBibTekst(FlJournaal, "#v038 #")) <> 8 Then
+'		If Len(AdoGetField(FlJournaal, "#v038 #")) <> 8 Then
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
-'			'DummyText = vBibTekst(FlJournaal, "#v033 #") + " " + Chr$(124) + " "
+'			'DummyText = AdoGetField(FlJournaal, "#v033 #") + " " + Chr$(124) + " "
 '		Else
-'			DummyText = vBibTekst(FlJournaal, "#v038 #") & " " & Chr(124) & " "
+'			DummyText = AdoGetField(FlJournaal, "#v038 #") & " " & Chr(124) & " "
 '		End If
-'		DummyText = DummyText & FunctionDateText(vBibTekst(FlJournaal, "#v066 #")) & " " & Chr(124) & " "
-'		DummyText = DummyText & vSet(vBibTekst(FlJournaal, "#v067 #"), 30) & Chr(124)
-'		DCBedrag = Val(vBibTekst(FlJournaal, "#v068 #"))
+'		DummyText = DummyText & FunctionDateText(AdoGetField(FlJournaal, "#v066 #")) & " " & Chr(124) & " "
+'		DummyText = DummyText & SetSpacing(AdoGetField(FlJournaal, "#v067 #"), 30) & Chr(124)
+'		DCBedrag = Val(AdoGetField(FlJournaal, "#v068 #"))
 '		Select Case DCBedrag
 '			Case Is < 0
 '				DummyText = DummyText & Dec(0, MaskEURBH) & Chr(124) & Dec(System.Math.Abs(DCBedrag), MaskEURBH)
@@ -785,15 +785,15 @@ End Class
 '					PeriodToChosen.Value = Mid(TekstLijn(0).Text, 20, 4) & Mid(TekstLijn(0).Text, 17, 2) & Mid(TekstLijn(0).Text, 14, 2)
 '					KeuzeInfo(0).Items.Clear()
 '					For T = 0 To 9
-'						MsJetGet(FlLedgerAccount, 0, RekeningNummer(T))
+'						JetGet(TableOfLedgerAccounts, 0, RekeningNummer(T))
 '						If Ktrl Then
 '							A = RekeningNummer(T) & Chr(124) & "Niet aanwezig. Setup Boekjaar!"
 '						Else
-'							RecordToVeld(FlLedgerAccount)
-'							A = RekeningNummer(T) & Chr(124) & RTrim(vBibTekst(FlLedgerAccount, "#v020 #"))
+'							RecordToVeld(TableOfLedgerAccounts)
+'							A = RekeningNummer(T) & Chr(124) & RTrim(AdoGetField(TableOfLedgerAccounts, "#v020 #"))
 '						End If
-'						bFirst(FlJournaal, 0)
-'						bGetOrGreater(FlJournaal, 0, RekeningNummer(T) & PeriodFromChosen.Value)
+'						JetGetFirst(FlJournaal, 0)
+'						JetGetOrGreater(FlJournaal, 0, RekeningNummer(T) & PeriodFromChosen.Value)
 '						If Ktrl Then
 '						Else
 '							If KeyBuf(FlJournaal) > RekeningNummer(T) & PeriodToChosen.Value Then

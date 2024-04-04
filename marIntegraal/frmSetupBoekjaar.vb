@@ -45,13 +45,13 @@ End Class
 '		On Error GoTo TeleBibError
 
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		If Dir(ProgrammaLokatie & "Def\" & "099.Def") = "" Then
+'		If Dir(ProgramLocation & "Def\" & "099.Def") = "" Then
 '			MsgBox("Geen TeleBib definitie 099.Def")
 '			Exit Function
 '		End If
 
 '		FlInput = FreeFile
-'		FileOpen(FlInput, ProgrammaLokatie & "Def\" & "099.Def", OpenMode.Input)
+'		FileOpen(FlInput, ProgramLocation & "Def\" & "099.Def", OpenMode.Input)
 '		Do While Not EOF(FlInput)
 '			LokatieString = LineInput(FlInput)
 '			If LokatieString = TeZoeken Then
@@ -126,13 +126,13 @@ End Class
 '		aa = ""
 '		T = 0
 '		Do While TeleBibCode(T) <> Space(10)
-'			MsJetGet(FlTeller, 0, Mid(TeleBibCode(T), 5, 5))
+'			JetGet(TableOfCounters, 0, Mid(TeleBibCode(T), 5, 5))
 '			If Ktrl Then
 '				CrText = ""
 '			Else
-'				RecordToVeld(FlTeller)
-'				'CrText = ntRS(FlTeller).Fields("v217")
-'				CrText = rsMAR(FlTeller).Fields("v217").Value
+'				RecordToVeld(TableOfCounters)
+'				'CrText = ntRS(TableOfCounters).Fields("v217")
+'				CrText = rsMAR(TableOfCounters).Fields("v217").Value
 '				Select Case Mid(TeleBibCode(T), 2, 2)
 '					Case "  ", "K ", "L ", "LC", "R ", "R3", "R4", "R6", "R7"
 '						'niks
@@ -190,12 +190,12 @@ End Class
 '				Do While TeleBibCode(T) <> Space(10)
 '					Xlog.X.Row = T + 1
 '					CrText2 = Xlog.X.Text
-'					MsJetGet(FlTeller, 0, Mid(TeleBibCode(T), 5, 5))
+'					JetGet(TableOfCounters, 0, Mid(TeleBibCode(T), 5, 5))
 '					If Ktrl Then
-'						TLBRecord(FlTeller) = ""
-'						vBib(FlTeller, Mid(TeleBibCode(T), 5, 5), "v071")
+'						TLBRecord(TableOfCounters) = ""
+'						AdoInsertToRecord(TableOfCounters, Mid(TeleBibCode(T), 5, 5), "v071")
 '					Else
-'						RecordToVeld(FlTeller)
+'						RecordToVeld(TableOfCounters)
 '					End If
 
 '					Select Case Mid(TeleBibCode(T), 2, 2)
@@ -208,11 +208,11 @@ End Class
 '								On Error GoTo 0
 '							End If
 '					End Select
-'					vBib(FlTeller, CrText2, "v217")
+'					AdoInsertToRecord(TableOfCounters, CrText2, "v217")
 '					If Ktrl Then
-'						bInsert(FlTeller, 0)
+'						JetInsert(TableOfCounters, 0)
 '					Else
-'						bUpdate(FlTeller, 0)
+'						bUpdate(TableOfCounters, 0)
 '					End If
 '					T = T + 1
 '				Loop 

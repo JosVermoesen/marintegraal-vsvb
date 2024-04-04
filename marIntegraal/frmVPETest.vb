@@ -23,12 +23,12 @@ VPETEST:
             .GridVisible = True
         End With
 
-        If Dir(BedrijfsLokatie & "pdfDDEF" & TypeEnTaal & ".Txt") = "" Then
+        If Dir(LocationCompanyData & "pdfDDEF" & TypeEnTaal & ".Txt") = "" Then
             Beep()
             Mim.Report.CloseDoc()
             MsgBox("pdfDDEF" & TypeEnTaal & ".Txt niet gevonden in de bedrijfsinhoudsopgave. Hierna wordt een voorbeelddocument vanuit de programmainhoudsopgave gecopiëerd", MsgBoxStyle.Information)
 
-            If Not CopyFile(My.Application.Info.DirectoryPath & "\Def", BedrijfsLokatie, "pdfDDEF" & TypeEnTaal & ".Txt") Then
+            If Not CopyFile(My.Application.Info.DirectoryPath & "\Def", LocationCompanyData, "pdfDDEF" & TypeEnTaal & ".Txt") Then
                 MsgBox(My.Application.Info.DirectoryPath & "\Def\pdfDDEF" & TypeEnTaal & ".Txt kan als voorbeelddocument niet vanuit de programmainhoudsopgave gecopiëerd worden.  Probeer eventueel manueel", MsgBoxStyle.Information)
             Else
                 GoTo VPETEST
@@ -36,7 +36,7 @@ VPETEST:
             Exit Sub
         Else
             FlFree = FreeFile()
-            FileOpen(FlFree, BedrijfsLokatie & "pdfDDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
+            FileOpen(FlFree, LocationCompanyData & "pdfDDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
 
             Do While Not EOF(FlFree)
                 pdfCmd = LineInput(FlFree)
@@ -63,7 +63,7 @@ VPETEST:
                 End If
             Loop
             FileClose(FlFree)
-            Mim.Report.WriteDoc(ProgrammaLokatie & "marrapport.pdf")
+            Mim.Report.WriteDoc(ProgramLocation & "marrapport.pdf")
             Mim.Report.Preview()
         End If
     End Sub
@@ -106,9 +106,9 @@ errorCMDVSOFTSPACE:
         Mim.Report.PictureBestFit = True
         '2.5, 0.5, 19, 2.5
         If Mid(filename, 1, 4) = "[BL]" Then
-            filename = BedrijfsLokatie & Mid(filename, 5)
+            filename = LocationCompanyData & Mid(filename, 5)
         ElseIf Mid(filename, 1, 4) = "[PL]" Then
-            filename = ProgrammaLokatie & Mid(filename, 5)
+            filename = ProgramLocation & Mid(filename, 5)
         End If
         Ktrl = Mim.Report.Picture(xPos, YPOS, xPos2, YPOS2, filename)
         Exit Sub
@@ -354,7 +354,7 @@ errorCMDPRINT:
     End Sub
     Private Sub viakladblok_Click(sender As Object, e As EventArgs) Handles viakladblok.Click
         Dim HetBESTAND As String
-        HetBESTAND = BedrijfsLokatie & "pdfDDEF" & Format(KopVoet) & Format(TaalKode) & Format(DocuType) & ".Txt"
+        HetBESTAND = LocationCompanyData & "pdfDDEF" & Format(KopVoet) & Format(TaalKode) & Format(DocuType) & ".Txt"
         If Dir(HetBESTAND) = "" Then
             MsgBox(HetBESTAND & " is niet aanwezig", MsgBoxStyle.Information)
         Else

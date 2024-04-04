@@ -123,7 +123,7 @@ End Class
 '			Exit Sub
 '		End If
 
-'		If Not DatumKtrl(TekstInfo(0).Text, TekstPeriode) Then
+'		If Not DatumKtrl(TekstInfo(0).Text, PeriodAsText) Then
 '			Beep()
 '			BJPERDAT.WindowState = System.Windows.Forms.FormWindowState.Normal
 '			BJPERDAT.PeriodeBoekjaar.Focus()
@@ -153,9 +153,9 @@ End Class
 '			Exit Sub
 '		End If
 
-'		Ktrl = bOpen(FlLedgerAccount)
-'		Ktrl = bOpen(FlJournaal)
-'		Ktrl = bOpen(Fldokument)
+'		Ktrl = JetTableOpen(TableOfLedgerAccounts)
+'		Ktrl = JetTableOpen(FlJournaal)
+'		Ktrl = JetTableOpen(TableOfInvoices)
 '		TransBegin()
 '		If WegBoekFout() Then
 '			TransAbort()
@@ -164,7 +164,7 @@ End Class
 '			TransCommit()
 '			SS99(VB.Right(dokumentSleutel.Value, 5), 121)
 '			'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'			If Dir(AssurnetLokatie & "AS1.RCV") <> "" Then
+'			If Dir(LocationAsWeb & "AS1.RCV") <> "" Then
 '				RasterSchoon()
 '				Annuleren_Click(Annuleren, New System.EventArgs())
 '				Exit Sub
@@ -362,9 +362,9 @@ End Class
 '		InstallMij()
 
 '		On Error Resume Next
-'		RekBeheersKost.Value = String99(Lees, 289)
+'		RekBeheersKost.Value = String99(Reading, 289)
 '		On Error Resume Next
-'		tbBeheerForfait = CDec(String99(Lees, 288))
+'		tbBeheerForfait = CDec(String99(Reading, 288))
 
 '		KeuzeInfo(0).SelectedIndex = 0
 '		KeuzeInfo(1).Items.Add("0: Kies eerst bewerkingskode !")
@@ -380,7 +380,7 @@ End Class
 '		dokumentSleutel.Value = SleutelDok(121)
 '		Me.Text = "Kwijtschriften beginnende (" & dokumentSleutel.Value & ")"
 
-'		KlantenRekening.Value = LTrim(RTrim(String99(Lees, 9)))
+'		KlantenRekening.Value = LTrim(RTrim(String99(Reading, 9)))
 
 '		Dim arrayGTI() As String
 '		Dim arrayGridLines() As String
@@ -412,11 +412,11 @@ End Class
 '				Else
 '					beheersforfait = 0
 '				End If
-'				MsJetGet(FlPolis, 0, Trim(arrayGridCols(0)))
+'				JetGet(TableOfContracts, 0, Trim(arrayGridCols(0)))
 '				If Ktrl Then
 '					MsgBox("logicafout", MsgBoxStyle.Critical)
 '				Else
-'					RecordToVeld(FlPolis)
+'					RecordToVeld(TableOfContracts)
 '				End If
 
 '				'Ktrl = BeheersKost(Trim(Mid(GridText, 1, 12)), BeheerForfait)
@@ -425,15 +425,15 @@ End Class
 '				If KeuzeInfo(1).SelectedIndex = 6 Then
 '					LijnErBij = LijnErBij & vbTab & "0"
 '				Else
-'					If rsMAR(FlPolis).Fields("e070").Value = "1" Then
-'						BedragFee = Val(arrayGridCols(6)) * Val(rsMAR(FlPolis).Fields("e071").Value) / 100
+'					If rsMAR(TableOfContracts).Fields("e070").Value = "1" Then
+'						BedragFee = Val(arrayGridCols(6)) * Val(rsMAR(TableOfContracts).Fields("e071").Value) / 100
 '						LijnErBij = LijnErBij & vbTab & Str(BedragFee)
 '						'dit is een met FEE berekening!
 '					Else
-'						If Trim(rsMAR(FlPolis).Fields("e069").Value) = "" Then
+'						If Trim(rsMAR(TableOfContracts).Fields("e069").Value) = "" Then
 '							LijnErBij = LijnErBij & vbTab & BeheerForfait
 '						Else
-'							LijnErBij = LijnErBij & vbTab & Val(rsMAR(FlPolis).Fields("e069").Value)
+'							LijnErBij = LijnErBij & vbTab & Val(rsMAR(TableOfContracts).Fields("e069").Value)
 '						End If
 '					End If
 '				End If
@@ -489,28 +489,28 @@ End Class
 
 '		KeuzeInfo(0).Items.Clear()
 '		T = -1
-'		bGetOrGreater(FlLeverancier, 0, vSet("CO", 12))
+'		JetGetOrGreater(TableOfSuppliers, 0, SetSpacing("CO", 12))
 '		If Ktrl Then
 '			Beep()
 '			Exit Sub
 '		Else
-'			RecordToVeld(FlLeverancier)
+'			RecordToVeld(TableOfSuppliers)
 '		End If
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-'		If VB.Left(KeyBuf(FlLeverancier), 2) <> "CO" Then
+'		If VB.Left(KeyBuf(TableOfSuppliers), 2) <> "CO" Then
 '			Beep()
 '		Else
 '			T = T + 1
-'			KeuzeInfo(0).Items.Add(Mid(vBibTekst(FlLeverancier, "#A110 #"), 3, 4) & ": " & vBibTekst(FlLeverancier, "#A100 #") & "/" & vSet(vBibTekst(FlLeverancier, "#A400 #"), 8))
+'			KeuzeInfo(0).Items.Add(Mid(AdoGetField(TableOfSuppliers, "#A110 #"), 3, 4) & ": " & AdoGetField(TableOfSuppliers, "#A100 #") & "/" & SetSpacing(AdoGetField(TableOfSuppliers, "#A400 #"), 8))
 '			Do 
-'				bNext(FlLeverancier)
-'				If Ktrl Or VB.Left(KeyBuf(FlLeverancier), 2) <> "CO" Then
+'				bNext(TableOfSuppliers)
+'				If Ktrl Or VB.Left(KeyBuf(TableOfSuppliers), 2) <> "CO" Then
 '					Exit Do
 '				Else
-'					RecordToVeld(FlLeverancier)
+'					RecordToVeld(TableOfSuppliers)
 '					T = T + 1
-'					KeuzeInfo(0).Items.Add(Mid(vBibTekst(FlLeverancier, "#A110 #"), 3, 4) & ": " & vBibTekst(FlLeverancier, "#A100 #") & "/" & vSet(vBibTekst(FlLeverancier, "#A400 #"), 8))
+'					KeuzeInfo(0).Items.Add(Mid(AdoGetField(TableOfSuppliers, "#A110 #"), 3, 4) & ": " & AdoGetField(TableOfSuppliers, "#A100 #") & "/" & SetSpacing(AdoGetField(TableOfSuppliers, "#A400 #"), 8))
 '				End If
 '			Loop 
 '		End If
@@ -528,49 +528,49 @@ End Class
 
 '		Zoekstring.Value = Mid(TekstInfo(0).Text, 4, 2)
 '		Maatschappij.Value = VB.Left(KeuzeInfo(0).Text, 4)
-'		bGetOrGreater(FlPolis, 3, Zoekstring.Value)
-'		If Ktrl Or VB.Left(KeyBuf(FlPolis), 2) <> VB.Left(Zoekstring.Value, 2) Then
+'		JetGetOrGreater(TableOfContracts, 3, Zoekstring.Value)
+'		If Ktrl Or VB.Left(KeyBuf(TableOfContracts), 2) <> VB.Left(Zoekstring.Value, 2) Then
 '			Beep()
 '			Exit Sub
-'		ElseIf Maatschappij.Value = Mid(KeyBuf(FlPolis), 15, 4) Then 
-'			RecordToVeld(FlPolis)
-'			Select Case VB.Left(vBibTekst(FlPolis, "#vs97 #"), 1)
+'		ElseIf Maatschappij.Value = Mid(KeyBuf(TableOfContracts), 15, 4) Then 
+'			RecordToVeld(TableOfContracts)
+'			Select Case VB.Left(AdoGetField(TableOfContracts, "#vs97 #"), 1)
 '				Case "0", "7", "9"
 '				Case Else
-'					MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+'					JetGet(TableOfCustomers, 0, AdoGetField(TableOfContracts, "#A110 #"))
 '					If Ktrl Then
 '						Dummy.Value = "KlantLink onmogelijk !!! Kontroleer !!!"
 '					Else
-'						RecordToVeld(FlKlant)
-'						Dummy.Value = vBibTekst(FlKlant, "#A100 #")
+'						RecordToVeld(TableOfCustomers)
+'						Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
 '					End If
-'					PolisDetail.AddItem(vBibTekst(FlPolis, "#A000 #") & vbTab & Mid(vBibTekst(FlPolis, "#AW_2 #"), 7, 2) & "/" & Mid(vBibTekst(FlPolis, "#AW_2 #"), 5, 2) & "/" & Mid(PeriodeVanTot.Value, 1, 4) & vbTab & vbTab & vbTab & Dummy.Value & vbTab & 0, PolisDetail.Rows - 1)
+'					PolisDetail.AddItem(AdoGetField(TableOfContracts, "#A000 #") & vbTab & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2) & "/" & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 5, 2) & "/" & Mid(PeriodFromTo.Value, 1, 4) & vbTab & vbTab & vbTab & Dummy.Value & vbTab & 0, PolisDetail.Rows - 1)
 '			End Select
 '		End If
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 
 '		Do 
-'			bNext(FlPolis)
-'			If Ktrl Or VB.Left(KeyBuf(FlPolis), 2) <> VB.Left(Zoekstring.Value, 2) Then
+'			bNext(TableOfContracts)
+'			If Ktrl Or VB.Left(KeyBuf(TableOfContracts), 2) <> VB.Left(Zoekstring.Value, 2) Then
 '				'UPGRADE_ISSUE: Unable to determine which constant to upgrade vbNormal to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
 '				'UPGRADE_ISSUE: Screen property Screen.MousePointer does not support custom mousepointers. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="45116EAB-7060-405E-8ABE-9DBB40DC2E86"'
 '				'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '				System.Windows.Forms.Cursor.Current = vbNormal
 '				Exit Do
-'			ElseIf Maatschappij.Value = Mid(KeyBuf(FlPolis), 15, 4) Then 
-'				RecordToVeld(FlPolis)
-'				Select Case VB.Left(vBibTekst(FlPolis, "#vs97 #"), 1)
+'			ElseIf Maatschappij.Value = Mid(KeyBuf(TableOfContracts), 15, 4) Then 
+'				RecordToVeld(TableOfContracts)
+'				Select Case VB.Left(AdoGetField(TableOfContracts, "#vs97 #"), 1)
 '					Case "0", "7", "9"
 '					Case Else
-'						MsJetGet(FlKlant, 0, vBibTekst(FlPolis, "#A110 #"))
+'						JetGet(TableOfCustomers, 0, AdoGetField(TableOfContracts, "#A110 #"))
 '						If Ktrl Then
 '							Dummy.Value = "KlantLink onmogelijk !!! Kontroleer !!!"
 '						Else
-'							RecordToVeld(FlKlant)
-'							Dummy.Value = vBibTekst(FlKlant, "#A100 #")
+'							RecordToVeld(TableOfCustomers)
+'							Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
 '						End If
-'						PolisDetail.AddItem(vBibTekst(FlPolis, "#A000 #") & vbTab & Mid(vBibTekst(FlPolis, "#AW_2 #"), 7, 2) & "/" & Mid(vBibTekst(FlPolis, "#AW_2 #"), 5, 2) & "/" & Mid(PeriodeVanTot.Value, 1, 4) & vbTab & vbTab & vbTab & Dummy.Value & vbTab & 0, PolisDetail.Rows - 1)
+'						PolisDetail.AddItem(AdoGetField(TableOfContracts, "#A000 #") & vbTab & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2) & "/" & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 5, 2) & "/" & Mid(PeriodFromTo.Value, 1, 4) & vbTab & vbTab & vbTab & Dummy.Value & vbTab & 0, PolisDetail.Rows - 1)
 '				End Select
 '			End If
 '		Loop 
@@ -584,31 +584,31 @@ End Class
 
 '		Select Case Index
 '			Case 0
-'				MsJetGet(FlLeverancier, 0, vSet("CO" & VB.Left(KeuzeInfo(0).Text, 4), 12))
+'				JetGet(TableOfSuppliers, 0, SetSpacing("CO" & VB.Left(KeuzeInfo(0).Text, 4), 12))
 '				If Ktrl Then
 '					'MsgBox "stop"
 '				Else
-'					RecordToVeld(FlLeverancier)
+'					RecordToVeld(TableOfSuppliers)
 '				End If
-'				MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlLeverancier, "#v016 #"), 7))
+'				JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(TableOfSuppliers, "#v016 #"), 7))
 '				If Ktrl Then
 '					MsgBox("stop voor rekening aan te maken!")
-'					TLBRecord(FlLedgerAccount) = ""
-'					vBib(FlLedgerAccount, "700" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
-'					vBib(FlLedgerAccount, vBibTekst(FlLeverancier, "#A100 #"), "v020")
-'					bInsert(FlLedgerAccount, 0)
-'					TLBRecord(FlLedgerAccount) = ""
-'					vBib(FlLedgerAccount, "440" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
-'					vBib(FlLedgerAccount, vBibTekst(FlLeverancier, "#A100 #"), "v020")
-'					'FVT(FlLedgerAccount, 0) = "440" + Left(KeuzeInfo(0).Text, 4)
-'					'FVT(FlLedgerAccount, 1) = FVT(FlLeverancier, 1)
-'					bInsert(FlLedgerAccount, 0)
-'					vBib(FlLeverancier, vBibTekst(FlLedgerAccount, "#v019 #"), "v016")
-'					'FVT(FlLeverancier, 16) = FVT(FlLedgerAccount, 0)
-'					bUpdate(FlLeverancier, 0)
-'					LabelInfo(2).Text = vBibTekst(FlLeverancier, "#v016 #")
+'					TLBRecord(TableOfLedgerAccounts) = ""
+'					AdoInsertToRecord(TableOfLedgerAccounts, "700" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
+'					AdoInsertToRecord(TableOfLedgerAccounts, AdoGetField(TableOfSuppliers, "#A100 #"), "v020")
+'					JetInsert(TableOfLedgerAccounts, 0)
+'					TLBRecord(TableOfLedgerAccounts) = ""
+'					AdoInsertToRecord(TableOfLedgerAccounts, "440" & VB.Left(KeuzeInfo(0).Text, 4), "v019")
+'					AdoInsertToRecord(TableOfLedgerAccounts, AdoGetField(TableOfSuppliers, "#A100 #"), "v020")
+'					'FVT(TableOfLedgerAccounts, 0) = "440" + Left(KeuzeInfo(0).Text, 4)
+'					'FVT(TableOfLedgerAccounts, 1) = FVT(TableOfSuppliers, 1)
+'					JetInsert(TableOfLedgerAccounts, 0)
+'					AdoInsertToRecord(TableOfSuppliers, AdoGetField(TableOfLedgerAccounts, "#v019 #"), "v016")
+'					'FVT(TableOfSuppliers, 16) = FVT(TableOfLedgerAccounts, 0)
+'					bUpdate(TableOfSuppliers, 0)
+'					LabelInfo(2).Text = AdoGetField(TableOfSuppliers, "#v016 #")
 '				Else
-'					LabelInfo(2).Text = vBibTekst(FlLeverancier, "#v016 #")
+'					LabelInfo(2).Text = AdoGetField(TableOfSuppliers, "#v016 #")
 '				End If
 '				If Me.cbTB2ktrl.CheckState = System.Windows.Forms.CheckState.Checked Then
 '					cbTB2ktrl_CheckStateChanged(cbTB2ktrl, New System.EventArgs())
@@ -782,7 +782,7 @@ End Class
 '					TekstInfo(0).Text = MimGlobalDate.Value
 '					Beep()
 '					TekstInfo(0).Focus()
-'				ElseIf Not DatumKtrl(TekstInfo(0).Text, TekstPeriode) Then 
+'				ElseIf Not DatumKtrl(TekstInfo(0).Text, PeriodAsText) Then 
 '					Beep()
 '					BJPERDAT.WindowState = System.Windows.Forms.FormWindowState.Normal
 '					BJPERDAT.PeriodeBoekjaar.Focus()
@@ -812,11 +812,11 @@ End Class
 '		BakdokumentSleutel.Value = dokumentSleutel.Value
 '		frmBoeking.Close()
 '		'frmBoeking.Hide
-'		TLBRecord(Fldokument) = ""
+'		TLBRecord(TableOfInvoices) = ""
 '		TLBRecord(FlJournaal) = ""
 '		'bijgevoegd voor scanning
-'		If rsMAR(Fldokument).State = ADODB.ObjectStateEnum.adStateClosed Then
-'			Ktrl = bOpen(Fldokument)
+'		If rsMAR(TableOfInvoices).State = ADODB.ObjectStateEnum.adStateClosed Then
+'			Ktrl = JetTableOpen(TableOfInvoices)
 '		End If
 
 '		dTotaalMij = 0
@@ -825,52 +825,52 @@ End Class
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 '		For T = 1 To PolisDetail.Rows - 2
-'			rsMAR(Fldokument).AddNew()
+'			rsMAR(TableOfInvoices).AddNew()
 '			If bhEuro Then
-'				vBib(Fldokument, "EUR", "vs03")
+'				AdoInsertToRecord(TableOfInvoices, "EUR", "vs03")
 '			Else
-'				vBib(Fldokument, "BEF", "vs03")
+'				AdoInsertToRecord(TableOfInvoices, "BEF", "vs03")
 '			End If
-'			vBib(Fldokument, "1", "v040")
-'			vBib(Fldokument, VB.Left(KeuzeInfo(1).Text, 1), "v041")
+'			AdoInsertToRecord(TableOfInvoices, "1", "v040")
+'			AdoInsertToRecord(TableOfInvoices, VB.Left(KeuzeInfo(1).Text, 1), "v041")
 
 '			PolisDetail.Row = T
 '			PolisDetail.Col = 0
-'			MsJetGet(FlPolis, 0, vSet((PolisDetail.Text), 12))
+'			JetGet(TableOfContracts, 0, SetSpacing((PolisDetail.Text), 12))
 '			If Ktrl Then
 '				MsgBox("Polisnummer " & PolisDetail.Text & vbCrLf & vbCrLf & "niet te vinden !")
 '				WegBoekFout = True
 '				dokumentSleutel.Value = BakdokumentSleutel.Value
 '				Exit Function
 '			Else
-'				RecordToVeld(FlPolis)
-'				MsJetGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
+'				RecordToVeld(TableOfContracts)
+'				JetGet(TableOfCustomers, 0, SetSpacing(AdoGetField(TableOfContracts, "#A110 #"), 12))
 '				If Ktrl Then
-'					MsgBox("Klantnummer " & vBibTekst(FlPolis, "#A110 #") & " in lijn " & Str(PolisDetail.Row) & vbCrLf & vbCrLf & "niet te vinden !")
+'					MsgBox("Klantnummer " & AdoGetField(TableOfContracts, "#A110 #") & " in lijn " & Str(PolisDetail.Row) & vbCrLf & vbCrLf & "niet te vinden !")
 '					WegBoekFout = True
 '					dokumentSleutel.Value = BakdokumentSleutel.Value
 '					Exit Function
 '				Else
-'					vBib(FlJournaal, "K" & vBibTekst(FlPolis, "#A110 #"), "v034")
-'					vBib(Fldokument, "K" & vBibTekst(FlPolis, "#A110 #"), "v034")
-'					vBib(Fldokument, (PolisDetail.Text), "A000")
-'					vBib(FlJournaal, KlantenRekening.Value, "v019")
-'					vBib(FlJournaal, DatumKey(TekstInfo(0).Text), "v066")
-'					vBib(FlJournaal, dokumentSleutel.Value, "v033")
-'					vBib(Fldokument, dokumentSleutel.Value, "v033")
+'					AdoInsertToRecord(FlJournaal, "K" & AdoGetField(TableOfContracts, "#A110 #"), "v034")
+'					AdoInsertToRecord(TableOfInvoices, "K" & AdoGetField(TableOfContracts, "#A110 #"), "v034")
+'					AdoInsertToRecord(TableOfInvoices, (PolisDetail.Text), "A000")
+'					AdoInsertToRecord(FlJournaal, KlantenRekening.Value, "v019")
+'					AdoInsertToRecord(FlJournaal, DatumKey(TekstInfo(0).Text), "v066")
+'					AdoInsertToRecord(FlJournaal, dokumentSleutel.Value, "v033")
+'					AdoInsertToRecord(TableOfInvoices, dokumentSleutel.Value, "v033")
 '					PolisDetail.Col = 1
 
-'					vBib(FlJournaal, DatumKey((PolisDetail.Text)), "v035")
-'					vBib(Fldokument, DatumKey((PolisDetail.Text)), "v035")
-'					vBib(Fldokument, DatumKey((PolisDetail.Text)), "v036")
+'					AdoInsertToRecord(FlJournaal, DatumKey((PolisDetail.Text)), "v035")
+'					AdoInsertToRecord(TableOfInvoices, DatumKey((PolisDetail.Text)), "v035")
+'					AdoInsertToRecord(TableOfInvoices, DatumKey((PolisDetail.Text)), "v036")
 '					Select Case VB.Left(KeuzeInfo(1).Text, 1)
 '						Case "1", "2", "6"
 '							If VB.Left(KeuzeInfo(1).Text, 1) = "1" Then
-'								vBib(FlPolis, Mid(DatumKey((PolisDetail.Text)), 5, 2), "v164")
-'								vBib(FlPolis, Mid(DatumKey((PolisDetail.Text)), 7, 2), "v165")
+'								AdoInsertToRecord(TableOfContracts, Mid(DatumKey((PolisDetail.Text)), 5, 2), "v164")
+'								AdoInsertToRecord(TableOfContracts, Mid(DatumKey((PolisDetail.Text)), 7, 2), "v165")
 '							End If
 '							PolisDetail.Col = 4
-'							vBib(FlJournaal, (PolisDetail.Text), "v067")
+'							AdoInsertToRecord(FlJournaal, (PolisDetail.Text), "v067")
 
 '							'nieuw voor beheer...
 '							PolisDetail.Col = 6
@@ -881,54 +881,54 @@ End Class
 '							End If
 '							dTotaalBKost = dTotaalBKost + BedragBeheer
 
-'							vBib(Fldokument, Str(BedragBeheer), "e069")
-'							vBib(FlPolis, Str(BedragBeheer), "e069")
+'							AdoInsertToRecord(TableOfInvoices, Str(BedragBeheer), "e069")
+'							AdoInsertToRecord(TableOfContracts, Str(BedragBeheer), "e069")
 
 '							PolisDetail.Col = 5
 '							'MsgBox "TODO: snipped document: " & PolisDetail.Text
 '							If PolisDetail.Text = "" Then
-'								rsMAR(Fldokument).Fields("rvXMLTB2").Value = ""
+'								rsMAR(TableOfInvoices).Fields("rvXMLTB2").Value = ""
 '							Else
-'								rsMAR(Fldokument).Fields("rvXMLTB2").Value = PolisDetail.Text
+'								rsMAR(TableOfInvoices).Fields("rvXMLTB2").Value = PolisDetail.Text
 '							End If
 
 '							PolisDetail.Col = 2
 '							BedragTotaal = BedragBeheer + Val(PolisDetail.Text)
-'							vBib(FlJournaal, Str(BedragTotaal), "v068")
-'							vBib(FlPolis, (PolisDetail.Text), "B010")
-'							vBib(Fldokument, (PolisDetail.Text), "B010")
-'							vBib(Fldokument, Str(BedragTotaal), "v249")
+'							AdoInsertToRecord(FlJournaal, Str(BedragTotaal), "v068")
+'							AdoInsertToRecord(TableOfContracts, (PolisDetail.Text), "B010")
+'							AdoInsertToRecord(TableOfInvoices, (PolisDetail.Text), "B010")
+'							AdoInsertToRecord(TableOfInvoices, Str(BedragTotaal), "v249")
 
-'							vBib(FlJournaal, LabelInfo(2).Text, "v069")
+'							AdoInsertToRecord(FlJournaal, LabelInfo(2).Text, "v069")
 '							If BedragTotaal <> 0 Then
-'								bInsert(FlJournaal, 0)
+'								JetInsert(FlJournaal, 0)
 '							End If
 
 '							Temporek.Value = LabelInfo(2).Text
 '							Mid(Temporek.Value, 1, 2) = "70"
-'							vBib(FlJournaal, Temporek.Value, "v019")
+'							AdoInsertToRecord(FlJournaal, Temporek.Value, "v019")
 
 '							PolisDetail.Col = 3
-'							vBib(FlJournaal, Str(-Val(PolisDetail.Text)), "v068")
-'							vBib(FlPolis, (PolisDetail.Text), "B014")
-'							vBib(Fldokument, (PolisDetail.Text), "B014")
+'							AdoInsertToRecord(FlJournaal, Str(-Val(PolisDetail.Text)), "v068")
+'							AdoInsertToRecord(TableOfContracts, (PolisDetail.Text), "B014")
+'							AdoInsertToRecord(TableOfInvoices, (PolisDetail.Text), "B014")
 '							If Val(PolisDetail.Text) <> 0 Then
 '								If VB.Left(KeuzeInfo(1).Text, 1) = "1" Then
 '									dTotaalLoon = dTotaalLoon - Val(PolisDetail.Text)
 '								Else
-'									bInsert(FlJournaal, 0)
+'									JetInsert(FlJournaal, 0)
 '								End If
 '							End If
-'							vBib(FlJournaal, vBibTekst(FlJournaal, "#v069 #"), "v019")
-'							vBib(FlJournaal, " ", "v069")
-'							vBib(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
+'							AdoInsertToRecord(FlJournaal, AdoGetField(FlJournaal, "#v069 #"), "v019")
+'							AdoInsertToRecord(FlJournaal, " ", "v069")
+'							AdoInsertToRecord(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
 
-'							vBib(FlJournaal, Str(-(Val(vBibTekst(Fldokument, "#B010 #")) - Val(vBibTekst(Fldokument, "#B014 #")))), "v068")
-'							If Val(vBibTekst(FlJournaal, "#v068 #")) <> 0 Then
+'							AdoInsertToRecord(FlJournaal, Str(-(Val(AdoGetField(TableOfInvoices, "#B010 #")) - Val(AdoGetField(TableOfInvoices, "#B014 #")))), "v068")
+'							If Val(AdoGetField(FlJournaal, "#v068 #")) <> 0 Then
 '								If VB.Left(KeuzeInfo(1).Text, 1) = "1" Then
-'									dTotaalMij = dTotaalMij + Val(vBibTekst(FlJournaal, "#v068 #"))
+'									dTotaalMij = dTotaalMij + Val(AdoGetField(FlJournaal, "#v068 #"))
 '								Else
-'									bInsert(FlJournaal, 0)
+'									JetInsert(FlJournaal, 0)
 '								End If
 '							End If
 
@@ -936,25 +936,25 @@ End Class
 '								TotaalBedragBeheer = TotaalBedragBeheer + BedragBeheer
 '								'MsgBox "stop"
 '							Else
-'								vBib(FlJournaal, vBibTekst(FlJournaal, "#v019 #"), "v069")
-'								vBib(FlJournaal, RekBeheersKost.Value, "v019")
-'								vBib(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
-'								vBib(FlJournaal, Str(-BedragBeheer), "v068")
-'								If Val(vBibTekst(FlJournaal, "#v068 #")) <> 0 Then
-'									bInsert(FlJournaal, 0)
+'								AdoInsertToRecord(FlJournaal, AdoGetField(FlJournaal, "#v019 #"), "v069")
+'								AdoInsertToRecord(FlJournaal, RekBeheersKost.Value, "v019")
+'								AdoInsertToRecord(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
+'								AdoInsertToRecord(FlJournaal, Str(-BedragBeheer), "v068")
+'								If Val(AdoGetField(FlJournaal, "#v068 #")) <> 0 Then
+'									JetInsert(FlJournaal, 0)
 '								End If
 '							End If
 
-'							vBib(FlJournaal, " ", "v041")
-'							Select Case VB.Left(vBibTekst(FlPolis, "#vs97 #"), 1)
+'							AdoInsertToRecord(FlJournaal, " ", "v041")
+'							Select Case VB.Left(AdoGetField(TableOfContracts, "#vs97 #"), 1)
 '								Case "2", "0"
 
 '								Case Else
-'									vBib(FlPolis, "1", "v041")
+'									AdoInsertToRecord(TableOfContracts, "1", "v041")
 '							End Select
 
-'							bUpdate(FlPolis, 0)
-'							bInsert(Fldokument, 0)
+'							bUpdate(TableOfContracts, 0)
+'							JetInsert(TableOfInvoices, 0)
 '							If Ktrl Then
 '								WegBoekFout = True
 '								dokumentSleutel.Value = BakdokumentSleutel.Value
@@ -964,7 +964,7 @@ End Class
 
 '						Case "3", "4", "5"
 '							PolisDetail.Col = 4
-'							vBib(FlJournaal, (PolisDetail.Text), "v067")
+'							AdoInsertToRecord(FlJournaal, (PolisDetail.Text), "v067")
 
 '							PolisDetail.Col = 6
 '							If Trim(PolisDetail.Text) = "" Then
@@ -972,61 +972,61 @@ End Class
 '							Else
 '								BedragBeheer = CDec(PolisDetail.Text)
 '							End If
-'							vBib(Fldokument, Str(BedragBeheer), "e069")
-'							vBib(FlPolis, Str(BedragBeheer), "e069")
+'							AdoInsertToRecord(TableOfInvoices, Str(BedragBeheer), "e069")
+'							AdoInsertToRecord(TableOfContracts, Str(BedragBeheer), "e069")
 '							dTotaalBKost = dTotaalBKost - BedragBeheer
 
 '							PolisDetail.Col = 5
 '							'MsgBox "TODO: snipped document: " & PolisDetail.Text
 '							If PolisDetail.Text = "" Then
-'								rsMAR(Fldokument).Fields("rvXMLTB2").Value = ""
+'								rsMAR(TableOfInvoices).Fields("rvXMLTB2").Value = ""
 '							Else
-'								rsMAR(Fldokument).Fields("rvXMLTB2").Value = PolisDetail.Text
+'								rsMAR(TableOfInvoices).Fields("rvXMLTB2").Value = PolisDetail.Text
 '							End If
 
 '							PolisDetail.Col = 2
 '							BedragTotaal = BedragBeheer + Val(PolisDetail.Text)
-'							vBib(FlJournaal, Str(-BedragTotaal), "v068")
-'							vBib(Fldokument, Str(-BedragTotaal), "v249")
-'							vBib(FlPolis, (PolisDetail.Text), "B090")
-'							vBib(Fldokument, (PolisDetail.Text), "B090")
+'							AdoInsertToRecord(FlJournaal, Str(-BedragTotaal), "v068")
+'							AdoInsertToRecord(TableOfInvoices, Str(-BedragTotaal), "v249")
+'							AdoInsertToRecord(TableOfContracts, (PolisDetail.Text), "B090")
+'							AdoInsertToRecord(TableOfInvoices, (PolisDetail.Text), "B090")
 
-'							vBib(FlJournaal, LabelInfo(2).Text, "v069")
+'							AdoInsertToRecord(FlJournaal, LabelInfo(2).Text, "v069")
 '							If BedragTotaal <> 0 Then
-'								bInsert(FlJournaal, 0)
+'								JetInsert(FlJournaal, 0)
 '							End If
 
 '							Temporek.Value = LabelInfo(2).Text
 '							Mid(Temporek.Value, 1, 2) = "70"
-'							vBib(FlJournaal, Temporek.Value, "v019")
+'							AdoInsertToRecord(FlJournaal, Temporek.Value, "v019")
 
 '							PolisDetail.Col = 3
-'							vBib(FlJournaal, (PolisDetail.Text), "v068")
-'							vBib(FlPolis, (PolisDetail.Text), "B094")
-'							vBib(Fldokument, (PolisDetail.Text), "B094")
+'							AdoInsertToRecord(FlJournaal, (PolisDetail.Text), "v068")
+'							AdoInsertToRecord(TableOfContracts, (PolisDetail.Text), "B094")
+'							AdoInsertToRecord(TableOfInvoices, (PolisDetail.Text), "B094")
 '							If Val(PolisDetail.Text) <> 0 Then
-'								bInsert(FlJournaal, 0)
+'								JetInsert(FlJournaal, 0)
 '							End If
 
-'							vBib(FlJournaal, vBibTekst(FlJournaal, "#v069 #"), "v019")
-'							vBib(FlJournaal, " ", "v069")
-'							vBib(FlJournaal, Str(Val(vBibTekst(Fldokument, "#B090 #")) - Val(vBibTekst(Fldokument, "#B094 #"))), "v068")
-'							If Val(vBibTekst(FlJournaal, "#v068 #")) <> 0 Then
-'								bInsert(FlJournaal, 0)
+'							AdoInsertToRecord(FlJournaal, AdoGetField(FlJournaal, "#v069 #"), "v019")
+'							AdoInsertToRecord(FlJournaal, " ", "v069")
+'							AdoInsertToRecord(FlJournaal, Str(Val(AdoGetField(TableOfInvoices, "#B090 #")) - Val(AdoGetField(TableOfInvoices, "#B094 #"))), "v068")
+'							If Val(AdoGetField(FlJournaal, "#v068 #")) <> 0 Then
+'								JetInsert(FlJournaal, 0)
 '							End If
 
-'							vBib(FlJournaal, vBibTekst(FlJournaal, "#v019 #"), "v069")
-'							vBib(FlJournaal, RekBeheersKost.Value, "v019")
-'							vBib(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
-'							vBib(FlJournaal, Str(BedragBeheer), "v068")
-'							If Val(vBibTekst(FlJournaal, "#v068 #")) <> 0 Then
-'								bInsert(FlJournaal, 0)
+'							AdoInsertToRecord(FlJournaal, AdoGetField(FlJournaal, "#v019 #"), "v069")
+'							AdoInsertToRecord(FlJournaal, RekBeheersKost.Value, "v019")
+'							AdoInsertToRecord(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
+'							AdoInsertToRecord(FlJournaal, Str(BedragBeheer), "v068")
+'							If Val(AdoGetField(FlJournaal, "#v068 #")) <> 0 Then
+'								JetInsert(FlJournaal, 0)
 '							End If
 
 
 
 
-'							bInsert(Fldokument, 0)
+'							JetInsert(TableOfInvoices, 0)
 '							If Ktrl Then
 '								WegBoekFout = True
 '								dokumentSleutel.Value = BakdokumentSleutel.Value
@@ -1047,39 +1047,39 @@ End Class
 '		Next 
 
 '		If VB.Left(KeuzeInfo(1).Text, 1) = "1" Then
-'			vBib(FlJournaal, LabelInfo(2).Text, "v019")
+'			AdoInsertToRecord(FlJournaal, LabelInfo(2).Text, "v019")
 '			TempoDokSleutel = dokumentSleutel.Value
 '			Mid(TempoDokSleutel, 7, 5) = VB6.Format(Val(VB.Right(dokumentSleutel.Value, 5)) - 1, "00000")
 
-'			vBib(FlJournaal, TempoDokSleutel, "v033")
-'			vBib(FlJournaal, LabelInfo(2).Text, "v069")
+'			AdoInsertToRecord(FlJournaal, TempoDokSleutel, "v033")
+'			AdoInsertToRecord(FlJournaal, LabelInfo(2).Text, "v069")
 
-'			Temporek.Value = vBibTekst(FlJournaal, "#v019 #")
+'			Temporek.Value = AdoGetField(FlJournaal, "#v019 #")
 '			Mid(Temporek.Value, 1, 2) = "70"
-'			vBib(FlJournaal, Temporek.Value, "v019")
-'			vBib(FlJournaal, "Termijn", "v067")
-'			vBib(FlJournaal, Str(dTotaalLoon), "v068")
-'			If Val(vBibTekst(FlJournaal, "#v068 #")) <> 0 Then
-'				bInsert(FlJournaal, 0)
+'			AdoInsertToRecord(FlJournaal, Temporek.Value, "v019")
+'			AdoInsertToRecord(FlJournaal, "Termijn", "v067")
+'			AdoInsertToRecord(FlJournaal, Str(dTotaalLoon), "v068")
+'			If Val(AdoGetField(FlJournaal, "#v068 #")) <> 0 Then
+'				JetInsert(FlJournaal, 0)
 '			End If
 
 '			If TotaalBedragBeheer <> 0 Then
-'				vBib(FlJournaal, vBibTekst(FlJournaal, "#v019 #"), "v069")
-'				vBib(FlJournaal, RekBeheersKost.Value, "v019")
-'				vBib(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
-'				vBib(FlJournaal, Str(-TotaalBedragBeheer), "v068")
-'				If Val(vBibTekst(FlJournaal, "#v068 #")) <> 0 Then
-'					bInsert(FlJournaal, 0)
+'				AdoInsertToRecord(FlJournaal, AdoGetField(FlJournaal, "#v019 #"), "v069")
+'				AdoInsertToRecord(FlJournaal, RekBeheersKost.Value, "v019")
+'				AdoInsertToRecord(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
+'				AdoInsertToRecord(FlJournaal, Str(-TotaalBedragBeheer), "v068")
+'				If Val(AdoGetField(FlJournaal, "#v068 #")) <> 0 Then
+'					JetInsert(FlJournaal, 0)
 '				End If
 '				TotaalBedragBeheer = 0
 '			End If
 
-'			vBib(FlJournaal, vBibTekst(FlJournaal, "#v019 #"), "v069")
-'			vBib(FlJournaal, LabelInfo(2).Text, "v019")
-'			vBib(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
-'			vBib(FlJournaal, Str(dTotaalMij), "v068")
-'			If Val(vBibTekst(FlJournaal, "#v068 #")) <> 0 Then
-'				bInsert(FlJournaal, 0)
+'			AdoInsertToRecord(FlJournaal, AdoGetField(FlJournaal, "#v019 #"), "v069")
+'			AdoInsertToRecord(FlJournaal, LabelInfo(2).Text, "v019")
+'			AdoInsertToRecord(FlJournaal, VB.Left(KeuzeInfo(1).Text, 1), "v041")
+'			AdoInsertToRecord(FlJournaal, Str(dTotaalMij), "v068")
+'			If Val(AdoGetField(FlJournaal, "#v068 #")) <> 0 Then
+'				JetInsert(FlJournaal, 0)
 '			End If
 '		End If
 
@@ -1126,10 +1126,10 @@ End Class
 '		Dim BetalingStr As String
 
 '		BeheersKost = True
-'		MsJetGet(Fldokument, 2, PolisNummer)
+'		JetGet(TableOfInvoices, 2, PolisNummer)
 '		On Error Resume Next
-'		BetalingStr = Trim(rsMAR(Fldokument).Fields("v038").Value)
-'		If VB.Left(rsMAR(FlPolis).Fields("vs97").Value, 1) = "2" Then
+'		BetalingStr = Trim(rsMAR(TableOfInvoices).Fields("v038").Value)
+'		If VB.Left(rsMAR(TableOfContracts).Fields("vs97").Value, 1) = "2" Then
 '			BeheersKost = False
 '		ElseIf VB.Left(BetalingStr, 2) = "KA" Then 
 '			BeheersKost = False
@@ -1147,10 +1147,10 @@ End Class
 '		'nieuwe poging 08/2009
 
 '		ktrlRVmemo = True
-'		ktrlString = rsMAR(Fldokument).Fields("rvXMLTB2").Name
+'		ktrlString = rsMAR(TableOfInvoices).Fields("rvXMLTB2").Name
 
 '		If Err.Number = 3265 Then
-'			rsMAR(Fldokument).Close()
+'			rsMAR(TableOfInvoices).Close()
 '			Msg = "ALTER TABLE Dokumenten ADD COLUMN rvXMLTB2 MEMO;"
 '			Err.Clear()
 '			adntDB.Execute(Msg)

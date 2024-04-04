@@ -54,11 +54,11 @@ End Class
 '				If InStr(TxtInfo(TempoTel).Tag, "|") <> 0 Then
 '					If InStr(cmdSwitch.Text, "BEF") Then
 '						vBibDef = VB.Left(TxtInfo(TempoTel).Tag, 4)
-'						vBib(FlProdukt, Dec(Val(TxtInfo(TempoTel).Text) / Euro, MaskerEURX), vBibDef)
+'						AdoInsertToRecord(TableOfProductsAndServices, Dec(Val(TxtInfo(TempoTel).Text) / Euro, MaskEURX), vBibDef)
 '						vBibDef = VB.Right(TxtInfo(TempoTel).Tag, 4)
 '					Else
 '						vBibDef = VB.Right(TxtInfo(TempoTel).Tag, 4)
-'						vBib(FlProdukt, Dec(Val(TxtInfo(TempoTel).Text) * Euro, MaskerEURX), vBibDef)
+'						AdoInsertToRecord(TableOfProductsAndServices, Dec(Val(TxtInfo(TempoTel).Text) * Euro, MaskEURX), vBibDef)
 '						vBibDef = VB.Left(TxtInfo(TempoTel).Tag, 4)
 '					End If
 '				ElseIf InStr(TxtInfo(TempoTel).Tag, ";") <> 0 Then 
@@ -66,24 +66,24 @@ End Class
 '				Else
 '					vBibDef = TxtInfo(TempoTel).Tag
 '				End If
-'				vBib(FlProdukt, TxtInfo(TempoTel).Text, vBibDef)
+'				AdoInsertToRecord(TableOfProductsAndServices, TxtInfo(TempoTel).Text, vBibDef)
 '			End If
 '			TempoTel = TempoTel + 1
 '			SnelHelpPrint(TxtInfo(TempoTel).Tag, blLogging)
 '			If Err.Number Then Exit Do
 '		Loop 
-'		vBib(FlProdukt, (Me.txtLink.Text), "v002")
-'		vBib(FlProdukt, (Me.txtMilieu.Text), "v261")
-'		vBib(FlProdukt, (Me.txtEindeReeks.Text), "v300")
+'		AdoInsertToRecord(TableOfProductsAndServices, (Me.txtLink.Text), "v002")
+'		AdoInsertToRecord(TableOfProductsAndServices, (Me.txtMilieu.Text), "v261")
+'		AdoInsertToRecord(TableOfProductsAndServices, (Me.txtEindeReeks.Text), "v300")
 '		If Me.cbCategorie.SelectedIndex >= 0 Then
-'			vBib(FlProdukt, (Me.cbCategorie.Text), "v221")
+'			AdoInsertToRecord(TableOfProductsAndServices, (Me.cbCategorie.Text), "v221")
 '		Else
-'			vBib(FlProdukt, " ", "v221")
+'			AdoInsertToRecord(TableOfProductsAndServices, " ", "v221")
 '		End If
 '		If Me.cbMerk.SelectedIndex >= 0 Then
-'			vBib(FlProdukt, (Me.cbMerk.Text), "v001")
+'			AdoInsertToRecord(TableOfProductsAndServices, (Me.cbMerk.Text), "v001")
 '		Else
-'			vBib(FlProdukt, " ", "v001")
+'			AdoInsertToRecord(TableOfProductsAndServices, " ", "v001")
 '		End If
 
 '	End Sub
@@ -108,13 +108,13 @@ End Class
 '		'v108
 '		TxtInfo(4).Text = fmarBoxText("022", "2", "N")
 '		'v111
-'		TxtInfo(7).Text = fmarBoxText("002", "2", String99(Lees, 183))
+'		TxtInfo(7).Text = fmarBoxText("002", "2", String99(Reading, 183))
 '		'v116
-'		TxtInfo(11).Text = String99(Lees, 77)
+'		TxtInfo(11).Text = String99(Reading, 77)
 '		'v117
-'		TxtInfo(12).Text = String99(Lees, 78)
+'		TxtInfo(12).Text = String99(Reading, 78)
 '		'v118
-'		TxtInfo(13).Text = String99(Lees, 79)
+'		TxtInfo(13).Text = String99(Reading, 79)
 
 '		VernieuwStockWaarde()
 '		VernieuwTicketPrijs()
@@ -192,7 +192,7 @@ End Class
 
 '	Private Sub Alfa_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Alfa.Click
 
-'		SharedFl = FlProdukt
+'		SharedFl = TableOfProductsAndServices
 
 '		aIndex = 1
 '		GridText = TxtInfo(1).Text
@@ -239,9 +239,9 @@ End Class
 
 '	Private Sub CmdHoger_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles CmdHoger.Click
 
-'		bNext(FlProdukt)
+'		bNext(TableOfProductsAndServices)
 '		If Ktrl Then
-'			bLast(FlProdukt, 0)
+'			bLast(TableOfProductsAndServices, 0)
 '			If Ktrl Then
 '				Beep()
 '				MsgBox("Er zijn nog geen gegevens...")
@@ -291,9 +291,9 @@ End Class
 
 '	Private Sub CmdLager_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles CmdLager.Click
 
-'		bPrev(FlProdukt)
+'		bPrev(TableOfProductsAndServices)
 '		If Ktrl Then
-'			bFirst(FlProdukt, 0)
+'			JetGetFirst(TableOfProductsAndServices, 0)
 '			If Ktrl Then
 '				Beep()
 '				MsgBox("Er zijn nog geen gegevens...")
@@ -316,7 +316,7 @@ End Class
 
 '		tempo = Split(txtMilieu.Text, ";")
 '		For TelTot = 0 To UBound(tempo)
-'			MsJetGet(FlProdukt, 0, tempo(TelTot))
+'			JetGet(TableOfProductsAndServices, 0, tempo(TelTot))
 '			If Ktrl = 0 Then
 '				MsgBox(Trim(tempo(TelTot)) & " aanwezig", MsgBoxStyle.Information)
 '				TelOK = TelOK + 1
@@ -363,7 +363,7 @@ End Class
 '			txtMilieu.Text = TempoMilieu
 '			TempoMilieu = ""
 '		End If
-'		Msg = "Gegevens bestaande '" & bstNaam(FlProdukt) & "'-fiche wijzigen.  Bent U zeker ?"
+'		Msg = "Gegevens bestaande '" & JetTableName(TableOfProductsAndServices) & "'-fiche wijzigen.  Bent U zeker ?"
 '		KtrlBox = MsgBox(Msg, 292)
 '		If KtrlBox = MsgBoxResult.Yes Then
 '			RecordVullen()
@@ -372,14 +372,14 @@ End Class
 '			End If
 
 '			If FicheIsNieuw Then
-'				bInsert(FlProdukt, 0)
+'				JetInsert(TableOfProductsAndServices, 0)
 '				If Me.FormBorderStyle Then
 '					cmdSchoon_Click(cmdSchoon, New System.EventArgs())
 '				Else
 '					Me.Close()
 '				End If
 '			Else
-'				bUpdate(FlProdukt, 0)
+'				bUpdate(TableOfProductsAndServices, 0)
 '			End If
 '		Else
 '			If TeSwitchen = True Then
@@ -396,8 +396,8 @@ End Class
 '		Dim vBibDef As String
 
 '		FicheIsNieuw = False
-'		RecordToVeld(FlProdukt)
-'		Me.Text = "ProduktFiche : " & RTrim(vBibTekst(FlProdukt, "#v105 #"))
+'		RecordToVeld(TableOfProductsAndServices)
+'		Me.Text = "ProduktFiche : " & RTrim(AdoGetField(TableOfProductsAndServices, "#v105 #"))
 
 '		'If rsPFStat.State = adStateOpen Then
 '		'        rsPFStat.Close
@@ -429,42 +429,42 @@ End Class
 '						'boekhoudcijfers in EUR
 '						vBibDef = VB.Left(TxtInfo(TempoTel).Tag, 4)
 '						If InStr(cmdSwitch.Text, "EUR") Then
-'							TxtInfo(TempoTel).Text = Dec(Val(vBibTekst(FlProdukt, "#" & vBibDef & " #")), "#######0.0000")
+'							TxtInfo(TempoTel).Text = Dec(Val(AdoGetField(TableOfProductsAndServices, "#" & vBibDef & " #")), "#######0.0000")
 '						Else
-'							TxtInfo(TempoTel).Text = Dec(Val(vBibTekst(FlProdukt, "#" & vBibDef & " #")) * Euro, "#######0.0000")
+'							TxtInfo(TempoTel).Text = Dec(Val(AdoGetField(TableOfProductsAndServices, "#" & vBibDef & " #")) * Euro, "#######0.0000")
 '						End If
 '					Else
 '						'boekhoudcijfers in BEF
 '						vBibDef = VB.Right(TxtInfo(TempoTel).Tag, 4)
 '						If InStr(cmdSwitch.Text, "BEF") Then
-'							TxtInfo(TempoTel).Text = Dec(Val(vBibTekst(FlProdukt, "#" & vBibDef & " #")), "#######0.0000")
+'							TxtInfo(TempoTel).Text = Dec(Val(AdoGetField(TableOfProductsAndServices, "#" & vBibDef & " #")), "#######0.0000")
 '						Else
-'							TxtInfo(TempoTel).Text = Dec(Val(vBibTekst(FlProdukt, "#" & vBibDef & " #")) / Euro, "#######0.0000")
+'							TxtInfo(TempoTel).Text = Dec(Val(AdoGetField(TableOfProductsAndServices, "#" & vBibDef & " #")) / Euro, "#######0.0000")
 '						End If
 '					End If
 '				ElseIf InStr(TxtInfo(TempoTel).Tag, ";") <> 0 Then 
 '					vBibDef = VB.Left(TxtInfo(TempoTel).Tag, InStr(TxtInfo(TempoTel).Tag, ";") - 1)
 '					If InStr(TxtInfo(TempoTel).Tag, "&") Then
-'						TxtInfo(TempoTel).Text = vBibTekst(FlProdukt, "#" & vBibDef & " #")
+'						TxtInfo(TempoTel).Text = AdoGetField(TableOfProductsAndServices, "#" & vBibDef & " #")
 '					Else
-'						TxtInfo(TempoTel).Text = fmarBoxText(Mid(TxtInfo(TempoTel).Tag, InStr(TxtInfo(TempoTel).Tag, ";") + 1), "2", vBibTekst(FlProdukt, "#" & vBibDef & " #"))
+'						TxtInfo(TempoTel).Text = fmarBoxText(Mid(TxtInfo(TempoTel).Tag, InStr(TxtInfo(TempoTel).Tag, ";") + 1), "2", AdoGetField(TableOfProductsAndServices, "#" & vBibDef & " #"))
 '					End If
 '				Else
 '					vBibDef = TxtInfo(TempoTel).Tag
-'					TxtInfo(TempoTel).Text = vBibTekst(FlProdukt, "#" & vBibDef & " #")
+'					TxtInfo(TempoTel).Text = AdoGetField(TableOfProductsAndServices, "#" & vBibDef & " #")
 '				End If
 '			End If
 '			'If TempoTel = 16 Then Stop
 '		Next 
-'		Me.txtLink.Text = vBibTekst(FlProdukt, "#v002 #")
-'		Me.txtEindeReeks.Text = Str(Val(vBibTekst(FlProdukt, "#v300 #")))
-'		Me.txtMilieu.Text = vBibTekst(FlProdukt, "#v261 #")
+'		Me.txtLink.Text = AdoGetField(TableOfProductsAndServices, "#v002 #")
+'		Me.txtEindeReeks.Text = Str(Val(AdoGetField(TableOfProductsAndServices, "#v300 #")))
+'		Me.txtMilieu.Text = AdoGetField(TableOfProductsAndServices, "#v261 #")
 '		Dim tmpCategorie As String
 '		Dim tmpMerk As String
 '		Dim TelTotHier As Short
 
-'		tmpCategorie = Trim(vBibTekst(FlProdukt, "#v221 #"))
-'		tmpMerk = Trim(vBibTekst(FlProdukt, "#v001 #"))
+'		tmpCategorie = Trim(AdoGetField(TableOfProductsAndServices, "#v221 #"))
+'		tmpMerk = Trim(AdoGetField(TableOfProductsAndServices, "#v001 #"))
 '		Me.cbMerk.SelectedIndex = -1
 '		Me.cbCategorie.SelectedIndex = -1
 
@@ -575,19 +575,19 @@ End Class
 
 '	Private Sub CmdVerwijderFiche_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles CmdVerwijderFiche.Click
 
-'		If Trim(TLBRecord(FlProdukt)) = "" Or Trim(TxtInfo(0).Text) = "" Then
+'		If Trim(TLBRecord(TableOfProductsAndServices)) = "" Or Trim(TxtInfo(0).Text) = "" Then
 '			Msg = "Nummer met blanco verwijderen.  Bent u zeker"
 '			KtrlBox = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2)
 '			If KtrlBox = MsgBoxResult.Yes Then
-'				bDelete(FlProdukt)
+'				Bdelete(TableOfProductsAndServices)
 '				CmdHoger_Click(CmdHoger, New System.EventArgs())
 '				Exit Sub
 '			End If
 '		Else
-'			Msg = "Gegevens bestaande '" & bstNaam(FlProdukt) & "'-fiche :" & Trim(TxtInfo(0).Text) & " verwijderen.  Bent U zeker ?"
+'			Msg = "Gegevens bestaande '" & JetTableName(TableOfProductsAndServices) & "'-fiche :" & Trim(TxtInfo(0).Text) & " verwijderen.  Bent U zeker ?"
 '			KtrlBox = MsgBox(Msg, MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2)
 '			If KtrlBox = MsgBoxResult.Yes Then
-'				bDelete(FlProdukt)
+'				Bdelete(TableOfProductsAndServices)
 '				CmdHoger_Click(CmdHoger, New System.EventArgs())
 '				Exit Sub
 '			End If
@@ -619,7 +619,7 @@ End Class
 '		cmdSwitch.Text = "Ingave in EUR"
 
 '		Schoon()
-'		RekenOpties = String99(Lees, 181)
+'		RekenOpties = String99(Reading, 181)
 '		For TelTot = 1 To Len(RekenOpties)
 '			If CDbl(Mid(RekenOpties, TelTot, 1)) = 1 Then
 '				chkFilter(TelTot - 1).CheckState = System.Windows.Forms.CheckState.Checked
@@ -669,15 +669,15 @@ End Class
 '			ElseIf InStr(TxtInfo(Index).Tag, "&") Then 
 '				Select Case Mid(TxtInfo(Index).Tag, InStr(TxtInfo(Index).Tag, "&") + 1, 1)
 '					Case "K"
-'						SharedFl = FlKlant
+'						SharedFl = TableOfCustomers
 '					Case "L"
-'						SharedFl = FlLeverancier
+'						SharedFl = TableOfSuppliers
 '					Case "R"
-'						SharedFl = FlLedgerAccount
+'						SharedFl = TableOfLedgerAccounts
 '					Case Else
 '						MsgBox("nog niks")
 '				End Select
-'				MsJetGet(SharedFl, 0, TxtInfo(Index).Text)
+'				JetGet(SharedFl, 0, TxtInfo(Index).Text)
 '				If Ktrl Then
 '					MsgBox(TxtInfo(Index).Text & " bestaat niet (meer) !")
 '				Else
@@ -703,11 +703,11 @@ End Class
 '			aIndex = 0
 '			Select Case Mid(TxtInfo(Index).Tag, InStr(TxtInfo(Index).Tag, "&") + 1, 1)
 '				Case "K"
-'					SharedFl = FlKlant
+'					SharedFl = TableOfCustomers
 '				Case "L"
-'					SharedFl = FlLeverancier
+'					SharedFl = TableOfSuppliers
 '				Case "R"
-'					SharedFl = FlLedgerAccount
+'					SharedFl = TableOfLedgerAccounts
 '				Case Else
 '					MsgBox("nog niks")
 '			End Select
@@ -755,7 +755,7 @@ End Class
 '		TxtInfo(Index).BackColor = System.Drawing.ColorTranslator.FromOle(&HFFFFFF)
 '		Select Case Index
 '			Case 0
-'				MsJetGet(FlProdukt, 0, TxtInfo(0).Text)
+'				JetGet(TableOfProductsAndServices, 0, TxtInfo(0).Text)
 '				If Ktrl Then
 '					Sleuteltje = TxtInfo(0).Text
 '					Schoon()
@@ -848,7 +848,7 @@ End Class
 '			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 
 
-'			msgQuery = "SELECT * FROM Journalen WHERE v102 ='" & vBibTekst(FlProdukt, "v102") & "' and v019 >'5'"
+'			msgQuery = "SELECT * FROM Journalen WHERE v102 ='" & AdoGetField(TableOfProductsAndServices, "v102") & "' and v019 >'5'"
 '			On Error Resume Next
 '			'UPGRADE_NOTE: Object msfJournaal.Recordset may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
 '			msfJournaal.Recordset = Nothing

@@ -40,7 +40,7 @@ End Class
 
 '	'Msg = "ALTER TABLE Journalen ADD COLUMN v248 CURRENCY;"
 '	'Msg = "ALTER TABLE Journalen DROP COLUMN v248"
-'	'Msg = "UPDATE Journalen SET v248=Str$(Cdbl(Format(Val(v068)/40.3399," + Chr$(34) + "0.0000" + Chr$(34) + "))) WHERE v066 <= '" + Right(BoekjaarVanTot, 8) + "';"
+'	'Msg = "UPDATE Journalen SET v248=Str$(Cdbl(Format(Val(v068)/40.3399," + Chr$(34) + "0.0000" + Chr$(34) + "))) WHERE v066 <= '" + Right(BookyearFromTo, 8) + "';"
 '	'adntDB.Execute Msg, AantalRecordsHier
 '	'If Err Then
 '	'    MsgBox "Foutmelding bron: " & Err.Source & vbCrLf & "Foutkodenummer: " & Err.Number & vbCrLf & vbCrLf & "Foutmelding omschrijving:" & vbCrLf & Err.Description
@@ -67,11 +67,11 @@ End Class
 
 '		ReportText(2) = "Algemeen Journaal (Systeem OT) " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = txtTekstLijn(1).Text
-'		ReportText(3) = "Boekjaar aanvang : " & VB.Left(BoekjaarVanTot.Value, 4) & ", " & txtTekstLijn(0).Text
+'		ReportText(3) = "Boekjaar aanvang : " & VB.Left(BookyearFromTo.Value, 4) & ", " & txtTekstLijn(0).Text
 '		InitializeFields()
 
-'		bFirst(FlJournaal, 4)
-'		bGetOrGreater(FlJournaal, 4, BeginSleutel.Value)
+'		JetGetFirst(FlJournaal, 4)
+'		JetGetOrGreater(FlJournaal, 4, BeginSleutel.Value)
 '		If Ktrl Then
 '			Beep()
 '			Exit Sub
@@ -129,45 +129,45 @@ End Class
 
 'PrintInfo: 
 '		RecordToVeld(FlJournaal)
-'		If vBibTekst(FlJournaal, "#v066 #") >= PeriodFromChosen.Value And vBibTekst(FlJournaal, "#v066 #") <= PeriodToChosen.Value Then
+'		If AdoGetField(FlJournaal, "#v066 #") >= PeriodFromChosen.Value And AdoGetField(FlJournaal, "#v066 #") <= PeriodToChosen.Value Then
 '			Line = Line + 1
-'			If DCDatum.Value <> vBibTekst(FlJournaal, "#v066 #") Then
-'				DCDatum.Value = vBibTekst(FlJournaal, "#v066 #")
+'			If DCDatum.Value <> AdoGetField(FlJournaal, "#v066 #") Then
+'				DCDatum.Value = AdoGetField(FlJournaal, "#v066 #")
 '				If ErrorTekst = "j" Then
 '				Else
 '					If TotalDebit - TotalCredit <> 0 Then
 '						ErrorTekst = "j"
-'						Msg = "DC ongelijkheid vanaf laatste dag vóór : " & ErrorTekst & vBibTekst(FlJournaal, "#v066 #")
+'						Msg = "DC ongelijkheid vanaf laatste dag vóór : " & ErrorTekst & AdoGetField(FlJournaal, "#v066 #")
 '						MsgBox(Msg)
 '					End If
 '				End If
 '			End If
 
-'			MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
+'			JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7))
 '			If Ktrl Then
 '				FieldText(3) = "-"
 '			Else
-'				RecordToVeld(FlLedgerAccount)
-'				FieldText(3) = vBibTekst(FlLedgerAccount, "#v020 #")
-'				SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v019 #") & " " & vBibTekst(FlLedgerAccount, "#v020 #") & " " & FieldText(3), blLogging)
+'				RecordToVeld(TableOfLedgerAccounts)
+'				FieldText(3) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
+'				SnelHelpPrint(AdoGetField(TableOfLedgerAccounts, "#v019 #") & " " & AdoGetField(TableOfLedgerAccounts, "#v020 #") & " " & FieldText(3), blLogging)
 '			End If
 '			FieldText(0) = VB6.Format(Line, "00000")
-'			FieldText(1) = FunctionDateText(vBibTekst(FlJournaal, "#v066 #"))
-'			FieldText(2) = vBibTekst(FlJournaal, "#v019 #")
-'			FieldText(4) = vBibTekst(FlJournaal, "#v067 #")
+'			FieldText(1) = FunctionDateText(AdoGetField(FlJournaal, "#v066 #"))
+'			FieldText(2) = AdoGetField(FlJournaal, "#v019 #")
+'			FieldText(4) = AdoGetField(FlJournaal, "#v067 #")
 
 '			Select Case rsMAR(FlJournaal).Fields("dece068").Value
 '				Case Is < 0
 '					FieldText(5) = ""
-'					FieldText(6) = Dec(System.Math.Abs(rsMAR(FlJournaal).Fields("dece068").Value), Masker2002.Value)
+'					FieldText(6) = Dec(System.Math.Abs(rsMAR(FlJournaal).Fields("dece068").Value), Mask2002.Value)
 '					TotalCredit = TotalCredit + Val(FieldText(6))
 '				Case Else
-'					FieldText(5) = Dec((rsMAR(FlJournaal).Fields("dece068").Value), Masker2002.Value)
+'					FieldText(5) = Dec((rsMAR(FlJournaal).Fields("dece068").Value), Mask2002.Value)
 '					FieldText(6) = ""
 '					TotalDebit = TotalDebit + Val(FieldText(5))
 '			End Select
 
-'			FieldText(7) = vBibTekst(FlJournaal, "#v033 #")
+'			FieldText(7) = AdoGetField(FlJournaal, "#v033 #")
 '			PrintVelden()
 '		End If
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -190,16 +190,16 @@ End Class
 '		Line = 0
 '		VorigeSleutel.Value = ""
 '		KontroleLijst = ""
-'		BeginSleutel.Value = vSet(txtTekstLijn(2).Text, 7) & PeriodFromChosen.Value
-'		EindSleutel.Value = vSet(txtTekstLijn(3).Text, 7) & PeriodToChosen.Value
+'		BeginSleutel.Value = SetSpacing(txtTekstLijn(2).Text, 7) & PeriodFromChosen.Value
+'		EindSleutel.Value = SetSpacing(txtTekstLijn(3).Text, 7) & PeriodToChosen.Value
 
 '		ReportText(2) = "Proef- en Saldibalans " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = txtTekstLijn(1).Text
-'		ReportText(3) = "Boekjaar aanvang : " & VB.Left(BoekjaarVanTot.Value, 4) & ", " & txtTekstLijn(0).Text
+'		ReportText(3) = "Boekjaar aanvang : " & VB.Left(BookyearFromTo.Value, 4) & ", " & txtTekstLijn(0).Text
 '		InitializeFields()
 
-'		bFirst(FlJournaal, 0)
-'		bGetOrGreater(FlJournaal, 0, BeginSleutel.Value)
+'		JetGetFirst(FlJournaal, 0)
+'		JetGetOrGreater(FlJournaal, 0, BeginSleutel.Value)
 '		If Ktrl Then
 '			Beep()
 '			Exit Sub
@@ -297,14 +297,14 @@ End Class
 
 '			CumTotaalD = 0
 '			CumTotaalC = 0
-'			MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
-'			FieldText(0) = vBibTekst(FlJournaal, "#v019 #")
+'			JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7))
+'			FieldText(0) = AdoGetField(FlJournaal, "#v019 #")
 '			If Ktrl Then
 '				FieldText(1) = "Rekening reeds vernietigd..."
 '				FieldText(2) = ""
 '			Else
-'				RecordToVeld(FlLedgerAccount)
-'				FieldText(1) = vBibTekst(FlLedgerAccount, "#v020 #")
+'				RecordToVeld(TableOfLedgerAccounts)
+'				FieldText(1) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 
 '				If bhEuro Then
 '					rkVeldje = "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"
@@ -312,18 +312,18 @@ End Class
 '					rkVeldje = "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"
 '				End If
 
-'				FieldText(2) = Str(Val(vBibTekst(FlLedgerAccount, rkVeldje)))
+'				FieldText(2) = Str(Val(AdoGetField(TableOfLedgerAccounts, rkVeldje)))
 '				Select Case Val(FieldText(2))
 '					Case Is < 0
-'						FieldText(2) = "CS:" & Dec(System.Math.Abs(Val(FieldText(2))), Masker2002.Value)
+'						FieldText(2) = "CS:" & Dec(System.Math.Abs(Val(FieldText(2))), Mask2002.Value)
 '					Case Else
-'						FieldText(2) = "DS:" & Dec(Val(FieldText(2)), Masker2002.Value)
+'						FieldText(2) = "DS:" & Dec(Val(FieldText(2)), Mask2002.Value)
 '				End Select
 '			End If
 '		End If
 '		VorigeSleutel.Value = KeyBuf(FlJournaal)
-'		FieldText(3) = MaandTekst(Val(Mid(KeyBuf(FlJournaal), 12, 2)))
-'		SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v019 #") & " " & vBibTekst(FlLedgerAccount, "#v020 #") & " " & Trim(FieldText(3)) & " " & Mid(KeyBuf(FlJournaal), 8, 4), blLogging)
+'		FieldText(3) = MonthText(Val(Mid(KeyBuf(FlJournaal), 12, 2)))
+'		SnelHelpPrint(AdoGetField(TableOfLedgerAccounts, "#v019 #") & " " & AdoGetField(TableOfLedgerAccounts, "#v020 #") & " " & Trim(FieldText(3)) & " " & Mid(KeyBuf(FlJournaal), 8, 4), blLogging)
 
 '		'UPGRADE_WARNING: Use of Null/IsNull() detected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="2EED02CB-5C0E-4DC1-AE94-4FAA3A30F51A"'
 '		If IsDbNull(rsMAR(FlJournaal).Fields("dece068").Value) Then
@@ -350,25 +350,25 @@ End Class
 '		Else
 '			rkVeldje = "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"
 '		End If
-'		If System.Math.Abs(CumTotaalD + CumTotaalC) - System.Math.Abs(Val(vBibTekst(FlLedgerAccount, rkVeldje))) = 0 Then
+'		If System.Math.Abs(CumTotaalD + CumTotaalC) - System.Math.Abs(Val(AdoGetField(TableOfLedgerAccounts, rkVeldje))) = 0 Then
 '		Else
 '			Msg = "KontroleStop bijwerking rekeningsaldo !!" & vbCrLf & vbCrLf
-'			Msg = Msg & "Rekening : " & KeyBuf(FlLedgerAccount) & vbCrLf
+'			Msg = Msg & "Rekening : " & KeyBuf(TableOfLedgerAccounts) & vbCrLf
 '			If bhEuro Then
-'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
+'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
 '			Else
-'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
+'				Msg = Msg & Str(CumTotaalD + CumTotaalC) & " <> " & Str(Val(AdoGetField(TableOfLedgerAccounts, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")))
 '			End If
 '			MsgBox(Msg & vbCrLf & vbCrLf & "Na deze P&S, nogmaals opnieuw P&S a.u.b. samenstellen", MsgBoxStyle.Exclamation)
 
-'			KontroleLijst = KontroleLijst & vBibTekst(FlLedgerAccount, "#v020 #") & " " & Dec(CumTotaalD + CumTotaalC, "#########.00") & " " & Dec(Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#########.00") & vbCrLf
+'			KontroleLijst = KontroleLijst & AdoGetField(TableOfLedgerAccounts, "#v020 #") & " " & Dec(CumTotaalD + CumTotaalC, "#########.00") & " " & Dec(Val(AdoGetField(TableOfLedgerAccounts, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#########.00") & vbCrLf
 '			If bhEuro Then
-'				vBib(FlLedgerAccount, Str(CumTotaalD + CumTotaalC), "e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
-'				rsMAR(FlLedgerAccount).Fields("dece" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000")).Value = CumTotaalD + CumTotaalC
+'				AdoInsertToRecord(TableOfLedgerAccounts, Str(CumTotaalD + CumTotaalC), "e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
+'				rsMAR(TableOfLedgerAccounts).Fields("dece" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000")).Value = CumTotaalD + CumTotaalC
 '			Else
-'				vBib(FlLedgerAccount, Str(CumTotaalD + CumTotaalC), "v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
+'				AdoInsertToRecord(TableOfLedgerAccounts, Str(CumTotaalD + CumTotaalC), "v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000"))
 '			End If
-'			bUpdate(FlLedgerAccount, 0)
+'			bUpdate(TableOfLedgerAccounts, 0)
 '		End If
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -454,7 +454,7 @@ End Class
 
 '		Dim lTeller As Integer
 
-'		If PeriodFromChosen.Value = VB.Left(BoekjaarVanTot.Value, 8) And PeriodToChosen.Value = VB.Right(BoekjaarVanTot.Value, 8) Then
+'		If PeriodFromChosen.Value = VB.Left(BookyearFromTo.Value, 8) And PeriodToChosen.Value = VB.Right(BookyearFromTo.Value, 8) Then
 '			SaldiKontrole = True
 '		Else
 '			SaldiKontrole = False
@@ -479,11 +479,11 @@ End Class
 '		Next 
 '		FieldText(1) = "Totalen :"
 '		If chkDetailJournaal.CheckState Then
-'			FieldText(5) = Dec(TotalDebit, Masker2002.Value)
-'			FieldText(6) = Dec(System.Math.Abs(TotalCredit), Masker2002.Value)
+'			FieldText(5) = Dec(TotalDebit, Mask2002.Value)
+'			FieldText(6) = Dec(System.Math.Abs(TotalCredit), Mask2002.Value)
 '		Else
-'			FieldText(4) = Dec(TotalDebit, Masker2002.Value)
-'			FieldText(5) = Dec(System.Math.Abs(TotalCredit), Masker2002.Value)
+'			FieldText(4) = Dec(TotalDebit, Mask2002.Value)
+'			FieldText(5) = Dec(System.Math.Abs(TotalCredit), Mask2002.Value)
 '		End If
 '		T = 0
 '		If chkAfdrukInVenster.CheckState Then
@@ -605,7 +605,7 @@ End Class
 '		PeriodFromChosen.Value = Mid(txtTekstLijn(0).Text, 7, 4) & Mid(txtTekstLijn(0).Text, 4, 2) & Mid(txtTekstLijn(0).Text, 1, 2)
 '		PeriodToChosen.Value = Mid(txtTekstLijn(0).Text, 20, 4) & Mid(txtTekstLijn(0).Text, 17, 2) & Mid(txtTekstLijn(0).Text, 14, 2)
 '		txtTekstLijn(1).Text = MimGlobalDate.Value
-'		Text = Text & " " & VB.Left(BoekjaarVanTot.Value, 4)
+'		Text = Text & " " & VB.Left(BookyearFromTo.Value, 4)
 
 '		Printer = Printers(LijstPrinterNr)
 '		On Error Resume Next
@@ -774,25 +774,25 @@ End Class
 '		Dim TotaalDC As Double
 '		Dim CumTotaalDC As Double
 
-'		FieldText(4) = Dec(SubTotaalD, Masker2002.Value)
-'		FieldText(5) = Dec(System.Math.Abs(SubTotaalC), Masker2002.Value)
-'		'FieldText(6) = Dec$((CumTotaalD), MaskerSy(0))
+'		FieldText(4) = Dec(SubTotaalD, Mask2002.Value)
+'		FieldText(5) = Dec(System.Math.Abs(SubTotaalC), Mask2002.Value)
+'		'FieldText(6) = Dec$((CumTotaalD), MaskSy(0))
 '		TotaalDC = SubTotaalD + SubTotaalC
 '		If TotaalDC < 0 Then
-'			FieldText(6) = "C:" & Dec(System.Math.Abs(TotaalDC), Masker2002.Value)
+'			FieldText(6) = "C:" & Dec(System.Math.Abs(TotaalDC), Mask2002.Value)
 '		ElseIf TotaalDC > 0 Then 
-'			FieldText(6) = "D:" & Dec(TotaalDC, Masker2002.Value)
+'			FieldText(6) = "D:" & Dec(TotaalDC, Mask2002.Value)
 '		Else
-'			FieldText(6) = "  " & Dec(TotaalDC, Masker2002.Value)
+'			FieldText(6) = "  " & Dec(TotaalDC, Mask2002.Value)
 '		End If
 
 '		CumTotaalDC = CumTotaalD + CumTotaalC
 '		If CumTotaalDC < 0 Then
-'			FieldText(7) = "C:" & Dec(System.Math.Abs(CumTotaalDC), Masker2002.Value)
+'			FieldText(7) = "C:" & Dec(System.Math.Abs(CumTotaalDC), Mask2002.Value)
 '		ElseIf CumTotaalDC > 0 Then 
-'			FieldText(7) = "D:" & Dec(CumTotaalDC, Masker2002.Value)
+'			FieldText(7) = "D:" & Dec(CumTotaalDC, Mask2002.Value)
 '		Else
-'			FieldText(7) = "  " & Dec(CumTotaalDC, Masker2002.Value)
+'			FieldText(7) = "  " & Dec(CumTotaalDC, Mask2002.Value)
 '		End If
 
 '		T = 0
@@ -854,7 +854,7 @@ End Class
 '				Else
 '					PeriodFromChosen.Value = Mid(txtTekstLijn(0).Text, 7, 4) & Mid(txtTekstLijn(0).Text, 4, 2) & Mid(txtTekstLijn(0).Text, 1, 2)
 '					PeriodToChosen.Value = Mid(txtTekstLijn(0).Text, 20, 4) & Mid(txtTekstLijn(0).Text, 17, 2) & Mid(txtTekstLijn(0).Text, 14, 2)
-'					If PeriodFromChosen.Value < VB.Left(BoekjaarVanTot.Value, 8) Or PeriodToChosen.Value > VB.Right(BoekjaarVanTot.Value, 8) Then
+'					If PeriodFromChosen.Value < VB.Left(BookyearFromTo.Value, 8) Or PeriodToChosen.Value > VB.Right(BookyearFromTo.Value, 8) Then
 '						'MsgBox "Geen selectie BUITEN het boekjaar a.u.b. !"
 '						'txtTekstLijn(0).Text = BJPERDAT.PeriodeBoekjaar.Text
 '						'txtTekstLijn(0).SetFocus

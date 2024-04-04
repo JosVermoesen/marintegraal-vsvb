@@ -82,7 +82,7 @@ End Class
 '			On Error Resume Next
 '			Err.Clear()
 '			rsBrief.CursorLocation = ADODB.CursorLocationEnum.adUseClient
-'			Msg = "SELECT * FROM Briefwisseling WHERE A110 = " & "'" & vBibTekst(FlPartij, "#A110 #") & "'"
+'			Msg = "SELECT * FROM Briefwisseling WHERE A110 = " & "'" & AdoGetField(FlPartij, "#A110 #") & "'"
 
 '			rsBrief.Open(Msg, adntDB, ADODB.CursorTypeEnum.adOpenDynamic, ADODB.LockTypeEnum.adLockOptimistic)
 '			If Err.Number Then
@@ -129,7 +129,7 @@ End Class
 '				Xlog.Close()
 '				'UPGRADE_ISSUE: Load statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B530EFF2-3132-48F8-B8BC-D88AF543D321"'
 '				Load(Xlog)
-'				Xlog.Text = "Bericht inladen voor : " & vBibTekst(FlPartij, "#A100 #")
+'				Xlog.Text = "Bericht inladen voor : " & AdoGetField(FlPartij, "#A100 #")
 '				Xlog.X.Rows = 1
 '				Xlog.X.Cols = 2
 '				Xlog.X.Col = 0
@@ -249,7 +249,7 @@ End Class
 'VolgendeLijn: 
 '		T = T + 1
 '		Select Case FlPartij
-'			Case FlKlant, FlLeverancier
+'			Case TableOfCustomers, TableOfSuppliers
 '				Xlog.X.AddItem(rsBrief.Fields("v128").Value & vbTab & rsBrief.Fields("v129").Value)
 '		End Select
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -277,7 +277,7 @@ End Class
 '		'UPGRADE_WARNING: Couldn't resolve default property of object LaadTekst(dnnInstellingen, PostvakIO). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '		If LaadTekst("dnnInstellingen", "PostvakIO") = "" Then
 '			MsgBox("Nieuwe PC of nog geen instellingen voor PDF Postvak In.  Aanbevolen in te te stellen a.u.b. via submenu DotNetNuke.", MsgBoxStyle.Information)
-'			Mim.TekenOpen.InitialDirectory = BedrijfsLokatie
+'			Mim.TekenOpen.InitialDirectory = LocationCompanyData
 '		Else
 '			'UPGRADE_WARNING: Couldn't resolve default property of object LaadTekst(dnnInstellingen, PostvakIO). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '			'UPGRADE_WARNING: Couldn't resolve default property of object LaadTekst(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
@@ -300,7 +300,7 @@ End Class
 '	Private Sub cbFaxBijlage_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cbFaxBijlage.Click
 
 '		Mim.TekenOpen.FileName = mailBijlage
-'		'Mim.Teken.InitDir = BedrijfsLokatie
+'		'Mim.Teken.InitDir = LocationCompanyData
 '		Mim.TekenOpen.ShowDialog()
 '		If Mim.TekenOpen.FileName = "" Then Exit Sub
 '		faxBijlage = Mim.TekenOpen.FileName
@@ -488,7 +488,7 @@ End Class
 '			Else
 '				Me.MPIBericht.MsgSubject = TxtTekst(1).Text
 '				Me.MPIBericht.MsgNoteText = "Briefwisseling in bijlage als MS Word Document" 'txtTekst0.Text
-'				'KtrlBox = MsgBox("Verstuurde E-mail aan " & vBibTekst(FlPartij, "#v224 #") & vbCr & vbCr & "Afdruk maken ?", vbQuestion + vbYesNo + vbDefaultButton2)
+'				'KtrlBox = MsgBox("Verstuurde E-mail aan " & AdoGetField(FlPartij, "#v224 #") & vbCr & vbCr & "Afdruk maken ?", vbQuestion + vbYesNo + vbDefaultButton2)
 '				Me.MPIBericht.AttachmentPathName = BestandHier
 '			End If
 '			If mailBijlage <> "" Then
@@ -565,7 +565,7 @@ End Class
 '			Me.cbDocumentPrinterHier.Items.Add(Printers(TelTot).Port & " " & Printers(TelTot).DeviceName)
 '		Next 
 '		cbDocumentPrinterHier.SelectedIndex = dokumentPrinterNr
-'		If String99(Lees, 299) = "2" Then
+'		If String99(Reading, 299) = "2" Then
 '			Me.cbPDF.CheckState = System.Windows.Forms.CheckState.Unchecked
 '		Else
 '			Me.cbPDF.CheckState = System.Windows.Forms.CheckState.Checked
@@ -578,7 +578,7 @@ End Class
 '		Briefwisseling(1).Enabled = True
 '		Briefwisseling(0).Checked = True
 
-'		KontaktPersoon = Val(String99(Lees, 201))
+'		KontaktPersoon = Val(String99(Reading, 201))
 
 '		CmbAfdrukModus.Items.Clear()
 '		CmbAfdrukModus.Items.Add("0: E-mail via normale tekst")
@@ -612,10 +612,10 @@ End Class
 '			Select Case Partij(0).Checked
 '				Case True
 '					PartijKode.Value = "K"
-'					FlPartij = FlKlant
+'					FlPartij = TableOfCustomers
 '				Case False
 '					PartijKode.Value = "L"
-'					FlPartij = FlLeverancier
+'					FlPartij = TableOfSuppliers
 '			End Select
 '			BriefType.Value = "B"
 '			Briefwisseling(0).Checked = 1
@@ -661,12 +661,12 @@ End Class
 '		On Error GoTo ErrorLoad
 
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		If Dir(BedrijfsLokatie & "DDEF" & TypeEnTaal & ".Txt") = "" Then
+'		If Dir(LocationCompanyData & "DDEF" & TypeEnTaal & ".Txt") = "" Then
 '			Beep()
 '			Exit Sub
 '		Else
 '			FlFree = FreeFile
-'			FileOpen(FlFree, BedrijfsLokatie & "DDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
+'			FileOpen(FlFree, LocationCompanyData & "DDEF" & TypeEnTaal & ".Txt", OpenMode.Input)
 '			Input(FlFree, Dummy)
 '			Input(FlFree, VsoftVanaf)
 '			Input(FlFree, VsoftTot)
@@ -729,15 +729,15 @@ End Class
 '		Dim Breedte As Object
 
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		If Dir(BedrijfsLokatie & "DDEF" & TypeEnTaal & "G.Txt") = "" Then
+'		If Dir(LocationCompanyData & "DDEF" & TypeEnTaal & "G.Txt") = "" Then
 '		Else
 '			FlFree = FreeFile
-'			FileOpen(FlFree, BedrijfsLokatie & "DDEF" & TypeEnTaal & "G.Txt", OpenMode.Input)
+'			FileOpen(FlFree, LocationCompanyData & "DDEF" & TypeEnTaal & "G.Txt", OpenMode.Input)
 '			While Not EOF(FlFree)
 '				Input(FlFree, FiguurX)
 '				Input(FlFree, FiguurY)
 '				Input(FlFree, FiguurName)
-'				If ScrLeesTekstBestand(Msg, BedrijfsLokatie & FiguurName & ".mfd") Then
+'				If ScrLeesTekstBestand(Msg, LocationCompanyData & FiguurName & ".mfd") Then
 '					FigBestandsnaam = VB.Left(Msg, InStr(Msg, vbTab) - 1)
 '					Mim.imgFiguur.Image = System.Drawing.Image.FromFile(FigBestandsnaam)
 '					Msg = Mid(Msg, InStr(Msg, vbTab) + 1)
@@ -781,7 +781,7 @@ End Class
 '		BerichtInofUit(1).Enabled = False
 '		BerichtInofUit(0).Enabled = True
 '		Zoeken.Enabled = True
-'		TLBRecord(FlAllerlei) = ""
+'		TLBRecord(TableOfVarious) = ""
 
 '		Partij_CheckedChanged(Partij.Item(0), New System.EventArgs())
 
@@ -939,7 +939,7 @@ End Class
 '				.Title = "dnnBriefwisseling"
 '			End With
 '			pdfDrukAf()
-'			Mim.Report.WriteDoc(ProgrammaLokatie & VB6.Format(Now, "YYYYMMDDHHMMSS") & "-dnnBriefwisseling.pdf")
+'			Mim.Report.WriteDoc(ProgramLocation & VB6.Format(Now, "YYYYMMDDHHMMSS") & "-dnnBriefwisseling.pdf")
 '			'If Me.cbPdfExport.Value = vbChecked Then
 '			'    MsgBox "exporteren naar DNN folder of andere nog te definiëren"
 '			'    Mim.Report.CloseDoc
@@ -993,14 +993,14 @@ End Class
 '			BerichtInofUit(1).Enabled = False
 '			Exit Sub
 '		Else
-'			Msg = vBibTekst(FlPartij, "#A100 #") & vbCrLf
-'			Msg = Msg & vBibTekst(FlPartij, "#A125 #") & vbCrLf
-'			Msg = Msg & vBibTekst(FlPartij, "#A104 #") & vBibTekst(FlPartij, "#A105 #") & vBibTekst(FlPartij, "#A106 #") & vbCrLf
-'			Msg = Msg & vBibTekst(FlPartij, "#A109 #") & " " & vBibTekst(FlPartij, "#A107 #") & " " & vBibTekst(FlPartij, "#A108 #")
+'			Msg = AdoGetField(FlPartij, "#A100 #") & vbCrLf
+'			Msg = Msg & AdoGetField(FlPartij, "#A125 #") & vbCrLf
+'			Msg = Msg & AdoGetField(FlPartij, "#A104 #") & AdoGetField(FlPartij, "#A105 #") & AdoGetField(FlPartij, "#A106 #") & vbCrLf
+'			Msg = Msg & AdoGetField(FlPartij, "#A109 #") & " " & AdoGetField(FlPartij, "#A107 #") & " " & AdoGetField(FlPartij, "#A108 #")
 
 '			txtTekst0.Enabled = True
 '			VanTot(JumpTeller).Text = FVT(FlPartij, Sortering.SelectedIndex)
-'			VanTot(2).Text = vBibTekst(FlPartij, "#A110 #")
+'			VanTot(2).Text = AdoGetField(FlPartij, "#A110 #")
 '			If Briefwisseling(0).Checked Then
 '				VanTot(1).Text = VanTot(0).Text
 '			Else
@@ -1009,30 +1009,30 @@ End Class
 '					GoTo Jumper
 '				End If
 '			End If
-'			Taal = vBibTekst(FlPartij, "#A10C #")
-'			TxtTekst(2).Text = Mid(fmarBoxText("003", Taal, vBibTekst(FlPartij, "#A102 #")), 4, 10)
-'			TxtTekst(3).Text = vBibTekst(FlPartij, "#A100 #")
-'			TxtTekst(0).Text = vBibTekst(FlPartij, "#A101 #")
-'			If Val(vBibTekst(FlPartij, "#A102 #")) = 0 Then
+'			Taal = AdoGetField(FlPartij, "#A10C #")
+'			TxtTekst(2).Text = Mid(fmarBoxText("003", Taal, AdoGetField(FlPartij, "#A102 #")), 4, 10)
+'			TxtTekst(3).Text = AdoGetField(FlPartij, "#A100 #")
+'			TxtTekst(0).Text = AdoGetField(FlPartij, "#A101 #")
+'			If Val(AdoGetField(FlPartij, "#A102 #")) = 0 Then
 '				TxtTekst(2).Text = ""
 '			End If
-'			TxtTekst(4).Text = Mid(fmarBoxText("003", Taal, vBibTekst(FlPartij, "#vs01 #")), 4, 10)
-'			TxtTekst(5).Text = vBibTekst(FlPartij, "#A125 #")
-'			TxtTekst(12).Text = vBibTekst(FlPartij, "#A127 #")
+'			TxtTekst(4).Text = Mid(fmarBoxText("003", Taal, AdoGetField(FlPartij, "#vs01 #")), 4, 10)
+'			TxtTekst(5).Text = AdoGetField(FlPartij, "#A125 #")
+'			TxtTekst(12).Text = AdoGetField(FlPartij, "#A127 #")
 '			If KontaktPersoon = 1 Then
-'				If Val(vBibTekst(FlPartij, "#vs01 #")) = 0 Then
+'				If Val(AdoGetField(FlPartij, "#vs01 #")) = 0 Then
 '					TxtTekst(4).Text = ""
 '				End If
 '			Else
 '				TxtTekst(4).Text = ""
 '				TxtTekst(12).Text = ""
 '			End If
-'			TxtTekst(6).Text = vBibTekst(FlPartij, "#A104 #")
-'			TxtTekst(7).Text = vBibTekst(FlPartij, "#A105 #")
-'			TxtTekst(8).Text = vBibTekst(FlPartij, "#A106 #")
-'			TxtTekst(9).Text = vBibTekst(FlPartij, "#A109 #")
-'			TxtTekst(10).Text = vBibTekst(FlPartij, "#A107 #")
-'			TxtTekst(11).Text = vBibTekst(FlPartij, "#A108 #")
+'			TxtTekst(6).Text = AdoGetField(FlPartij, "#A104 #")
+'			TxtTekst(7).Text = AdoGetField(FlPartij, "#A105 #")
+'			TxtTekst(8).Text = AdoGetField(FlPartij, "#A106 #")
+'			TxtTekst(9).Text = AdoGetField(FlPartij, "#A109 #")
+'			TxtTekst(10).Text = AdoGetField(FlPartij, "#A107 #")
+'			TxtTekst(11).Text = AdoGetField(FlPartij, "#A108 #")
 '			TxtTekst(1).Focus()
 '			ReedsBestaand = False
 '		End If
@@ -1062,7 +1062,7 @@ End Class
 '		XDoEvents = System.Windows.Forms.Application.DoEvents()
 '		Select Case Briefwisseling(0).Checked
 '			Case True
-'				MsJetGet(FlPartij, 0, vSet(VanTot(2).Text, 12))
+'				JetGet(FlPartij, 0, SetSpacing(VanTot(2).Text, 12))
 '				If Ktrl Then
 '					MsgBox("Partij '" & Trim(VanTot(2).Text) & "' niet gevonden.  Gelieve klant of leveranciers nogmaals te SELECTeren en opnieuw proberen afdrukken a.u.b.")
 '				Else
@@ -1071,15 +1071,15 @@ End Class
 '					GoSub PrintHetPDFdokument
 '				End If
 '			Case False
-'				bGetOrGreater(FlPartij, (Sortering.SelectedIndex), vSet(VanTot(0).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)))
-'				If Ktrl Or KeyBuf(FlPartij) > vSet(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
+'				JetGetOrGreater(FlPartij, (Sortering.SelectedIndex), SetSpacing(VanTot(0).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)))
+'				If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '				Else
 '					RecordToVeld(FlPartij)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintHetPDFdokument
 '					Do 
 '						bNext(FlPartij)
-'						If Ktrl Or KeyBuf(FlPartij) > vSet(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
+'						If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '							Exit Do
 '						Else
 '							RecordToVeld(FlPartij)
@@ -1114,21 +1114,21 @@ End Class
 
 'KopBalk: 
 '		Pagina = Pagina + 1
-'		Taal = vBibTekst(FlPartij, "#A10C #")
-'		TxtTekst(2).Text = Mid(fmarBoxText("003", Taal, vBibTekst(FlPartij, "#A102 #")), 4, 10)
-'		TxtTekst(3).Text = vBibTekst(FlPartij, "#A100 #")
-'		TxtTekst(0).Text = vBibTekst(FlPartij, "#A101 #")
-'		If Val(vBibTekst(FlPartij, "#A102 #")) = 0 Then
+'		Taal = AdoGetField(FlPartij, "#A10C #")
+'		TxtTekst(2).Text = Mid(fmarBoxText("003", Taal, AdoGetField(FlPartij, "#A102 #")), 4, 10)
+'		TxtTekst(3).Text = AdoGetField(FlPartij, "#A100 #")
+'		TxtTekst(0).Text = AdoGetField(FlPartij, "#A101 #")
+'		If Val(AdoGetField(FlPartij, "#A102 #")) = 0 Then
 '			rSip(0) = TxtTekst(3).Text
 '			TxtTekst(2).Text = ""
 '		Else
 '			rSip(0) = Trim(TxtTekst(2).Text) & " " & Trim(TxtTekst(3).Text) & " " & Trim(TxtTekst(0).Text)
 '		End If
-'		TxtTekst(4).Text = Mid(fmarBoxText("003", Taal, vBibTekst(FlPartij, "#vs01 #")), 4, 10)
-'		TxtTekst(5).Text = vBibTekst(FlPartij, "#A125 #")
-'		TxtTekst(12).Text = vBibTekst(FlPartij, "#A127 #")
+'		TxtTekst(4).Text = Mid(fmarBoxText("003", Taal, AdoGetField(FlPartij, "#vs01 #")), 4, 10)
+'		TxtTekst(5).Text = AdoGetField(FlPartij, "#A125 #")
+'		TxtTekst(12).Text = AdoGetField(FlPartij, "#A127 #")
 '		If KontaktPersoon = 1 Then
-'			If Val(vBibTekst(FlPartij, "#vs01 #")) = 0 Then
+'			If Val(AdoGetField(FlPartij, "#vs01 #")) = 0 Then
 '				rSip(1) = TxtTekst(5).Text
 '				TxtTekst(4).Text = ""
 '			Else
@@ -1139,14 +1139,14 @@ End Class
 '			TxtTekst(4).Text = ""
 '			TxtTekst(5).Text = ""
 '		End If
-'		TxtTekst(6).Text = vBibTekst(FlPartij, "#A104 #")
-'		TxtTekst(7).Text = vBibTekst(FlPartij, "#A105 #")
-'		TxtTekst(8).Text = vBibTekst(FlPartij, "#A106 #")
+'		TxtTekst(6).Text = AdoGetField(FlPartij, "#A104 #")
+'		TxtTekst(7).Text = AdoGetField(FlPartij, "#A105 #")
+'		TxtTekst(8).Text = AdoGetField(FlPartij, "#A106 #")
 '		rSip(2) = Trim(TxtTekst(6).Text) & " " & Trim(TxtTekst(7).Text) & " " & Trim(TxtTekst(8).Text)
 
-'		TxtTekst(9).Text = vBibTekst(FlPartij, "#A109 #")
-'		TxtTekst(10).Text = vBibTekst(FlPartij, "#A107 #")
-'		TxtTekst(11).Text = vBibTekst(FlPartij, "#A108 #")
+'		TxtTekst(9).Text = AdoGetField(FlPartij, "#A109 #")
+'		TxtTekst(10).Text = AdoGetField(FlPartij, "#A107 #")
+'		TxtTekst(11).Text = AdoGetField(FlPartij, "#A108 #")
 '		rSip(4) = TxtTekst(9).Text & " " & TxtTekst(10).Text & " " & TxtTekst(11).Text
 
 '		PrintUserDef("1" & Taal & "4")
@@ -1188,14 +1188,14 @@ End Class
 '				Select Case Taal
 '					Case "1"
 '						BetreftTXT = "Concerne : "
-'						If vBibTekst(FlPartij, "#A125 #") = "" Then
+'						If AdoGetField(FlPartij, "#A125 #") = "" Then
 '							AanspreekTitel = "Cher Cliènt,"
 '						Else
 '							AanspreekTitel = "Cher Cliènts,"
 '						End If
 '					Case Else
 '						BetreftTXT = "Betreft  : "
-'						If vBibTekst(FlPartij, "#A125 #") = "" Then
+'						If AdoGetField(FlPartij, "#A125 #") = "" Then
 '							AanspreekTitel = "Beste Klant,"
 '						Else
 '							AanspreekTitel = "Beste Klanten,"
@@ -1288,7 +1288,7 @@ End Class
 '		XDoEvents = System.Windows.Forms.Application.DoEvents()
 '		Select Case Briefwisseling(0).Checked
 '			Case True
-'				MsJetGet(FlPartij, 0, vSet(VanTot(2).Text, 12))
+'				JetGet(FlPartij, 0, SetSpacing(VanTot(2).Text, 12))
 '				If Ktrl Then
 '					MsgBox("Partij '" & Trim(VanTot(2).Text) & "' niet gevonden.  Gelieve klant of leveranciers nogmaals te SELECTeren en opnieuw proberen afdrukken a.u.b.")
 '				Else
@@ -1297,15 +1297,15 @@ End Class
 '					GoSub PrintHetdokument
 '				End If
 '			Case False
-'				bGetOrGreater(FlPartij, (Sortering.SelectedIndex), vSet(VanTot(0).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)))
-'				If Ktrl Or KeyBuf(FlPartij) > vSet(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
+'				JetGetOrGreater(FlPartij, (Sortering.SelectedIndex), SetSpacing(VanTot(0).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)))
+'				If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '				Else
 '					RecordToVeld(FlPartij)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintHetdokument
 '					Do 
 '						bNext(FlPartij)
-'						If Ktrl Or KeyBuf(FlPartij) > vSet(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
+'						If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '							Exit Do
 '						Else
 '							RecordToVeld(FlPartij)
@@ -1339,21 +1339,21 @@ End Class
 
 'KopBalk: 
 '		Pagina = Pagina + 1
-'		Taal = vBibTekst(FlPartij, "#A10C #")
-'		TxtTekst(2).Text = Mid(fmarBoxText("003", Taal, vBibTekst(FlPartij, "#A102 #")), 4, 10)
-'		TxtTekst(3).Text = vBibTekst(FlPartij, "#A100 #")
-'		TxtTekst(0).Text = vBibTekst(FlPartij, "#A101 #")
-'		If Val(vBibTekst(FlPartij, "#A102 #")) = 0 Then
+'		Taal = AdoGetField(FlPartij, "#A10C #")
+'		TxtTekst(2).Text = Mid(fmarBoxText("003", Taal, AdoGetField(FlPartij, "#A102 #")), 4, 10)
+'		TxtTekst(3).Text = AdoGetField(FlPartij, "#A100 #")
+'		TxtTekst(0).Text = AdoGetField(FlPartij, "#A101 #")
+'		If Val(AdoGetField(FlPartij, "#A102 #")) = 0 Then
 '			rSip(0) = TxtTekst(3).Text
 '			TxtTekst(2).Text = ""
 '		Else
 '			rSip(0) = Trim(TxtTekst(2).Text) & " " & Trim(TxtTekst(3).Text) & " " & Trim(TxtTekst(0).Text)
 '		End If
-'		TxtTekst(4).Text = Mid(fmarBoxText("003", Taal, vBibTekst(FlPartij, "#vs01 #")), 4, 10)
-'		TxtTekst(5).Text = vBibTekst(FlPartij, "#A125 #")
-'		TxtTekst(12).Text = vBibTekst(FlPartij, "#A127 #")
+'		TxtTekst(4).Text = Mid(fmarBoxText("003", Taal, AdoGetField(FlPartij, "#vs01 #")), 4, 10)
+'		TxtTekst(5).Text = AdoGetField(FlPartij, "#A125 #")
+'		TxtTekst(12).Text = AdoGetField(FlPartij, "#A127 #")
 '		If KontaktPersoon = 1 Then
-'			If Val(vBibTekst(FlPartij, "#vs01 #")) = 0 Then
+'			If Val(AdoGetField(FlPartij, "#vs01 #")) = 0 Then
 '				rSip(1) = TxtTekst(5).Text
 '				TxtTekst(4).Text = ""
 '			Else
@@ -1364,14 +1364,14 @@ End Class
 '			TxtTekst(4).Text = ""
 '			TxtTekst(5).Text = ""
 '		End If
-'		TxtTekst(6).Text = vBibTekst(FlPartij, "#A104 #")
-'		TxtTekst(7).Text = vBibTekst(FlPartij, "#A105 #")
-'		TxtTekst(8).Text = vBibTekst(FlPartij, "#A106 #")
+'		TxtTekst(6).Text = AdoGetField(FlPartij, "#A104 #")
+'		TxtTekst(7).Text = AdoGetField(FlPartij, "#A105 #")
+'		TxtTekst(8).Text = AdoGetField(FlPartij, "#A106 #")
 '		rSip(2) = Trim(TxtTekst(6).Text) & " " & Trim(TxtTekst(7).Text) & " " & Trim(TxtTekst(8).Text)
 
-'		TxtTekst(9).Text = vBibTekst(FlPartij, "#A109 #")
-'		TxtTekst(10).Text = vBibTekst(FlPartij, "#A107 #")
-'		TxtTekst(11).Text = vBibTekst(FlPartij, "#A108 #")
+'		TxtTekst(9).Text = AdoGetField(FlPartij, "#A109 #")
+'		TxtTekst(10).Text = AdoGetField(FlPartij, "#A107 #")
+'		TxtTekst(11).Text = AdoGetField(FlPartij, "#A108 #")
 '		rSip(4) = TxtTekst(9).Text & " " & TxtTekst(10).Text & " " & TxtTekst(11).Text
 
 '		PrintUserDef("1" & Taal & "4")
@@ -1413,14 +1413,14 @@ End Class
 '				Select Case Taal
 '					Case "1"
 '						BetreftTXT = "Concerne : "
-'						If vBibTekst(FlPartij, "#A125 #") = "" Then
+'						If AdoGetField(FlPartij, "#A125 #") = "" Then
 '							AanspreekTitel = "Cher Cliènt,"
 '						Else
 '							AanspreekTitel = "Cher Cliènts,"
 '						End If
 '					Case Else
 '						BetreftTXT = "Betreft  : "
-'						If vBibTekst(FlPartij, "#A125 #") = "" Then
+'						If AdoGetField(FlPartij, "#A125 #") = "" Then
 '							AanspreekTitel = "Beste Klant,"
 '						Else
 '							AanspreekTitel = "Beste Klanten,"

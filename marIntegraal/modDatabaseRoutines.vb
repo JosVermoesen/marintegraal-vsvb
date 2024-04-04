@@ -3,55 +3,92 @@ Option Explicit On
 Module modDataBaseRoutines
 
     Dim X As Short
-    Function adoBlankoRecord(ByRef Fl As Integer) As Boolean
+
+    Sub TransBegin()
+
+        On Error Resume Next
+        Err.Clear()
+        'NTRuimte.BeginTrans
+        adntDB.BeginTrans()
+        Ktrl = Err.Number
+        If Err.Number Then
+            MsgBox(ErrorToString())
+        End If
+
+    End Sub
+
+    Sub TransCommit()
+
+        On Error Resume Next
+        adntDB.CommitTrans()
+        Ktrl = Err.Number
+        If Err.Number Then
+            MsgBox(ErrorToString())
+        End If
+
+    End Sub
+
+    Sub TransAbort()
+
+        On Error Resume Next
+        Err.Clear()
+        'NTRuimte.Rollback
+        adntDB.RollbackTrans()
+        Ktrl = Err.Number
+        If Err.Number Then
+            MsgBox(ErrorToString())
+        End If
+
+    End Sub
+
+    Function AdoNewRecord(ByRef Fl As Integer) As Boolean
 
         TLBRecord(Fl) = ""
         Select Case Fl
-            Case FlKlant, FlLeverancier
-                vBib(Fl, "2", "A10C") 'Taalkode
-                vBib(Fl, "002", "v149") 'Landnummer  ISO kode
-                vBib(Fl, "B  ", "A109") 'Landkode Postkantoor
-                vBib(Fl, "BE", "v150") 'Landkode    ISO kode
+            Case TableOfCustomers, TableOfSuppliers
+                AdoInsertToRecord(Fl, "2", "A10C") 'Taalkode
+                AdoInsertToRecord(Fl, "002", "v149") 'Landnummer  ISO kode
+                AdoInsertToRecord(Fl, "B  ", "A109") 'Landkode Postkantoor
+                AdoInsertToRecord(Fl, "BE", "v150") 'Landkode    ISO kode
                 'If bhEuro Then
-                vBib(Fl, "EUR", "vs03") 'Munteenheid ISO kode
+                AdoInsertToRecord(Fl, "EUR", "vs03") 'Munteenheid ISO kode
                 'Else
-                'vBib(Fl, "BEF", "vs03") 'Munteenheid ISO kode
+                'AdoInsertToRecord(Fl, "BEF", "vs03") 'Munteenheid ISO kode
                 'End If
-                vBib(Fl, "1", "vs07") 'exemplaren dokumenten
-            Case FlLedgerAccount
-                vBib(Fl, "O", "v032") 'Budgetcode
+                AdoInsertToRecord(Fl, "1", "vs07") 'exemplaren dokumenten
+            Case TableOfLedgerAccounts
+                AdoInsertToRecord(Fl, "O", "v032") 'Budgetcode
         End Select
         Return True
 
     End Function
 
-    Function vSet(ByRef fTekst As String, ByRef fLengte As Short) As String
+    Function SetSpacing(ByRef fTekst As String, ByRef fLengte As Short) As String
         Dim b As String
 
         b = Left(fTekst, fLengte)
-        vSet = b & Space(fLengte - Len(b))
+        SetSpacing = b & Space(fLengte - Len(b))
 
     End Function
 
-
-    Sub vBib(ByRef Fl As Short, ByRef StringTekst1 As String, ByRef StringTekst2 As String)
+    Sub AdoInsertToRecord(ByRef Fl As Short, ByRef FieldString1 As String, ByRef FieldString2 As String)
         Dim TBLen As Short
         Dim TBStart As Short
         Dim TBStop As Short
         Dim TBCode As String
 
         TBCode = "#     #"
-        Mid(TBCode, 2, 5) = StringTekst2
+        Mid(TBCode, 2, 5) = FieldString2
 
-        If StringTekst1 = "" Then
-            StringTekst1 = " "
+        If FieldString1 = "" Then
+            FieldString1 = " "
         End If
 
 jump:
         If InStr(TLBRecord(Fl), TBCode) = 0 Then
-            TLBRecord(Fl) = TLBRecord(Fl) & TBCode & StringTekst1 & "#"
+            TLBRecord(Fl) = TLBRecord(Fl) & TBCode & FieldString1 & "#"
         Else
-            If RTrim(vBibTekst(Fl, TBCode)) = StringTekst1 Then
+            If RTrim(AdoGetField(Fl, TBCode)) = FieldString1 Then
                 Exit Sub
             Else
                 TBLen = Len(TLBRecord(Fl))
@@ -65,38 +102,38 @@ jump:
     End Sub
 
 
-    Function vBibTekst(ByRef Fl As Short, ByRef TBS As String) As String
+    Function AdoGetField(ByRef Fl As Short, ByRef TBS As String) As String
 
-        Dim tbsHier As String
+        Dim tbsHere As String = ""
         If Mid(TBS, 1, 1) = "#" And Len(TBS) = 7 Then
-            tbsHier = TBS
-        ElseIf Len(tbs) = 6 Then
-            tbsHier = "#     #"
-            Mid(tbsHier, 2) = Mid(TBS, 2, 4)
+            tbsHere = TBS
+        ElseIf Len(TBS) = 6 Then
+            tbsHere = "#     #"
+            Mid(tbsHere, 2) = Mid(TBS, 2, 4)
         Else
             Stop
         End If
         Err.Clear()
         On Error Resume Next
         If TLBRecord(Fl) = "" Then
-            vBibTekst = ""
+            AdoGetField = ""
         Else
-            vBibTekst = Mid(TLBRecord(Fl), InStr(TLBRecord(Fl), tbsHier) + 7, InStr(InStr(TLBRecord(Fl), tbsHier) + 7, TLBRecord(Fl), "#") - (InStr(TLBRecord(Fl), tbsHier) + 7))
+            AdoGetField = Mid(TLBRecord(Fl), InStr(TLBRecord(Fl), tbsHere) + 7, InStr(InStr(TLBRecord(Fl), tbsHere) + 7, TLBRecord(Fl), "#") - (InStr(TLBRecord(Fl), tbsHere) + 7))
         End If
-        If Err.Number Then vBibTekst = ""
+        If Err.Number Then AdoGetField = ""
 
     End Function
 
-    Function xrsMar(ByRef Fl As Short, ByRef TBS As String) As Object
+    Function XrsMar(ByRef Fl As Short, ByRef TBS As String) As Object
 
         'UPGRADE_WARNING: IsEmpty was upgraded to IsNothing and has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
         'UPGRADE_WARNING: Use of Null/IsNull() detected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="2EED02CB-5C0E-4DC1-AE94-4FAA3A30F51A"'
         If IsDBNull(rsMAR(Fl).Fields(TBS).Value) Or IsNothing(rsMAR(Fl).Fields(TBS).Value) Then
-            'UPGRADE_WARNING: Couldn't resolve default property of object xrsMar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            xrsMar = ""
+            'UPGRADE_WARNING: Couldn't resolve default property of object XrsMar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            XrsMar = ""
         Else
-            'UPGRADE_WARNING: Couldn't resolve default property of object xrsMar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            xrsMar = rsMAR(Fl).Fields(TBS).Value
+            'UPGRADE_WARNING: Couldn't resolve default property of object XrsMar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            XrsMar = rsMAR(Fl).Fields(TBS).Value
         End If
 
     End Function
@@ -117,36 +154,34 @@ jump:
 
     End Function
 
-
     Sub ClearFlDummy()
 
-        bClose(FlDummy)
-        Ktrl = bOpen(FlDummy)
-        bFirst(FlDummy, 0)
+        JetTableClose(TableDummy)
+        Ktrl = JetTableOpen(TableDummy)
+        JetGetFirst(TableDummy, 0)
         If Ktrl Then
-            bClose(FlDummy)
+            JetTableClose(TableDummy)
             Exit Sub
         End If
-        bClose(FlDummy)
+        JetTableClose(TableDummy)
 
     End Sub
 
-
-    Public Function Editmogelijk(ByRef Fl As Short) As Short
+    Public Function EditIsPossible(ByRef Fl As Short) As Short
         Dim TTT As Short
 
-        Editmogelijk = True
+        EditIsPossible = True
         Exit Function
 
-ProbeerEdit:
-        'On Local Error GoTo OpnieuwEdit
+EditTry:
+        'On Local Error GoTo EditAgain
         Err.Clear()
         'If ntRS(Fl).EditMode = dbEditNone Then
         If rsMAR(Fl).EditMode = ADODB.EditModeEnum.adEditNone Then
             MsgBox("stop")
-            Editmogelijk = False
+            EditIsPossible = False
         Else
-            Editmogelijk = True
+            EditIsPossible = True
         End If
         'If IsNull(ntRS(Fl).Fields(0)) Then
         '    ntRS(Fl).AddNew
@@ -155,19 +190,19 @@ ProbeerEdit:
         'End If
         Exit Function
 
-OpnieuwEdit:
+EditAgain:
         If Err.Number = 91 Then
-            bOpen(Fl)
-            GoTo ProbeerEdit
+            JetTableOpen(Fl)
+            GoTo EditTry
         ElseIf Err.Number = 3021 Then
             'MsgBox "addnew niet uitgevoerd voor bestand " + ntRS(Fl).Name + " !  Verwittig ons."
-            MsgBox("addnew niet uitgevoerd voor tabel " & bstNaam(Fl) & " !  Verwittig ons.")
+            MsgBox("addnew niet uitgevoerd voor tabel " & JetTableName(Fl) & " !  Verwittig ons.")
             Err.Clear()
             'ntRS(Fl).AddNew
             rsMAR(Fl).AddNew()
             'msgBox "Addnew 2e poging met succes " + ntRS(Fl).Name + " !  Vergeet ons niet te verwittigen a.u.b. !"
-            MsgBox("Addnew 2e poging met succes " & bstNaam(Fl) & " !  Vergeet ons niet te verwittigen a.u.b. !")
-            Editmogelijk = True
+            MsgBox("Addnew 2e poging met succes " & JetTableName(Fl) & " !  Vergeet ons niet te verwittigen a.u.b. !")
+            EditIsPossible = True
             Exit Function
         End If
         MsgBox(ErrorToString())
@@ -183,39 +218,11 @@ OpnieuwEdit:
 
     End Function
 
-
-    Sub TransAbort()
-
-        On Error Resume Next
-        Err.Clear()
-        'NTRuimte.Rollback
-        adntDB.RollbackTrans()
-        Ktrl = Err.Number
-        If Err.Number Then
-            MsgBox(ErrorToString())
-        End If
-
-    End Sub
-
-    Sub TransBegin()
-
-        On Error Resume Next
-        Err.Clear()
-        'NTRuimte.BeginTrans
-        adntDB.BeginTrans()
-        Ktrl = Err.Number
-        If Err.Number Then
-            MsgBox(ErrorToString())
-        End If
-
-    End Sub
-
-
-    Sub bClose(ByRef Fl As Short)
+    Sub JetTableClose(ByRef Fl As Short)
         Dim T As Short
 
         If Fl = 99 Then
-            For Fl = 0 To AFl
+            For Fl = 0 To NumberOfTables
                 TLBRecord(Fl) = ""
                 If rsMAR(Fl).State = ADODB.ObjectStateEnum.adStateClosed Then
                 Else
@@ -245,11 +252,11 @@ OpnieuwEdit:
 
     End Sub
 
-    Sub bDelete(ByRef Fl As Short)
+    Sub Bdelete(ByRef Fl As Short)
 
         Ktrl = 0
         If VsoftLog Then
-            SchrijfLog("DELETE", Fl, 0, "")
+            WriteLog("DELETE", Fl, 0, "")
         End If
 
         On Error Resume Next
@@ -263,38 +270,26 @@ OpnieuwEdit:
 
     End Sub
 
-
-    Sub TransCommit()
-
-        On Error Resume Next
-        adntDB.CommitTrans()
-        Ktrl = Err.Number
-        If Err.Number Then
-            MsgBox(ErrorToString())
-        End If
-
-    End Sub
-
-    Sub bFirst(ByRef Fl As Short, ByRef fIndex As Short)
+    Sub JetGetFirst(ByRef Fl As Short, ByRef fIndex As Short)
 
         On Error Resume Next
 
-        bClose(Fl)
+        JetTableClose(Fl)
         If VsoftLog Then
-            SchrijfLog("FIRST ", Fl, fIndex, "")
+            WriteLog("FIRST ", Fl, fIndex, "")
         End If
 
         Err.Clear()
         'SELECT  TOP 1 * FROM Klanten ORDER BY A110 ASC
-        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & bstNaam(Fl) & " ORDER BY " & FlIndexIs(Fl, fIndex) & " ASC"
-        Ktrl = 0 : bOpen(Fl)
+        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & JetTableName(Fl) & " ORDER BY " & JetTableUseIndex(Fl, fIndex) & " ASC"
+        Ktrl = 0 : JetTableOpen(Fl)
 
         If rsMAR(Fl).EOF Then
             MsgBox("Stop")
         ElseIf rsMAR(Fl).RecordCount = -1 Then
             MsgBox("Stop")
         ElseIf rsMAR(Fl).RecordCount = 1 Then
-            'fSleutel = vSet(fSleutel, FlIndexLen(Fl, fIndex))
+            'fKey = SetSpacing(fKey, FlIndexLen(Fl, fIndex))
             KeyIndex(Fl) = fIndex
         ElseIf rsMAR(Fl).RecordCount > 1 Then
             MsgBox("Stop")
@@ -302,25 +297,25 @@ OpnieuwEdit:
 
     End Sub
 
-    Sub MsJetGet(ByRef Fl As Short, ByRef fIndex As Short, ByRef fSleutel As String)
+    Sub JetGet(ByRef Fl As Short, ByRef fIndex As Short, ByRef fSleutel As String)
 
         On Error Resume Next
-        bClose(Fl)
+        JetTableClose(Fl)
         If VsoftLog Then
-            SchrijfLog("GET   ", Fl, fIndex, fSleutel)
+            WriteLog("GET   ", Fl, fIndex, fSleutel)
         End If
 
         Err.Clear()
-        fSleutel = vSet(fSleutel, FlIndexLen(Fl, fIndex))
-        sqlMsg(Fl) = "SELECT * FROM " & bstNaam(Fl) & " WHERE " & FlIndexIs(Fl, fIndex) & "='" & fSleutel & "'"
-        Ktrl = 0 : bOpen(Fl)
+        fSleutel = SetSpacing(fSleutel, FlIndexLen(Fl, fIndex))
+        sqlMsg(Fl) = "SELECT * FROM " & JetTableName(Fl) & " WHERE " & JetTableUseIndex(Fl, fIndex) & "='" & fSleutel & "'"
+        Ktrl = 0 : JetTableOpen(Fl)
 
         If rsMAR(Fl).EOF Then
             Ktrl = 9
         ElseIf rsMAR(Fl).RecordCount = -1 Then
             MsgBox("Stop")
         ElseIf rsMAR(Fl).RecordCount = 1 Then
-            KeyBuf(Fl) = vSet(fSleutel, FlIndexLen(Fl, fIndex))
+            KeyBuf(Fl) = SetSpacing(fSleutel, FlIndexLen(Fl, fIndex))
             KeyIndex(Fl) = fIndex
         ElseIf rsMAR(Fl).RecordCount > 1 Then
             MsgBox("Stop")
@@ -328,75 +323,66 @@ OpnieuwEdit:
 
     End Sub
 
-    Sub bGetOrGreater(ByRef Fl As Short, ByRef fIndex As Short, ByRef fSleutel As String)
+    Sub JetGetOrGreater(ByRef Fl As Short, ByRef fIndex As Short, ByRef fKey As String)
 
         On Error Resume Next
 
-opnieuwGOG:
+TryAgain:
         If rsMAR(Fl).State = ADODB.ObjectStateEnum.adStateClosed Then
-            Ktrl = bOpen(Fl)
+            Ktrl = JetTableOpen(Fl)
         End If
         If VsoftLog Then
-            SchrijfLog("GETOG ", Fl, fIndex, fSleutel)
+            WriteLog("GETOG ", Fl, fIndex, fKey)
         End If
 
         Err.Clear()
-        fSleutel = vSet(fSleutel, FlIndexLen(Fl, fIndex))
-        'If ntRS(Fl).Index = FLIndexCaption(Fl, fIndex) Then
+        fKey = SetSpacing(fKey, FlIndexLen(Fl, fIndex))
         If rsMAR(Fl).Index = FLIndexCaption(Fl, fIndex) Then
         Else
-            'ntRS(Fl).Index = FLIndexCaption(Fl, fIndex)
             rsMAR(Fl).Index = FLIndexCaption(Fl, fIndex)
             If Err.Number = -2147217883 Then
-                'MsgBox "Stop"
-                bClose(Fl)
-                System.Windows.Forms.Application.DoEvents()
-                GoTo opnieuwGOG
+                JetTableClose(Fl)
+                Application.DoEvents()
+                GoTo TryAgain
             End If
         End If
 
-        'ntRS(Fl).Seek "=", fSleutel
-        rsMAR(Fl).Seek(fSleutel, ADODB.SeekEnum.adSeekAfterEQ)
-
-        'If ntRS(Fl).NoMatch Then
+        rsMAR(Fl).Seek(fKey, ADODB.SeekEnum.adSeekAfterEQ)
 
         If rsMAR(Fl).EOF Then
             Ktrl = 4
         Else
             Ktrl = 0
         End If
-        KeyBuf(Fl) = rsMAR(Fl).Fields(RTrim(FlIndexIs(Fl, fIndex))).Value
+        KeyBuf(Fl) = rsMAR(Fl).Fields(RTrim(JetTableUseIndex(Fl, fIndex))).Value
         KeyIndex(Fl) = fIndex
 
-        'KeyBuf(Fl) = vSet(fSleutel, FlIndexLen(Fl, fIndex))
-
-
     End Sub
-    Sub bInsert(ByRef Fl As Short, ByRef fIndex As Short) ', fSleutel As String)
+
+    Sub JetInsert(ByRef Fl As Short, ByRef fIndex As Short) ', fKey As String)
         Dim XXXXX As Short
 
-        If Fl = Fldokument Then
+        If Fl = TableOfInvoices Then
         Else
             If rsMAR(Fl).State = ADODB.ObjectStateEnum.adStateClosed Then
-                Ktrl = bOpen(Fl)
+                Ktrl = JetTableOpen(Fl)
             End If
-            'ntRS(Fl).AddNew
             rsMAR(Fl).AddNew()
         End If
-        XXXXX = VeldToRecord(Fl)
+        XXXXX = FieldToRecord(Fl)
         If Ktrl = 32000 Then Exit Sub
         KeyIndex(Fl) = fIndex
         KeyBuf(Fl) = FVT(Fl, fIndex)
         If VsoftLog Then
-            SchrijfLog("INSERT", Fl, fIndex, "")
+            WriteLog("INSERT", Fl, fIndex, "")
         End If
 
-        Dim Pipo As Object
+        Dim JustTry As Object
         If Fl = FlJournaal Then
-            dKtrlCumul = dKtrlCumul + Val(rsMAR(FlJournaal).Fields("v068").Value)
+            dKtrlCumul += Val(rsMAR(FlJournaal).Fields("v068").Value)
             If bhEuro Then
-                dKtrlBEF = dKtrlBEF + System.Math.Round(Val(rsMAR(FlJournaal).Fields("v068").Value) * Euro, 0)
-                dKtrlEUR = dKtrlEUR + System.Math.Round(Val(rsMAR(FlJournaal).Fields("v068").Value), 2)
+                dKtrlBEF += Math.Round(Val(rsMAR(FlJournaal).Fields("v068").Value) * Euro, 0)
+                dKtrlEUR += Math.Round(Val(rsMAR(FlJournaal).Fields("v068").Value), 2)
                 On Error Resume Next
                 rsMAR(FlJournaal).Fields("dece068").Value = Val(rsMAR(FlJournaal).Fields("v068").Value)
                 Err.Clear()
@@ -406,61 +392,60 @@ opnieuwGOG:
                 dKtrlEUR = dKtrlEUR + System.Math.Round(Val(rsMAR(FlJournaal).Fields("v068").Value) / Euro, 2)
             End If
 
-            'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            Pipo = rsMAR(Fl).Fields("v019").Value & vbTab & rsMAR(Fl).Fields("v067").Value & vbTab
+            'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            JustTry = rsMAR(Fl).Fields("v019").Value & vbTab & rsMAR(Fl).Fields("v067").Value & vbTab
             If bhEuro Then
                 If Val(rsMAR(Fl).Fields("v068").Value) < 0 Then
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & "" & vbTab & Format(-Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00")
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & vbTab & "" & vbTab & Format(System.Math.Round(-Val(rsMAR(Fl).Fields("v068").Value) * Euro, 0), "#,##0.00")
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & "" & vbTab & Format(-Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00")
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & vbTab & "" & vbTab & Format(System.Math.Round(-Val(rsMAR(Fl).Fields("v068").Value) * Euro, 0), "#,##0.00")
                 Else
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & Format(Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00") & vbTab & ""
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & vbTab & Format(System.Math.Round(Val(rsMAR(Fl).Fields("v068").Value) * Euro, 0), "#,##0.00") & vbTab & ""
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & Format(Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00") & vbTab & ""
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & vbTab & Format(System.Math.Round(Val(rsMAR(Fl).Fields("v068").Value) * Euro, 0), "#,##0.00") & vbTab & ""
                 End If
             Else
                 If Val(rsMAR(Fl).Fields("v068").Value) < 0 Then
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & "" & vbTab & Format(-Val(rsMAR(Fl).Fields("v068").Value) / Euro, "#,##0.00")
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & vbTab & "" & vbTab & Format(-Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00")
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & "" & vbTab & Format(-Val(rsMAR(Fl).Fields("v068").Value) / Euro, "#,##0.00")
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & vbTab & "" & vbTab & Format(-Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00")
                 Else
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & Format(Val(rsMAR(Fl).Fields("v068").Value) / Euro, "#,##0.00") & vbTab & ""
-                    'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                    Pipo = Pipo & vbTab & Format(Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00") & vbTab & ""
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & Format(Val(rsMAR(Fl).Fields("v068").Value) / Euro, "#,##0.00") & vbTab & ""
+                    'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+                    JustTry = JustTry & vbTab & Format(Val(rsMAR(Fl).Fields("v068").Value), "#,##0.00") & vbTab & ""
                 End If
             End If
-            'UPGRADE_WARNING: Couldn't resolve default property of object Pipo. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+            'UPGRADE_WARNING: Couldn't resolve default property of object JustTry. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
             Stop
-            'TO DO:frmBoeking.mshfBoekLijst.AddItem(Pipo, frmBoeking.mshfBoekLijst.Rows - 1)
+            'TO DO:frmBoeking.mshfBoekLijst.AddItem(JustTry, frmBoeking.mshfBoekLijst.Rows - 1)
         End If
 
-        On Error GoTo AccesErrorInsert
+        On Error GoTo JetErrorInsert
         Ktrl = 0
-        'ntRS(Fl).Update
         rsMAR(Fl).Update()
         If Fl = FlJournaal Then
             If Ktrl Then
-                MsgBox("bInsert journaal stopkode " & Str(Ktrl))
+                MsgBox("JetInsert journaal stopkode " & Str(Ktrl))
             Else
-                MsJetGet(FlLedgerAccount, 0, Left(FVT(FlJournaal, 0), 7))
+                JetGet(TableOfLedgerAccounts, 0, Left(FVT(FlJournaal, 0), 7))
                 If Ktrl Then
                     MsgBox("Rekening " & Left(FVT(FlJournaal, 0), 7) & " niet te vinden." & vbCrLf & "Eerst SETUPrekening inbrengen a.u.b. !")
                     dKtrlCumul = dKtrlCumul + 99
                     Exit Sub
-                ElseIf AktiefBoekjaar Then
-                    RecordToVeld(FlLedgerAccount)
-                    vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e023 #")) + Val(vBibTekst(FlJournaal, "#v068 #"))), "e023")
-                    rsMAR(FlLedgerAccount).Fields("dece023").Value = rsMAR(FlLedgerAccount).Fields("dece023").Value + rsMAR(FlJournaal).Fields("dece068").Value
+                ElseIf ActiveBookyear Then
+                    RecordToVeld(TableOfLedgerAccounts)
+                    AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e023 #")) + Val(AdoGetField(FlJournaal, "#v068 #"))), "e023")
+                    rsMAR(TableOfLedgerAccounts).Fields("dece023").Value = rsMAR(TableOfLedgerAccounts).Fields("dece023").Value + rsMAR(FlJournaal).Fields("dece068").Value
                 Else
-                    RecordToVeld(FlLedgerAccount)
-                    vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e022 #")) + Val(vBibTekst(FlJournaal, "#v068 #"))), "e022")
-                    rsMAR(FlLedgerAccount).Fields("dece022").Value = rsMAR(FlLedgerAccount).Fields("dece022").Value + rsMAR(FlJournaal).Fields("dece068").Value
+                    RecordToVeld(TableOfLedgerAccounts)
+                    AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e022 #")) + Val(AdoGetField(FlJournaal, "#v068 #"))), "e022")
+                    rsMAR(TableOfLedgerAccounts).Fields("dece022").Value = rsMAR(TableOfLedgerAccounts).Fields("dece022").Value + rsMAR(FlJournaal).Fields("dece068").Value
                 End If
-                bUpdate(FlLedgerAccount, 0)
+                bUpdate(TableOfLedgerAccounts, 0)
             End If
         End If
         Select Case Ktrl
@@ -478,17 +463,17 @@ opnieuwGOG:
         End Select
         Exit Sub
 
-AccesErrorInsert:
+JetErrorInsert:
         Select Case Err.Number
             Case 3022
-                MsgBox("Unieke sleutel reeds aanwezig in bestand : " & bstNaam(Fl) & vbCrLf & vbCrLf & "Mogelijke sleutel : " & FVT(Fl, fIndex))
+                MsgBox("Unieke sleutel reeds aanwezig in bestand : " & JetTableName(Fl) & vbCrLf & vbCrLf & "Mogelijke sleutel : " & FVT(Fl, fIndex))
                 Ktrl = Err.Number
             Case Else
                 'UPGRADE_WARNING: Use of Null/IsNull() detected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="2EED02CB-5C0E-4DC1-AE94-4FAA3A30F51A"'
                 If IsDBNull(rsMAR(Fl).Fields(fIndex).Value) Then
-                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Bestand : " & bstNaam(Fl) & vbCrLf & vbCrLf & "De sleutel heeft 'null' waarde", MsgBoxStyle.Exclamation)
+                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Bestand : " & JetTableName(Fl) & vbCrLf & vbCrLf & "De sleutel heeft 'null' waarde", MsgBoxStyle.Exclamation)
                 Else
-                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Bestand : " & bstNaam(Fl) & vbCrLf & vbCrLf & "Mogelijke sleutel : " & FVT(Fl, fIndex), MsgBoxStyle.Exclamation)
+                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Bestand : " & JetTableName(Fl) & vbCrLf & vbCrLf & "Mogelijke sleutel : " & FVT(Fl, fIndex), MsgBoxStyle.Exclamation)
                 End If
                 Ktrl = Err.Number
         End Select
@@ -500,22 +485,22 @@ AccesErrorInsert:
 
         On Error Resume Next
 
-        bClose(Fl)
+        JetTableClose(Fl)
         If VsoftLog Then
-            SchrijfLog("LAST  ", Fl, fIndex, "")
+            WriteLog("LAST  ", Fl, fIndex, "")
         End If
 
         Err.Clear()
         'SELECT  TOP 1 * FROM Klanten ORDER BY A110 DESC
-        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & bstNaam(Fl) & " ORDER BY " & FlIndexIs(Fl, fIndex) & " DESC"
-        Ktrl = 0 : bOpen(Fl)
+        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & JetTableName(Fl) & " ORDER BY " & JetTableUseIndex(Fl, fIndex) & " DESC"
+        Ktrl = 0 : JetTableOpen(Fl)
 
         If rsMAR(Fl).EOF Then
             Stop
         ElseIf rsMAR(Fl).RecordCount = -1 Then
             Stop
         ElseIf rsMAR(Fl).RecordCount = 1 Then
-            'fSleutel = vSet(fSleutel, FlIndexLen(Fl, fIndex))
+            'fKey = SetSpacing(fKey, FlIndexLen(Fl, fIndex))
             KeyIndex(Fl) = fIndex
         ElseIf rsMAR(Fl).RecordCount > 1 Then
             Stop
@@ -527,22 +512,22 @@ AccesErrorInsert:
     Sub bNext(ByRef Fl As Short, ByRef fIndex As Short, ByRef SleutelBefore As String)
 
         On Error Resume Next
-        bClose(Fl)
+        JetTableClose(Fl)
         If VsoftLog Then
-            SchrijfLog("NEXT  ", Fl, 0, "")
+            WriteLog("NEXT  ", Fl, 0, "")
         End If
 
         Err.Clear()
 
-        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & bstNaam(Fl) & " WHERE " & FlIndexIs(Fl, fIndex) & " > '" & SleutelBefore & "' " & " ORDER BY " & FlIndexIs(Fl, fIndex) & " ASC"
-        Ktrl = 0 : bOpen(Fl)
+        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & JetTableName(Fl) & " WHERE " & JetTableUseIndex(Fl, fIndex) & " > '" & SleutelBefore & "' " & " ORDER BY " & JetTableUseIndex(Fl, fIndex) & " ASC"
+        Ktrl = 0 : JetTableOpen(Fl)
 
         If rsMAR(Fl).EOF Then
             Ktrl = 9
         ElseIf rsMAR(Fl).RecordCount = -1 Then
             Ktrl = 9
         ElseIf rsMAR(Fl).RecordCount = 1 Then
-            'KeyBuf(Fl) = vSet(fSleutel, FlIndexLen(Fl, fIndex))
+            'KeyBuf(Fl) = SetSpacing(fKey, FlIndexLen(Fl, fIndex))
             KeyBuf(Fl) = ""
             KeyIndex(Fl) = fIndex
         ElseIf rsMAR(Fl).RecordCount > 1 Then
@@ -551,21 +536,21 @@ AccesErrorInsert:
 
     End Sub
 
-    Function bOpen(ByRef Fl As Short) As Short
+    Function JetTableOpen(ByRef Fl As Short) As Short
         Dim DataLijn As String
         Dim FlNr As Short
         Dim Dlen As Short
 
         If rsMAR(Fl).State = ADODB.ObjectStateEnum.adStateClosed Then
         Else
-            bOpen = 0
+            JetTableOpen = 0
             Exit Function
         End If
 
         Err.Clear()
         On Error Resume Next
         rsMAR(Fl).CursorLocation = ADODB.CursorLocationEnum.adUseClient 'ADODB.CursorLocationEnum.adUseServer
-        If Fl = FlTeller Then
+        If Fl = TableOfCounters Then
             rsMAR(Fl).Open(sqlMsg(Fl), adntDB) ', ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic, ADODB.CommandTypeEnum.adCmdTableDirect)
         Else
             rsMAR(Fl).Open(sqlMsg(Fl), adntDB, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic, ADODB.CommandTypeEnum.adCmdTableDirect)
@@ -576,7 +561,7 @@ AccesErrorInsert:
             MsgBox(ErrorToString())
             Ktrl = Err.Number
         Else
-            bOpen = 0
+            JetTableOpen = 0
         End If
 
     End Function
@@ -584,22 +569,22 @@ AccesErrorInsert:
     Sub bPrev(ByRef Fl As Short, ByRef fIndex As Short, ByRef SleutelBefore As String)
 
         On Error Resume Next
-        bClose(Fl)
+        JetTableClose(Fl)
         If VsoftLog Then
-            SchrijfLog("PREV  ", Fl, 0, "")
+            WriteLog("PREV  ", Fl, 0, "")
         End If
 
 
         Err.Clear()
-        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & bstNaam(Fl) & " WHERE " & FlIndexIs(Fl, fIndex) & " < '" & SleutelBefore & "' " & " ORDER BY " & FlIndexIs(Fl, fIndex) & " DESC"
-        Ktrl = 0 : bOpen(Fl)
+        sqlMsg(Fl) = "SELECT TOP 1 * FROM " & JetTableName(Fl) & " WHERE " & JetTableUseIndex(Fl, fIndex) & " < '" & SleutelBefore & "' " & " ORDER BY " & JetTableUseIndex(Fl, fIndex) & " DESC"
+        Ktrl = 0 : JetTableOpen(Fl)
 
         If rsMAR(Fl).EOF Then
             Ktrl = 9
         ElseIf rsMAR(Fl).RecordCount = -1 Then
             Ktrl = 9
         ElseIf rsMAR(Fl).RecordCount = 1 Then
-            'KeyBuf(Fl) = vSet(fSleutel, FlIndexLen(Fl, fIndex))
+            'KeyBuf(Fl) = SetSpacing(fKey, FlIndexLen(Fl, fIndex))
             KeyBuf(Fl) = ""
             KeyIndex(Fl) = fIndex
         ElseIf rsMAR(Fl).RecordCount > 1 Then
@@ -611,13 +596,13 @@ AccesErrorInsert:
     Sub bUpdate(ByRef Fl As Short, ByRef fIndex As Short)
         Dim XXXXX As Short
         Err.Clear()
-        XXXXX = VeldToRecord(Fl)
+        XXXXX = FieldToRecord(Fl)
         If Ktrl = 32000 Then Exit Sub
         KeyBuf(Fl) = FVT(Fl, fIndex)
         KeyIndex(Fl) = fIndex
         rsMAR(Fl).Fields("dnnsync").Value = False
         If VsoftLog Then
-            SchrijfLog("UPDATE", Fl, fIndex, "")
+            WriteLog("UPDATE", Fl, fIndex, "")
         End If
         Try
             rsMAR(Fl).Update()
@@ -633,12 +618,12 @@ AccesErrorInsert:
         On Error Resume Next
         T = 0
         Do While Asc(vBC(Fl, T)) <> 0
-            'vBib Fl, RTrim$(ntRS(Fl).Fields(vBC(Fl, T))), vBC(Fl, T)
-            vBib(Fl, RTrim(rsMAR(Fl).Fields(vBC(Fl, T)).Value), vBC(Fl, T))
+            'AdoInsertToRecord Fl, RTrim$(ntRS(Fl).Fields(vBC(Fl, T))), vBC(Fl, T)
+            AdoInsertToRecord(Fl, RTrim(rsMAR(Fl).Fields(vBC(Fl, T)).Value), vBC(Fl, T))
             T = T + 1
         Loop
         For T = 0 To FlAantalIndexen(Fl)
-            FVT(Fl, T) = vBibTekst(Fl, "#" & FlIndexIs(Fl, T) & "#")
+            FVT(Fl, T) = AdoGetField(Fl, "#" & JetTableUseIndex(Fl, T) & "#")
         Next
         RTV = True
 
@@ -652,16 +637,16 @@ AccesErrorInsert:
         TLBRecord(Fl) = ""
         On Error Resume Next
         T = 0
-        If Fl = FlAllerlei Then
+        If Fl = TableOfVarious Then
             'TLBRecord(Fl) = ntRS(Fl).Fields("MEMO")
             TLBRecord(Fl) = rsMAR(Fl).Fields("MEMO").Value
-        ElseIf Fl = FlDummy Then
+        ElseIf Fl = TableDummy Then
             'TLBRecord(Fl) = ntRS(Fl).Fields("MEMO")
             TLBRecord(Fl) = rsMAR(Fl).Fields("MEMO").Value
         Else
             Do While vBC(Fl, T) <> ""
-                'vBib Fl, Trim$(ntRS(Fl).Fields(vBC(Fl, T))), vBC(Fl, T)
-                vBib(Fl, rsMAR(Fl).Fields(vBC(Fl, T)).Value, vBC(Fl, T))
+                'AdoInsertToRecord Fl, Trim$(ntRS(Fl).Fields(vBC(Fl, T))), vBC(Fl, T)
+                AdoInsertToRecord(Fl, rsMAR(Fl).Fields(vBC(Fl, T)).Value, vBC(Fl, T))
                 T = T + 1
             Loop
         End If
@@ -669,29 +654,29 @@ AccesErrorInsert:
     End Sub
 
 
-    Sub SchrijfLog(ByRef BtrieveAktie As String, ByRef FlNummer As Short, ByRef IndexNummer As Short, ByRef IndexSleutel As String)
+    Sub WriteLog(ByRef BtrieveAktie As String, ByRef FlNummer As Short, ByRef IndexNummer As Short, ByRef IndexSleutel As String)
         Dim FlLog As Short
         Dim RecordLijn As String
 
         RecordLijn = BtrieveAktie & Format(IndexNummer)
         Select Case FlNummer
-            Case FlAllerlei
+            Case TableOfVarious
                 RecordLijn = RecordLijn & "ALLERLEI"
-            Case FlKlant
+            Case TableOfCustomers
                 RecordLijn = RecordLijn & "KLANTEN "
-            Case FlLeverancier
+            Case TableOfSuppliers
                 RecordLijn = RecordLijn & "LEVERANC"
-            Case FlLedgerAccount
+            Case TableOfLedgerAccounts
                 RecordLijn = RecordLijn & "REKENING"
-            Case FlProdukt
+            Case TableOfProductsAndServices
                 RecordLijn = RecordLijn & "PRODUKT "
-            Case Fldokument
+            Case TableOfInvoices
                 RecordLijn = RecordLijn & "dokument"
             Case FlJournaal
                 RecordLijn = RecordLijn & "JOURNAAL"
-            Case FlPolis
+            Case TableOfContracts
                 RecordLijn = RecordLijn & "POLISSEN"
-            Case FlTeller
+            Case TableOfCounters
                 RecordLijn = RecordLijn & "TELLERS "
         End Select
 
@@ -703,7 +688,7 @@ AccesErrorInsert:
         End Select
 
         FlLog = FreeFile()
-        FileOpen(FlLog, ProgrammaLokatie & "NTIMPORT.LOG", OpenMode.Append, , OpenShare.LockWrite)
+        FileOpen(FlLog, ProgramLocation & "NTIMPORT.LOG", OpenMode.Append, , OpenShare.LockWrite)
         Print(FlLog, RecordLijn & vbCrLf)
         FileClose(FlLog)
 
@@ -736,34 +721,34 @@ AccesErrorInsert:
     End Sub
 
 
-    Function VeldToRecord(ByRef Fl As Short) As Short
+    Function FieldToRecord(ByRef Fl As Short) As Short
         Dim T As Short
 
         On Error GoTo 0
         If rsMAR(Fl).State = ADODB.ObjectStateEnum.adStateClosed Then
-            Ktrl = bOpen(Fl)
-            'ElseIf Editmogelijk(Fl) = False Then
+            Ktrl = JetTableOpen(Fl)
+            'ElseIf EditIsPossible(Fl) = False Then
             '    Ktrl = 32000
             '    Exit Function
         End If
 
-        If Fl = FlPolis Then
-            vBib(Fl, vSet(vBibTekst(Fl, "#v164 #"), 2) & vSet(vBibTekst(Fl, "#A110 #"), 12) & vSet(vBibTekst(Fl, "#A010 #"), 4) & vSet(vBibTekst(Fl, "#A000 #"), 12), "v167") 'MaandKlantMaatschappijPolis
+        If Fl = TableOfContracts Then
+            AdoInsertToRecord(Fl, SetSpacing(AdoGetField(Fl, "#v164 #"), 2) & SetSpacing(AdoGetField(Fl, "#A110 #"), 12) & SetSpacing(AdoGetField(Fl, "#A010 #"), 4) & SetSpacing(AdoGetField(Fl, "#A000 #"), 12), "v167") 'MaandKlantMaatschappijPolis
         ElseIf Fl = FlJournaal Then
-            vBib(Fl, vSet(vBibTekst(Fl, "#v019 #"), 7) & vBibTekst(Fl, "#v066 #"), "v070")
+            AdoInsertToRecord(Fl, SetSpacing(AdoGetField(Fl, "#v019 #"), 7) & AdoGetField(Fl, "#v066 #"), "v070")
         End If
         For T = 0 To FlAantalIndexen(Fl)
-            FVT(Fl, T) = vSet(vBibTekst(Fl, "#" & FlIndexIs(Fl, T) & "#"), FlIndexLen(Fl, T))
+            FVT(Fl, T) = SetSpacing(AdoGetField(Fl, "#" & JetTableUseIndex(Fl, T) & "#"), FlIndexLen(Fl, T))
         Next
-        vBib(Fl, FVT(Fl, 0), FlIndexIs(Fl, 0))
+        AdoInsertToRecord(Fl, FVT(Fl, 0), JetTableUseIndex(Fl, 0))
         T = 0
         Do While vBC(Fl, T) <> ""
-            SetFields(Fl, vBC(Fl, T), vBibTekst(Fl, "#" & vBC(Fl, T) & " #"))
+            SetFields(Fl, vBC(Fl, T), AdoGetField(Fl, "#" & vBC(Fl, T) & " #"))
             T = T + 1
         Loop
         On Error Resume Next
-        If Fl = FlAllerlei Then
-            rsMAR(FlAllerlei).Fields("A000").Value = vBibTekst(FlAllerlei, "#A000 #")
+        If Fl = TableOfVarious Then
+            rsMAR(TableOfVarious).Fields("A000").Value = AdoGetField(TableOfVarious, "#A000 #")
         End If
 
     End Function
@@ -772,25 +757,25 @@ AccesErrorInsert:
         Dim TlString As String
 
         TlString = "s" & Format(SZNummer, "000")
-        If LockModus = Lees Then
+        If LockModus = Reading Then
             LockHold = False
         Else
             LockHold = True
         End If
-        MsJetGet(FlTeller, 0, TlString)
+        JetGet(TableOfCounters, 0, TlString)
 
         If Ktrl = 99 Then
         ElseIf Ktrl Then
             MsgBox("Tellers Stopkode " & Format(Ktrl) & ", voor setup-tellersleutel " & TlString & vbCrLf & vbCrLf & "Overloop ALLE setup instellingen vooraleer énig boekjaar op te starten !" & vbCrLf & "Wij staan tot uw beschikking om U hierbij te helpen.")
         Else
-            RecordToVeld(FlTeller)
-            'String99 = ntRS(FlTeller).Fields("v217")
+            RecordToVeld(TableOfCounters)
+            'String99 = ntRS(TableOfCounters).Fields("v217")
             On Error Resume Next
             Err.Clear()
-            String99 = rsMAR(FlTeller).Fields("v217").Value
+            String99 = rsMAR(TableOfCounters).Fields("v217").Value
             If Err.Number Then MsgBox(ErrorToString())
         End If
-        bClose(FlTeller)
+        JetTableClose(TableOfCounters)
 
     End Function
 
@@ -822,7 +807,7 @@ AccesErrorInsert:
 
         Dim LokaalBestand As String
 
-        If Fl <> FlTeller Then
+        If Fl <> TableOfCounters Then
             LokaalBestand = Left(Bestand(Fl), 3)
         Else
             LokaalBestand = "00"
@@ -1011,32 +996,32 @@ TeleBibError:
                 itemHier.SubItems.Add(Format(Math.Round(Val(rsJournaal.Fields("v068").Value) * Euro), "#,##0.00"))
                 itemHier.SubItems.Add(" ")
             End If
-            'TODOBoeking. Boeking.mshfBoekLijst.AddItem(Pipo, frmBoeking.mshfBoekLijst.Rows - 1)
+            'TODOBoeking. Boeking.mshfBoekLijst.AddItem(JustTry, frmBoeking.mshfBoekLijst.Rows - 1)
         End If
         Boeking.boekListView.Items.Add(itemHier)
 
-        rsJournaal.Fields("v070").Value = vSet(rsJournaal.Fields("v019").Value, 7) + rsJournaal.Fields("v066").Value
+        rsJournaal.Fields("v070").Value = SetSpacing(rsJournaal.Fields("v019").Value, 7) + rsJournaal.Fields("v066").Value
 
-        MsJetGet(FlLedgerAccount, 0, rsJournaal.Fields("v019").Value)
+        JetGet(TableOfLedgerAccounts, 0, rsJournaal.Fields("v019").Value)
         If Ktrl Then
             MsgBox("Rekening " + rsJournaal.Fields("v019").Value + " niet te vinden." + vbCrLf + "Eerst SETUPrekening inbrengen a.u.b. !")
             dKtrlCumul = dKtrlCumul + 99
             Exit Function
-        ElseIf AktiefBoekjaar Then
-            RecordToVeld(FlLedgerAccount)
+        ElseIf ActiveBookyear Then
+            RecordToVeld(TableOfLedgerAccounts)
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e023 #")) + Val(RV(rsJournaal, "v068"))), "e023")
+            AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e023 #")) + Val(RV(rsJournaal, "v068"))), "e023")
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJournaal, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            rsMAR(FlLedgerAccount).Fields("dece023").Value = rsMAR(FlLedgerAccount).Fields("dece023").Value + RV(rsJournaal, "dece068")
+            rsMAR(TableOfLedgerAccounts).Fields("dece023").Value = rsMAR(TableOfLedgerAccounts).Fields("dece023").Value + RV(rsJournaal, "dece068")
         Else
-            RecordToVeld(FlLedgerAccount)
+            RecordToVeld(TableOfLedgerAccounts)
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            vBib(FlLedgerAccount, Str(Val(vBibTekst(FlLedgerAccount, "#e022 #")) + Val(RV(rsJournaal, "v068"))), "e022")
+            AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e022 #")) + Val(RV(rsJournaal, "v068"))), "e022")
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJournaal, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-            rsMAR(FlLedgerAccount).Fields("dece022").Value = rsMAR(FlLedgerAccount).Fields("dece022").Value + RV(rsJournaal, "dece068")
+            rsMAR(TableOfLedgerAccounts).Fields("dece022").Value = rsMAR(TableOfLedgerAccounts).Fields("dece022").Value + RV(rsJournaal, "dece068")
         End If
-        rsMAR(FlLedgerAccount).Fields("dnnsync").Value = False
-        bUpdate(FlLedgerAccount, 0)
+        rsMAR(TableOfLedgerAccounts).Fields("dnnsync").Value = False
+        bUpdate(TableOfLedgerAccounts, 0)
         Err.Clear()
         On Error Resume Next
         rsJournaal.Update()
@@ -1053,18 +1038,18 @@ TeleBibError:
 
         On Error Resume Next
         If rsMAR(iTabel).State = ADODB.ObjectStateEnum.adStateClosed Then
-            Ktrl = bOpen(iTabel)
+            Ktrl = JetTableOpen(iTabel)
         End If
         adoGet = False
         Err.Clear()
         If InStr(SQLConnect, "SQLOLEDB") Then
             rsMAR(iTabel).Close()
-            If iTabel = FlTeller Then
+            If iTabel = TableOfCounters Then
                 'UPGRADE_WARNING: Couldn't resolve default property of object sZoek. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                MsgHier = "SELECT * FROM " & "jr" & bstNaam(iTabel) & " WHERE " & FlIndexIs(iTabel, iIndex) & " " & sZoals & " " & " '" & sZoek & "'"
+                MsgHier = "SELECT * FROM " & "jr" & JetTableName(iTabel) & " WHERE " & JetTableUseIndex(iTabel, iIndex) & " " & sZoals & " " & " '" & sZoek & "'"
             Else
                 'UPGRADE_WARNING: Couldn't resolve default property of object sZoek. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-                MsgHier = "SELECT * FROM " & bstNaam(iTabel) & " WHERE " & FlIndexIs(iTabel, iIndex) & " " & sZoals & " " & " '" & sZoek & "'"
+                MsgHier = "SELECT * FROM " & JetTableName(iTabel) & " WHERE " & JetTableUseIndex(iTabel, iIndex) & " " & sZoals & " " & " '" & sZoek & "'"
             End If
             'SnelHelpPrint MsgHier, blLogging
             rsMAR(iTabel).Open(MsgHier, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockOptimistic)

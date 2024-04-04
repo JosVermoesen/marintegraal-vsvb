@@ -41,18 +41,18 @@ Public Class SqlSearch
             TelOrde = TelTot + 1
         Loop
 
-        MsJetGet(FlAllerlei, 1, "29" & Sleuteltje)
+        JetGet(TableOfVarious, 1, "29" & Sleuteltje)
         If Ktrl Then
             MsgBox("InitSQL")
         Else
-            RecordToVeld(FlAllerlei)
-            Msg = vBibTekst(FlAllerlei, "#v132 #")
+            RecordToVeld(TableOfVarious)
+            Msg = AdoGetField(TableOfVarious, "#v132 #")
             If InStr(UCase(Msg), "WHERE") Then
                 Msg = Mid(Msg, 1, InStr(UCase(Msg), " WHERE ") - 1)
                 Msg = Msg & " WHERE " & SorteerIndex & " Like " & Chr(34) & txtTeZoeken.Text & Chr(34)
                 Msg = Msg & " ORDER BY " & SorteerOrde
                 rtbSQLTekst.Text = Msg
-                Msg = Mid(vBibTekst(FlAllerlei, "#v132 #"), InStr(vBibTekst(FlAllerlei, "#v132 #"), "[Colwidth]") + 10)
+                Msg = Mid(AdoGetField(TableOfVarious, "#v132 #"), InStr(AdoGetField(TableOfVarious, "#v132 #"), "[Colwidth]") + 10)
                 If Msg = "" Then
                     Stop
                     'grdColWidth(0) = 0
@@ -84,7 +84,7 @@ InitSQL:
         'eerst eerste index verzekeren !
         'Stop
         'For TelTot = 0 To Sortering.Items.Count - 1
-        'If Trim(FlIndexIs(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2) Then
+        'If Trim(JetTableUseIndex(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2) Then
         'Msg = Msg & " " & Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2)
         'Msg = Msg & " AS [" & Mid(VB6.GetItemString(Sortering, TelTot), InStr(VB6.GetItemString(Sortering, TelTot), ";") + 2) & "]"
         'Msg = Msg & ","
@@ -100,7 +100,7 @@ InitSQL:
 
         'dan de rest bijvoegen
         'For TelTot = 0 To Sortering.Items.Count - 1
-        'If Trim(FlIndexIs(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2) Then
+        'If Trim(JetTableUseIndex(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2) Then
         'Else
         'Msg = Msg & " " & Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2)
         'Msg = Msg & " AS [" & Mid(VB6.GetItemString(Sortering, TelTot), InStr(VB6.GetItemString(Sortering, TelTot), ";") + 2) & "]"
@@ -111,7 +111,7 @@ InitSQL:
         'End If
         'End If
         'Next
-        'Msg = Msg & " FROM " & bstNaam(SharedFl)
+        'Msg = Msg & " FROM " & JetTableName(SharedFl)
         'Msg = Msg & " WHERE " & SorteerIndex & " Like " & Chr(34) & txtTeZoeken.Text & Chr(34)
         'Msg = Msg & " ORDER BY " & SorteerOrde
         'UPGRADE_WARNING: TextRTF was upgraded to Text and has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -126,7 +126,7 @@ InitSQL:
         Dim SorteringTel As Short
         sqlresultListView.Clear()
         SorteringTel = 0
-        Text = Text & ": " & bstNaam(SharedFl)
+        Text = Text & ": " & JetTableName(SharedFl)
         VulcmbSortering()
         XLogKey = ""
 
@@ -148,7 +148,7 @@ InitSQL:
         Dim T As Short
         sorteringComboBox.Items.Clear()
         For T = 0 To FlAantalIndexen(SharedFl)
-            Dim sortveldString As String = Trim(FlIndexIs(SharedFl, T))
+            Dim sortveldString As String = Trim(JetTableUseIndex(SharedFl, T))
             sorteringComboBox.Items.Add("+" & sortveldString & "; " & FLIndexCaption(SharedFl, T))
         Next
         If SharedIndex Then
@@ -186,7 +186,7 @@ InitSQL:
                 datPrimaryRS.Close()
             End If
 
-            MsJetGet(SharedFl, 0, XLogKey)
+            JetGet(SharedFl, 0, XLogKey)
             If Ktrl Then
                 Beep()
                 txtTeZoeken.Focus()

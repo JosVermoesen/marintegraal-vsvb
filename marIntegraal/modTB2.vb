@@ -371,17 +371,17 @@ Module modTB2
         '               2 : xxxM    'uitbreiding makelaar
 
 
-        If Dir(ProgrammaLokatie & "Def\" & BsDef & ".Def") = "" Then
+        If Dir(ProgramLocation & "Def\" & BsDef & ".Def") = "" Then
             MsgBox("Geen VsoftBib definitie " & BsDef & ".Def")
             Exit Function
         End If
 
-        If Dir(ProgrammaLokatie & "Def\" & BsDef & "U.Def") = "" Then
+        If Dir(ProgramLocation & "Def\" & BsDef & "U.Def") = "" Then
             GoTo GeenUserDef
         Else
             FlInput = FreeFile()
             T = 0
-            FileOpen(FlInput, ProgrammaLokatie & "Def\" & BsDef & "U.Def", OpenMode.Input)
+            FileOpen(FlInput, ProgramLocation & "Def\" & BsDef & "U.Def", OpenMode.Input)
             Do While Not EOF(FlInput)
                 Input(FlInput, TeleBibCode(T))
                 Input(FlInput, TeleBibTekst(T))
@@ -398,7 +398,7 @@ Module modTB2
 
 GeenUserDef:
         FlInput = FreeFile()
-        FileOpen(FlInput, ProgrammaLokatie & "Def\" & BsDef & ".Def", OpenMode.Input)
+        FileOpen(FlInput, ProgramLocation & "Def\" & BsDef & ".Def", OpenMode.Input)
         T = 0
         Do While Not EOF(FlInput)
             Input(FlInput, TeleBibCode(T))
@@ -411,10 +411,10 @@ GeenUserDef:
         TeleBibCode(T) = ""
 
         If Trim(ProducentNummer) = "" Then
-        ElseIf Dir(ProgrammaLokatie & "Def\" & BsDef & "M.Def") = "" Then
+        ElseIf Dir(ProgramLocation & "Def\" & BsDef & "M.Def") = "" Then
         Else
             FlInput = FreeFile()
-            FileOpen(FlInput, ProgrammaLokatie & "Def\" & BsDef & "M.Def", OpenMode.Input)
+            FileOpen(FlInput, ProgramLocation & "Def\" & BsDef & "M.Def", OpenMode.Input)
             Do While Not EOF(FlInput)
                 Input(FlInput, TeleBibCode(T))
                 Input(FlInput, TeleBibTekst(T))
@@ -449,13 +449,13 @@ TLBError:
         '      9 - 9 : * voor verplichte invulling
 
 
-        If Dir(ProgrammaLokatie & "Def\" & BsDef & ".Def") = "" Then
+        If Dir(ProgramLocation & "Def\" & BsDef & ".Def") = "" Then
             MsgBox("Geen VsoftBib definitie " & BsDef & ".Def")
             Exit Function
         End If
 
         FlTemp = FreeFile()
-        FileOpen(FlTemp, ProgrammaLokatie & "Def\" & BsDef & ".DEF", OpenMode.Input)
+        FileOpen(FlTemp, ProgramLocation & "Def\" & BsDef & ".DEF", OpenMode.Input)
         T = 0
         Do While Not EOF(FlTemp)
             Input(FlTemp, TeleBibCode(T))
@@ -744,7 +744,7 @@ TLBError:
         '		Else
         '			'BJPERDAT!Boekjaar.ListIndex = 0
         '			PeriodeVoor = BoekjaarKontrole.Value & MaandVerwerking.Value
-        '			'If PeriodeVoor < Left(BoekjaarVanTot, 6) Then
+        '			'If PeriodeVoor < Left(BookyearFromTo, 6) Then
         '			'    If BJPERDAT!Boekjaar.ListCount > 1 Then
         '			'        BJPERDAT!Boekjaar.ListIndex = 1
         '			'    End If
@@ -754,8 +754,8 @@ TLBError:
         '				CType(BJPERDAT.Controls("Boekjaar"), Object).SelectedIndex = Teljaar
         '				For Tel = 0 To CType(BJPERDAT.Controls("PeriodeBoekjaar"), Object).Items.Count - 1
         '					CType(BJPERDAT.Controls("PeriodeBoekjaar"), Object).SelectedIndex = Tel
-        '					If PeriodeVoor >= Left(PeriodeVanTot.Value, 6) And PeriodeVoor <= Mid(PeriodeVanTot.Value, 9, 6) Then
-        '						'bClose 99
+        '					If PeriodeVoor >= Left(PeriodFromTo.Value, 6) And PeriodeVoor <= Mid(PeriodFromTo.Value, 9, 6) Then
+        '						'JetTableClose 99
         '						KwijtingBoeken.Close()
         '						GridTextIs = "006" & vbTab & Maatschappij & vbTab & "Commissies"
         '						blLogging = False
@@ -800,17 +800,17 @@ TLBError:
         '			MsgBox("ONMOGELIJKE SITUATIE")
         '		End If
 
-        '		MsJetGet(FlPolis, 0, PolisNummer.Value)
+        '		JetGet(TableOfContracts, 0, PolisNummer.Value)
         '		If Ktrl Then
         '			MsgBox("polis niet aanwezig. EDIFACT nieuw nog in te brengen !!!", MsgBoxStyle.Critical)
-        '			TLBRecord(FlPolis) = ""
+        '			TLBRecord(TableOfContracts) = ""
         '			MsgBox("Stop.  Polis bestaat nog niet :" & PolisNummer.Value)
-        '			vBib(FlPolis, Mid(iolijn, 23, 2), "v164")
-        '			vBib(FlPolis, "NONAME", "A110")
-        '			vBib(FlPolis, Maatschappij, "A010")
-        '			vBib(FlPolis, PolisNummer.Value, "A000")
-        '			vBib(FlPolis, Mid(iolijn, 30, 10), "vs99")
-        '			bInsert(FlPolis, 0)
+        '			AdoInsertToRecord(TableOfContracts, Mid(iolijn, 23, 2), "v164")
+        '			AdoInsertToRecord(TableOfContracts, "NONAME", "A110")
+        '			AdoInsertToRecord(TableOfContracts, Maatschappij, "A010")
+        '			AdoInsertToRecord(TableOfContracts, PolisNummer.Value, "A000")
+        '			AdoInsertToRecord(TableOfContracts, Mid(iolijn, 30, 10), "vs99")
+        '			JetInsert(TableOfContracts, 0)
         '			If Ktrl Then
         '				MsgBox("onbekende soldaat ! STOP!!!")
         '			End If
@@ -819,13 +819,13 @@ TLBError:
         '			As2TelebibIn.UserInfo(3).Text = Str(Val(As2TelebibIn.UserInfo(3).Text) + 1)
         '			ddag = "01"
         '		Else
-        '			RecordToVeld(FlPolis)
+        '			RecordToVeld(TableOfContracts)
         '			PolisTeWijzigen = False
-        '			DagKtrl1.Value = vBibTekst(FlPolis, "#v165 #")
-        '			DagKtrl2.Value = Mid(vBibTekst(FlPolis, "#AW_2 #"), 7, 2)
-        '			If MaandKwijting.Value = vBibTekst(FlPolis, "#v164 #") Then
+        '			DagKtrl1.Value = AdoGetField(TableOfContracts, "#v165 #")
+        '			DagKtrl2.Value = Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2)
+        '			If MaandKwijting.Value = AdoGetField(TableOfContracts, "#v164 #") Then
         '			Else
-        '				vBib(FlPolis, MaandKwijting.Value, "v164")
+        '				AdoInsertToRecord(TableOfContracts, MaandKwijting.Value, "v164")
         '				PolisTeWijzigen = True
         '			End If
         '			If DagKtrl1.Value = DagKtrl2.Value Then
@@ -833,26 +833,26 @@ TLBError:
         '			Else
         '				KtrlBox = MsgBox(DagKtrl2.Value & " correctie vervalDAG", MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1)
         '				If KtrlBox = MsgBoxResult.Yes Then
-        '					vBib(FlPolis, DagKtrl2.Value, "v165")
+        '					AdoInsertToRecord(TableOfContracts, DagKtrl2.Value, "v165")
         '					PolisTeWijzigen = True
         '				End If
         '			End If
         '			DagKwijting.Value = DagKtrl2.Value
-        '			If Maatschappij <> vBibTekst(FlPolis, "#A010 #") Then
-        '				As2TelebibIn.UserInfo(1).Text = "Maatschappij conflict!  Polis " & PolisNummer.Value & "bestaat reeds bij maatschappij !" & vBibTekst(FlPolis, "#A010 #")
-        '				vBib(FlPolis, Maatschappij, "A010")
+        '			If Maatschappij <> AdoGetField(TableOfContracts, "#A010 #") Then
+        '				As2TelebibIn.UserInfo(1).Text = "Maatschappij conflict!  Polis " & PolisNummer.Value & "bestaat reeds bij maatschappij !" & AdoGetField(TableOfContracts, "#A010 #")
+        '				AdoInsertToRecord(TableOfContracts, Maatschappij, "A010")
         '				PolisTeWijzigen = True
         '			End If
         '			If PolisTeWijzigen = True Then
-        '				bUpdate(FlPolis, 0)
+        '				bUpdate(TableOfContracts, 0)
         '			End If
         '			As2TelebibIn.UserInfo(2).Text = Str(Val(As2TelebibIn.UserInfo(2).Text) + 1)
-        '			MsJetGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
+        '			JetGet(TableOfCustomers, 0, SetSpacing(AdoGetField(TableOfContracts, "#A110 #"), 12))
         '			If Ktrl Then
         '				Dummy.Value = "Verbeter !!! " & TempoNaamKlant
         '			Else
-        '				RecordToVeld(FlKlant)
-        '				Dummy.Value = vBibTekst(FlKlant, "#A100 #")
+        '				RecordToVeld(TableOfCustomers)
+        '				Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
         '			End If
         '		End If
         '		'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
@@ -870,11 +870,11 @@ TLBError:
         '		Return 
 
         'ruTeleBibKTRL: 
-        '		MsJetGet(FlAllerlei, 1, "25" & Maatschappij & PolisNummer.Value)
+        '		JetGet(TableOfVarious, 1, "25" & Maatschappij & PolisNummer.Value)
         '		If Ktrl Then
-        '			TLBRecord(FlAllerlei) = ""
+        '			TLBRecord(TableOfVarious) = ""
         '		Else
-        '			RecordToVeld(FlAllerlei)
+        '			RecordToVeld(TableOfVarious)
         '		End If
 
         '		Select Case Mid(iolijn, 42, 1)
@@ -882,24 +882,24 @@ TLBError:
         '				'AUTO ?
         '				'If Maatschappij = "0145" And Mid(iolijn, 42, 6) = "000000" Then
         '				'Else
-        '				'    vBib FlAllerlei, "P11", "AW00"
-        '				'    vBib FlAllerlei, "4", "AW06"
-        '				'    vBib FlAllerlei, Str$(Bedrag1 + Bedrag2 + Bedrag3), "AW04"
-        '				'    vBib FlAllerlei, Mid(iolijn, 40, 2), "5315"
+        '				'    AdoInsertToRecord TableOfVarious, "P11", "AW00"
+        '				'    AdoInsertToRecord TableOfVarious, "4", "AW06"
+        '				'    AdoInsertToRecord TableOfVarious, Str$(Bedrag1 + Bedrag2 + Bedrag3), "AW04"
+        '				'    AdoInsertToRecord TableOfVarious, Mid(iolijn, 40, 2), "5315"
         '				'End If
         '		End Select
 
-        '		vBib(FlAllerlei, Str(Bedrag9), "B014") 'commissieloon
-        '		vBib(FlAllerlei, vSet("K" & vBibTekst(FlPolis, "#A110 #"), 13), "v004")
-        '		vBib(FlAllerlei, vSet(vBibTekst(FlPolis, "#A110 #"), 12), "A110")
-        '		vBib(FlAllerlei, Maatschappij, "A010")
-        '		vBib(FlAllerlei, PolisNummer.Value, "A000")
-        '		vBib(FlAllerlei, vSet("25" & Maatschappij & PolisNummer.Value, 20), "v005")
+        '		AdoInsertToRecord(TableOfVarious, Str(Bedrag9), "B014") 'commissieloon
+        '		AdoInsertToRecord(TableOfVarious, SetSpacing("K" & AdoGetField(TableOfContracts, "#A110 #"), 13), "v004")
+        '		AdoInsertToRecord(TableOfVarious, SetSpacing(AdoGetField(TableOfContracts, "#A110 #"), 12), "A110")
+        '		AdoInsertToRecord(TableOfVarious, Maatschappij, "A010")
+        '		AdoInsertToRecord(TableOfVarious, PolisNummer.Value, "A000")
+        '		AdoInsertToRecord(TableOfVarious, SetSpacing("25" & Maatschappij & PolisNummer.Value, 20), "v005")
 
         '		If Ktrl Then
-        '			bInsert(FlAllerlei, 1)
+        '			JetInsert(TableOfVarious, 1)
         '		Else
-        '			bUpdate(FlAllerlei, 1)
+        '			bUpdate(TableOfVarious, 1)
         '		End If
         '		If Ktrl Then
         '			MsgBox("Stopkode " & Str(Ktrl))
@@ -1314,17 +1314,17 @@ TLBError:
         '					BedragPremie = Dec(Bedrag0, MaskerHier)
         '					'MsgBox "Totaal premie werd meegegeven: " & BedragPremie
         '				End If
-        '				MsJetGet(FlPolis, 0, PolisNummer.Value)
+        '				JetGet(TableOfContracts, 0, PolisNummer.Value)
         '				If Ktrl Then
         '					MsgBox("polis niet aanwezig. EDIFACT nieuw nog in te brengen !!!", MsgBoxStyle.Critical)
-        '					TLBRecord(FlPolis) = ""
+        '					TLBRecord(TableOfContracts) = ""
         '					MsgBox("Stop.  Polis bestaat nog niet :" & PolisNummer.Value)
-        '					vBib(FlPolis, MaandKwijting.Value, "v164")
-        '					vBib(FlPolis, "NONAME", "A110")
-        '					vBib(FlPolis, Maatschappij, "A010")
-        '					vBib(FlPolis, PolisNummer.Value, "A000")
-        '					vBib(FlPolis, TempoNaamKlant, "vs99")
-        '					bInsert(FlPolis, 0)
+        '					AdoInsertToRecord(TableOfContracts, MaandKwijting.Value, "v164")
+        '					AdoInsertToRecord(TableOfContracts, "NONAME", "A110")
+        '					AdoInsertToRecord(TableOfContracts, Maatschappij, "A010")
+        '					AdoInsertToRecord(TableOfContracts, PolisNummer.Value, "A000")
+        '					AdoInsertToRecord(TableOfContracts, TempoNaamKlant, "vs99")
+        '					JetInsert(TableOfContracts, 0)
         '					If Ktrl Then
         '						MsgBox("onbekende soldaat ! STOP!!!")
         '					End If
@@ -1333,18 +1333,18 @@ TLBError:
         '					'As2TelebibIn.UserInfo(3).Caption = Str$(Val(As2TelebibIn.UserInfo(3).Caption) + 1)
         '					ddag = "01"
         '				Else
-        '					RecordToVeld(FlPolis)
+        '					RecordToVeld(TableOfContracts)
         '					PolisTeWijzigen = False
-        '					DagKtrl1.Value = vBibTekst(FlPolis, "#v165 #")
-        '					DagKtrl2.Value = Mid(vBibTekst(FlPolis, "#AW_2 #"), 7, 2)
-        '					If rsMAR(FlPolis).Fields("vs97").Value > "2" Then
-        '						MsgBox("Polis " & PolisNummer.Value & vbCrLf & "Aktiecode staat op: " & rsMAR(FlPolis).Fields("vs97").Value & vbCr & vbCr & "Wordt automatisch op 1 (Post) geplaatst", MsgBoxStyle.Information)
-        '						vBib(FlPolis, "1", "vs97")
+        '					DagKtrl1.Value = AdoGetField(TableOfContracts, "#v165 #")
+        '					DagKtrl2.Value = Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2)
+        '					If rsMAR(TableOfContracts).Fields("vs97").Value > "2" Then
+        '						MsgBox("Polis " & PolisNummer.Value & vbCrLf & "Aktiecode staat op: " & rsMAR(TableOfContracts).Fields("vs97").Value & vbCr & vbCr & "Wordt automatisch op 1 (Post) geplaatst", MsgBoxStyle.Information)
+        '						AdoInsertToRecord(TableOfContracts, "1", "vs97")
         '						PolisTeWijzigen = True
         '					End If
-        '					If MaandKwijting.Value = vBibTekst(FlPolis, "#v164 #") Then
+        '					If MaandKwijting.Value = AdoGetField(TableOfContracts, "#v164 #") Then
         '					Else
-        '						vBib(FlPolis, MaandKwijting.Value, "v164")
+        '						AdoInsertToRecord(TableOfContracts, MaandKwijting.Value, "v164")
         '						PolisTeWijzigen = True
         '					End If
         '					If DagKtrl1.Value = DagKtrl2.Value Then
@@ -1352,35 +1352,35 @@ TLBError:
         '					Else
         '						KtrlBox = MsgBox(DagKtrl2.Value & " correctie vervalDAG", MsgBoxStyle.YesNo + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1)
         '						If KtrlBox = MsgBoxResult.Yes Then
-        '							vBib(FlPolis, DagKtrl2.Value, "v165")
+        '							AdoInsertToRecord(TableOfContracts, DagKtrl2.Value, "v165")
         '							PolisTeWijzigen = True
         '						End If
         '					End If
         '					DagKwijting.Value = DagKtrl2.Value
-        '					If Maatschappij <> vBibTekst(FlPolis, "#A010 #") Then
-        '						'As2TelebibIn.UserInfo(1).Caption = "Maatschappij conflict!  Polis " + PolisNummer + "bestaat reeds bij maatschappij !" + vBibTekst(FlPolis, "#A010 #")
-        '						vBib(FlPolis, Maatschappij, "A010")
+        '					If Maatschappij <> AdoGetField(TableOfContracts, "#A010 #") Then
+        '						'As2TelebibIn.UserInfo(1).Caption = "Maatschappij conflict!  Polis " + PolisNummer + "bestaat reeds bij maatschappij !" + AdoGetField(TableOfContracts, "#A010 #")
+        '						AdoInsertToRecord(TableOfContracts, Maatschappij, "A010")
         '						PolisTeWijzigen = True
         '					End If
         '					If PolisTeWijzigen = True Then
-        '						bUpdate(FlPolis, 0)
+        '						bUpdate(TableOfContracts, 0)
         '					End If
         '					'As2TelebibIn.UserInfo(2).Caption = Str$(Val(As2TelebibIn.UserInfo(2).Caption) + 1)
-        '					MsJetGet(FlKlant, 0, vSet(vBibTekst(FlPolis, "#A110 #"), 12))
+        '					JetGet(TableOfCustomers, 0, SetSpacing(AdoGetField(TableOfContracts, "#A110 #"), 12))
         '					If Ktrl Then
         '						Dummy.Value = "Verbeter !!! " & TempoNaamKlant
         '					Else
-        '						RecordToVeld(FlKlant)
-        '						Dummy.Value = vBibTekst(FlKlant, "#A100 #")
+        '						RecordToVeld(TableOfCustomers)
+        '						Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
         '					End If
         '				End If
 
         '				'GoSub TeleBibKTRL
-        '				MsJetGet(FlAllerlei, 1, "25" & Maatschappij & PolisNummer.Value)
+        '				JetGet(TableOfVarious, 1, "25" & Maatschappij & PolisNummer.Value)
         '				If Ktrl Then
-        '					TLBRecord(FlAllerlei) = ""
+        '					TLBRecord(TableOfVarious) = ""
         '				Else
-        '					RecordToVeld(FlAllerlei)
+        '					RecordToVeld(TableOfVarious)
         '				End If
 
         '				Select Case Mid(iolijn, 42, 1)
@@ -1388,35 +1388,35 @@ TLBError:
         '						'AUTO ?
         '						'If Maatschappij = "0145" And Mid$(iolijn, 42, 6) = "000000" Then
         '						'Else
-        '						'    vBib FlAllerlei, "P11", "AW00"
-        '						'    vBib FlAllerlei, "4", "AW06"
-        '						'    vBib FlAllerlei, Str$(Bedrag1 + Bedrag2 + Bedrag3), "AW04"
-        '						'    vBib FlAllerlei, Mid$(iolijn, 40, 2), "5315"
+        '						'    AdoInsertToRecord TableOfVarious, "P11", "AW00"
+        '						'    AdoInsertToRecord TableOfVarious, "4", "AW06"
+        '						'    AdoInsertToRecord TableOfVarious, Str$(Bedrag1 + Bedrag2 + Bedrag3), "AW04"
+        '						'    AdoInsertToRecord TableOfVarious, Mid$(iolijn, 40, 2), "5315"
         '						'End If
         '				End Select
 
         '				If Trim(HuidigeIndex) <> "" Then
-        '					vBib(FlAllerlei, HuidigeIndex, "AW.R") 'index
+        '					AdoInsertToRecord(TableOfVarious, HuidigeIndex, "AW.R") 'index
         '				End If
         '				If Trim(HuidigeBM.Value) <> "" Then
         '					'Debug.Assert False
-        '					vBib(FlAllerlei, HuidigeBM.Value, "5315")
-        '					vBib(FlAllerlei, HuidigeBM.Value, "5300")
+        '					AdoInsertToRecord(TableOfVarious, HuidigeBM.Value, "5315")
+        '					AdoInsertToRecord(TableOfVarious, HuidigeBM.Value, "5300")
         '				End If
-        '				vBib(FlAllerlei, Str(Bedrag7 + Bedrag8), "B010") 'premie taksen en kosten inbegrepen
-        '				vBib(FlAllerlei, Str(Bedrag8), "B011") 'taksen en kosten
-        '				vBib(FlAllerlei, Str(Bedrag7), "B013") 'premie zonder taksen en kosten
-        '				vBib(FlAllerlei, Str(Bedrag9), "B014") 'commissieloon
-        '				vBib(FlAllerlei, vSet("K" & vBibTekst(FlPolis, "#A110 #"), 13), "v004")
-        '				vBib(FlAllerlei, vSet(vBibTekst(FlPolis, "#A110 #"), 12), "A110")
-        '				vBib(FlAllerlei, Maatschappij, "A010")
-        '				vBib(FlAllerlei, PolisNummer.Value, "A000")
-        '				vBib(FlAllerlei, vSet("25" & Maatschappij & PolisNummer.Value, 20), "v005")
+        '				AdoInsertToRecord(TableOfVarious, Str(Bedrag7 + Bedrag8), "B010") 'premie taksen en kosten inbegrepen
+        '				AdoInsertToRecord(TableOfVarious, Str(Bedrag8), "B011") 'taksen en kosten
+        '				AdoInsertToRecord(TableOfVarious, Str(Bedrag7), "B013") 'premie zonder taksen en kosten
+        '				AdoInsertToRecord(TableOfVarious, Str(Bedrag9), "B014") 'commissieloon
+        '				AdoInsertToRecord(TableOfVarious, SetSpacing("K" & AdoGetField(TableOfContracts, "#A110 #"), 13), "v004")
+        '				AdoInsertToRecord(TableOfVarious, SetSpacing(AdoGetField(TableOfContracts, "#A110 #"), 12), "A110")
+        '				AdoInsertToRecord(TableOfVarious, Maatschappij, "A010")
+        '				AdoInsertToRecord(TableOfVarious, PolisNummer.Value, "A000")
+        '				AdoInsertToRecord(TableOfVarious, SetSpacing("25" & Maatschappij & PolisNummer.Value, 20), "v005")
 
         '				If Ktrl Then
-        '					bInsert(FlAllerlei, 1)
+        '					JetInsert(TableOfVarious, 1)
         '				Else
-        '					bUpdate(FlAllerlei, 1)
+        '					bUpdate(TableOfVarious, 1)
         '				End If
         '				If Ktrl Then
         '					MsgBox("Stopkode " & Str(Ktrl))
@@ -1501,7 +1501,7 @@ TLBError:
         'Else
         '	CType(BJPERDAT.Controls("Boekjaar"), Object).SelectedIndex = 0
         '	PeriodeVoor = BoekjaarKontrole.Value & MaandVerwerking.Value
-        '	If PeriodeVoor < Left(BoekjaarVanTot.Value, 6) Then
+        '	If PeriodeVoor < Left(BookyearFromTo.Value, 6) Then
         '		If CType(BJPERDAT.Controls("Boekjaar"), Object).Items.Count > 1 Then
         '			CType(BJPERDAT.Controls("Boekjaar"), Object).SelectedIndex = 1
         '		End If
@@ -1509,8 +1509,8 @@ TLBError:
         '	KtrlFlag = False
         '	For Tel = 0 To CType(BJPERDAT.Controls("PeriodeBoekjaar"), Object).Items.Count - 1
         '		CType(BJPERDAT.Controls("PeriodeBoekjaar"), Object).SelectedIndex = Tel
-        '		If PeriodeVoor >= Left(PeriodeVanTot.Value, 6) And PeriodeVoor <= Mid(PeriodeVanTot.Value, 9, 6) Then
-        '			'bClose 99
+        '		If PeriodeVoor >= Left(PeriodFromTo.Value, 6) And PeriodeVoor <= Mid(PeriodFromTo.Value, 9, 6) Then
+        '			'JetTableClose 99
         '			KwijtingBoeken.Close()
         '			GridTextIs = "001" & vbTab & Maatschappij & vbTab & "Termijn"
         '			blLogging = False

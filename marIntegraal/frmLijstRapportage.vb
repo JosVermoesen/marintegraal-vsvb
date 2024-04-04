@@ -53,7 +53,7 @@ End Class
 '	Function sqlSELECTLijst() As String
 '		Dim IndexeerVeld As String
 
-'		IndexeerVeld = Trim(FlIndexIs(Val(Mid(Tabel.Text, 1, 1)), Val(Mid(Me.Sortering.Text, 1, 2))))
+'		IndexeerVeld = Trim(JetTableUseIndex(Val(Mid(Tabel.Text, 1, 1)), Val(Mid(Me.Sortering.Text, 1, 2))))
 
 '		Msg = "SELECT"
 '		For TelTot = 0 To Me.RapportVelden.Items.Count - 1
@@ -272,7 +272,7 @@ End Class
 '			WindowState = System.Windows.Forms.FormWindowState.Normal
 '			FlTemp = FreeFile
 '			VolgNummer = RapportDefinitie.Items.Count
-'			FileOpen(FlTemp, ProgrammaLokatie & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB6.Format(VolgNummer, "00") & ".PRD", OpenMode.Output)
+'			FileOpen(FlTemp, ProgramLocation & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB6.Format(VolgNummer, "00") & ".PRD", OpenMode.Output)
 '			PrintLine(FlTemp, TekstInfo(2).Text)
 '			For T = 0 To RapportVelden.Items.Count - 1
 '				PrintLine(FlTemp, VB6.GetItemString(RapportVelden, T))
@@ -443,7 +443,7 @@ End Class
 '				Case "D"
 '					VeldInfo = FunctionDateText(VeldInfo)
 '				Case "0" To "6"
-'					VeldInfo = Dec(Val(VeldInfo), MaskerSy(Val(VeldInfoSh)))
+'					VeldInfo = Dec(Val(VeldInfo), MaskSy(Val(VeldInfoSh)))
 '				Case Else
 '					MsgBox(Mid(VB6.GetItemString(RapportVelden, T), 20, 1) & " werd nog niet voorzien...")
 '			End Select
@@ -486,12 +486,12 @@ End Class
 '		FlTemp = FreeFile
 
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		If Dir(ProgrammaLokatie & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB.Left(RapportDefinitie.Text, 2) & ".PRD") = "" Then
+'		If Dir(ProgramLocation & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB.Left(RapportDefinitie.Text, 2) & ".PRD") = "" Then
 '			MsgBox(VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB.Left(RapportDefinitie.Text, 2) & ".PRD" & " bestaat niet meer...")
 '			Exit Sub
 '		End If
 
-'		FileOpen(FlTemp, ProgrammaLokatie & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB.Left(RapportDefinitie.Text, 2) & ".PRD", OpenMode.Input)
+'		FileOpen(FlTemp, ProgramLocation & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB.Left(RapportDefinitie.Text, 2) & ".PRD", OpenMode.Input)
 '		RapportTekst = LineInput(FlTemp)
 '		TekstInfo(2).Text = RapportTekst
 '		RapportVelden.Items.Clear()
@@ -514,7 +514,7 @@ End Class
 '				Msg = "Rapportdefinitie " & vbCrLf & vbCrLf & RapportDefinitie.Text & vbCrLf & vbCrLf & "verwijderen.  Bent U zeker ?"
 '				KtrlBox = MsgBox(Msg, 292)
 '				If KtrlBox = 6 Then
-'					Kill(ProgrammaLokatie & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB.Left(RapportDefinitie.Text, 2) & ".PRD")
+'					Kill(ProgramLocation & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & VB.Left(RapportDefinitie.Text, 2) & ".PRD")
 '					RapportDefinitie.Items.RemoveAt(RapportDefinitie.SelectedIndex)
 
 '				End If
@@ -585,13 +585,13 @@ End Class
 '		Sortering.SelectedIndex = 0
 '		RapportDefinitie.Items.Clear()
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		X = Dir(ProgrammaLokatie & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & "??.PRD")
+'		X = Dir(ProgramLocation & "Def\" & VB6.Format(Val(VB.Left(Tabel.Text, 1)), "000") & "??.PRD")
 '		If X = "" Then
 '			Exit Sub
 '		Else
 '			FlL = FreeFile
 '			Do While X <> ""
-'				FileOpen(FlL, ProgrammaLokatie & "Def\" & X, OpenMode.Input)
+'				FileOpen(FlL, ProgramLocation & "Def\" & X, OpenMode.Input)
 '				TekstLijn = LineInput(FlL)
 '				FileClose(FlL)
 '				RapportDefinitie.Items.Add(Mid(X, 4, 2) & ": " & TekstLijn)

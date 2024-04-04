@@ -83,14 +83,14 @@ End Class
 '		ReportText(3) = TekstLijn(0).Text
 
 '		InitializeFields()
-'		bClose(FlProdukt)
+'		JetTableClose(TableOfProductsAndServices)
 '		'Set rsLijstProducten = New ADODB.Recordset
 '		'SQLstring = "SELECT * FROM Produkten WHERE "
 '		'Stop
 
-'		bFirst(FlProdukt, IndexNR)
-'		bGetOrGreater(FlProdukt, IndexNR, BeginSleutel)
-'		If Ktrl Or UCase(KeyBuf(FlProdukt)) > UCase(EindSleutel) Then
+'		JetGetFirst(TableOfProductsAndServices, IndexNR)
+'		JetGetOrGreater(TableOfProductsAndServices, IndexNR, BeginSleutel)
+'		If Ktrl Or UCase(KeyBuf(TableOfProductsAndServices)) > UCase(EindSleutel) Then
 '			Beep()
 '			Exit Sub
 '		Else
@@ -116,8 +116,8 @@ End Class
 '		End If
 
 '		Do 
-'			bNext(FlProdukt)
-'			If Ktrl Or UCase(Trim(KeyBuf(FlProdukt))) > UCase(EindSleutel) Then
+'			bNext(TableOfProductsAndServices)
+'			If Ktrl Or UCase(Trim(KeyBuf(TableOfProductsAndServices))) > UCase(EindSleutel) Then
 '				Exit Do
 '			Else
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
@@ -139,46 +139,46 @@ End Class
 '		Dim BasisAantal As Single
 
 'PrintInfo: 
-'		RecordToVeld(FlProdukt)
+'		RecordToVeld(TableOfProductsAndServices)
 '		Select Case CmbLijstType.SelectedIndex
 '			Case 0
-'				FieldText(0) = vBibTekst(FlProdukt, "#v102 #")
-'				FieldText(1) = vBibTekst(FlProdukt, "#v105 #")
+'				FieldText(0) = AdoGetField(TableOfProductsAndServices, "#v102 #")
+'				FieldText(1) = AdoGetField(TableOfProductsAndServices, "#v105 #")
 
-'				Basisbedrag = Val(vBibTekst(FlProdukt, "#e112 #"))
-'				FieldText(2) = Dec(Val(vBibTekst(FlProdukt, "#e112 #")), MaskerEUR & "00")
+'				Basisbedrag = Val(AdoGetField(TableOfProductsAndServices, "#e112 #"))
+'				FieldText(2) = Dec(Val(AdoGetField(TableOfProductsAndServices, "#e112 #")), MaskEUR & "00")
 
-'				FieldText(3) = vBibTekst(FlProdukt, "#v111 #")
+'				FieldText(3) = AdoGetField(TableOfProductsAndServices, "#v111 #")
 '				VeldTXT3 = Mid(fmarBoxText("002", "2", FieldText(3)), 4)
 
-'				BasisAantal = Val(vBibTekst(FlProdukt, "#v107 #"))
-'				FieldText(4) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v107 #")), MaskerSy(7)), 6)
+'				BasisAantal = Val(AdoGetField(TableOfProductsAndServices, "#v107 #"))
+'				FieldText(4) = VB.Right(Dec(Val(AdoGetField(TableOfProductsAndServices, "#v107 #")), MaskSy(7)), 6)
 
-'				FieldText(5) = Mid(fmarBoxText("004", "2", vBibTekst(FlProdukt, "#v106 #")), 4)
+'				FieldText(5) = Mid(fmarBoxText("004", "2", AdoGetField(TableOfProductsAndServices, "#v106 #")), 4)
 '				TicketEUR2005 = ((Basisbedrag * BasisAantal) + ((Basisbedrag * BasisAantal * Val(VeldTXT3) / 100)))
-'				FieldText(6) = VB.Right(Dec(TicketEUR2005, MaskerEUR), 8)
-'				FieldText(7) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v114 #")) + Val(vBibTekst(FlProdukt, "#v119 #")) - Val(vBibTekst(FlProdukt, "#v120 #")), MaskerSy(7)), 6)
-'				FieldText(8) = vBibTekst(FlProdukt, "#v109 #")
+'				FieldText(6) = VB.Right(Dec(TicketEUR2005, MaskEUR), 8)
+'				FieldText(7) = VB.Right(Dec(Val(AdoGetField(TableOfProductsAndServices, "#v114 #")) + Val(AdoGetField(TableOfProductsAndServices, "#v119 #")) - Val(AdoGetField(TableOfProductsAndServices, "#v120 #")), MaskSy(7)), 6)
+'				FieldText(8) = AdoGetField(TableOfProductsAndServices, "#v109 #")
 
 '			Case 1
-'				FieldText(0) = vBibTekst(FlProdukt, "#v102 #")
-'				FieldText(1) = vBibTekst(FlProdukt, "#v105 #")
+'				FieldText(0) = AdoGetField(TableOfProductsAndServices, "#v102 #")
+'				FieldText(1) = AdoGetField(TableOfProductsAndServices, "#v105 #")
 
-'				Basisbedrag = Val(vBibTekst(FlProdukt, "#e113 #"))
-'				FieldText(2) = Dec(Val(vBibTekst(FlProdukt, "#e113 #")), MaskerEUR & "00")
+'				Basisbedrag = Val(AdoGetField(TableOfProductsAndServices, "#e113 #"))
+'				FieldText(2) = Dec(Val(AdoGetField(TableOfProductsAndServices, "#e113 #")), MaskEUR & "00")
 
-'				FieldText(3) = vBibTekst(FlProdukt, "#v111 #")
+'				FieldText(3) = AdoGetField(TableOfProductsAndServices, "#v111 #")
 '				VeldTXT3 = Mid(fmarBoxText("002", "2", FieldText(3)), 4)
 
-'				BasisAantal = Val(vBibTekst(FlProdukt, "#v107 #"))
-'				FieldText(4) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v107 #")), MaskerSy(7)), 6)
-'				FieldText(5) = Mid(fmarBoxText("004", "2", vBibTekst(FlProdukt, "#v106 #")), 4)
+'				BasisAantal = Val(AdoGetField(TableOfProductsAndServices, "#v107 #"))
+'				FieldText(4) = VB.Right(Dec(Val(AdoGetField(TableOfProductsAndServices, "#v107 #")), MaskSy(7)), 6)
+'				FieldText(5) = Mid(fmarBoxText("004", "2", AdoGetField(TableOfProductsAndServices, "#v106 #")), 4)
 
 '				'TicketEUR2005 = ((Basisbedrag * BasisAantal) + ((Basisbedrag * BasisAantal * Val(VeldTXT3) / 100)))
-'				'FieldText(6) = Right(Dec((TicketEUR2005), MaskerEUR), 8)
-'				FieldText(6) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v115 #")), MaskerSy(7)), 6)
-'				FieldText(7) = VB.Right(Dec(Val(vBibTekst(FlProdukt, "#v114 #")) + Val(vBibTekst(FlProdukt, "#v119 #")) - Val(vBibTekst(FlProdukt, "#v120 #")), MaskerSy(7)), 6)
-'				FieldText(8) = Dec(Val(FieldText(6)) - Val(FieldText(7)), MaskerSy(7))
+'				'FieldText(6) = Right(Dec((TicketEUR2005), MaskEUR), 8)
+'				FieldText(6) = VB.Right(Dec(Val(AdoGetField(TableOfProductsAndServices, "#v115 #")), MaskSy(7)), 6)
+'				FieldText(7) = VB.Right(Dec(Val(AdoGetField(TableOfProductsAndServices, "#v114 #")) + Val(AdoGetField(TableOfProductsAndServices, "#v119 #")) - Val(AdoGetField(TableOfProductsAndServices, "#v120 #")), MaskSy(7)), 6)
+'				FieldText(8) = Dec(Val(FieldText(6)) - Val(FieldText(7)), MaskSy(7))
 '		End Select
 '		PrintVelden()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -218,9 +218,9 @@ End Class
 '		CmbLijstType.SelectedIndex = 0
 
 '		SorteringTel = -1
-'		ToonIndexen(bstNaam(FlProdukt), Sortering)
+'		ToonIndexen(JetTableName(TableOfProductsAndServices), Sortering)
 '		For T = 0 To Sortering.Items.Count - 1
-'			If InStr(VB6.GetItemString(Sortering, T), FLIndexCaption(FlProdukt, 0)) Then
+'			If InStr(VB6.GetItemString(Sortering, T), FLIndexCaption(TableOfProductsAndServices, 0)) Then
 '				Sortering.SelectedIndex = T
 '				Exit For
 '			End If
@@ -477,7 +477,7 @@ End Class
 
 '		IndexNR = -1
 '		For T = 0 To Sortering.Items.Count - 1
-'			If InStr(Sortering.Text, FLIndexCaption(FlProdukt, T)) Then
+'			If InStr(Sortering.Text, FLIndexCaption(TableOfProductsAndServices, T)) Then
 '				IndexNR = T
 '				Exit For
 '			End If

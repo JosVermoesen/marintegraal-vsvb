@@ -88,7 +88,7 @@ End Class
 '		End If
 
 '		FlTemp = FreeFile
-'		FileOpen(FlTemp, ProgrammaLokatie & "Def\" & sFile(Keuzelijst.SelectedIndex), OpenMode.Input)
+'		FileOpen(FlTemp, ProgramLocation & "Def\" & sFile(Keuzelijst.SelectedIndex), OpenMode.Input)
 '		Input(FlTemp, smg(9))
 '		Input(FlTemp, smg(2))
 '		Input(FlTemp, smg(3))
@@ -235,29 +235,29 @@ End Class
 '		End Select
 
 'Vooraan: 
-'		bFirst(FlLedgerAccount, 0)
-'		bGetOrGreater(FlLedgerAccount, 0, sminsl.Value)
+'		JetGetFirst(TableOfLedgerAccounts, 0)
+'		JetGetOrGreater(TableOfLedgerAccounts, 0, sminsl.Value)
 '		If Ktrl Then
 '			GoTo PrintAf
 '		Else
-'			If vSet(KeyBuf(FlLedgerAccount), 7) > smaxsl.Value Then
+'			If SetSpacing(KeyBuf(TableOfLedgerAccounts), 7) > smaxsl.Value Then
 '				GoTo PrintAf
 '			Else
-'				RecordToVeld(FlLedgerAccount)
+'				RecordToVeld(TableOfLedgerAccounts)
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub TelOp
 '			End If
 '		End If
 
 '		Do 
-'			bNext(FlLedgerAccount)
+'			bNext(TableOfLedgerAccounts)
 '			If Ktrl Then
 '				GoTo PrintAf
 '			Else
-'				If vSet(KeyBuf(FlLedgerAccount), 7) > smaxsl.Value Then
+'				If SetSpacing(KeyBuf(TableOfLedgerAccounts), 7) > smaxsl.Value Then
 '					GoTo PrintAf
 '				Else
-'					RecordToVeld(FlLedgerAccount)
+'					RecordToVeld(TableOfLedgerAccounts)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub TelOp
 '				End If
@@ -267,11 +267,11 @@ End Class
 
 'TelOp: 
 '		If bhEuro Then
-'			dbdhbj = Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
-'			dbdvbj = Val(vBibTekst(FlLedgerAccount, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
+'			dbdhbj = Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
+'			dbdvbj = Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
 '		Else
-'			dbdhbj = Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
-'			dbdvbj = Val(vBibTekst(FlLedgerAccount, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
+'			dbdhbj = Val(AdoGetField(TableOfLedgerAccounts, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #"))
+'			dbdvbj = Val(AdoGetField(TableOfLedgerAccounts, "#v" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex + 1, "000") & " #"))
 '		End If
 '		dTOT = dTOT + dbdhbj
 '		dvtot = dvtot + dbdvbj
@@ -394,13 +394,13 @@ End Class
 
 '		i = 0
 '		'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-'		Bedrijf = Dir(ProgrammaLokatie & "Def\" & "99MAR*.SRN")
+'		Bedrijf = Dir(ProgramLocation & "Def\" & "99MAR*.SRN")
 '		If Bedrijf = Space(Len(Bedrijf)) Then
 '			Drukken.Enabled = False
 '		Else
 '			Do While Bedrijf <> ""
 '				FlTemp = FreeFile
-'				FileOpen(FlTemp, ProgrammaLokatie & "Def\" & Bedrijf, OpenMode.Input)
+'				FileOpen(FlTemp, ProgramLocation & "Def\" & Bedrijf, OpenMode.Input)
 '				Input(FlTemp, sInfo)
 '				FileClose(FlTemp)
 '				sInfo = UCase(VB.Left(sInfo, 1)) & LCase(VB.Right(sInfo, Len(sInfo) - 1))

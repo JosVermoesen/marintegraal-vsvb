@@ -23,8 +23,8 @@ Public Class FrmJournalEntriesBook
         TotalCredit = 0
         TextBoxPeriodFromTo.Text = frmBJPERDAT.PeriodeBoekjaar.Text
         DateTimePickerProcessingDate.Text = MimGlobalDate
-        PeriodFromChosen = Mid(PeriodeVanTot, 1, 8)
-        PeriodToChosen = Mid(PeriodeVanTot, 9)
+        PeriodFromChosen = Mid(PeriodFromTo, 1, 8)
+        PeriodToChosen = Mid(PeriodFromTo, 9)
         CheckRecordSet()
     End Sub
 
@@ -187,7 +187,7 @@ Public Class FrmJournalEntriesBook
         Loop
         PrintTotal()
         With Mim.Report
-            .WriteDoc(BedrijfsLokatie & Format(Now, "YYYYMMDDHHMMSS") & "-diverseposten.pdf")
+            .WriteDoc(LocationCompanyData & Format(Now, "YYYYMMDDHHMMSS") & "-diverseposten.pdf")
             .MailSubject = "Diverse Posten bedrijfx"
             .MailText = "diverseposten bedrijf ix in bijlage."
         End With

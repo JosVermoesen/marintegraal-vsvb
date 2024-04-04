@@ -90,15 +90,15 @@ End Class
 
 '		Line = 0
 '		VorigeSleutel.Value = ""
-'		BeginSleutel.Value = vSet(TekstLijn(2).Text, 7) & VB.Left(SelectieVanTot, 8)
-'		EindSleutel.Value = vSet(TekstLijn(3).Text, 7) & VB.Right(SelectieVanTot, 8)
+'		BeginSleutel.Value = SetSpacing(TekstLijn(2).Text, 7) & VB.Left(SelectieVanTot, 8)
+'		EindSleutel.Value = SetSpacing(TekstLijn(3).Text, 7) & VB.Right(SelectieVanTot, 8)
 
 '		ReportText(2) = "Historieken " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = TekstLijn(1).Text
 
 '		InitializeFields()
-'		bFirst(FlJournaal, 0)
-'		bGetOrGreater(FlJournaal, 0, BeginSleutel.Value)
+'		JetGetFirst(FlJournaal, 0)
+'		JetGetOrGreater(FlJournaal, 0, BeginSleutel.Value)
 '		If Ktrl Then
 '			Beep()
 '			Exit Sub
@@ -123,7 +123,7 @@ End Class
 '		End If
 '		VolgendePagina()
 
-'		If DatumKtrl(VB.Right(KeyBuf(FlJournaal), 8), SleutelBoekjaar) Then
+'		If DatumKtrl(VB.Right(KeyBuf(FlJournaal), 8), BookyearAsKey) Then
 '			If VB.Left(KeyBuf(FlJournaal), 7) >= VB.Left(BeginSleutel.Value, 7) Then
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub InstalSubTitel
@@ -134,11 +134,11 @@ End Class
 
 '		Do 
 '			bNext(FlJournaal)
-'			If Ktrl Or vSet(KeyBuf(FlJournaal), 15) > EindSleutel.Value Then
+'			If Ktrl Or SetSpacing(KeyBuf(FlJournaal), 15) > EindSleutel.Value Then
 '				Exit Do
 '			End If
 '			If VB.Left(VorigeSleutel.Value, 7) = VB.Left(KeyBuf(FlJournaal), 7) Then
-'				If Not DatumKtrl(VB.Right(KeyBuf(FlJournaal), 8), SleutelBoekjaar) Then
+'				If Not DatumKtrl(VB.Right(KeyBuf(FlJournaal), 8), BookyearAsKey) Then
 '				ElseIf Mid(VorigeSleutel.Value, 12, 2) = Mid(KeyBuf(FlJournaal), 12, 2) Then 
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintInfo
@@ -148,12 +148,12 @@ End Class
 '					Else
 '						Printer.Write(vbCrLf)
 '					End If
-'					VorigeSleutel.Value = vSet(KeyBuf(FlJournaal), 15)
+'					VorigeSleutel.Value = SetSpacing(KeyBuf(FlJournaal), 15)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintInfo
 '				End If
 '			Else
-'				If DatumKtrl(VB.Right(KeyBuf(FlJournaal), 8), SleutelBoekjaar) Then
+'				If DatumKtrl(VB.Right(KeyBuf(FlJournaal), 8), BookyearAsKey) Then
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub InstalSubTitel
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
@@ -180,16 +180,16 @@ End Class
 '		End If
 '		Line = 0
 '		RecordToVeld(FlJournaal)
-'		MsJetGet(FlLedgerAccount, 0, vSet(vBibTekst(FlJournaal, "#v019 #"), 7))
+'		JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7))
 '		If Ktrl Then
-'			SubTitelTekst = vSet(vBibTekst(FlJournaal, "#v019 #"), 7) & " rekening reeds vernietigd..."
+'			SubTitelTekst = SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7) & " rekening reeds vernietigd..."
 '		Else
-'			RecordToVeld(FlLedgerAccount)
-'			SubTitelTekst = vBibTekst(FlLedgerAccount, "#v019 #") & " " & vBibTekst(FlLedgerAccount, "#v020 #")
+'			RecordToVeld(TableOfLedgerAccounts)
+'			SubTitelTekst = AdoGetField(TableOfLedgerAccounts, "#v019 #") & " " & AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '			SnelHelpPrint(SubTitelTekst, blLogging)
 '			ReportText(3) = SubTitelTekst
 '		End If
-'		VorigeSleutel.Value = vSet(KeyBuf(FlJournaal), 15)
+'		VorigeSleutel.Value = SetSpacing(KeyBuf(FlJournaal), 15)
 '		PrintTitel()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -198,13 +198,13 @@ End Class
 '		RecordToVeld(FlJournaal)
 '		Line = Line + 1
 '		FieldText(0) = VB6.Format(Line, "00000")
-'		FieldText(1) = FunctionDateText(vBibTekst(FlJournaal, "#v066 #"))
-'		FieldText(2) = vBibTekst(FlJournaal, "#v067 #")
-'		FieldText(3) = vBibTekst(FlJournaal, "#v033 #")
-'		FieldText(4) = vBibTekst(FlJournaal, "#v038 #")
-'		FieldText(7) = vBibTekst(FlJournaal, "#v069 #")
+'		FieldText(1) = FunctionDateText(AdoGetField(FlJournaal, "#v066 #"))
+'		FieldText(2) = AdoGetField(FlJournaal, "#v067 #")
+'		FieldText(3) = AdoGetField(FlJournaal, "#v033 #")
+'		FieldText(4) = AdoGetField(FlJournaal, "#v038 #")
+'		FieldText(7) = AdoGetField(FlJournaal, "#v069 #")
 '		If RTrim(FieldText(3)) <> "" Then
-'			MsJetGet(Fldokument, 0, FieldText(3))
+'			JetGet(TableOfInvoices, 0, FieldText(3))
 '			If Ktrl Then
 '				FieldText(8) = FieldText(3)
 '			Else
@@ -214,7 +214,7 @@ End Class
 '			FieldText(8) = ""
 '		End If
 
-'		DCBedrag = Val(vBibTekst(FlJournaal, "#v068 #"))
+'		DCBedrag = Val(AdoGetField(FlJournaal, "#v068 #"))
 
 '		Select Case DCBedrag
 '			Case Is < 0
@@ -290,7 +290,7 @@ End Class
 '		TotalDebit = 0
 '		TotalCredit = 0
 
-'		SelectieVanTot = BoekjaarVanTot.Value
+'		SelectieVanTot = BookyearFromTo.Value
 '		TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(SelectieVanTot, 8)) & " - " & FunctionDateText(VB.Right(SelectieVanTot, 8))
 '		TekstLijn(1).Text = MimGlobalDate.Value
 '		TekstLijn(2).Text = CStr(10)
@@ -482,12 +482,12 @@ End Class
 '				Select Case KeyCode
 '					Case 17
 '						aIndex = 0
-'						SharedFl = FlLedgerAccount
+'						SharedFl = TableOfLedgerAccounts
 '						GridText = TekstLijn(Index).Text
 '						SqlSearch.ShowDialog()
 '						If Ktrl = 0 Then
-'							TekstLijn(Index).Text = vBibTekst(FlLedgerAccount, "#v019 #")
-'							SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v020 #"), blLogging)
+'							TekstLijn(Index).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
+'							SnelHelpPrint(AdoGetField(TableOfLedgerAccounts, "#v020 #"), blLogging)
 '						End If
 '				End Select
 '		End Select
@@ -505,12 +505,12 @@ End Class
 '					TekstLijn(1).Focus()
 '				End If
 '			Case 2
-'				bGetOrGreater(FlLedgerAccount, 0, vSet(TekstLijn(2).Text, 7))
+'				JetGetOrGreater(TableOfLedgerAccounts, 0, SetSpacing(TekstLijn(2).Text, 7))
 '				If Ktrl Then
 '				Else
-'					RecordToVeld(FlLedgerAccount)
-'					TekstLijn(2).Text = vBibTekst(FlLedgerAccount, "#v019 #")
-'					SnelHelpPrint(vBibTekst(FlLedgerAccount, "#v020 #"), blLogging)
+'					RecordToVeld(TableOfLedgerAccounts)
+'					TekstLijn(2).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
+'					SnelHelpPrint(AdoGetField(TableOfLedgerAccounts, "#v020 #"), blLogging)
 '				End If
 '		End Select
 
@@ -537,15 +537,15 @@ End Class
 
 '		If DateWrongFormat(VB.Right(TxtPeriodeVanTot.Text, 10)) Then
 '			MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !")
-'			TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(BoekjaarVanTot.Value, 8)) & " - " & FunctionDateText(VB.Right(BoekjaarVanTot.Value, 8))
-'			SelectieVanTot = BoekjaarVanTot.Value
+'			TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(BookyearFromTo.Value, 8)) & " - " & FunctionDateText(VB.Right(BookyearFromTo.Value, 8))
+'			SelectieVanTot = BookyearFromTo.Value
 '			TxtPeriodeVanTot.Focus()
 '			Exit Sub
 '		ElseIf Len(TxtPeriodeVanTot.Text) <> 23 Then 
 '			MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !")
-'			TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(BoekjaarVanTot.Value, 8)) & " - " & FunctionDateText(VB.Right(BoekjaarVanTot.Value, 8))
+'			TxtPeriodeVanTot.Text = FunctionDateText(VB.Left(BookyearFromTo.Value, 8)) & " - " & FunctionDateText(VB.Right(BookyearFromTo.Value, 8))
 '			TxtPeriodeVanTot.Focus()
-'			SelectieVanTot = BoekjaarVanTot.Value
+'			SelectieVanTot = BookyearFromTo.Value
 '			Exit Sub
 '		Else
 '			SelectieVanTot = DatumKey(VB.Left(TxtPeriodeVanTot.Text, 10)) & DatumKey(VB.Right(TxtPeriodeVanTot.Text, 10))

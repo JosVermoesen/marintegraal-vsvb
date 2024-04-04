@@ -7,53 +7,53 @@ Public Class Mim
 
     Sub InitEerst()
         FullLine = New String(Chr(173), 128)
-        Bestand(FlAllerlei) = "0000000.ONT" '00
-        Bestand(FlKlant) = "0010000.ONT" '01
-        Bestand(FlLeverancier) = "0020000.ONT" '02
-        Bestand(FlLedgerAccount) = "0030000.ONT" '03
-        Bestand(FlProdukt) = "0040000.ONT" '04
+        Bestand(TableOfVarious) = "0000000.ONT" '00
+        Bestand(TableOfCustomers) = "0010000.ONT" '01
+        Bestand(TableOfSuppliers) = "0020000.ONT" '02
+        Bestand(TableOfLedgerAccounts) = "0030000.ONT" '03
+        Bestand(TableOfProductsAndServices) = "0040000.ONT" '04
         Bestand(FlJournaal) = "0600000.ONT" '05
-        Bestand(Fldokument) = "0200000.ONT" '06
-        Bestand(FlPolis) = "0700000.ONT" '07
-        Bestand(FlDummy) = "90DUMMY.ONT" '08
-        Bestand(FlTeller) = "00.ONT" '09
+        Bestand(TableOfInvoices) = "0200000.ONT" '06
+        Bestand(TableOfContracts) = "0700000.ONT" '07
+        Bestand(TableDummy) = "90DUMMY.ONT" '08
+        Bestand(TableOfCounters) = "00.ONT" '09
 
-        bstNaam(FlAllerlei) = "Allerlei" '00
-        bstNaam(FlKlant) = "Klanten" '01
-        bstNaam(FlLeverancier) = "Leveranciers" '02
-        bstNaam(FlLedgerAccount) = "Rekeningen" '03
-        bstNaam(FlProdukt) = "Produkten" '04
-        bstNaam(FlJournaal) = "Journalen" '05
-        bstNaam(Fldokument) = "dokumenten" '06
-        bstNaam(FlPolis) = "Polissen" '07
-        bstNaam(FlDummy) = "TmpBestand" '08
-        bstNaam(FlTeller) = "Tell" '09
+        JetTableName(TableOfVarious) = "Allerlei" '00
+        JetTableName(TableOfCustomers) = "Klanten" '01
+        JetTableName(TableOfSuppliers) = "Leveranciers" '02
+        JetTableName(TableOfLedgerAccounts) = "Rekeningen" '03
+        JetTableName(TableOfProductsAndServices) = "Produkten" '04
+        JetTableName(FlJournaal) = "Journalen" '05
+        JetTableName(TableOfInvoices) = "dokumenten" '06
+        JetTableName(TableOfContracts) = "Polissen" '07
+        JetTableName(TableDummy) = "TmpBestand" '08
+        JetTableName(TableOfCounters) = "Tell" '09
 
-        DagenInMaand(1) = 31
-        DagenInMaand(2) = 29
-        DagenInMaand(3) = 31
-        DagenInMaand(4) = 30
-        DagenInMaand(5) = 31
-        DagenInMaand(6) = 30
-        DagenInMaand(7) = 31
-        DagenInMaand(8) = 31
-        DagenInMaand(9) = 30
-        DagenInMaand(10) = 31
-        DagenInMaand(11) = 30
-        DagenInMaand(12) = 31
+        DaysInAMonth(1) = 31
+        DaysInAMonth(2) = 29
+        DaysInAMonth(3) = 31
+        DaysInAMonth(4) = 30
+        DaysInAMonth(5) = 31
+        DaysInAMonth(6) = 30
+        DaysInAMonth(7) = 31
+        DaysInAMonth(8) = 31
+        DaysInAMonth(9) = 30
+        DaysInAMonth(10) = 31
+        DaysInAMonth(11) = 30
+        DaysInAMonth(12) = 31
 
-        MaandTekst(1) = "Januari  "
-        MaandTekst(2) = "Februari "
-        MaandTekst(3) = "Maart    "
-        MaandTekst(4) = "April    "
-        MaandTekst(5) = "Mei      "
-        MaandTekst(6) = "Juni     "
-        MaandTekst(7) = "Juli     "
-        MaandTekst(8) = "Augustus "
-        MaandTekst(9) = "September"
-        MaandTekst(10) = "October  "
-        MaandTekst(11) = "November "
-        MaandTekst(12) = "December "
+        MonthText(1) = "Januari  "
+        MonthText(2) = "Februari "
+        MonthText(3) = "Maart    "
+        MonthText(4) = "April    "
+        MonthText(5) = "Mei      "
+        MonthText(6) = "Juni     "
+        MonthText(7) = "Juli     "
+        MonthText(8) = "Augustus "
+        MonthText(9) = "September"
+        MonthText(10) = "October  "
+        MonthText(11) = "November "
+        MonthText(12) = "December "
         InitBestanden()
 
     End Sub
@@ -100,7 +100,7 @@ Public Class Mim
 
         InitEerst()
         MimGlobalDate = Format(Now, "dd/MM/yyyy")
-        ProgrammaLokatie = My.Application.Info.DirectoryPath & "\"
+        ProgramLocation = My.Application.Info.DirectoryPath & "\"
 
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
         Text = "marIntegraal.NET " & marVersion
@@ -113,10 +113,10 @@ Public Class Mim
         adTBIB = New ADODB.Connection
 
         'adKBDB.ConnectionString = marIntegraal.My.Settings.defaultConnectionString
-        adKBDB.ConnectionString = adoJetProvider & "Data Source=" & ProgrammaLokatie & "Def\default.def;" & "Persist Security Info=False"
+        adKBDB.ConnectionString = adoJetProvider & "Data Source=" & ProgramLocation & "Def\default.def;" & "Persist Security Info=False"
         adKBDB.Open()
 
-        adTBIB.ConnectionString =  adoJetProvider & "Data Source=" & ProgrammaLokatie & "\Def\Telebib2.def;" & "Persist Security Info=False"
+        adTBIB.ConnectionString =  adoJetProvider & "Data Source=" & ProgramLocation & "\Def\Telebib2.def;" & "Persist Security Info=False"
         adTBIB.Open()
 
         adKBTable = New ADODB.Recordset
@@ -416,7 +416,7 @@ Public Class Mim
 
     Private Sub AankoopboekToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AankoopboekToolStripMenuItem.Click
 
-        aIndex = FlLeverancier 
+        aIndex = TableOfSuppliers 
          With AVBoek
             .WindowState = FormWindowState.Normal 
             .Enabled = True
