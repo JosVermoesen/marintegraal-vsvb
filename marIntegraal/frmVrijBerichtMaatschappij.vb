@@ -322,9 +322,9 @@ End Class
 
 '		cbDocumentPrinterHier.Items.Clear()
 '		If Printers.Count = 0 Then MsgBox("Installeer eerst een printerdriver a.u.b. (ook al beschikt U nog over geen printer.  Bij blijvende problemen in netwerk gelieve op te starten met het command '/P=FALSE' en uw netwerkbeheerder te informeren)", MsgBoxStyle.Exclamation) : End
-'		For TelTot = 0 To Printers.Count - 1
+'		For CountTo = 0 To Printers.Count - 1
 '			'UPGRADE_ISSUE: Printer property Printers.Port was not upgraded. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="CC4C7EC0-C903-48FC-ACCC-81861D12DA4A"'
-'			Me.cbDocumentPrinterHier.Items.Add(Printers(TelTot).Port & " " & Printers(TelTot).DeviceName)
+'			Me.cbDocumentPrinterHier.Items.Add(Printers(CountTo).Port & " " & Printers(CountTo).DeviceName)
 '		Next 
 '		cbDocumentPrinterHier.SelectedIndex = dokumentPrinterNr
 

@@ -103,13 +103,13 @@ End Class
 '		Dim BoxMask As String
 '		Dim BoxType As Short
 
-'		For TelTot = 0 To 8
-'			If SetupOption(TelTot).Checked = True Then
+'		For CountTo = 0 To 8
+'			If SetupOption(CountTo).Checked = True Then
 '				Exit For
 '			End If
 '		Next 
 
-'		If TeleBibDEF(";" & SetupOption(TelTot).Text) Then
+'		If TeleBibDEF(";" & SetupOption(CountTo).Text) Then
 '		Else
 '			Beep()
 '			MsgBox("Definitiebestand 099.DEF defekt ?")

@@ -454,7 +454,7 @@ TryAgain:
                 Msg = "Dergelijke ID.Kode Bestaat reeds : " & KeyBuf(Fl) & " : " & Str(Fl)
                 MsgBox(Msg)
             Case 46
-                Msg = "Bestand werd geopend in LEES-modus." & vbCrLf & "Schrijven is niet mogelijk..."
+                Msg = "TableDefOnt werd geopend in LEES-modus." & vbCrLf & "Schrijven is niet mogelijk..."
                 MsgBox(Msg, 0, "Database beveiliging")
 
             Case Else
@@ -471,9 +471,9 @@ JetErrorInsert:
             Case Else
                 'UPGRADE_WARNING: Use of Null/IsNull() detected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="2EED02CB-5C0E-4DC1-AE94-4FAA3A30F51A"'
                 If IsDBNull(rsMAR(Fl).Fields(fIndex).Value) Then
-                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Bestand : " & JetTableName(Fl) & vbCrLf & vbCrLf & "De sleutel heeft 'null' waarde", MsgBoxStyle.Exclamation)
+                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "TableDefOnt : " & JetTableName(Fl) & vbCrLf & vbCrLf & "De sleutel heeft 'null' waarde", MsgBoxStyle.Exclamation)
                 Else
-                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "Bestand : " & JetTableName(Fl) & vbCrLf & vbCrLf & "Mogelijke sleutel : " & FVT(Fl, fIndex), MsgBoxStyle.Exclamation)
+                    MsgBox(ErrorToString() & vbCrLf & vbCrLf & "TableDefOnt : " & JetTableName(Fl) & vbCrLf & vbCrLf & "Mogelijke sleutel : " & FVT(Fl, fIndex), MsgBoxStyle.Exclamation)
                 End If
                 Ktrl = Err.Number
         End Select
@@ -808,7 +808,7 @@ JetErrorInsert:
         Dim LokaalBestand As String
 
         If Fl <> TableOfCounters Then
-            LokaalBestand = Left(Bestand(Fl), 3)
+            LokaalBestand = Left(TableDefOnt(Fl), 3)
         Else
             LokaalBestand = "00"
         End If

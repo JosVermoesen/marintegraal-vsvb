@@ -53,7 +53,7 @@ End Class
 
 
 '	Dim bCtrl As Boolean
-'	Dim TelTot As Short
+'	Dim CountTo As Short
 '	Dim iOptelControle As Short
 
 '	'Begin
@@ -912,8 +912,8 @@ End Class
 
 '			Case "2" 'Deel 2
 '				sMededeling2 = Mid(DeString, 11, 53)
-'				For TelTot = 0 To 1
-'					sRefKlant(TelTot) = Mid(DeString, 64 + (TelTot * 13), 13)
+'				For CountTo = 0 To 1
+'					sRefKlant(CountTo) = Mid(DeString, 64 + (CountTo * 13), 13)
 '				Next 
 '				sMuntVerrichting = Mid(DeString, 90, 3)
 '				cBedragMunt = Val(Mid(DeString, 93, 15)) / 1000
@@ -922,8 +922,8 @@ End Class
 '				sRekeningTP = Mid(DeString, 11, 12)
 '				sITcodesTP = Mid(DeString, 23, 10)
 '				sRekeningTPextra = Mid(DeString, 33, 15)
-'				For TelTot = 0 To 2
-'					sNaamEnAdres(TelTot) = Mid(DeString, 48 + (TelTot * 26), 26)
+'				For CountTo = 0 To 2
+'					sNaamEnAdres(CountTo) = Mid(DeString, 48 + (CountTo * 26), 26)
 '				Next 
 
 '			Case Else

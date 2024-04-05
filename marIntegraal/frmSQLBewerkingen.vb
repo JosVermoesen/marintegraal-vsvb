@@ -75,17 +75,17 @@ End Class
 '			If Msg = "" Then
 '				grdColWidth(0) = 0
 '			Else
-'				TelTot = 0
+'				CountTo = 0
 '				Do While Msg <> ""
 '					If InStr(Msg, vbTab) <> 0 Then
-'						grdColWidth(TelTot) = Val(VB.Left(Msg, InStr(Msg, vbTab) - 1))
+'						grdColWidth(CountTo) = Val(VB.Left(Msg, InStr(Msg, vbTab) - 1))
 '						Msg = Mid(Msg, InStr(Msg, vbTab) + 1)
-'						TelTot = TelTot + 1
+'						CountTo = CountTo + 1
 '					Else
 '						Exit Do
 '					End If
 '				Loop 
-'				grdColWidth(TelTot) = 0
+'				grdColWidth(CountTo) = 0
 '			End If
 
 '		End If
@@ -290,8 +290,8 @@ End Class
 '			'Als nieuw bijvoegen
 '			TLBRecord(TableOfVarious) = ""
 '			Msg = ""
-'			For TelTot = 0 To msfSQL.get_Cols() - 1
-'				Msg = Msg & VB6.Format(msfSQL.get_ColWidth(TelTot)) & vbTab
+'			For CountTo = 0 To msfSQL.get_Cols() - 1
+'				Msg = Msg & VB6.Format(msfSQL.get_ColWidth(CountTo)) & vbTab
 '			Next 
 '			Msg = "[Colwidth]" & Msg
 '			Msg = txtSQL.Text & Msg
@@ -302,8 +302,8 @@ End Class
 '		ElseIf MsgBox("Bestaande definitie '" & cmbSelect.Text & "' overschrijven ?", MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2) = MsgBoxResult.Yes Then 
 '			RecordToVeld(TableOfVarious)
 '			Msg = ""
-'			For TelTot = 0 To msfSQL.get_Cols() - 1
-'				Msg = Msg & VB6.Format(msfSQL.get_ColWidth(TelTot)) & vbTab
+'			For CountTo = 0 To msfSQL.get_Cols() - 1
+'				Msg = Msg & VB6.Format(msfSQL.get_ColWidth(CountTo)) & vbTab
 '			Next 
 '			Msg = "[Colwidth]" & Msg
 '			Msg = txtSQL.Text & Msg
@@ -332,13 +332,13 @@ End Class
 '		lblRecordCount.Text = ""
 '		Me.Refresh()
 '		If adoRECORDset Then
-'			For TelTot = 0 To msfSQL.get_Cols() - 1
-'				If grdColWidth(TelTot) = 0 Then
+'			For CountTo = 0 To msfSQL.get_Cols() - 1
+'				If grdColWidth(CountTo) = 0 Then
 '					Exit For
 '				Else
-'					msfSQL.set_ColWidth(TelTot,  , grdColWidth(TelTot))
+'					msfSQL.set_ColWidth(CountTo,  , grdColWidth(CountTo))
 '				End If
-'				msfSQL.set_ColAlignment(TelTot, MSFlexGridLib.AlignmentSettings.flexAlignLeftTop)
+'				msfSQL.set_ColAlignment(CountTo, MSFlexGridLib.AlignmentSettings.flexAlignLeftTop)
 '			Next 
 '		End If
 
@@ -442,7 +442,7 @@ End Class
 '		'hier nu eerst terug rsjournaal maken !!!!!
 '		If allesGesloten = True Then
 '			MsgBox("Bedrijfsdatabase wordt hierna automatisch afgesloten.", MsgBoxStyle.Information)
-'			AutoUnloadBedrijf()
+'			AutoUnloadCompany()
 '			Exit Sub
 '		End If
 
@@ -456,7 +456,7 @@ End Class
 
 '	Private Sub lvDatabase_DoubleClick(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles lvDatabase.DoubleClick
 
-'		Dim TelTot As Short
+'		Dim CountTo As Short
 
 '		txtSQL.Text = "SELECT * FROM " & lvDatabase.FocusedItem.Text
 '		cmdSQL_Click(cmdSQL, New System.EventArgs())
@@ -465,8 +465,8 @@ End Class
 
 '		cbVelden.Enabled = True
 '		cbVelden.Items.Clear()
-'		For TelTot = 0 To datPrimaryRS.Fields.Count - 1
-'			cbVelden.Items.Add(datPrimaryRS.Fields(TelTot).Name)
+'		For CountTo = 0 To datPrimaryRS.Fields.Count - 1
+'			cbVelden.Items.Add(datPrimaryRS.Fields(CountTo).Name)
 '		Next 
 '		If cbVelden.Items.Count Then
 '			cbVelden.SelectedIndex = 0

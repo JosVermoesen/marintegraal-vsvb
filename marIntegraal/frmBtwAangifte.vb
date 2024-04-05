@@ -295,8 +295,8 @@ End Class
 '			Do 
 '				RecordToVeld(TableOfVarious)
 '				dokumentTot = 0
-'				For TelTot = 92 To 98 Step 2
-'					dokumentTot = dokumentTot + Val(AdoGetField(TableOfVarious, "#v" & VB6.Format(TelTot, "000") & " #"))
+'				For CountTo = 92 To 98 Step 2
+'					dokumentTot = dokumentTot + Val(AdoGetField(TableOfVarious, "#v" & VB6.Format(CountTo, "000") & " #"))
 '				Next 
 '				If dokumentTot Then
 '					'UPGRADE_WARNING: Cannot determine Node location Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="196D987F-2118-46D0-80D2-92FB2909C206"'

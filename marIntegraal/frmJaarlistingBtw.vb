@@ -577,9 +577,9 @@ End Class
 
 '		Dim TempbModus As Short
 
-'		For TelTot = 0 To BJPERDAT.PeriodeBoekjaar.Items.Count
-'			If Mid(VB6.GetItemString(BJPERDAT.PeriodeBoekjaar, TelTot), 14, 5) = "31/12" Then
-'				Datum.Value = Mid(VB6.GetItemString(BJPERDAT.PeriodeBoekjaar, TelTot), 14)
+'		For CountTo = 0 To BJPERDAT.PeriodeBoekjaar.Items.Count
+'			If Mid(VB6.GetItemString(BJPERDAT.PeriodeBoekjaar, CountTo), 14, 5) = "31/12" Then
+'				Datum.Value = Mid(VB6.GetItemString(BJPERDAT.PeriodeBoekjaar, CountTo), 14)
 '				Datum.Enabled = False
 '				Exit For
 '			End If

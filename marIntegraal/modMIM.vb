@@ -29,8 +29,8 @@
             Mim.ContractbeheerToolStripMenuItem.Enabled = True
         End If
 
-        'For TelTot = 1 To 5
-        ' Mim.MenuTitel(TelTot).Enabled = True
+        'For CountTo = 1 To 5
+        ' Mim.MenuTitel(CountTo).Enabled = True
         ' Next
         ' For T = 1 To 4
         ' BasisB(T).Enabled = True
@@ -74,10 +74,10 @@ ProbeerNogEens:
         End If
 
         ActiveBookyear = Val(actiefBJ(0))
-        For TelTot = 9 To 0 Step -1
-            If Dir(LocationCompanyData & "DEF" & Format(TelTot, "00") & ".OXT") <> "" Then
+        For CountTo = 9 To 0 Step -1
+            If Dir(LocationCompanyData & "DEF" & Format(CountTo, "00") & ".OXT") <> "" Then
                 FlTemp2 = FreeFile()
-                FileOpen(FlTemp2, LocationCompanyData & "DEF" & Format(TelTot, "00") & ".OXT", OpenMode.Input)
+                FileOpen(FlTemp2, LocationCompanyData & "DEF" & Format(CountTo, "00") & ".OXT", OpenMode.Input)
                 c = LineInput(FlTemp2)
                 'periodesBJ = Split(c, ",")
                 XX = Left(c, 4)
@@ -187,7 +187,7 @@ ErrorOpvang:
 
     End Sub
 
-    Sub AutoUnloadBedrijf(BJPERDAT)
+    Sub AutoUnloadCompany(BJPERDAT)
         Dim T As Short
         Dim LastUsed As String
 
@@ -204,8 +204,8 @@ ErrorOpvang:
         rsJournaal.Close()
         rsJournaal = Nothing
 
-        For TelTot = TableOfVarious To TableOfContracts
-            rsMAR(TelTot).Close()
+        For CountTo = TableOfVarious To TableOfContracts
+            rsMAR(CountTo).Close()
         Next
 
         'Menuopties beperken
@@ -215,9 +215,9 @@ ErrorOpvang:
         Mim.BoekhoudingToolStripMenuItem.Enabled = False
         Mim.ContractbeheerToolStripMenuItem.Enabled = False
 
-        'For TelTot = 1 To 6
+        'For CountTo = 1 To 6
         'TODO
-        'Mim.MenuTitel(TelTot).Enabled = False
+        'Mim.MenuTitel(CountTo).Enabled = False
         'Next
 
         With BFKlanten
@@ -247,10 +247,10 @@ ErrorOpvang:
     End Sub
 
 
-    Function InitBestanden() As Boolean
+    Function InitTables() As Boolean
         Dim T As Integer
 
-        InitBestanden = True
+        InitTables = True
         FlAantalIndexen(TableOfVarious) = 1
         JetTableUseIndex(TableOfVarious, 0) = "v004 " : FlIndexLen(TableOfVarious, 0) = 13 : FLIndexCaption(TableOfVarious, 0) = "Partij"
         JetTableUseIndex(TableOfVarious, 1) = "v005 " : FlIndexLen(TableOfVarious, 1) = 20 : FLIndexCaption(TableOfVarious, 1) = "SPtype"
@@ -299,23 +299,23 @@ ErrorOpvang:
             If TeleBibPagina(T) Then
             Else
                 MsgBox("Fout tijdens inladen bestandsdefinities.  Herinstalleer het programma en/of kontakteer Vsoft")
-                InitBestanden = False
+                InitTables = False
             End If
         Next
     End Function
 
 
-    Function InstellingenBewaard(ByRef frmVenster As System.Windows.Forms.Form) As Boolean
+    Function SettingsSaving(ByRef frmVenster As System.Windows.Forms.Form) As Boolean
 
-        Err.Clear() : InstellingenBewaard = True
+        Err.Clear() : SettingsSaving = True
         SaveSetting(My.Application.Info.ProductName, frmVenster.Name, "Top", frmVenster.Top.ToString)
         SaveSetting(My.Application.Info.ProductName, frmVenster.Name, "Links", frmVenster.Left.ToString)
         SaveSetting(My.Application.Info.ProductName, frmVenster.Name, "Breedte", frmVenster.Width.ToString)
         SaveSetting(My.Application.Info.ProductName, frmVenster.Name, "Hoogte", frmVenster.Height.ToString)
-        If Err.Number Then InstellingenBewaard = False
+        If Err.Number Then SettingsSaving = False
 
     End Function
-    Sub LaadInstellingen(ByRef frmVenster As System.Windows.Forms.Form)
+    Sub SettingsLoading(ByRef frmVenster As System.Windows.Forms.Form)
         Dim valTop As Integer = Val(GetSetting(My.Application.Info.ProductName, frmVenster.Name, "Top"))
         Dim valLeft As Integer = Val(GetSetting(My.Application.Info.ProductName, frmVenster.Name, "Top"))
         Dim valWidth As Integer = Val(GetSetting(My.Application.Info.ProductName, frmVenster.Name, "Breedte"))
@@ -905,7 +905,7 @@ handlerVVDag:
             'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
             BestandReeks(1) = Dir(SourcePath & "\" & FileToCopy)
             If BestandReeks(1) = "" Then
-                MsgBox("Stop tijdens het kopieren.  Bestand niet te vinden: """ & FileToCopy & """", 64, "SETUP")
+                MsgBox("Stop tijdens het kopieren.  TableDefOnt niet te vinden: """ & FileToCopy & """", 64, "SETUP")
                 GoTo CopyError
             Else
                 Do
@@ -922,23 +922,23 @@ handlerVVDag:
             BestandReeks(1) = FileToCopy
             Aantal = 1
             If Not FileExists(SourcePath & "\" & FileToCopy) Then
-                MsgBox("Bestand niet te vinden: """ & FileToCopy & """", 64, "SETUP")
+                MsgBox("TableDefOnt niet te vinden: """ & FileToCopy & """", 64, "SETUP")
                 GoTo CopyError
             End If
         End If
 
-        For TelTot = 1 To Aantal
+        For CountTo = 1 To Aantal
 
             'UPGRADE_WARNING: Dir has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-            If Dir(TargetPath & "\" & BestandReeks(TelTot)) <> "" Then
-                Kill(TargetPath & "\" & BestandReeks(TelTot))
+            If Dir(TargetPath & "\" & BestandReeks(CountTo)) <> "" Then
+                Kill(TargetPath & "\" & BestandReeks(CountTo))
             End If
 
             FlCopy1 = FreeFile()
-            FileOpen(FlCopy1, SourcePath & "\" & BestandReeks(TelTot), OpenMode.Binary)
+            FileOpen(FlCopy1, SourcePath & "\" & BestandReeks(CountTo), OpenMode.Binary)
 
             FlCopy2 = FreeFile()
-            FileOpen(FlCopy2, TargetPath & "\" & BestandReeks(TelTot), OpenMode.Binary)
+            FileOpen(FlCopy2, TargetPath & "\" & BestandReeks(CountTo), OpenMode.Binary)
 
             BufferVar = New String(" ", 3000)
 

@@ -394,24 +394,24 @@ End Class
 '			If bhEuro Then
 '				'EUR boekhouding
 '				dMuntL = 1 / Euro
-'				For TelTot = 0 To AankoopDetail.Items.Count - 1
+'				For CountTo = 0 To AankoopDetail.Items.Count - 1
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
+'					TempoVar = VB6.GetItemString(AankoopDetail, CountTo)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) * Euro, 0), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
+'					VB6.SetItemString(AankoopDetail, CountTo, TempoVar)
 '				Next 
 '			Else
 '				'BEF boekhouding
 '				dMuntL = 1
-'				For TelTot = 0 To AankoopDetail.Items.Count - 1
+'				For CountTo = 0 To AankoopDetail.Items.Count - 1
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
+'					TempoVar = VB6.GetItemString(AankoopDetail, CountTo)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) * Euro, 0), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
+'					VB6.SetItemString(AankoopDetail, CountTo, TempoVar)
 '				Next 
 '			End If
 '		Else
@@ -421,24 +421,24 @@ End Class
 '			If bhEuro Then
 '				'EUR boekhouding
 '				dMuntL = 1
-'				For TelTot = 0 To AankoopDetail.Items.Count - 1
+'				For CountTo = 0 To AankoopDetail.Items.Count - 1
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
+'					TempoVar = VB6.GetItemString(AankoopDetail, CountTo)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) / Euro, 2), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
+'					VB6.SetItemString(AankoopDetail, CountTo, TempoVar)
 '				Next 
 '			Else
 '				'BEF boekhouding
 '				dMuntL = 1 / Euro
-'				For TelTot = 0 To AankoopDetail.Items.Count - 1
+'				For CountTo = 0 To AankoopDetail.Items.Count - 1
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					TempoVar = VB6.GetItemString(AankoopDetail, TelTot)
+'					TempoVar = VB6.GetItemString(AankoopDetail, CountTo)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					Mid(TempoVar, 50, 12) = Dec(System.Math.Round(Val(Mid(TempoVar, 50, 12)) / Euro, 2), MaskEURBH)
 '					'UPGRADE_WARNING: Couldn't resolve default property of object TempoVar. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VB6.SetItemString(AankoopDetail, TelTot, TempoVar)
+'					VB6.SetItemString(AankoopDetail, CountTo, TempoVar)
 '				Next 
 '			End If
 '		End If
@@ -468,7 +468,7 @@ End Class
 '		'rsMAR(TableOfInvoices).Close
 '		Ktrl = ktrlBLOBRecord
 '		If Ktrl = False Then
-'			AutoUnloadBedrijf()
+'			AutoUnloadCompany()
 '			Exit Sub
 '		End If
 

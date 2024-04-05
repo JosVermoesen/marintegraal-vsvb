@@ -1,11 +1,11 @@
 ﻿Option Strict Off
 Option Explicit On
 Module aLoadMain
-    Public Sub opStart()
+    Public Sub StartUp()
         DecimalKTRL = False
         blLogging = False
-        For TelTot = 0 To 9
-            rsMAR(TelTot) = New ADODB.Recordset
+        For CountTo = 0 To 9
+            rsMAR(CountTo) = New ADODB.Recordset
         Next
         ChDir(My.Application.Info.DirectoryPath)
         fs = New Scripting.FileSystemObject

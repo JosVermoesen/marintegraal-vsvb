@@ -25,7 +25,7 @@ Public Class frmBJPERDAT
         PeriodeMeestLogisch = -1
         If ActiveBookyear <> Boekjaar.SelectedIndex Then
             JetTableClose(99)
-            Bestand(TableOfCounters) = Format(Boekjaar.SelectedIndex, "00") & ".ONT"
+            TableDefOnt(TableOfCounters) = Format(Boekjaar.SelectedIndex, "00") & ".ONT"
             JetTableName(TableOfCounters) = "jr" & Boekjaar.Text
             CloseOpenWindows()
             ActiveBookyear = Boekjaar.SelectedIndex

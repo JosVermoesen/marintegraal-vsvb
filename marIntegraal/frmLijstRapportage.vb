@@ -56,10 +56,10 @@ End Class
 '		IndexeerVeld = Trim(JetTableUseIndex(Val(Mid(Tabel.Text, 1, 1)), Val(Mid(Me.Sortering.Text, 1, 2))))
 
 '		Msg = "SELECT"
-'		For TelTot = 0 To Me.RapportVelden.Items.Count - 1
-'			Msg = Msg & " " & Trim(Mid(VB6.GetItemString(Me.RapportVelden, TelTot), 5, 5))
-'			Msg = Msg & " AS [" & Trim(Mid(VB6.GetItemString(RapportVelden, TelTot), 22)) & "]"
-'			If TelTot < Me.RapportVelden.Items.Count - 1 Then
+'		For CountTo = 0 To Me.RapportVelden.Items.Count - 1
+'			Msg = Msg & " " & Trim(Mid(VB6.GetItemString(Me.RapportVelden, CountTo), 5, 5))
+'			Msg = Msg & " AS [" & Trim(Mid(VB6.GetItemString(RapportVelden, CountTo), 22)) & "]"
+'			If CountTo < Me.RapportVelden.Items.Count - 1 Then
 '				Msg = Msg & ","
 '			End If
 '		Next 

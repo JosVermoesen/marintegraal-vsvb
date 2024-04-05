@@ -308,20 +308,20 @@ End Class
 '	Private Sub cmdRBAcontrole_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdRBAcontrole.Click
 
 '		Dim tempo() As String
-'		Dim TelTot As Short
+'		Dim CountTo As Short
 '		Dim TelOK As Short
 
 '		TempoMilieu = txtMilieu.Text
 '		TelOK = -1
 
 '		tempo = Split(txtMilieu.Text, ";")
-'		For TelTot = 0 To UBound(tempo)
-'			JetGet(TableOfProductsAndServices, 0, tempo(TelTot))
+'		For CountTo = 0 To UBound(tempo)
+'			JetGet(TableOfProductsAndServices, 0, tempo(CountTo))
 '			If Ktrl = 0 Then
-'				MsgBox(Trim(tempo(TelTot)) & " aanwezig", MsgBoxStyle.Information)
+'				MsgBox(Trim(tempo(CountTo)) & " aanwezig", MsgBoxStyle.Information)
 '				TelOK = TelOK + 1
 '			Else
-'				MsgBox(Trim(tempo(TelTot)) & " NIET aanwezig", MsgBoxStyle.Exclamation)
+'				MsgBox(Trim(tempo(CountTo)) & " NIET aanwezig", MsgBoxStyle.Exclamation)
 '			End If
 '		Next 
 '		If TelOK = UBound(tempo) Then
@@ -620,11 +620,11 @@ End Class
 
 '		Schoon()
 '		RekenOpties = String99(Reading, 181)
-'		For TelTot = 1 To Len(RekenOpties)
-'			If CDbl(Mid(RekenOpties, TelTot, 1)) = 1 Then
-'				chkFilter(TelTot - 1).CheckState = System.Windows.Forms.CheckState.Checked
+'		For CountTo = 1 To Len(RekenOpties)
+'			If CDbl(Mid(RekenOpties, CountTo, 1)) = 1 Then
+'				chkFilter(CountTo - 1).CheckState = System.Windows.Forms.CheckState.Checked
 '			Else
-'				chkFilter(TelTot - 1).CheckState = System.Windows.Forms.CheckState.Unchecked
+'				chkFilter(CountTo - 1).CheckState = System.Windows.Forms.CheckState.Unchecked
 '			End If
 '		Next 
 '		groepenVullen()

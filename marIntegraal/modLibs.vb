@@ -74,7 +74,7 @@ Module ModLibs
     Public FileNr(NumberOfTables) As Short
     Public TLBRecord(NumberOfTables) As String
     Public KeyBuf(NumberOfTables) As String
-    Public Bestand(NumberOfTables) As String
+    Public TableDefOnt(NumberOfTables) As String
     Public KeyIndex(NumberOfTables) As Short
     Public InsertFlag(NumberOfTables) As Short
     Public FlAantalIndexen(10) As Short
@@ -121,7 +121,7 @@ Module ModLibs
     Public dKtrlEUR As Decimal
 
     Public bModus As Short
-    Public TelTot As Short
+    Public CountTo As Short
 
     Public PeriodFromTo As String ' New VB6.FixedLengthString(16)
     Public BookyearFromTo As String 'New VB6.FixedLengthString(16)

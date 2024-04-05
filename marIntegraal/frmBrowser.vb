@@ -74,10 +74,10 @@ Public Class Browser
                 Mim.HostingToolStripMenuItem.Enabled=True 
 
             Case "SmarterMail"
-                Mim.SmartermailToolStripMenuItem.Enabled=True 
+                Mim.PleskMailToolStripMenuItem.Enabled=True 
 
             Case "marIntegraal"
-                Mim.marIntegraalToolStripMenuItem.Enabled=True 
+                Mim.VsoftToolStripMenuItem.Enabled=True 
         End Select
 
     End Sub

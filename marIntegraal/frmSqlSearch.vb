@@ -15,22 +15,22 @@ Public Class SqlSearch
         Sleuteltje = "marSQL" & Format(SharedFl, "00") & Mid(comboTekst, 1, InStr(comboTekst, ";") - 1)
         TelOrde = 0
         Do
-            TelTot = InStr(TelOrde + 1, comboTekst, ";") - 1
-            If TelTot < 0 Then
+            CountTo = InStr(TelOrde + 1, comboTekst, ";") - 1
+            If CountTo < 0 Then
                 Exit Do
             Else
                 If TelOrde = 0 Then
-                    SorteerIndex = Mid(comboTekst, TelTot - 3, 4)
-                    SorteerOrde = Mid(comboTekst, TelTot - 3, 4)
-                    If Mid(comboTekst, TelTot - 4, 1) = "+" Then
+                    SorteerIndex = Mid(comboTekst, CountTo - 3, 4)
+                    SorteerOrde = Mid(comboTekst, CountTo - 3, 4)
+                    If Mid(comboTekst, CountTo - 4, 1) = "+" Then
                         SorteerOrde = SorteerOrde & " ASC"
                     Else
                         SorteerOrde = SorteerOrde & " DESC"
                     End If
                 Else
-                    SorteerIndex = SorteerIndex & "+" & Mid(comboTekst, TelTot - 3, 4)
-                    SorteerOrde = SorteerOrde & ", " & Mid(comboTekst, TelTot - 3, 4)
-                    If Mid(comboTekst, TelTot - 4, 1) = "+" Then
+                    SorteerIndex = SorteerIndex & "+" & Mid(comboTekst, CountTo - 3, 4)
+                    SorteerOrde = SorteerOrde & ", " & Mid(comboTekst, CountTo - 3, 4)
+                    If Mid(comboTekst, CountTo - 4, 1) = "+" Then
                         SorteerOrde = SorteerOrde & " ASC"
                     Else
                         SorteerOrde = SorteerOrde & " DESC"
@@ -38,7 +38,7 @@ Public Class SqlSearch
                 End If
 
             End If
-            TelOrde = TelTot + 1
+            TelOrde = CountTo + 1
         Loop
 
         JetGet(TableOfVarious, 1, "29" & Sleuteltje)
@@ -58,17 +58,17 @@ Public Class SqlSearch
                     'grdColWidth(0) = 0
                 Else
 
-                    TelTot = 0
+                    CountTo = 0
                     Do While Msg <> ""
                         If InStr(Msg, vbTab) <> 0 Then
-                            'grdColWidth(TelTot) = Val(VB.Left(Msg, InStr(Msg, vbTab) - 1))
+                            'grdColWidth(CountTo) = Val(VB.Left(Msg, InStr(Msg, vbTab) - 1))
                             Msg = Mid(Msg, InStr(Msg, vbTab) + 1)
-                            TelTot = TelTot + 1
+                            CountTo = CountTo + 1
                         Else
                             Exit Do
                         End If
                     Loop
-                    'grdColWidth(TelTot) = 0
+                    'grdColWidth(CountTo) = 0
                 End If
             Else
                 MsgBox("InitSQL")
@@ -83,30 +83,30 @@ InitSQL:
         'Delaatste = False
         'eerst eerste index verzekeren !
         'Stop
-        'For TelTot = 0 To Sortering.Items.Count - 1
-        'If Trim(JetTableUseIndex(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2) Then
-        'Msg = Msg & " " & Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2)
-        'Msg = Msg & " AS [" & Mid(VB6.GetItemString(Sortering, TelTot), InStr(VB6.GetItemString(Sortering, TelTot), ";") + 2) & "]"
+        'For CountTo = 0 To Sortering.Items.Count - 1
+        'If Trim(JetTableUseIndex(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, CountTo), 2, InStr(VB6.GetItemString(Sortering, CountTo), ";") - 2) Then
+        'Msg = Msg & " " & Mid(VB6.GetItemString(Sortering, CountTo), 2, InStr(VB6.GetItemString(Sortering, CountTo), ";") - 2)
+        'Msg = Msg & " AS [" & Mid(VB6.GetItemString(Sortering, CountTo), InStr(VB6.GetItemString(Sortering, CountTo), ";") + 2) & "]"
         'Msg = Msg & ","
-        'If TelTot = Sortering.Items.Count - 1 Then
+        'If CountTo = Sortering.Items.Count - 1 Then
         'Delaatste = True
         'End If
         'Exit For
         'End If
         'Next
         'If Msg = "SELECT" Then
-        'MsgBox("Hoofdindex " & Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2) & " bestaat niet (meer)", MsgBoxStyle.Critical)
+        'MsgBox("Hoofdindex " & Mid(VB6.GetItemString(Sortering, CountTo), 2, InStr(VB6.GetItemString(Sortering, CountTo), ";") - 2) & " bestaat niet (meer)", MsgBoxStyle.Critical)
         'End If
 
         'dan de rest bijvoegen
-        'For TelTot = 0 To Sortering.Items.Count - 1
-        'If Trim(JetTableUseIndex(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2) Then
+        'For CountTo = 0 To Sortering.Items.Count - 1
+        'If Trim(JetTableUseIndex(SharedFl, 0)) = Mid(VB6.GetItemString(Sortering, CountTo), 2, InStr(VB6.GetItemString(Sortering, CountTo), ";") - 2) Then
         'Else
-        'Msg = Msg & " " & Mid(VB6.GetItemString(Sortering, TelTot), 2, InStr(VB6.GetItemString(Sortering, TelTot), ";") - 2)
-        'Msg = Msg & " AS [" & Mid(VB6.GetItemString(Sortering, TelTot), InStr(VB6.GetItemString(Sortering, TelTot), ";") + 2) & "]"
+        'Msg = Msg & " " & Mid(VB6.GetItemString(Sortering, CountTo), 2, InStr(VB6.GetItemString(Sortering, CountTo), ";") - 2)
+        'Msg = Msg & " AS [" & Mid(VB6.GetItemString(Sortering, CountTo), InStr(VB6.GetItemString(Sortering, CountTo), ";") + 2) & "]"
         'If Delaatste = True And Sortering.Items.Count = 1 Then
-        'ElseIf Delaatste = True And TelTot = Sortering.Items.Count - 2 Then
-        'ElseIf TelTot < Sortering.Items.Count - 1 Then
+        'ElseIf Delaatste = True And CountTo = Sortering.Items.Count - 2 Then
+        'ElseIf CountTo < Sortering.Items.Count - 1 Then
         'Msg = Msg & ","
         'End If
         'End If
@@ -233,8 +233,8 @@ InitSQL:
         Else
             Try
                 sqlresultListView.Clear()
-                For TelTot = 0 To datPrimaryRS.Fields.Count - 1
-                    sqlresultListView.Columns.Add(datPrimaryRS.Fields.Item(TelTot).Name, 100)
+                For CountTo = 0 To datPrimaryRS.Fields.Count - 1
+                    sqlresultListView.Columns.Add(datPrimaryRS.Fields.Item(CountTo).Name, 100)
                 Next
                 sqlresultListView.View = View.Details
                 Dim dataVeld As String
@@ -243,11 +243,11 @@ InitSQL:
                     Do While Not datPrimaryRS.EOF
                         dataVeld = datPrimaryRS.Fields(datPrimaryRS.Fields.Item(0).Name).Value
                         Dim itemHier As New ListViewItem(dataVeld)
-                        For TelTot = 1 To datPrimaryRS.Fields.Count - 1
-                            If IsDBNull(datPrimaryRS.Fields(datPrimaryRS.Fields.Item(TelTot).Name).Value) Then
+                        For CountTo = 1 To datPrimaryRS.Fields.Count - 1
+                            If IsDBNull(datPrimaryRS.Fields(datPrimaryRS.Fields.Item(CountTo).Name).Value) Then
                                 dataVeld = " "
                             Else
-                                dataVeld = datPrimaryRS.Fields(datPrimaryRS.Fields.Item(TelTot).Name).Value
+                                dataVeld = datPrimaryRS.Fields(datPrimaryRS.Fields.Item(CountTo).Name).Value
                             End If
                             itemHier.SubItems.Add(dataVeld)
                         Next
@@ -277,11 +277,11 @@ InitSQL:
             'datPrimaryRS.Close()
         End If
 
-        'For TelTot = 0 To mfgLijst.get_Cols() - 1
-        'If grdColWidth(TelTot) = 0 Then
+        'For CountTo = 0 To mfgLijst.get_Cols() - 1
+        'If grdColWidth(CountTo) = 0 Then
         'Exit For
         'Else
-        'mfgLijst.set_ColWidth(TelTot,  , grdColWidth(TelTot))
+        'mfgLijst.set_ColWidth(CountTo,  , grdColWidth(CountTo))
         'End If
         '   Next
 

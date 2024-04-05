@@ -572,14 +572,14 @@ End Class
 '			Msg = Msg & "(zonder verwijdering enkel afdruk op papier mogelijk)"
 '			KtrlBox = MsgBox(Msg, MsgBoxStyle.Question + MsgBoxStyle.DefaultButton2 + MsgBoxStyle.YesNo)
 '			If KtrlBox = MsgBoxResult.Yes Then
-'				TelTot = 1
+'				CountTo = 1
 '				CmdEmailNBB.Enabled = True
-'				Do While TelTot < grdDokumentDetail.Rows - 1
-'					Debug.Print(grdDokumentDetail.get_TextMatrix(TelTot, 6))
-'					If Mid(grdDokumentDetail.get_TextMatrix(TelTot, 6), 1, 2) = "!!" Then
-'						grdDokumentDetail.RemoveItem(TelTot)
+'				Do While CountTo < grdDokumentDetail.Rows - 1
+'					Debug.Print(grdDokumentDetail.get_TextMatrix(CountTo, 6))
+'					If Mid(grdDokumentDetail.get_TextMatrix(CountTo, 6), 1, 2) = "!!" Then
+'						grdDokumentDetail.RemoveItem(CountTo)
 '					Else
-'						TelTot = TelTot + 1
+'						CountTo = CountTo + 1
 '					End If
 '				Loop 
 '			End If

@@ -39,7 +39,6 @@ Partial Class frmBedrijfOpenen
         'onedriveButton
         '
         Me.onedriveButton.BackColor = System.Drawing.SystemColors.Control
-        Me.onedriveButton.Cursor = System.Windows.Forms.Cursors.Default
         Me.onedriveButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.onedriveButton.Location = New System.Drawing.Point(134, 207)
         Me.onedriveButton.Name = "onedriveButton"
@@ -47,13 +46,12 @@ Partial Class frmBedrijfOpenen
         Me.onedriveButton.Size = New System.Drawing.Size(105, 22)
         Me.onedriveButton.TabIndex = 20
         Me.onedriveButton.Text = "OneDrive BackUp"
-        Me.onedriveButton.UseVisualStyleBackColor = false
+        Me.onedriveButton.UseVisualStyleBackColor = False
         '
         'serverdataRadioButton
         '
         Me.serverdataRadioButton.BackColor = System.Drawing.SystemColors.Control
         Me.serverdataRadioButton.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.serverdataRadioButton.Cursor = System.Windows.Forms.Cursors.Default
         Me.serverdataRadioButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.serverdataRadioButton.Location = New System.Drawing.Point(410, 17)
         Me.serverdataRadioButton.Name = "serverdataRadioButton"
@@ -61,12 +59,11 @@ Partial Class frmBedrijfOpenen
         Me.serverdataRadioButton.Size = New System.Drawing.Size(69, 22)
         Me.serverdataRadioButton.TabIndex = 19
         Me.serverdataRadioButton.Text = "Server"
-        Me.serverdataRadioButton.UseVisualStyleBackColor = false
+        Me.serverdataRadioButton.UseVisualStyleBackColor = False
         '
         'localdataRadioButton
         '
         Me.localdataRadioButton.BackColor = System.Drawing.SystemColors.Control
-        Me.localdataRadioButton.Cursor = System.Windows.Forms.Cursors.Default
         Me.localdataRadioButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.localdataRadioButton.Location = New System.Drawing.Point(6, 17)
         Me.localdataRadioButton.Name = "localdataRadioButton"
@@ -74,28 +71,27 @@ Partial Class frmBedrijfOpenen
         Me.localdataRadioButton.Size = New System.Drawing.Size(89, 22)
         Me.localdataRadioButton.TabIndex = 18
         Me.localdataRadioButton.Text = "Lokaal"
-        Me.localdataRadioButton.UseVisualStyleBackColor = false
+        Me.localdataRadioButton.UseVisualStyleBackColor = False
         '
         'verwijderenButton
         '
         Me.verwijderenButton.BackColor = System.Drawing.SystemColors.Control
-        Me.verwijderenButton.Cursor = System.Windows.Forms.Cursors.Default
         Me.verwijderenButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.verwijderenButton.Location = New System.Drawing.Point(244, 207)
         Me.verwijderenButton.Name = "verwijderenButton"
         Me.verwijderenButton.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.verwijderenButton.Size = New System.Drawing.Size(156, 22)
         Me.verwijderenButton.TabIndex = 17
-        Me.verwijderenButton.TabStop = false
+        Me.verwijderenButton.TabStop = False
         Me.verwijderenButton.Text = "Verwijderen Mogelijk Maken.."
-        Me.verwijderenButton.UseVisualStyleBackColor = false
+        Me.verwijderenButton.UseVisualStyleBackColor = False
         '
         'locatieTextBox
         '
-        Me.locatieTextBox.AcceptsReturn = true
+        Me.locatieTextBox.AcceptsReturn = True
         Me.locatieTextBox.BackColor = System.Drawing.SystemColors.Window
         Me.locatieTextBox.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.locatieTextBox.Enabled = false
+        Me.locatieTextBox.Enabled = False
         Me.locatieTextBox.ForeColor = System.Drawing.SystemColors.WindowText
         Me.locatieTextBox.Location = New System.Drawing.Point(8, 180)
         Me.locatieTextBox.MaxLength = 0
@@ -107,48 +103,45 @@ Partial Class frmBedrijfOpenen
         'locatieButton
         '
         Me.locatieButton.BackColor = System.Drawing.SystemColors.Control
-        Me.locatieButton.Cursor = System.Windows.Forms.Cursors.Default
         Me.locatieButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.locatieButton.Location = New System.Drawing.Point(464, 180)
         Me.locatieButton.Name = "locatieButton"
         Me.locatieButton.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.locatieButton.Size = New System.Drawing.Size(29, 21)
         Me.locatieButton.TabIndex = 13
-        Me.locatieButton.TabStop = false
+        Me.locatieButton.TabStop = False
         Me.locatieButton.Text = "..."
-        Me.locatieButton.UseVisualStyleBackColor = false
+        Me.locatieButton.UseVisualStyleBackColor = False
         '
         'bedrijvenListView
         '
         Me.bedrijvenListView.BackColor = System.Drawing.SystemColors.Window
         Me.bedrijvenListView.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.bedrijvenListView.FullRowSelect = true
-        Me.bedrijvenListView.HideSelection = false
+        Me.bedrijvenListView.FullRowSelect = True
+        Me.bedrijvenListView.HideSelection = False
         Me.bedrijvenListView.Location = New System.Drawing.Point(8, 63)
         Me.bedrijvenListView.Name = "bedrijvenListView"
         Me.bedrijvenListView.Size = New System.Drawing.Size(485, 113)
         Me.bedrijvenListView.TabIndex = 11
-        Me.bedrijvenListView.UseCompatibleStateImageBehavior = false
+        Me.bedrijvenListView.UseCompatibleStateImageBehavior = False
         Me.bedrijvenListView.View = System.Windows.Forms.View.Details
         '
         'compactdatabaseButton
         '
         Me.compactdatabaseButton.BackColor = System.Drawing.SystemColors.Control
-        Me.compactdatabaseButton.Cursor = System.Windows.Forms.Cursors.Default
         Me.compactdatabaseButton.ForeColor = System.Drawing.SystemColors.ControlText
         Me.compactdatabaseButton.Location = New System.Drawing.Point(8, 206)
         Me.compactdatabaseButton.Name = "compactdatabaseButton"
         Me.compactdatabaseButton.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.compactdatabaseButton.Size = New System.Drawing.Size(116, 22)
         Me.compactdatabaseButton.TabIndex = 14
-        Me.compactdatabaseButton.TabStop = false
+        Me.compactdatabaseButton.TabStop = False
         Me.compactdatabaseButton.Text = "Database &Vernieuwen"
-        Me.compactdatabaseButton.UseVisualStyleBackColor = false
+        Me.compactdatabaseButton.UseVisualStyleBackColor = False
         '
         'Label1
         '
         Me.Label1.BackColor = System.Drawing.SystemColors.Control
-        Me.Label1.Cursor = System.Windows.Forms.Cursors.Default
         Me.Label1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label1.Location = New System.Drawing.Point(241, 207)
         Me.Label1.Name = "Label1"
@@ -163,9 +156,9 @@ Partial Class frmBedrijfOpenen
         Me.sluitenButton.Name = "sluitenButton"
         Me.sluitenButton.Size = New System.Drawing.Size(75, 23)
         Me.sluitenButton.TabIndex = 22
-        Me.sluitenButton.TabStop = false
+        Me.sluitenButton.TabStop = False
         Me.sluitenButton.Text = "Sluiten"
-        Me.sluitenButton.UseVisualStyleBackColor = true
+        Me.sluitenButton.UseVisualStyleBackColor = True
         '
         'datalocatieGroupBox
         '
@@ -175,15 +168,15 @@ Partial Class frmBedrijfOpenen
         Me.datalocatieGroupBox.Name = "datalocatieGroupBox"
         Me.datalocatieGroupBox.Size = New System.Drawing.Size(485, 45)
         Me.datalocatieGroupBox.TabIndex = 23
-        Me.datalocatieGroupBox.TabStop = false
+        Me.datalocatieGroupBox.TabStop = False
         Me.datalocatieGroupBox.Text = "Database"
         '
         'frmBedrijfOpenen
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.sluitenButton
-        Me.ClientSize = New System.Drawing.Size(500, 238)
+        Me.ClientSize = New System.Drawing.Size(506, 239)
         Me.ControlBox = false
         Me.Controls.Add(Me.datalocatieGroupBox)
         Me.Controls.Add(Me.sluitenButton)

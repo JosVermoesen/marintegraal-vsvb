@@ -1122,9 +1122,9 @@ End Class
 
 '		cbLijstPrinterHier.Items.Clear()
 '		If Printers.Count = 0 Then MsgBox("Installeer eerst minstens één printerdriver a.u.b. (bvb. cutePDF)", MsgBoxStyle.Exclamation) : End
-'		For TelTot = 0 To Printers.Count - 1
+'		For CountTo = 0 To Printers.Count - 1
 '			'UPGRADE_ISSUE: Printer property Printers.Port was not upgraded. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="CC4C7EC0-C903-48FC-ACCC-81861D12DA4A"'
-'			Me.cbLijstPrinterHier.Items.Add(Printers(TelTot).Port & " " & Printers(TelTot).DeviceName)
+'			Me.cbLijstPrinterHier.Items.Add(Printers(CountTo).Port & " " & Printers(CountTo).DeviceName)
 '		Next 
 '		cbLijstPrinterHier.SelectedIndex = LijstPrinterNr
 '		Printer = Printers(LijstPrinterNr)

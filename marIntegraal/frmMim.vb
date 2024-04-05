@@ -3,20 +3,20 @@ Option Explicit On
 Imports System.ComponentModel
 
 Public Class Mim
-    Inherits System.Windows.Forms.Form
+    Inherits Form
 
-    Sub InitEerst()
+    Sub InitFirst()
         FullLine = New String(Chr(173), 128)
-        Bestand(TableOfVarious) = "0000000.ONT" '00
-        Bestand(TableOfCustomers) = "0010000.ONT" '01
-        Bestand(TableOfSuppliers) = "0020000.ONT" '02
-        Bestand(TableOfLedgerAccounts) = "0030000.ONT" '03
-        Bestand(TableOfProductsAndServices) = "0040000.ONT" '04
-        Bestand(FlJournaal) = "0600000.ONT" '05
-        Bestand(TableOfInvoices) = "0200000.ONT" '06
-        Bestand(TableOfContracts) = "0700000.ONT" '07
-        Bestand(TableDummy) = "90DUMMY.ONT" '08
-        Bestand(TableOfCounters) = "00.ONT" '09
+        TableDefOnt(TableOfVarious) = "0000000.ONT" '00
+        TableDefOnt(TableOfCustomers) = "0010000.ONT" '01
+        TableDefOnt(TableOfSuppliers) = "0020000.ONT" '02
+        TableDefOnt(TableOfLedgerAccounts) = "0030000.ONT" '03
+        TableDefOnt(TableOfProductsAndServices) = "0040000.ONT" '04
+        TableDefOnt(FlJournaal) = "0600000.ONT" '05
+        TableDefOnt(TableOfInvoices) = "0200000.ONT" '06
+        TableDefOnt(TableOfContracts) = "0700000.ONT" '07
+        TableDefOnt(TableDummy) = "90DUMMY.ONT" '08
+        TableDefOnt(TableOfCounters) = "00.ONT" '09
 
         JetTableName(TableOfVarious) = "Allerlei" '00
         JetTableName(TableOfCustomers) = "Klanten" '01
@@ -54,20 +54,18 @@ Public Class Mim
         MonthText(10) = "October  "
         MonthText(11) = "November "
         MonthText(12) = "December "
-        InitBestanden()
+        InitTables()
 
     End Sub
 
     Private Sub TotalClose()
 
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
-        AutoUnloadBedrijf(BJPERDAT:=frmBJPERDAT)
-        For TelTot = 0 To 9
-            'UPGRADE_NOTE: Object rsMAR() may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-            rsMAR(TelTot) = Nothing
+        AutoUnloadCompany(BJPERDAT:=frmBJPERDAT)
+        For CountTo = 0 To 9
+            rsMAR(CountTo) = Nothing
         Next
         'TODO: adKBDB.Close()
-        'UPGRADE_NOTE: Object adKBDB may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         adKBDB = Nothing
 
         On Error Resume Next
@@ -75,37 +73,33 @@ Public Class Mim
         If Err.Number Then Exit Sub
         ntDB.Close()
 
-        'UPGRADE_NOTE: Object adntDB may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         adntDB = Nothing
-        'UPGRADE_NOTE: Object ntDB may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
         ntDB = Nothing
 
-
     End Sub
-
 
     Private Sub Mim_Closed(sender As Object, e As EventArgs) Handles Me.Closed
 
         Dim X As Boolean
         TotalClose()
-        If WindowState = System.Windows.Forms.FormWindowState.Minimized Then
-            WindowState = System.Windows.Forms.FormWindowState.Normal
+        If WindowState = FormWindowState.Minimized Then
+            WindowState = FormWindowState.Normal
         End If
-        X = InstellingenBewaard(Me)
+        X = SettingsSaving(Me)
         On Error Resume Next
 
     End Sub
 
     Private Sub Mim_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        InitEerst()
+        InitFirst()
         MimGlobalDate = Format(Now, "dd/MM/yyyy")
         ProgramLocation = My.Application.Info.DirectoryPath & "\"
 
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
         Text = "marIntegraal.NET " & marVersion
-        opStart()
-        LaadInstellingen(Me)
+        StartUp()
+        SettingsLoading(Me)
 
         On Error GoTo 0
 
@@ -116,28 +110,28 @@ Public Class Mim
         adKBDB.ConnectionString = adoJetProvider & "Data Source=" & ProgramLocation & "Def\default.def;" & "Persist Security Info=False"
         adKBDB.Open()
 
-        adTBIB.ConnectionString =  adoJetProvider & "Data Source=" & ProgramLocation & "\Def\Telebib2.def;" & "Persist Security Info=False"
+        adTBIB.ConnectionString = adoJetProvider & "Data Source=" & ProgramLocation & "\Def\Telebib2.def;" & "Persist Security Info=False"
         adTBIB.Open()
 
-        adKBTable = New ADODB.Recordset
-        adKBTable.CursorLocation = ADODB.CursorLocationEnum.adUseServer
+        adKBTable = New ADODB.Recordset With {
+            .CursorLocation = ADODB.CursorLocationEnum.adUseServer
+        }
         adKBTable.Open("KeuzeBoxData", adKBDB, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic, ADODB.CommandTypeEnum.adCmdTableDirect) '  adLockReadOnly, adCmdTableDirect
         adKBTable.Index = "BestandsNaam"
         With BFKlanten
             .MdiParent = Me
             .Text = "Klanten"
-            .BackColor = System.Drawing.ColorTranslator.FromOle(QBColor(9))
+            .BackColor = ColorTranslator.FromOle(QBColor(9))
             .Tag = "1"
-
             .WindowState = FormWindowState.Minimized
             .Enabled = False
             .Show()
         End With
 
-        With bfLeveranciers
+        With BFLeveranciers
             .MdiParent = Me
             .Text = "Leveranciers"
-            .BackColor = System.Drawing.ColorTranslator.FromOle(QBColor(12))
+            .BackColor = ColorTranslator.FromOle(QBColor(12))
             .Tag = "2"
             .WindowState = FormWindowState.Minimized
             .Enabled = False
@@ -147,7 +141,7 @@ Public Class Mim
         With BFRekeningen
             .MdiParent = Me
             .Text = "Rekeningen"
-            .BackColor = System.Drawing.ColorTranslator.FromOle(QBColor(15))
+            .BackColor = ColorTranslator.FromOle(QBColor(15))
             .Tag = "3"
             .WindowState = FormWindowState.Minimized
             .Enabled = False
@@ -157,11 +151,49 @@ Public Class Mim
 
     End Sub
 
+    Private Sub LicentieToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("Licentie")
+    End Sub
+
+    Private Sub PleskMailToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        Process.Start(New ProcessStartInfo("https://webmail.rv.be"))
+    End Sub
+
+    Private Sub HostingToolStripMenuItem_Click_1(sender As Object, e As EventArgs)
+        Process.Start(New ProcessStartInfo("https://web20.foxxl.com:8443"))
+    End Sub
+
+    Private Sub VsoftToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        Process.Start(New ProcessStartInfo("https://vsoft.be/#/marintegraal"))
+    End Sub
+
+    Private Sub CommandToolStripMenuItem_Click(sender As Object, e As EventArgs)
+
+        Dim myDocumentsFolderPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Dim myDocProcess As New Process
+
+        myDocProcess.StartInfo.FileName = "cmd.exe"
+        myDocProcess.StartInfo.WorkingDirectory = myDocumentsFolderPath
+        myDocProcess.StartInfo.UseShellExecute = True
+        myDocProcess.StartInfo.CreateNoWindow = True
+        myDocProcess.Start()
+
+        If LocationCompanyData IsNot "" Then
+            Dim myCompanyProcess As New Process
+            myCompanyProcess.StartInfo.FileName = "cmd.exe"
+            myCompanyProcess.StartInfo.WorkingDirectory = LocationCompanyData
+            myCompanyProcess.StartInfo.UseShellExecute = True
+            myCompanyProcess.StartInfo.CreateNoWindow = True
+            myCompanyProcess.Start()
+        End If
+
+    End Sub
+
     Private Sub BedrijfOpenenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BedrijfOpenenToolStripMenuItem.Click
         Msg = "Hierna worden eerst alle bestanden en openstaande vensters van een actief bedrijf gesloten."
         If GaVerder(Msg, 1, "Bedrijf Openen") Then
             Ktrl = 100
-            AutoUnloadBedrijf(BJPERDAT:=frmBJPERDAT)
+            AutoUnloadCompany(BJPERDAT:=frmBJPERDAT)
             On Error Resume Next
             ntDB.Close()
             On Error GoTo 0
@@ -249,7 +281,7 @@ Public Class Mim
         Msg = "Hierna worden eerst alle bestanden en openstaande vensters van een actief bedrijf gesloten."
         If GaVerder(Msg, 1, "Nieuw Bedrijf") Then
             Ktrl = 100
-            AutoUnloadBedrijf(BJPERDAT:=frmBJPERDAT)
+            AutoUnloadCompany(BJPERDAT:=frmBJPERDAT)
             On Error Resume Next
             ntDB.Close()
             On Error GoTo 0
@@ -306,54 +338,6 @@ Public Class Mim
             hierCancel = True
         End If
         e.Cancel = hierCancel
-    End Sub
-
-    Private Sub HostingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HostingToolStripMenuItem.Click
-
-        Dim BrowserHosting As New Browser 
-
-        With BrowserHosting 
-            .StartingAddress = "https://ccp.my-hosting-panel.com"
-            .MdiParent = Me
-            .Text = "Hosting"
-            .WindowState = FormWindowState.Maximized 
-            .Enabled = True 
-            .Show()
-        End With
-        HostingToolStripMenuItem.Enabled = False 
-
-    End Sub
-
-    Private Sub SmartermailToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SmartermailToolStripMenuItem.Click
-
-        Dim BrowserSmartermail As New Browser 
-
-        With BrowserSmartermail 
-            .StartingAddress = "http://webmail.herdersem.be"
-            .MdiParent = Me
-            .Text = "SmarterMail"
-            .WindowState = FormWindowState.Maximized 
-            .Enabled = True 
-            .Show()
-        End With
-        SmartermailToolStripMenuItem.Enabled = False 
-
-    End Sub
-
-    Private Sub marIntegraalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles marIntegraalToolStripMenuItem.Click
-
-        Dim BrowserMAR As New Browser 
-
-        With BrowserMAR 
-            .StartingAddress = "http://www.rv.be/marIntegraal.aspx"
-            .MdiParent = Me
-            .Text = "marIntegraal"
-            .WindowState = FormWindowState.Maximized 
-            .Enabled = True 
-            .Show()
-        End With
-        marIntegraalToolStripMenuItem.Enabled = False 
-
     End Sub
 
     Private Sub DiverseGebruikersficheToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DiverseGebruikersficheToolStripMenuItem.Click
@@ -434,12 +418,13 @@ Public Class Mim
 
     Private Sub AswebGboUitwisselingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AswebGboUitwisselingToolStripMenuItem.Click
 
-         With TelebibIN 
-            .WindowState = FormWindowState.Normal 
+        With TelebibIN
+            .WindowState = FormWindowState.Normal
             .Enabled = True
-            .ShowDialog 
+            .ShowDialog
             .Dispose
         End With
 
     End Sub
+
 End Class

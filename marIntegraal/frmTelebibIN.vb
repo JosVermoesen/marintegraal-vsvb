@@ -127,16 +127,16 @@ Public Class TelebibIN
 	Private Sub btnAswebFile_Click(sender As Object, e As EventArgs) Handles btnAswebFile.Click
 
 		On Error Resume Next
-		Mim.TekenOpen.InitialDirectory = aswebDIR
-		Mim.TekenOpen.FileName = aswebDIR & aswebFILE
-		Mim.TekenOpen.ShowDialog()
+		Mim.OpenFileDialog.InitialDirectory = aswebDIR
+		Mim.OpenFileDialog.FileName = aswebDIR & aswebFILE
+		Mim.OpenFileDialog.ShowDialog()
 		If Err.Number Then
-			Mim.TekenOpen.FileName = " "
+			Mim.OpenFileDialog.FileName = " "
 		End If
-		If Mim.TekenOpen.FileName = "" Then
+		If Mim.OpenFileDialog.FileName = "" Then
 			Exit Sub
-		ElseIf Mim.TekenOpen.FileName <> aswebDIR Then
-			aswebDIR = UCase(Mim.TekenOpen.FileName)
+		ElseIf Mim.OpenFileDialog.FileName <> aswebDIR Then
+			aswebDIR = UCase(Mim.OpenFileDialog.FileName)
 			aswebDIR = Mid(aswebDIR, 1, InStr(aswebDIR, aswebFILE)-1)
 			BeWaarTekst("TelebibIN", "aswebLocatie", aswebDIR)
 
@@ -156,16 +156,16 @@ Public Class TelebibIN
 	Private Sub btnGboFile_Click(sender As Object, e As EventArgs) Handles btnGboFile.Click
 
 		On Error Resume Next
-		Mim.TekenOpen.InitialDirectory = gboDIR
-		Mim.TekenOpen.FileName = gboDIR & gboFILE
-		Mim.TekenOpen.ShowDialog()
+		Mim.OpenFileDialog.InitialDirectory = gboDIR
+		Mim.OpenFileDialog.FileName = gboDIR & gboFILE
+		Mim.OpenFileDialog.ShowDialog()
 		If Err.Number Then
-			Mim.TekenOpen.FileName = " "
+			Mim.OpenFileDialog.FileName = " "
 		End If
-		If Mim.TekenOpen.FileName = "" Then
+		If Mim.OpenFileDialog.FileName = "" Then
 			Exit Sub
-		ElseIf Mim.TekenOpen.FileName <> gboDIR Then
-			gboDIR = UCase(Mim.TekenOpen.FileName)
+		ElseIf Mim.OpenFileDialog.FileName <> gboDIR Then
+			gboDIR = UCase(Mim.OpenFileDialog.FileName)
 			gboDIR = Mid(gboDIR, 1, InStr(gboDIR, gboFILE) - 1)
 			BeWaarTekst("TelebibIN", "gboLocatie", gboDIR)
 			lblGboFile.Text = gboDIR & gboFILE
@@ -250,8 +250,8 @@ Public Class TelebibIN
 		Dim atXGHarray() As String
 
 		atXGHarray = Split(Me.RichTextBox3.Text, "XGT+1'")
-		For TelTot = 0 To UBound(atXGHarray) - 1
-			atXGHarray(TelTot) = atXGHarray(TelTot) & "XGT+1'"
+		For CountTo = 0 To UBound(atXGHarray) - 1
+			atXGHarray(CountTo) = atXGHarray(CountTo) & "XGT+1'"
 		Next
 		
 		With Mim.Report
@@ -268,8 +268,8 @@ Public Class TelebibIN
 			.PenSize = 0.01
 		End With
 
-		For TelTot = 0 To UBound(atXGHarray) - 1
-			RichTextBox1.Text = atXGHarray(TelTot)
+		For CountTo = 0 To UBound(atXGHarray) - 1
+			RichTextBox1.Text = atXGHarray(CountTo)
 			tb2infoHier = tb2Indent((Me.RichTextBox1.Text))
 			pdfY = Mim.Report.Print(1, 1, tb2infoHier & vbCrLf)
 			Mim.Report.PageBreak()
@@ -306,8 +306,8 @@ ASWEBeinde:
 		Dim atXGHarray() As String
 
 		atXGHarray = Split(Me.RichTextBox2.Text, "XGT+1'")
-		For TelTot = 0 To UBound(atXGHarray) - 1
-			atXGHarray(TelTot) = atXGHarray(TelTot) & "XGT+1'"
+		For CountTo = 0 To UBound(atXGHarray) - 1
+			atXGHarray(CountTo) = atXGHarray(CountTo) & "XGT+1'"
 		Next
 
 		With Mim.Report
@@ -325,8 +325,8 @@ ASWEBeinde:
 		End With
 
 
-		For TelTot = 0 To UBound(atXGHarray) - 1
-			RichTextBox1.Text = atXGHarray(TelTot)
+		For CountTo = 0 To UBound(atXGHarray) - 1
+			RichTextBox1.Text = atXGHarray(CountTo)
 			tb2infoHier = tb2Indent((Me.RichTextBox1.Text))
 			pdfY = Mim.Report.Print(1, 1, tb2infoHier & vbCrLf)
 			Mim.Report.PageBreak()

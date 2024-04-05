@@ -215,7 +215,7 @@ End Class
 '		CmbBedrijfsType.Items.Add("9: Gezinshuishouding")
 '		CmbBedrijfsType.SelectedIndex = 0
 
-'		Bestand(TableOfCounters) = "00.ONT" '09
+'		TableDefOnt(TableOfCounters) = "00.ONT" '09
 '		JetTableName(TableOfCounters) = "jr" & Me.Boekjaar.Text
 
 '	End Sub
@@ -304,7 +304,7 @@ End Class
 
 '		adntDB.Open(jetConnect)
 '		ntDB = NTRuimte.OpenDatabase(LocationCompanyData & "marnt.MDV", False, False)
-'		X = InitBestanden
+'		X = InitTables
 '		X = InstallTellers
 '		JetTableClose(99)
 '		adntDB.Close()

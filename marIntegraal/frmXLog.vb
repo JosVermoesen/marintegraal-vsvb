@@ -11,7 +11,7 @@ Public Class xLog
     Private Sub xLog_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         flHier = Val(Tag)
-        LaadInstellingen(Me)
+        SettingsLoading(Me)
         If selectonlyButton.Visible Then
         Else
             ArrangeDeckChairs(flHier)
@@ -26,7 +26,7 @@ Public Class xLog
     End Sub
     Private Sub xLog_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         Dim X As Boolean
-        X = InstellingenBewaard(Me)
+        X = SettingsSaving(Me)
     End Sub
     Private Sub xLog_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         On Error Resume Next
