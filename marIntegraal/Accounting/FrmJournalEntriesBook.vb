@@ -35,7 +35,7 @@ Public Class FrmJournalEntriesBook
             MsgBox("Sluit eerst het PDF venster a.u.b.", MsgBoxStyle.Information)
             CancelHere = True
         Else
-            Mim.DiversePostenboekToolStripMenuItem.Enabled = True
+            Mim.JournalEntriesBookMenuItem.Enabled = True
         End If
         e.Cancel = CancelHere
 

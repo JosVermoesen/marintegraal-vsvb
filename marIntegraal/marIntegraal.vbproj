@@ -143,16 +143,16 @@
     <Compile Include="frmAppOutInstellingen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAVBoek.Designer.vb">
+    <Compile Include="Accounting\frmAVBoek.Designer.vb">
       <DependentUpon>frmAVBoek.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAVBoek.vb">
+    <Compile Include="Accounting\frmAVBoek.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBalansKlantLeverancier.Designer.vb">
+    <Compile Include="Accounting\frmBalansKlantLeverancier.Designer.vb">
       <DependentUpon>frmBalansKlantLeverancier.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBalansKlantLeverancier.vb">
+    <Compile Include="Accounting\frmBalansKlantLeverancier.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Documents\frmBetalingOut.Designer.vb">
@@ -239,10 +239,10 @@
     <Compile Include="frmDokHistoriek.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmFinancieelBoek.Designer.vb">
+    <Compile Include="Accounting\frmFinancieelBoek.Designer.vb">
       <DependentUpon>frmFinancieelBoek.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmFinancieelBoek.vb">
+    <Compile Include="Accounting\frmFinancieelBoek.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Documents\frmFinancieleVerrichtingen.Designer.vb">
@@ -251,10 +251,10 @@
     <Compile Include="Documents\frmFinancieleVerrichtingen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmHistoriekRekeningen.Designer.vb">
+    <Compile Include="Accounting\frmHistoriekRekeningen.Designer.vb">
       <DependentUpon>frmHistoriekRekeningen.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmHistoriekRekeningen.vb">
+    <Compile Include="Accounting\frmHistoriekRekeningen.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Sheets\FrmLedgerHistoryOnScreen.Designer.vb">
@@ -269,10 +269,10 @@
     <Compile Include="frmInvesteringsFiche.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmJaarlistingBtw.Designer.vb">
+    <Compile Include="Accounting\frmJaarlistingBtw.Designer.vb">
       <DependentUpon>frmJaarlistingBtw.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmJaarlistingBtw.vb">
+    <Compile Include="Accounting\frmJaarlistingBtw.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmKeuzeLijst.Designer.vb">
@@ -331,10 +331,10 @@
     <Compile Include="frmProductlijstRekenkundig.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProefEnSaldi.Designer.vb">
+    <Compile Include="Accounting\frmProefEnSaldi.Designer.vb">
       <DependentUpon>frmProefEnSaldi.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProefEnSaldi.vb">
+    <Compile Include="Accounting\frmProefEnSaldi.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="System\FrmSettingsFinancialYear.Designer.vb">
@@ -367,10 +367,10 @@
     <Compile Include="frmTelebibIN.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTopDown.Designer.vb">
+    <Compile Include="Accounting\frmTopDown.Designer.vb">
       <DependentUpon>frmTopDown.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmTopDown.vb">
+    <Compile Include="Accounting\frmTopDown.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmVerkoopSjabloon.Designer.vb">
@@ -441,10 +441,10 @@
     <EmbeddedResource Include="frmAppOutInstellingen.resx">
       <DependentUpon>frmAppOutInstellingen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAVBoek.resx">
+    <EmbeddedResource Include="Accounting\frmAVBoek.resx">
       <DependentUpon>frmAVBoek.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBalansKlantLeverancier.resx">
+    <EmbeddedResource Include="Accounting\frmBalansKlantLeverancier.resx">
       <DependentUpon>frmBalansKlantLeverancier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Documents\frmBetalingOut.resx">
@@ -489,13 +489,13 @@
     <EmbeddedResource Include="frmDokHistoriek.resx">
       <DependentUpon>frmDokHistoriek.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFinancieelBoek.resx">
+    <EmbeddedResource Include="Accounting\frmFinancieelBoek.resx">
       <DependentUpon>frmFinancieelBoek.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Documents\frmFinancieleVerrichtingen.resx">
       <DependentUpon>frmFinancieleVerrichtingen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmHistoriekRekeningen.resx">
+    <EmbeddedResource Include="Accounting\frmHistoriekRekeningen.resx">
       <DependentUpon>frmHistoriekRekeningen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sheets\FrmLedgerHistoryOnScreen.resx">
@@ -504,7 +504,7 @@
     <EmbeddedResource Include="frmInvesteringsFiche.resx">
       <DependentUpon>frmInvesteringsFiche.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmJaarlistingBtw.resx">
+    <EmbeddedResource Include="Accounting\frmJaarlistingBtw.resx">
       <DependentUpon>frmJaarlistingBtw.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmKeuzeLijst.resx">
@@ -534,7 +534,7 @@
     <EmbeddedResource Include="frmProductlijstRekenkundig.resx">
       <DependentUpon>frmProductlijstRekenkundig.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProefEnSaldi.resx">
+    <EmbeddedResource Include="Accounting\frmProefEnSaldi.resx">
       <DependentUpon>frmProefEnSaldi.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="System\FrmSettingsFinancialYear.resx">
@@ -552,7 +552,7 @@
     <EmbeddedResource Include="frmTelebibIN.resx">
       <DependentUpon>frmTelebibIN.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmTopDown.resx">
+    <EmbeddedResource Include="Accounting\frmTopDown.resx">
       <DependentUpon>frmTopDown.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVerkoopSjabloon.resx">

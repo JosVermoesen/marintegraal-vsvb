@@ -150,6 +150,21 @@ Public Class Mim
         CompanyOpenMenuItem_Click(sender, e)
 
     End Sub
+    Private Function GaVerder(ByRef Bericht As String, ByRef BedrijfOpenKontrole As Short, ByRef Titel As String) As Short
+        If BedrijfOpenKontrole Then
+            If CustomerSheet.Enabled = True Then
+            Else
+                GaVerder = True
+                Exit Function
+            End If
+        End If
+        KtrlBox = MsgBox(Bericht & vbCrLf & vbCrLf & "Bent U zeker ?", 292, Titel)
+        If KtrlBox = 6 Then
+            GaVerder = True
+        Else
+            GaVerder = False
+        End If
+    End Function
 
     ' Actions
     Private Sub CompanyOpenMenuItem_Click(sender As Object, e As EventArgs)
@@ -314,12 +329,78 @@ Public Class Mim
         End With
     End Sub
 
-
-
     ' Accounting
+    Private Sub JournalEntryInputMenuItem_Click(sender As Object, e As EventArgs)
+        Dim DiversePosten As New FrmJournalEntryInput With {
+            .MdiParent = Me
+        }
+        JournalEntryInputMenuItem.Enabled = False
+        DiversePosten.Show()
+    End Sub
+    Private Sub JournalEntriesBookMenuItem_Click(sender As Object, e As EventArgs)
+        Dim dpBoek As New FrmJournalEntriesBook
+        'dpBoek.MdiParent = Me
+        dpBoek.ShowDialog()
+    End Sub
+    Private Sub PurchaseDiaryMenuItem_Click(sender As Object, e As EventArgs)
+        aIndex = TableOfSuppliers
+        With AVBoek
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .ShowDialog()
+            .Dispose()
+        End With
+    End Sub
+    Private Sub SalesDiaryMenuItem_Click(sender As Object, e As EventArgs)
+        aIndex = TableOfCustomers
+        With AVBoek
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .ShowDialog()
+            .Dispose()
+        End With
+    End Sub
+    Private Sub FinancialJournalMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("FinancialJournalMenuItem_Click")
+    End Sub
+    Private Sub VATDomesticAnnualListingMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("VATDomesticAnnualListingMenuItem_Click")
+    End Sub
+    Private Sub VATReturnStatusMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("VATReturnStatusMenuItem_Click")
+    End Sub
+    Private Sub InventoryControlMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("InventoryControlMenuItem_Click")
+    End Sub
+    Private Sub TrialBalanceMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("TrialBalanceMenuItem_Click")
+    End Sub
+    Private Sub JournalHistoryMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("JournalHistoryMenuItem_Click")
+    End Sub
+    Private Sub FinalReportingMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("FinalReportingMenuItem_Click")
+    End Sub
+    Private Sub CustomersBalanceMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("CustomersBalanceMenuItem_Click")
+    End Sub
+    Private Sub TopdownCustomersMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("TopdownCustomersMenuItem_Click")
+    End Sub
+    Private Sub SuppliersBalansMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("SuppliersBalansMenuItem_Click")
+    End Sub
+    Private Sub TopdownSuppliersMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("TopdownSuppliersMenuItem_Click")
+    End Sub
+    Private Sub SetupNewFinancialYearMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("SetupNewFinancialYearMenuItem_Click")
+    End Sub
+    Private Sub CleanUpTablesMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("CleanUpTablesMenuItem_Click")
+    End Sub
 
-
-
+    ' Contracts
 
 
 
@@ -361,34 +442,6 @@ Public Class Mim
 
     End Sub
 
-    Private Function GaVerder(ByRef Bericht As String, ByRef BedrijfOpenKontrole As Short, ByRef Titel As String) As Short
-        If BedrijfOpenKontrole Then
-            If CustomerSheet.Enabled = True Then
-            Else
-                GaVerder = True
-                Exit Function
-            End If
-        End If
-        KtrlBox = MsgBox(Bericht & vbCrLf & vbCrLf & "Bent U zeker ?", 292, Titel)
-        If KtrlBox = 6 Then
-            GaVerder = True
-        Else
-            GaVerder = False
-        End If
-    End Function
-
-    Private Sub DiversePostenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DiversePostenToolStripMenuItem.Click
-        Dim DiversePosten As New FrmJournalEntryInput With {
-            .MdiParent = Me
-        }
-        DiversePostenToolStripMenuItem.Enabled = False
-        DiversePosten.Show()
-    End Sub
-    Private Sub DiversePostenboekToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DiversePostenboekToolStripMenuItem.Click
-        Dim dpBoek As New FrmJournalEntriesBook
-        'dpBoek.MdiParent = Me
-        dpBoek.ShowDialog()
-    End Sub
 
 
     Private Sub InboekenKwijtingenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InboekenKwijtingenToolStripMenuItem.Click
@@ -415,17 +468,6 @@ Public Class Mim
     End Sub
 
 
-    Private Sub AankoopboekToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AankoopboekToolStripMenuItem.Click
-
-        aIndex = TableOfSuppliers 
-         With AVBoek
-            .WindowState = FormWindowState.Normal 
-            .Enabled = True
-            .ShowDialog 
-            .Dispose
-        End With
-        
-    End Sub
 
 
     Private Sub AswebGboUitwisselingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AswebGboUitwisselingToolStripMenuItem.Click
@@ -438,20 +480,6 @@ Public Class Mim
         End With
 
     End Sub
-
-
-    Private Sub AankoopToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PurchaseTransactionMenuItem.Click
-
-
-    End Sub
-    Private Sub VerkoopToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesTransactionMenuItem.Click
-
-    End Sub
-
-
-
-
-
 
 
 End Class

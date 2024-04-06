@@ -635,7 +635,7 @@ Public Class FrmJournalEntryInput
                 Exit Sub
             End If
         End If
-        Mim.DiversePostenToolStripMenuItem.Enabled = True
+        Mim.JournalEntryInputMenuItem.Enabled = True
         Close()
     End Sub
 
