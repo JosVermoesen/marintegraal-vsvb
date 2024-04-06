@@ -7,7 +7,7 @@ Public Class FinancieleVerrichtingen
 
 	Private Sub FinancieleVerrichtingen_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
-		Mim.FinanciëelToolStripMenuItem.Enabled=True 
+		Mim.FinancialTransactionMenuItem.Enabled=True 
 
 	End Sub
 

@@ -25,7 +25,7 @@ Public Class frmAankoopVerrichtingen
 
     Private Sub frmAankoopVerrichtingen_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
-        Mim.AankoopToolStripMenuItem.Enabled = True
+        Mim.PurchaseTransactionMenuItem.Enabled = True
 
     End Sub
 End Class

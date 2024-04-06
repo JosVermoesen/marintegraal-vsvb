@@ -52,17 +52,17 @@ Partial Class Mim
         Me.SheetsToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.LedgerHistoryOnScreenMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStrip = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AankoopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VerkoopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FinanciëelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
-        Me.KassaverkoopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
-        Me.OpvolgingFacturenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ElectronischBetalenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
-        Me.StandaardkostprijskaartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BriefwisselingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PurchaseTransactionMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SalesTransactionMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FinancialTransactionMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DocumentToolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.CashRegisterSalesMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DocumentToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.BillingFollowUpMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ElectronicPaymentMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DocumentToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.StandardCostCardMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CorrespondenceMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AccountingToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.DiversePostenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
@@ -312,87 +312,95 @@ Partial Class Mim
         '
         'DocumentToolStrip
         '
-        Me.DocumentToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AankoopToolStripMenuItem, Me.VerkoopToolStripMenuItem, Me.FinanciëelToolStripMenuItem, Me.ToolStripSeparator6, Me.KassaverkoopToolStripMenuItem, Me.ToolStripSeparator7, Me.OpvolgingFacturenToolStripMenuItem, Me.ElectronischBetalenToolStripMenuItem, Me.ToolStripSeparator8, Me.StandaardkostprijskaartToolStripMenuItem, Me.BriefwisselingToolStripMenuItem})
+        Me.DocumentToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PurchaseTransactionMenuItem, Me.SalesTransactionMenuItem, Me.FinancialTransactionMenuItem, Me.DocumentToolStripSeparator, Me.CashRegisterSalesMenuItem, Me.DocumentToolStripSeparator2, Me.BillingFollowUpMenuItem, Me.ElectronicPaymentMenuItem, Me.DocumentToolStripSeparator3, Me.StandardCostCardMenuItem, Me.CorrespondenceMenuItem})
         Me.DocumentToolStrip.Enabled = False
         Me.DocumentToolStrip.Name = "DocumentToolStrip"
         Me.DocumentToolStrip.Size = New System.Drawing.Size(75, 20)
         Me.DocumentToolStrip.Text = "Document"
         '
-        'AankoopToolStripMenuItem
+        'PurchaseTransactionMenuItem
         '
-        Me.AankoopToolStripMenuItem.Name = "AankoopToolStripMenuItem"
-        Me.AankoopToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+        Me.PurchaseTransactionMenuItem.Name = "PurchaseTransactionMenuItem"
+        Me.PurchaseTransactionMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
             Or System.Windows.Forms.Keys.F1), System.Windows.Forms.Keys)
-        Me.AankoopToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.AankoopToolStripMenuItem.Text = "Aankoop"
+        Me.PurchaseTransactionMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.PurchaseTransactionMenuItem.Text = "Aankoop"
+        AddHandler Me.PurchaseTransactionMenuItem.Click, AddressOf Me.PurchaseTransactionMenuItem_Click
         '
-        'VerkoopToolStripMenuItem
+        'SalesTransactionMenuItem
         '
-        Me.VerkoopToolStripMenuItem.Name = "VerkoopToolStripMenuItem"
-        Me.VerkoopToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+        Me.SalesTransactionMenuItem.Name = "SalesTransactionMenuItem"
+        Me.SalesTransactionMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
             Or System.Windows.Forms.Keys.F2), System.Windows.Forms.Keys)
-        Me.VerkoopToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.VerkoopToolStripMenuItem.Text = "Verkoop"
+        Me.SalesTransactionMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.SalesTransactionMenuItem.Text = "Verkoop"
+        AddHandler Me.SalesTransactionMenuItem.Click, AddressOf Me.SalesTransactionMenuItem_Click
         '
-        'FinanciëelToolStripMenuItem
+        'FinancialTransactionMenuItem
         '
-        Me.FinanciëelToolStripMenuItem.Name = "FinanciëelToolStripMenuItem"
-        Me.FinanciëelToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+        Me.FinancialTransactionMenuItem.Name = "FinancialTransactionMenuItem"
+        Me.FinancialTransactionMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
             Or System.Windows.Forms.Keys.F3), System.Windows.Forms.Keys)
-        Me.FinanciëelToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.FinanciëelToolStripMenuItem.Text = "Financiëel"
+        Me.FinancialTransactionMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.FinancialTransactionMenuItem.Text = "Financiëel"
+        AddHandler Me.FinancialTransactionMenuItem.Click, AddressOf Me.FinancialTransactionMenuItem_Click
         '
-        'ToolStripSeparator6
+        'DocumentToolStripSeparator
         '
-        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(221, 6)
+        Me.DocumentToolStripSeparator.Name = "DocumentToolStripSeparator"
+        Me.DocumentToolStripSeparator.Size = New System.Drawing.Size(221, 6)
         '
-        'KassaverkoopToolStripMenuItem
+        'CashRegisterSalesMenuItem
         '
-        Me.KassaverkoopToolStripMenuItem.Enabled = False
-        Me.KassaverkoopToolStripMenuItem.Name = "KassaverkoopToolStripMenuItem"
-        Me.KassaverkoopToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+        Me.CashRegisterSalesMenuItem.Enabled = False
+        Me.CashRegisterSalesMenuItem.Name = "CashRegisterSalesMenuItem"
+        Me.CashRegisterSalesMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
             Or System.Windows.Forms.Keys.F6), System.Windows.Forms.Keys)
-        Me.KassaverkoopToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.KassaverkoopToolStripMenuItem.Text = "Kassaverkoop"
+        Me.CashRegisterSalesMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.CashRegisterSalesMenuItem.Text = "Kassaverkoop"
+        AddHandler Me.CashRegisterSalesMenuItem.Click, AddressOf Me.CashRegisterSalesMenuItem_Click
         '
-        'ToolStripSeparator7
+        'DocumentToolStripSeparator2
         '
-        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-        Me.ToolStripSeparator7.Size = New System.Drawing.Size(221, 6)
+        Me.DocumentToolStripSeparator2.Name = "DocumentToolStripSeparator2"
+        Me.DocumentToolStripSeparator2.Size = New System.Drawing.Size(221, 6)
         '
-        'OpvolgingFacturenToolStripMenuItem
+        'BillingFollowUpMenuItem
         '
-        Me.OpvolgingFacturenToolStripMenuItem.Enabled = False
-        Me.OpvolgingFacturenToolStripMenuItem.Name = "OpvolgingFacturenToolStripMenuItem"
-        Me.OpvolgingFacturenToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.OpvolgingFacturenToolStripMenuItem.Text = "Opvolging facturen"
+        Me.BillingFollowUpMenuItem.Enabled = False
+        Me.BillingFollowUpMenuItem.Name = "BillingFollowUpMenuItem"
+        Me.BillingFollowUpMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.BillingFollowUpMenuItem.Text = "Opvolging facturen"
+        AddHandler Me.BillingFollowUpMenuItem.Click, AddressOf Me.BillingFollowUpMenuItem_Click
         '
-        'ElectronischBetalenToolStripMenuItem
+        'ElectronicPaymentMenuItem
         '
-        Me.ElectronischBetalenToolStripMenuItem.Enabled = False
-        Me.ElectronischBetalenToolStripMenuItem.Name = "ElectronischBetalenToolStripMenuItem"
-        Me.ElectronischBetalenToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.ElectronischBetalenToolStripMenuItem.Text = "Electronisch Betalen"
+        Me.ElectronicPaymentMenuItem.Enabled = False
+        Me.ElectronicPaymentMenuItem.Name = "ElectronicPaymentMenuItem"
+        Me.ElectronicPaymentMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.ElectronicPaymentMenuItem.Text = "Electronisch Betalen"
+        AddHandler Me.ElectronicPaymentMenuItem.Click, AddressOf Me.ElectronicPaymentMenuItem_Click
         '
-        'ToolStripSeparator8
+        'DocumentToolStripSeparator3
         '
-        Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-        Me.ToolStripSeparator8.Size = New System.Drawing.Size(221, 6)
+        Me.DocumentToolStripSeparator3.Name = "DocumentToolStripSeparator3"
+        Me.DocumentToolStripSeparator3.Size = New System.Drawing.Size(221, 6)
         '
-        'StandaardkostprijskaartToolStripMenuItem
+        'StandardCostCardMenuItem
         '
-        Me.StandaardkostprijskaartToolStripMenuItem.Enabled = False
-        Me.StandaardkostprijskaartToolStripMenuItem.Name = "StandaardkostprijskaartToolStripMenuItem"
-        Me.StandaardkostprijskaartToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.StandaardkostprijskaartToolStripMenuItem.Text = "Standaardkostprijskaart"
+        Me.StandardCostCardMenuItem.Enabled = False
+        Me.StandardCostCardMenuItem.Name = "StandardCostCardMenuItem"
+        Me.StandardCostCardMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.StandardCostCardMenuItem.Text = "Standaardkostprijskaart"
+        AddHandler Me.StandardCostCardMenuItem.Click, AddressOf Me.StandardCostCardMenuItem_Click
         '
-        'BriefwisselingToolStripMenuItem
+        'CorrespondenceMenuItem
         '
-        Me.BriefwisselingToolStripMenuItem.Name = "BriefwisselingToolStripMenuItem"
-        Me.BriefwisselingToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
-        Me.BriefwisselingToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
-        Me.BriefwisselingToolStripMenuItem.Text = "Briefwisseling"
+        Me.CorrespondenceMenuItem.Name = "CorrespondenceMenuItem"
+        Me.CorrespondenceMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
+        Me.CorrespondenceMenuItem.Size = New System.Drawing.Size(224, 22)
+        Me.CorrespondenceMenuItem.Text = "Briefwisseling"
+        AddHandler Me.CorrespondenceMenuItem.Click, AddressOf Me.CorrespondenceMenuItem_Click
         '
         'AccountingToolStrip
         '
@@ -740,8 +748,8 @@ Partial Class Mim
     Friend WithEvents SupplierSheetMenuItem As ToolStripMenuItem
     Friend WithEvents LedgerAccountSheetMenuItem As ToolStripMenuItem
     Friend WithEvents DiversePostenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AankoopToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents VerkoopToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PurchaseTransactionMenuItem As ToolStripMenuItem
+    Friend WithEvents SalesTransactionMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents DiversePostenboekToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AankoopboekToolStripMenuItem As ToolStripMenuItem
@@ -760,15 +768,15 @@ Partial Class Mim
     Friend WithEvents ReportingTableDataMenuItem As ToolStripMenuItem
     Friend WithEvents SheetsToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents LedgerHistoryOnScreenMenuItem As ToolStripMenuItem
-    Friend WithEvents FinanciëelToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
-    Friend WithEvents KassaverkoopToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator7 As ToolStripSeparator
-    Friend WithEvents OpvolgingFacturenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ElectronischBetalenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator8 As ToolStripSeparator
-    Friend WithEvents StandaardkostprijskaartToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BriefwisselingToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FinancialTransactionMenuItem As ToolStripMenuItem
+    Friend WithEvents DocumentToolStripSeparator As ToolStripSeparator
+    Friend WithEvents CashRegisterSalesMenuItem As ToolStripMenuItem
+    Friend WithEvents DocumentToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents BillingFollowUpMenuItem As ToolStripMenuItem
+    Friend WithEvents ElectronicPaymentMenuItem As ToolStripMenuItem
+    Friend WithEvents DocumentToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents StandardCostCardMenuItem As ToolStripMenuItem
+    Friend WithEvents CorrespondenceMenuItem As ToolStripMenuItem
     Friend WithEvents FinanciëleBoekenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator9 As ToolStripSeparator
     Friend WithEvents BtwJaarlistingBinnenlandToolStripMenuItem As ToolStripMenuItem

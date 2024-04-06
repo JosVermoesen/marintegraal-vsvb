@@ -22,7 +22,7 @@ Public Class Briefwisseling
 
     Private Sub frmBriefwisseling_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
-        Mim.BriefwisselingToolStripMenuItem.Enabled=True 
+        Mim.CorrespondenceMenuItem.Enabled=True 
 
     End Sub
 End Class

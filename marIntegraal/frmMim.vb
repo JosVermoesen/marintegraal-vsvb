@@ -268,6 +268,58 @@ Public Class Mim
         End With
     End Sub
 
+    ' Documents
+    Private Sub PurchaseTransactionMenuItem_Click(sender As Object, e As EventArgs)
+        Dim AankoopVerrichtingen As New frmAankoopVerrichtingen With {
+            .MdiParent = Me
+        }
+        PurchaseTransactionMenuItem.Enabled = False
+        AankoopVerrichtingen.Show()
+    End Sub
+    Private Sub SalesTransactionMenuItem_Click(sender As Object, e As EventArgs)
+        Dim VerkoopVerrichtingen As New frmVerkoopVerrichtingen With {
+            .MdiParent = Me
+        }
+        SalesTransactionMenuItem.Enabled = False
+        VerkoopVerrichtingen.Show()
+    End Sub
+    Private Sub FinancialTransactionMenuItem_Click(sender As Object, e As EventArgs)
+        FinancialTransactionMenuItem.Enabled = False
+        With FinancieleVerrichtingen
+            .MdiParent = Me
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .Show()
+        End With
+    End Sub
+    Private Sub CashRegisterSalesMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("CashRegisterSalesMenuItem_Click")
+    End Sub
+    Private Sub BillingFollowUpMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("BillingFollowUpMenuItem_Click")
+    End Sub
+    Private Sub ElectronicPaymentMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("ElectronicPaymentMenuItem_Click")
+    End Sub
+    Private Sub StandardCostCardMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("StandardCostCardMenuItem_Click")
+    End Sub
+    Private Sub CorrespondenceMenuItem_Click(sender As Object, e As EventArgs)
+        CorrespondenceMenuItem.Enabled = False
+        With Briefwisseling
+            .MdiParent = Me
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .Show()
+        End With
+    End Sub
+
+
+
+    ' Accounting
+
+
+
 
 
 
@@ -337,21 +389,7 @@ Public Class Mim
         'dpBoek.MdiParent = Me
         dpBoek.ShowDialog()
     End Sub
-    Private Sub AankoopToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AankoopToolStripMenuItem.Click
-        Dim AankoopVerrichtingen As New frmAankoopVerrichtingen With {
-            .MdiParent = Me
-        }
-        AankoopToolStripMenuItem.Enabled = False
-        AankoopVerrichtingen.Show()
 
-    End Sub
-    Private Sub VerkoopToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VerkoopToolStripMenuItem.Click
-        Dim VerkoopVerrichtingen As New frmVerkoopVerrichtingen With {
-            .MdiParent = Me
-        }
-        VerkoopToolStripMenuItem.Enabled = False
-        VerkoopVerrichtingen.Show()
-    End Sub
 
     Private Sub InboekenKwijtingenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InboekenKwijtingenToolStripMenuItem.Click
         Dim InboekenKwijtingen As New KwijtingInboeken
@@ -377,30 +415,6 @@ Public Class Mim
     End Sub
 
 
-    Private Sub FinanciëelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FinanciëelToolStripMenuItem.Click
-
-       FinanciëelToolStripMenuItem.Enabled = False 
-        With FinancieleVerrichtingen 
-            .MdiParent = Me
-            .WindowState = FormWindowState.Normal 
-            .Enabled = True 
-            .Show 
-        End With
-
-    End Sub
-
-    Private Sub BriefwisselingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BriefwisselingToolStripMenuItem.Click
-
-        BriefwisselingToolStripMenuItem.Enabled = False 
-        With Briefwisseling 
-            .MdiParent = Me
-            .WindowState = FormWindowState.Normal 
-            .Enabled = True 
-            .Show 
-        End With
-        
-    End Sub
-
     Private Sub AankoopboekToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AankoopboekToolStripMenuItem.Click
 
         aIndex = TableOfSuppliers 
@@ -424,5 +438,20 @@ Public Class Mim
         End With
 
     End Sub
+
+
+    Private Sub AankoopToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PurchaseTransactionMenuItem.Click
+
+
+    End Sub
+    Private Sub VerkoopToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalesTransactionMenuItem.Click
+
+    End Sub
+
+
+
+
+
+
 
 End Class

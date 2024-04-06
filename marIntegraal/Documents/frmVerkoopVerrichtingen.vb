@@ -1299,7 +1299,7 @@ pdfKontroleLijn:
                 Exit Sub
             End If
         End If
-        Mim.VerkoopToolStripMenuItem.Enabled = True
+        Mim.SalesTransactionMenuItem.Enabled = True
         Close()
     End Sub
 
