@@ -23,7 +23,6 @@ Partial Class FrmJournalEntriesBook
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.AutoPageBreak = New IDEALSoftware.VpeStandard.VpeControl()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.TextBoxPeriodFromTo = New System.Windows.Forms.TextBox()
         Me.LabelPeriodFromTo = New System.Windows.Forms.Label()
         Me.LabelProcessingDate = New System.Windows.Forms.Label()
@@ -34,54 +33,47 @@ Partial Class FrmJournalEntriesBook
         Me.TextBoxRecordLines = New System.Windows.Forms.TextBox()
         Me.TextBoxMailToOption = New System.Windows.Forms.TextBox()
         Me.LabelMailToOption = New System.Windows.Forms.Label()
-        Me.SuspendLayout
+        Me.SuspendLayout()
         '
         'AutoPageBreak
         '
         Me.AutoPageBreak.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.AutoPageBreak.DocFileReadOnly = false
-        Me.AutoPageBreak.EnableHelpRouting = false
-        Me.AutoPageBreak.EnablePrintSetupDialog = true
-        Me.AutoPageBreak.ExternalWindow = true
+        Me.AutoPageBreak.DocFileReadOnly = False
+        Me.AutoPageBreak.EnableHelpRouting = False
+        Me.AutoPageBreak.EnablePrintSetupDialog = True
+        Me.AutoPageBreak.ExternalWindow = True
         Me.AutoPageBreak.GridMode = IDEALSoftware.VpeStandard.GridMode.InForeground
-        Me.AutoPageBreak.GridVisible = false
+        Me.AutoPageBreak.GridVisible = False
         Me.AutoPageBreak.Location = New System.Drawing.Point(13, 188)
         Me.AutoPageBreak.Name = "AutoPageBreak"
         Me.AutoPageBreak.PageFormat = IDEALSoftware.VpeStandard.PageFormat.A4
         Me.AutoPageBreak.PageHeight = 29.7R
         Me.AutoPageBreak.PageOrientation = IDEALSoftware.VpeStandard.PageOrientation.Portrait
-        Me.AutoPageBreak.PageScroller = true
-        Me.AutoPageBreak.PageScrollerTracking = true
-        Me.AutoPageBreak.PageWidth = 21R
-        Me.AutoPageBreak.PaperView = true
+        Me.AutoPageBreak.PageScroller = True
+        Me.AutoPageBreak.PageScrollerTracking = True
+        Me.AutoPageBreak.PageWidth = 21.0R
+        Me.AutoPageBreak.PaperView = True
         Me.AutoPageBreak.PreviewCtrl = IDEALSoftware.VpeStandard.PreviewCtrl.JumpTop
-        Me.AutoPageBreak.Rulers = true
+        Me.AutoPageBreak.Rulers = True
         Me.AutoPageBreak.RulersMeasure = IDEALSoftware.VpeStandard.RulersMeasure.Centimeter
         Me.AutoPageBreak.Size = New System.Drawing.Size(96, 80)
-        Me.AutoPageBreak.StatusBar = true
-        Me.AutoPageBreak.StatusSegment = true
+        Me.AutoPageBreak.StatusBar = True
+        Me.AutoPageBreak.StatusSegment = True
         Me.AutoPageBreak.SwapFileName = Nothing
         Me.AutoPageBreak.TabIndex = 6
-        Me.AutoPageBreak.TabStop = false
-        Me.AutoPageBreak.tbAbout = true
-        Me.AutoPageBreak.tbClose = true
-        Me.AutoPageBreak.tbGrid = false
-        Me.AutoPageBreak.tbHelp = true
-        Me.AutoPageBreak.tbMail = true
-        Me.AutoPageBreak.tbNavigate = true
-        Me.AutoPageBreak.tbOpen = true
-        Me.AutoPageBreak.tbPrint = true
-        Me.AutoPageBreak.tbSave = true
-        Me.AutoPageBreak.tbScale = true
+        Me.AutoPageBreak.TabStop = False
+        Me.AutoPageBreak.tbAbout = True
+        Me.AutoPageBreak.tbClose = True
+        Me.AutoPageBreak.tbGrid = False
+        Me.AutoPageBreak.tbHelp = True
+        Me.AutoPageBreak.tbMail = True
+        Me.AutoPageBreak.tbNavigate = True
+        Me.AutoPageBreak.tbOpen = True
+        Me.AutoPageBreak.tbPrint = True
+        Me.AutoPageBreak.tbSave = True
+        Me.AutoPageBreak.tbScale = True
         Me.AutoPageBreak.Text = "Automatic Page Break Demo"
         Me.AutoPageBreak.ToolBar = True
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(0, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 108
         '
         'TextBoxPeriodFromTo
         '
@@ -200,7 +192,7 @@ Partial Class FrmJournalEntriesBook
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.ButtonClose
         Me.ClientSize = New System.Drawing.Size(380, 158)
-        Me.ControlBox = false
+        Me.ControlBox = False
         Me.Controls.Add(Me.LabelMailToOption)
         Me.Controls.Add(Me.TextBoxMailToOption)
         Me.Controls.Add(Me.TextBoxRecordLines)
@@ -212,19 +204,18 @@ Partial Class FrmJournalEntriesBook
         Me.Controls.Add(Me.LabelPeriodFromTo)
         Me.Controls.Add(Me.LabelProcessingDate)
         Me.Controls.Add(Me.AutoPageBreak)
-        Me.Controls.Add(Me.Button1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.MaximizeBox = false
+        Me.MaximizeBox = False
         Me.Name = "FrmJournalEntriesBook"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Diverse Postenboek"
-        Me.TopMost = true
-        Me.ResumeLayout(false)
+        Me.TopMost = True
+        AddHandler FormClosing, AddressOf Me.FrmJournalEntriesBook_FormClosing
+        Me.ResumeLayout(False)
         Me.PerformLayout
 
 End Sub
     Friend WithEvents AutoPageBreak As IDEALSoftware.VpeStandard.VpeControl
-    Friend WithEvents Button1 As Button
     Public WithEvents TextBoxPeriodFromTo As TextBox
     Public WithEvents LabelPeriodFromTo As Label
     Public WithEvents LabelProcessingDate As Label

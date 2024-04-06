@@ -14,8 +14,8 @@ Public Class FrmJournalEntriesBook
     Dim FieldText(17) As String
     Dim TotalLines As Short
     Dim aa As String
-    Dim PeriodFromChosen As String = "        "
-    Dim PeriodToChosen As String = "        "
+    Dim PeriodFromChosen As String = Space(8)
+    Dim PeriodToChosen As String = Space(8)
     Dim PdfReportTitle As String
 
     Private Sub FrmJournalEntriesBook_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -28,11 +28,24 @@ Public Class FrmJournalEntriesBook
         CheckRecordSet()
     End Sub
 
+    Private Sub FrmJournalEntriesBook_FormClosing(sender As Object, e As FormClosingEventArgs)
+
+        Dim CancelHere As Boolean = e.Cancel
+        If Mim.Report.IsOpen = True Then
+            MsgBox("Sluit eerst het PDF venster a.u.b.", MsgBoxStyle.Information)
+            CancelHere = True
+        Else
+            Mim.DiversePostenboekToolStripMenuItem.Enabled = True
+        End If
+        e.Cancel = CancelHere
+
+    End Sub
+
     Private Sub CheckRecordSet()
         Dim sSQL As String
         sSQL = "SELECT Journalen.v066, Journalen.v019, Rekeningen.v020, Journalen.v067, Journalen.v033, Journalen.dece068, Journalen.v069 FROM Journalen, Rekeningen WHERE  Journalen.v019=Rekeningen.v019 AND Journalen.v033 Like 'D0%' AND Journalen.v066 >= '" & PeriodFromChosen & "' AND Journalen.v066 <= '" & PeriodToChosen & "' ORDER BY Journalen.rvID" 'Journalen.v066"
-        ' Create a recordset using the provided collection
 
+        ' Create a recordset using the provided collection
         JournalEntriesRS = New ADODB.Recordset With {
             .CursorLocation = ADODB.CursorLocationEnum.adUseClient
         }
@@ -71,7 +84,7 @@ Public Class FrmJournalEntriesBook
         pdfY = Mim.Report.Print(1, pdfY, FullLine & vbCrLf & vbCrLf)
     End Sub
 
-    Private Sub InitializeFields()
+    Private Sub InitialiseFields()
 
         Dim T As Integer
         ReportField(0) = "Line"
@@ -112,10 +125,10 @@ Public Class FrmJournalEntriesBook
         DCAmount = ObjectValue((JournalEntriesRS.Fields("dece068").Value))
         Select Case DCAmount
             Case Is < 0
-                TotalCredit = TotalCredit + DCAmount
+                TotalCredit += DCAmount
                 Mid(PdfLine, ReportTab(6)) = Dec(System.Math.Abs(DCAmount), MaskEURBH) 'bedrag credit
             Case Else
-                TotalDebit = TotalDebit + DCAmount
+                TotalDebit += DCAmount
                 mid(PdfLine, ReportTab(5)) = Dec(DCAmount, MaskEURBH) 'bedrag debet
         End Select
         Mid(PdfLine, ReportTab(7)) = JournalEntriesRS.Fields("v069").Value 'tegenrekening
@@ -133,17 +146,6 @@ Public Class FrmJournalEntriesBook
         mid(PdfLine, ReportTab(5)) = Dec(Math.Abs(TotalDebit), MaskEURBH)
         mid(PdfLine, ReportTab(6)) = Dec(Math.Abs(TotalCredit), MaskEURBH)
         pdfY = Mim.Report.Print(1, pdfY, vbCrLf & FullLine & vbCrLf & PdfLine)
-    End Sub
-
-    Private Sub FrmJournalEntriesBook_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Dim CancelHere As Boolean = e.Cancel
-        If Mim.Report.IsOpen = True Then
-            MsgBox("Sluit eerst het PDF venster a.u.b.", MsgBoxStyle.Information)
-            CancelHere = True
-        Else
-            Mim.DiversePostenboekToolStripMenuItem.Enabled = True
-        End If
-        e.Cancel = CancelHere
     End Sub
 
     Private Sub TextBoxPeriodFromTo_Leave()
@@ -177,7 +179,7 @@ Public Class FrmJournalEntriesBook
         ReportText(2) = "Diverse Postenboek " & Mid(Mim.Text, InStr(Mim.Text, "["))
         ReportText(0) = DateTimePickerProcessingDate.Value
         ReportText(3) = TextBoxPeriodFromTo.Text
-        InitializeFields()
+        InitialiseFields()
         VpePrintHeader()
         Line = 0
         JournalEntriesRS.MoveFirst()
