@@ -36,8 +36,8 @@ Public Class frmBedrijfOpenen
     End Sub
 
     Private Sub sluitenButton_Click(sender As Object, e As EventArgs) Handles sluitenButton.Click
-        Mim.BedrijfOpenenToolStripMenuItem.Enabled = True
-        Mim.NieuwBedrijfToolStripMenuItem.Enabled = True
+        Mim.CompanyOpenMenuItem.Enabled = True
+        Mim.CompanyNewMenuItem.Enabled = True
         Close()
     End Sub
     Private Sub locatieButton_Click(sender As Object, e As EventArgs) Handles locatieButton.Click

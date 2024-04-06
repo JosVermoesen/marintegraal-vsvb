@@ -20,13 +20,13 @@
         On Error Resume Next
 
         'Menuopties toegang geven
-        Mim.SysteemToolStripMenuItem.Enabled = True
-        Mim.FichesToolStripMenuItem.Enabled = True
-        Mim.DocumentToolStripMenuItem.Enabled = True
-        Mim.BoekhoudingToolStripMenuItem.Enabled = True
+        Mim.SystemToolStrip.Enabled = True
+        Mim.SheetsToolStrip.Enabled = True
+        Mim.DocumentToolStrip.Enabled = True
+        Mim.AccountingToolStrip.Enabled = True
         If Trim(ProducentNummer) = "" Then
         Else
-            Mim.ContractbeheerToolStripMenuItem.Enabled = True
+            Mim.ContractManagementToolStrip.Enabled = True
         End If
 
         'For CountTo = 1 To 5
@@ -137,7 +137,7 @@ ProbeerNogEens:
         adntDB.Open(jetConnect)
 
         If String99(Reading, 20) = "5" Then
-            Mim.ContractbeheerToolStripMenuItem.Enabled = True
+            Mim.ContractManagementToolStrip.Enabled = True
             ProducentNummer = "60423"
         Else
             ProducentNummer = ""
@@ -209,11 +209,11 @@ ErrorOpvang:
         Next
 
         'Menuopties beperken
-        Mim.SysteemToolStripMenuItem.Enabled = False
-        Mim.FichesToolStripMenuItem.Enabled = False
-        Mim.DocumentToolStripMenuItem.Enabled = False
-        Mim.BoekhoudingToolStripMenuItem.Enabled = False
-        Mim.ContractbeheerToolStripMenuItem.Enabled = False
+        Mim.SystemToolStrip.Enabled = False
+        Mim.SheetsToolStrip.Enabled = False
+        Mim.DocumentToolStrip.Enabled = False
+        Mim.AccountingToolStrip.Enabled = False
+        Mim.ContractManagementToolStrip.Enabled = False
 
         'For CountTo = 1 To 6
         'TODO

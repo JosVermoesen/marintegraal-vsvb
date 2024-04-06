@@ -24,24 +24,24 @@ Partial Class Mim
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Mim))
         Me.MimMenuStrip = New System.Windows.Forms.MenuStrip()
-        Me.ActiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BedrijfOpenenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NieuwBedrijfToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.AfsluitenToolStripMenu = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SysteemToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SetUpBoekjaarEnParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DatumPeriodeBoekjaarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LayOutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-        Me.SQLBewerkingenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VensterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.trapsgewijsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OnderElkaarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NaastElkaarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PictogrammenSchikkenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AccessTestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FichesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ActionsToolStrip = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CompanyOpenMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CompanyNewMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ActionsSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.CloseAppMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SystemToolStrip = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SettingsFinancialYearMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BookyearPeriodDateMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VpeLayOutOutgoingMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SystemToolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.SQLOperationsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WindowToolStrip = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CascadeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TileHorizontalMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TileVerticalMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ArrangeIconsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AccessTestMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SheetsToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.KlantenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LeveranciersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RekeningenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -51,7 +51,7 @@ Partial Class Mim
         Me.LijstRapportageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.HistoriekGrootboekInSchermToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DocumentToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.AankoopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VerkoopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FinanciëelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -63,7 +63,7 @@ Partial Class Mim
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.StandaardkostprijskaartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BriefwisselingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BoekhoudingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AccountingToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.DiversePostenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DiversePostenboekToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -88,16 +88,16 @@ Partial Class Mim
         Me.OvergangBoekjaarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SetupNieuwBoekjaarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpkuisBestandenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ContractbeheerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContractManagementToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.BetalingsverzoekToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InboekenKwijtingenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
         Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
         Me.AswebGboUitwisselingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OneDriveDNNToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CloudIOToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.InstellingenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InfoToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.VsoftToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HostingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PleskMailToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -112,126 +112,138 @@ Partial Class Mim
         '
         'MimMenuStrip
         '
-        Me.MimMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActiesToolStripMenuItem, Me.SysteemToolStripMenuItem, Me.VensterToolStripMenuItem, Me.FichesToolStripMenuItem, Me.DocumentToolStripMenuItem, Me.BoekhoudingToolStripMenuItem, Me.ContractbeheerToolStripMenuItem, Me.OneDriveDNNToolStripMenuItem, Me.InfoToolStripMenuItem})
+        Me.MimMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActionsToolStrip, Me.SystemToolStrip, Me.WindowToolStrip, Me.SheetsToolStrip, Me.DocumentToolStrip, Me.AccountingToolStrip, Me.ContractManagementToolStrip, Me.CloudIOToolStrip, Me.InfoToolStrip})
         Me.MimMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MimMenuStrip.Name = "MimMenuStrip"
         Me.MimMenuStrip.Size = New System.Drawing.Size(597, 24)
         Me.MimMenuStrip.TabIndex = 1
         '
-        'ActiesToolStripMenuItem
+        'ActionsToolStrip
         '
-        Me.ActiesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BedrijfOpenenToolStripMenuItem, Me.NieuwBedrijfToolStripMenuItem, Me.ToolStripSeparator2, Me.AfsluitenToolStripMenu})
-        Me.ActiesToolStripMenuItem.Name = "ActiesToolStripMenuItem"
-        Me.ActiesToolStripMenuItem.Size = New System.Drawing.Size(51, 20)
-        Me.ActiesToolStripMenuItem.Text = "Acties"
+        Me.ActionsToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CompanyOpenMenuItem, Me.CompanyNewMenuItem, Me.ActionsSeparator, Me.CloseAppMenuItem})
+        Me.ActionsToolStrip.Name = "ActionsToolStrip"
+        Me.ActionsToolStrip.Size = New System.Drawing.Size(51, 20)
+        Me.ActionsToolStrip.Text = "Acties"
         '
-        'BedrijfOpenenToolStripMenuItem
+        'CompanyOpenMenuItem
         '
-        Me.BedrijfOpenenToolStripMenuItem.Name = "BedrijfOpenenToolStripMenuItem"
-        Me.BedrijfOpenenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.BedrijfOpenenToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.BedrijfOpenenToolStripMenuItem.Text = "Bedrijf Openen"
+        Me.CompanyOpenMenuItem.Name = "CompanyOpenMenuItem"
+        Me.CompanyOpenMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.CompanyOpenMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.CompanyOpenMenuItem.Text = "Bedrijf Openen"
+        AddHandler Me.CompanyOpenMenuItem.Click, AddressOf Me.CompanyOpenMenuItem_Click
         '
-        'NieuwBedrijfToolStripMenuItem
+        'CompanyNewMenuItem
         '
-        Me.NieuwBedrijfToolStripMenuItem.Name = "NieuwBedrijfToolStripMenuItem"
-        Me.NieuwBedrijfToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.NieuwBedrijfToolStripMenuItem.Text = "Nieuw Bedrijf"
+        Me.CompanyNewMenuItem.Name = "CompanyNewMenuItem"
+        Me.CompanyNewMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.CompanyNewMenuItem.Text = "Nieuw Bedrijf"
+        AddHandler Me.CompanyNewMenuItem.Click, AddressOf Me.CompanyNewMenuItem_Click
         '
-        'ToolStripSeparator2
+        'ActionsSeparator
         '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(193, 6)
+        Me.ActionsSeparator.Name = "ActionsSeparator"
+        Me.ActionsSeparator.Size = New System.Drawing.Size(193, 6)
         '
-        'AfsluitenToolStripMenu
+        'CloseAppMenuItem
         '
-        Me.AfsluitenToolStripMenu.Name = "AfsluitenToolStripMenu"
-        Me.AfsluitenToolStripMenu.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
-        Me.AfsluitenToolStripMenu.Size = New System.Drawing.Size(196, 22)
-        Me.AfsluitenToolStripMenu.Text = "Afsluiten"
+        Me.CloseAppMenuItem.Name = "CloseAppMenuItem"
+        Me.CloseAppMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
+        Me.CloseAppMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.CloseAppMenuItem.Text = "Afsluiten"
+        AddHandler Me.CloseAppMenuItem.Click, AddressOf Me.CloseAppMenuItem_Click
         '
-        'SysteemToolStripMenuItem
+        'SystemToolStrip
         '
-        Me.SysteemToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SetUpBoekjaarEnParametersToolStripMenuItem, Me.DatumPeriodeBoekjaarToolStripMenuItem, Me.LayOutToolStripMenuItem, Me.ToolStripSeparator3, Me.SQLBewerkingenToolStripMenuItem})
-        Me.SysteemToolStripMenuItem.Enabled = False
-        Me.SysteemToolStripMenuItem.Name = "SysteemToolStripMenuItem"
-        Me.SysteemToolStripMenuItem.Size = New System.Drawing.Size(63, 20)
-        Me.SysteemToolStripMenuItem.Text = "Systeem"
+        Me.SystemToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SettingsFinancialYearMenuItem, Me.BookyearPeriodDateMenuItem, Me.VpeLayOutOutgoingMenuItem, Me.SystemToolStripSeparator, Me.SQLOperationsMenuItem})
+        Me.SystemToolStrip.Enabled = False
+        Me.SystemToolStrip.Name = "SystemToolStrip"
+        Me.SystemToolStrip.Size = New System.Drawing.Size(63, 20)
+        Me.SystemToolStrip.Text = "Systeem"
         '
-        'SetUpBoekjaarEnParametersToolStripMenuItem
+        'SettingsFinancialYearMenuItem
         '
-        Me.SetUpBoekjaarEnParametersToolStripMenuItem.Name = "SetUpBoekjaarEnParametersToolStripMenuItem"
-        Me.SetUpBoekjaarEnParametersToolStripMenuItem.Size = New System.Drawing.Size(259, 22)
-        Me.SetUpBoekjaarEnParametersToolStripMenuItem.Text = "Set-Up Boekjaar en Parameters"
+        Me.SettingsFinancialYearMenuItem.Name = "SettingsFinancialYearMenuItem"
+        Me.SettingsFinancialYearMenuItem.Size = New System.Drawing.Size(259, 22)
+        Me.SettingsFinancialYearMenuItem.Text = "Set-Up Boekjaar en Parameters"
+        AddHandler Me.SettingsFinancialYearMenuItem.Click, AddressOf Me.SettingsFinancialYearMenuItem_Click
         '
-        'DatumPeriodeBoekjaarToolStripMenuItem
+        'BookyearPeriodDateMenuItem
         '
-        Me.DatumPeriodeBoekjaarToolStripMenuItem.Name = "DatumPeriodeBoekjaarToolStripMenuItem"
-        Me.DatumPeriodeBoekjaarToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.D), System.Windows.Forms.Keys)
-        Me.DatumPeriodeBoekjaarToolStripMenuItem.Size = New System.Drawing.Size(259, 22)
-        Me.DatumPeriodeBoekjaarToolStripMenuItem.Text = "Datum / Periode / Boekjaar"
+        Me.BookyearPeriodDateMenuItem.Name = "BookyearPeriodDateMenuItem"
+        Me.BookyearPeriodDateMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.D), System.Windows.Forms.Keys)
+        Me.BookyearPeriodDateMenuItem.Size = New System.Drawing.Size(259, 22)
+        Me.BookyearPeriodDateMenuItem.Text = "Datum / Periode / Boekjaar"
+        AddHandler Me.BookyearPeriodDateMenuItem.Click, AddressOf Me.BookyearPeriodDateMenuItem_Click
         '
-        'LayOutToolStripMenuItem
+        'VpeLayOutOutgoingMenuItem
         '
-        Me.LayOutToolStripMenuItem.Name = "LayOutToolStripMenuItem"
-        Me.LayOutToolStripMenuItem.Size = New System.Drawing.Size(259, 22)
-        Me.LayOutToolStripMenuItem.Text = "Lay-Out Uitgaand Document"
+        Me.VpeLayOutOutgoingMenuItem.Name = "VpeLayOutOutgoingMenuItem"
+        Me.VpeLayOutOutgoingMenuItem.Size = New System.Drawing.Size(259, 22)
+        Me.VpeLayOutOutgoingMenuItem.Text = "Lay-Out Uitgaand Document"
+        AddHandler Me.VpeLayOutOutgoingMenuItem.Click, AddressOf Me.VpeLayOutOutgoingMenuItem_Click
         '
-        'ToolStripSeparator3
+        'SystemToolStripSeparator
         '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(256, 6)
+        Me.SystemToolStripSeparator.Name = "SystemToolStripSeparator"
+        Me.SystemToolStripSeparator.Size = New System.Drawing.Size(256, 6)
         '
-        'SQLBewerkingenToolStripMenuItem
+        'SQLOperationsMenuItem
         '
-        Me.SQLBewerkingenToolStripMenuItem.Name = "SQLBewerkingenToolStripMenuItem"
-        Me.SQLBewerkingenToolStripMenuItem.Size = New System.Drawing.Size(259, 22)
-        Me.SQLBewerkingenToolStripMenuItem.Text = "SQL Bewerkingen"
+        Me.SQLOperationsMenuItem.Name = "SQLOperationsMenuItem"
+        Me.SQLOperationsMenuItem.Size = New System.Drawing.Size(259, 22)
+        Me.SQLOperationsMenuItem.Text = "SQL Bewerkingen"
+        AddHandler Me.SQLOperationsMenuItem.Click, AddressOf Me.SQLOperationsMenuItem_Click
         '
-        'VensterToolStripMenuItem
+        'WindowToolStrip
         '
-        Me.VensterToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.trapsgewijsToolStripMenuItem, Me.OnderElkaarToolStripMenuItem, Me.NaastElkaarToolStripMenuItem, Me.PictogrammenSchikkenToolStripMenuItem, Me.AccessTestToolStripMenuItem})
-        Me.VensterToolStripMenuItem.Name = "VensterToolStripMenuItem"
-        Me.VensterToolStripMenuItem.Size = New System.Drawing.Size(57, 20)
-        Me.VensterToolStripMenuItem.Text = "Venster"
+        Me.WindowToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CascadeMenuItem, Me.TileHorizontalMenuItem, Me.TileVerticalMenuItem, Me.ArrangeIconsMenuItem, Me.AccessTestMenuItem})
+        Me.WindowToolStrip.Name = "WindowToolStrip"
+        Me.WindowToolStrip.Size = New System.Drawing.Size(57, 20)
+        Me.WindowToolStrip.Text = "Venster"
         '
-        'trapsgewijsToolStripMenuItem
+        'CascadeMenuItem
         '
-        Me.trapsgewijsToolStripMenuItem.Name = "trapsgewijsToolStripMenuItem"
-        Me.trapsgewijsToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
-        Me.trapsgewijsToolStripMenuItem.Text = "Trapsgewijs"
+        Me.CascadeMenuItem.Name = "CascadeMenuItem"
+        Me.CascadeMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.CascadeMenuItem.Text = "Trapsgewijs"
+        AddHandler Me.CascadeMenuItem.Click, AddressOf Me.CascadeMenuItem_Click
         '
-        'OnderElkaarToolStripMenuItem
+        'TileHorizontalMenuItem
         '
-        Me.OnderElkaarToolStripMenuItem.Name = "OnderElkaarToolStripMenuItem"
-        Me.OnderElkaarToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
-        Me.OnderElkaarToolStripMenuItem.Text = "Onder Elkaar"
+        Me.TileHorizontalMenuItem.Name = "TileHorizontalMenuItem"
+        Me.TileHorizontalMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.TileHorizontalMenuItem.Text = "Onder Elkaar"
+        AddHandler Me.TileHorizontalMenuItem.Click, AddressOf Me.TileHorizontalMenuItem_Click
         '
-        'NaastElkaarToolStripMenuItem
+        'TileVerticalMenuItem
         '
-        Me.NaastElkaarToolStripMenuItem.Name = "NaastElkaarToolStripMenuItem"
-        Me.NaastElkaarToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
-        Me.NaastElkaarToolStripMenuItem.Text = "Naast Elkaar"
+        Me.TileVerticalMenuItem.Name = "TileVerticalMenuItem"
+        Me.TileVerticalMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.TileVerticalMenuItem.Text = "Naast Elkaar"
+        AddHandler Me.TileVerticalMenuItem.Click, AddressOf Me.TileVerticalMenuItem_Click
         '
-        'PictogrammenSchikkenToolStripMenuItem
+        'ArrangeIconsMenuItem
         '
-        Me.PictogrammenSchikkenToolStripMenuItem.Name = "PictogrammenSchikkenToolStripMenuItem"
-        Me.PictogrammenSchikkenToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
-        Me.PictogrammenSchikkenToolStripMenuItem.Text = "Pictogrammen Schikken"
+        Me.ArrangeIconsMenuItem.Name = "ArrangeIconsMenuItem"
+        Me.ArrangeIconsMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.ArrangeIconsMenuItem.Text = "Pictogrammen Schikken"
+        AddHandler Me.ArrangeIconsMenuItem.Click, AddressOf Me.ArrangeIconsMenuItem_Click
         '
-        'AccessTestToolStripMenuItem
+        'AccessTestMenuItem
         '
-        Me.AccessTestToolStripMenuItem.Name = "AccessTestToolStripMenuItem"
-        Me.AccessTestToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
-        Me.AccessTestToolStripMenuItem.Text = "accessTest"
+        Me.AccessTestMenuItem.Name = "AccessTestMenuItem"
+        Me.AccessTestMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.AccessTestMenuItem.Text = "accessTest"
+        AddHandler Me.AccessTestMenuItem.Click, AddressOf Me.AccessTestMenuItem_Click
         '
-        'FichesToolStripMenuItem
+        'SheetsToolStrip
         '
-        Me.FichesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.KlantenToolStripMenuItem, Me.LeveranciersToolStripMenuItem, Me.RekeningenToolStripMenuItem, Me.ArtikelProductDienstToolStripMenuItem, Me.DiverseGebruikersficheToolStripMenuItem, Me.ToolStripSeparator4, Me.LijstRapportageToolStripMenuItem, Me.ToolStripSeparator5, Me.HistoriekGrootboekInSchermToolStripMenuItem})
-        Me.FichesToolStripMenuItem.Enabled = False
-        Me.FichesToolStripMenuItem.Name = "FichesToolStripMenuItem"
-        Me.FichesToolStripMenuItem.Size = New System.Drawing.Size(52, 20)
-        Me.FichesToolStripMenuItem.Text = "Fiches"
+        Me.SheetsToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.KlantenToolStripMenuItem, Me.LeveranciersToolStripMenuItem, Me.RekeningenToolStripMenuItem, Me.ArtikelProductDienstToolStripMenuItem, Me.DiverseGebruikersficheToolStripMenuItem, Me.ToolStripSeparator4, Me.LijstRapportageToolStripMenuItem, Me.ToolStripSeparator5, Me.HistoriekGrootboekInSchermToolStripMenuItem})
+        Me.SheetsToolStrip.Enabled = False
+        Me.SheetsToolStrip.Name = "SheetsToolStrip"
+        Me.SheetsToolStrip.Size = New System.Drawing.Size(52, 20)
+        Me.SheetsToolStrip.Text = "Fiches"
         '
         'KlantenToolStripMenuItem
         '
@@ -291,13 +303,13 @@ Partial Class Mim
         Me.HistoriekGrootboekInSchermToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
         Me.HistoriekGrootboekInSchermToolStripMenuItem.Text = "Historiek Grootboek in Scherm"
         '
-        'DocumentToolStripMenuItem
+        'DocumentToolStrip
         '
-        Me.DocumentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AankoopToolStripMenuItem, Me.VerkoopToolStripMenuItem, Me.FinanciëelToolStripMenuItem, Me.ToolStripSeparator6, Me.KassaverkoopToolStripMenuItem, Me.ToolStripSeparator7, Me.OpvolgingFacturenToolStripMenuItem, Me.ElectronischBetalenToolStripMenuItem, Me.ToolStripSeparator8, Me.StandaardkostprijskaartToolStripMenuItem, Me.BriefwisselingToolStripMenuItem})
-        Me.DocumentToolStripMenuItem.Enabled = False
-        Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
-        Me.DocumentToolStripMenuItem.Size = New System.Drawing.Size(75, 20)
-        Me.DocumentToolStripMenuItem.Text = "Document"
+        Me.DocumentToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AankoopToolStripMenuItem, Me.VerkoopToolStripMenuItem, Me.FinanciëelToolStripMenuItem, Me.ToolStripSeparator6, Me.KassaverkoopToolStripMenuItem, Me.ToolStripSeparator7, Me.OpvolgingFacturenToolStripMenuItem, Me.ElectronischBetalenToolStripMenuItem, Me.ToolStripSeparator8, Me.StandaardkostprijskaartToolStripMenuItem, Me.BriefwisselingToolStripMenuItem})
+        Me.DocumentToolStrip.Enabled = False
+        Me.DocumentToolStrip.Name = "DocumentToolStrip"
+        Me.DocumentToolStrip.Size = New System.Drawing.Size(75, 20)
+        Me.DocumentToolStrip.Text = "Document"
         '
         'AankoopToolStripMenuItem
         '
@@ -375,13 +387,13 @@ Partial Class Mim
         Me.BriefwisselingToolStripMenuItem.Size = New System.Drawing.Size(224, 22)
         Me.BriefwisselingToolStripMenuItem.Text = "Briefwisseling"
         '
-        'BoekhoudingToolStripMenuItem
+        'AccountingToolStrip
         '
-        Me.BoekhoudingToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DiversePostenToolStripMenuItem, Me.ToolStripSeparator1, Me.DiversePostenboekToolStripMenuItem, Me.AankoopboekToolStripMenuItem, Me.VerkoopboekToolStripMenuItem, Me.FinanciëleBoekenToolStripMenuItem, Me.ToolStripSeparator9, Me.BtwJaarlistingBinnenlandToolStripMenuItem, Me.StandBtwAangifteToolStripMenuItem, Me.ToolStripSeparator10, Me.ControleInventarisToolStripMenuItem, Me.ToolStripSeparator11, Me.ToolStripMenuItem1, Me.ToolStripMenuItem3, Me.HistoriekRekeningenToolStripMenuItem, Me.ToolStripSeparator12, Me.BalansKlantenToolStripMenuItem, Me.TopdownKlantenToolStripMenuItem, Me.BalansLeveranciersToolStripMenuItem, Me.TopdownLeveranciersToolStripMenuItem, Me.ToolStripSeparator13, Me.OvergangBoekjaarToolStripMenuItem})
-        Me.BoekhoudingToolStripMenuItem.Enabled = False
-        Me.BoekhoudingToolStripMenuItem.Name = "BoekhoudingToolStripMenuItem"
-        Me.BoekhoudingToolStripMenuItem.Size = New System.Drawing.Size(90, 20)
-        Me.BoekhoudingToolStripMenuItem.Text = "Boekhouding"
+        Me.AccountingToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DiversePostenToolStripMenuItem, Me.ToolStripSeparator1, Me.DiversePostenboekToolStripMenuItem, Me.AankoopboekToolStripMenuItem, Me.VerkoopboekToolStripMenuItem, Me.FinanciëleBoekenToolStripMenuItem, Me.ToolStripSeparator9, Me.BtwJaarlistingBinnenlandToolStripMenuItem, Me.StandBtwAangifteToolStripMenuItem, Me.ToolStripSeparator10, Me.ControleInventarisToolStripMenuItem, Me.ToolStripSeparator11, Me.ToolStripMenuItem1, Me.ToolStripMenuItem3, Me.HistoriekRekeningenToolStripMenuItem, Me.ToolStripSeparator12, Me.BalansKlantenToolStripMenuItem, Me.TopdownKlantenToolStripMenuItem, Me.BalansLeveranciersToolStripMenuItem, Me.TopdownLeveranciersToolStripMenuItem, Me.ToolStripSeparator13, Me.OvergangBoekjaarToolStripMenuItem})
+        Me.AccountingToolStrip.Enabled = False
+        Me.AccountingToolStrip.Name = "AccountingToolStrip"
+        Me.AccountingToolStrip.Size = New System.Drawing.Size(90, 20)
+        Me.AccountingToolStrip.Text = "Boekhouding"
         '
         'DiversePostenToolStripMenuItem
         '
@@ -524,13 +536,13 @@ Partial Class Mim
         Me.OpkuisBestandenToolStripMenuItem.Size = New System.Drawing.Size(189, 22)
         Me.OpkuisBestandenToolStripMenuItem.Text = "Opkuis Bestanden"
         '
-        'ContractbeheerToolStripMenuItem
+        'ContractManagementToolStrip
         '
-        Me.ContractbeheerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BetalingsverzoekToolStripMenuItem, Me.InboekenKwijtingenToolStripMenuItem, Me.ToolStripSeparator14, Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem, Me.ToolStripSeparator15, Me.AswebGboUitwisselingToolStripMenuItem})
-        Me.ContractbeheerToolStripMenuItem.Enabled = False
-        Me.ContractbeheerToolStripMenuItem.Name = "ContractbeheerToolStripMenuItem"
-        Me.ContractbeheerToolStripMenuItem.Size = New System.Drawing.Size(101, 20)
-        Me.ContractbeheerToolStripMenuItem.Text = "Contractbeheer"
+        Me.ContractManagementToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BetalingsverzoekToolStripMenuItem, Me.InboekenKwijtingenToolStripMenuItem, Me.ToolStripSeparator14, Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem, Me.ToolStripSeparator15, Me.AswebGboUitwisselingToolStripMenuItem})
+        Me.ContractManagementToolStrip.Enabled = False
+        Me.ContractManagementToolStrip.Name = "ContractManagementToolStrip"
+        Me.ContractManagementToolStrip.Size = New System.Drawing.Size(101, 20)
+        Me.ContractManagementToolStrip.Text = "Contractbeheer"
         '
         'BetalingsverzoekToolStripMenuItem
         '
@@ -570,12 +582,12 @@ Partial Class Mim
         Me.AswebGboUitwisselingToolStripMenuItem.Size = New System.Drawing.Size(301, 22)
         Me.AswebGboUitwisselingToolStripMenuItem.Text = "Asweb/Gbo Uitwisseling"
         '
-        'OneDriveDNNToolStripMenuItem
+        'CloudIOToolStrip
         '
-        Me.OneDriveDNNToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InstellingenToolStripMenuItem})
-        Me.OneDriveDNNToolStripMenuItem.Name = "OneDriveDNNToolStripMenuItem"
-        Me.OneDriveDNNToolStripMenuItem.Size = New System.Drawing.Size(71, 20)
-        Me.OneDriveDNNToolStripMenuItem.Text = "Cloud I/O"
+        Me.CloudIOToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InstellingenToolStripMenuItem})
+        Me.CloudIOToolStrip.Name = "CloudIOToolStrip"
+        Me.CloudIOToolStrip.Size = New System.Drawing.Size(71, 20)
+        Me.CloudIOToolStrip.Text = "Cloud I/O"
         '
         'InstellingenToolStripMenuItem
         '
@@ -583,12 +595,12 @@ Partial Class Mim
         Me.InstellingenToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
         Me.InstellingenToolStripMenuItem.Text = "Instellingen"
         '
-        'InfoToolStripMenuItem
+        'InfoToolStrip
         '
-        Me.InfoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VsoftToolStripMenuItem, Me.HostingToolStripMenuItem, Me.PleskMailToolStripMenuItem, Me.InfoToolStripSeparator, Me.LicentieToolStripMenuItem, Me.InfoToolStripSeparator2, Me.CommandToolStripMenuItem})
-        Me.InfoToolStripMenuItem.Name = "InfoToolStripMenuItem"
-        Me.InfoToolStripMenuItem.Size = New System.Drawing.Size(24, 20)
-        Me.InfoToolStripMenuItem.Text = "?"
+        Me.InfoToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VsoftToolStripMenuItem, Me.HostingToolStripMenuItem, Me.PleskMailToolStripMenuItem, Me.InfoToolStripSeparator, Me.LicentieToolStripMenuItem, Me.InfoToolStripSeparator2, Me.CommandToolStripMenuItem})
+        Me.InfoToolStrip.Name = "InfoToolStrip"
+        Me.InfoToolStrip.Size = New System.Drawing.Size(24, 20)
+        Me.InfoToolStrip.Text = "?"
         '
         'VsoftToolStripMenuItem
         '
@@ -700,23 +712,23 @@ Partial Class Mim
     End Sub
 
     Friend WithEvents MimMenuStrip As MenuStrip
-    Friend WithEvents ActiesToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BedrijfOpenenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents VensterToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents trapsgewijsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents OnderElkaarToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NaastElkaarToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PictogrammenSchikkenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NieuwBedrijfToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SysteemToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents FichesToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DocumentToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents BoekhoudingToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ContractbeheerToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents OneDriveDNNToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents InfoToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SetUpBoekjaarEnParametersToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DatumPeriodeBoekjaarToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ActionsToolStrip As ToolStripMenuItem
+    Friend WithEvents CompanyOpenMenuItem As ToolStripMenuItem
+    Friend WithEvents WindowToolStrip As ToolStripMenuItem
+    Friend WithEvents CascadeMenuItem As ToolStripMenuItem
+    Friend WithEvents TileHorizontalMenuItem As ToolStripMenuItem
+    Friend WithEvents TileVerticalMenuItem As ToolStripMenuItem
+    Friend WithEvents ArrangeIconsMenuItem As ToolStripMenuItem
+    Friend WithEvents CompanyNewMenuItem As ToolStripMenuItem
+    Friend WithEvents SystemToolStrip As ToolStripMenuItem
+    Friend WithEvents SheetsToolStrip As ToolStripMenuItem
+    Friend WithEvents DocumentToolStrip As ToolStripMenuItem
+    Friend WithEvents AccountingToolStrip As ToolStripMenuItem
+    Friend WithEvents ContractManagementToolStrip As ToolStripMenuItem
+    Friend WithEvents CloudIOToolStrip As ToolStripMenuItem
+    Friend WithEvents InfoToolStrip As ToolStripMenuItem
+    Friend WithEvents SettingsFinancialYearMenuItem As ToolStripMenuItem
+    Friend WithEvents BookyearPeriodDateMenuItem As ToolStripMenuItem
     Friend WithEvents KlantenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LeveranciersToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RekeningenToolStripMenuItem As ToolStripMenuItem
@@ -730,12 +742,12 @@ Partial Class Mim
     Friend WithEvents Report As IDEALSoftware.VpeStandard.VpeControl
     Friend WithEvents BetalingsverzoekToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ArtikelProductDienstToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents LayOutToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SQLBewerkingenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
-    Friend WithEvents AfsluitenToolStripMenu As ToolStripMenuItem
+    Friend WithEvents VpeLayOutOutgoingMenuItem As ToolStripMenuItem
+    Friend WithEvents SQLOperationsMenuItem As ToolStripMenuItem
+    Friend WithEvents ActionsSeparator As ToolStripSeparator
+    Friend WithEvents CloseAppMenuItem As ToolStripMenuItem
     Friend WithEvents InboekenKwijtingenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents SystemToolStripSeparator As ToolStripSeparator
     Friend WithEvents DiverseGebruikersficheToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents LijstRapportageToolStripMenuItem As ToolStripMenuItem
@@ -779,7 +791,7 @@ Partial Class Mim
     Friend WithEvents InfoToolStripSeparator As ToolStripSeparator
     Friend WithEvents LicentieToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VsoftToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents AccessTestToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AccessTestMenuItem As ToolStripMenuItem
     Friend WithEvents OpenFileDialog As OpenFileDialog
     Friend WithEvents InfoToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents CommandToolStripMenuItem As ToolStripMenuItem

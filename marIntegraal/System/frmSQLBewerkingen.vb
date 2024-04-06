@@ -7,7 +7,7 @@ Public Class SQLBewerkingen
     End Sub
 
     Private Sub SQLBewerkingen_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Mim.SQLBewerkingenToolStripMenuItem.Enabled = True 
+        Mim.SQLOperationsMenuItem.Enabled = True 
     End Sub
 
     Private Sub SQLBewerkingen_Load(sender As Object, e As EventArgs) Handles MyBase.Load

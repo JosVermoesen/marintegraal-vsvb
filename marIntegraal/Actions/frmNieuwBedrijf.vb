@@ -1,7 +1,7 @@
 ﻿Public Class frmNieuwBedrijf
     Private Sub Negeren_Click(sender As Object, e As EventArgs) Handles Negeren.Click
-        Mim.BedrijfOpenenToolStripMenuItem.Enabled = True
-        Mim.NieuwBedrijfToolStripMenuItem.Enabled = True
+        Mim.CompanyOpenMenuItem.Enabled = True
+        Mim.CompanyNewMenuItem.Enabled = True
         Close()
     End Sub
 

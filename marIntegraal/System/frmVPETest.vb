@@ -284,7 +284,7 @@ errorCMDPRINT:
             MsgBox("Sluit eerst het PDF venster a.u.b.", MsgBoxStyle.Information)
             hierCancel = True
         Else
-            Mim.LayOutToolStripMenuItem.Enabled=True
+            Mim.VpeLayOutOutgoingMenuItem.Enabled=True
         End If
         e.Cancel = hierCancel
     End Sub

@@ -21,7 +21,7 @@ Module modTB2
         For telIndent = 0 To UBound(Xarray) - 1
             'Maak eerst het aantal tabs klaar voor de volgende stringreeks
             For telTabIndent = 1 To tabIndent
-                strIndent = strIndent & vbTab
+                strIndent &= vbTab
             Next
 
             'TELEBIB2 extra info eventueel toe te voegen...
