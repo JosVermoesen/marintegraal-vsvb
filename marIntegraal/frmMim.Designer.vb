@@ -42,15 +42,15 @@ Partial Class Mim
         Me.ArrangeIconsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AccessTestMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SheetsToolStrip = New System.Windows.Forms.ToolStripMenuItem()
-        Me.KlantenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LeveranciersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RekeningenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ArtikelProductDienstToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DiverseGebruikersficheToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
-        Me.LijstRapportageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
-        Me.HistoriekGrootboekInSchermToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CustomerSheetMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SupplierSheetMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LedgerAccountSheetMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProductSheetMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.VariousSheetsMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SheetsToolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.ReportingTableDataMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SheetsToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.LedgerHistoryOnScreenMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.AankoopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VerkoopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -239,69 +239,76 @@ Partial Class Mim
         '
         'SheetsToolStrip
         '
-        Me.SheetsToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.KlantenToolStripMenuItem, Me.LeveranciersToolStripMenuItem, Me.RekeningenToolStripMenuItem, Me.ArtikelProductDienstToolStripMenuItem, Me.DiverseGebruikersficheToolStripMenuItem, Me.ToolStripSeparator4, Me.LijstRapportageToolStripMenuItem, Me.ToolStripSeparator5, Me.HistoriekGrootboekInSchermToolStripMenuItem})
+        Me.SheetsToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CustomerSheetMenuItem, Me.SupplierSheetMenuItem, Me.LedgerAccountSheetMenuItem, Me.ProductSheetMenuItem, Me.VariousSheetsMenuItem, Me.SheetsToolStripSeparator, Me.ReportingTableDataMenuItem, Me.SheetsToolStripSeparator2, Me.LedgerHistoryOnScreenMenuItem})
         Me.SheetsToolStrip.Enabled = False
         Me.SheetsToolStrip.Name = "SheetsToolStrip"
         Me.SheetsToolStrip.Size = New System.Drawing.Size(52, 20)
         Me.SheetsToolStrip.Text = "Fiches"
         '
-        'KlantenToolStripMenuItem
+        'CustomerSheetMenuItem
         '
-        Me.KlantenToolStripMenuItem.Name = "KlantenToolStripMenuItem"
-        Me.KlantenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
-        Me.KlantenToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
-        Me.KlantenToolStripMenuItem.Text = "Klanten"
+        Me.CustomerSheetMenuItem.Name = "CustomerSheetMenuItem"
+        Me.CustomerSheetMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.K), System.Windows.Forms.Keys)
+        Me.CustomerSheetMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.CustomerSheetMenuItem.Text = "Klanten"
+        AddHandler Me.CustomerSheetMenuItem.Click, AddressOf Me.CustomerSheetMenuItem_Click
         '
-        'LeveranciersToolStripMenuItem
+        'SupplierSheetMenuItem
         '
-        Me.LeveranciersToolStripMenuItem.Name = "LeveranciersToolStripMenuItem"
-        Me.LeveranciersToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
-        Me.LeveranciersToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
-        Me.LeveranciersToolStripMenuItem.Text = "Leveranciers"
+        Me.SupplierSheetMenuItem.Name = "SupplierSheetMenuItem"
+        Me.SupplierSheetMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.L), System.Windows.Forms.Keys)
+        Me.SupplierSheetMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.SupplierSheetMenuItem.Text = "Leveranciers"
+        AddHandler Me.SupplierSheetMenuItem.Click, AddressOf Me.SupplierSheetMenuItem_Click
         '
-        'RekeningenToolStripMenuItem
+        'LedgerAccountSheetMenuItem
         '
-        Me.RekeningenToolStripMenuItem.Name = "RekeningenToolStripMenuItem"
-        Me.RekeningenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
-        Me.RekeningenToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
-        Me.RekeningenToolStripMenuItem.Text = "Rekeningen"
+        Me.LedgerAccountSheetMenuItem.Name = "LedgerAccountSheetMenuItem"
+        Me.LedgerAccountSheetMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.R), System.Windows.Forms.Keys)
+        Me.LedgerAccountSheetMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.LedgerAccountSheetMenuItem.Text = "Rekeningen"
+        AddHandler Me.LedgerAccountSheetMenuItem.Click, AddressOf Me.LedgerAccountSheetMenuItem_Click
         '
-        'ArtikelProductDienstToolStripMenuItem
+        'ProductSheetMenuItem
         '
-        Me.ArtikelProductDienstToolStripMenuItem.Name = "ArtikelProductDienstToolStripMenuItem"
-        Me.ArtikelProductDienstToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
-        Me.ArtikelProductDienstToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
-        Me.ArtikelProductDienstToolStripMenuItem.Text = "Artikel/Product/Dienst"
+        Me.ProductSheetMenuItem.Name = "ProductSheetMenuItem"
+        Me.ProductSheetMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.A), System.Windows.Forms.Keys)
+        Me.ProductSheetMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.ProductSheetMenuItem.Text = "Artikel/Product/Dienst"
+        AddHandler Me.ProductSheetMenuItem.Click, AddressOf Me.ProductSheetMenuItem_Click
         '
-        'DiverseGebruikersficheToolStripMenuItem
+        'VariousSheetsMenuItem
         '
-        Me.DiverseGebruikersficheToolStripMenuItem.Name = "DiverseGebruikersficheToolStripMenuItem"
-        Me.DiverseGebruikersficheToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.G), System.Windows.Forms.Keys)
-        Me.DiverseGebruikersficheToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
-        Me.DiverseGebruikersficheToolStripMenuItem.Text = "Diverse Gebruikersfiche"
+        Me.VariousSheetsMenuItem.Name = "VariousSheetsMenuItem"
+        Me.VariousSheetsMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.G), System.Windows.Forms.Keys)
+        Me.VariousSheetsMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.VariousSheetsMenuItem.Text = "Diverse Gebruikersfiche"
+        AddHandler Me.VariousSheetsMenuItem.Click, AddressOf Me.VariousSheetsMenuItem_Click
         '
-        'ToolStripSeparator4
+        'SheetsToolStripSeparator
         '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(276, 6)
+        Me.SheetsToolStripSeparator.Name = "SheetsToolStripSeparator"
+        Me.SheetsToolStripSeparator.Size = New System.Drawing.Size(276, 6)
         '
-        'LijstRapportageToolStripMenuItem
+        'ReportingTableDataMenuItem
         '
-        Me.LijstRapportageToolStripMenuItem.Name = "LijstRapportageToolStripMenuItem"
-        Me.LijstRapportageToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
-        Me.LijstRapportageToolStripMenuItem.Text = "LijstRapportage"
+        Me.ReportingTableDataMenuItem.Name = "ReportingTableDataMenuItem"
+        Me.ReportingTableDataMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.ReportingTableDataMenuItem.Text = "LijstRapportage"
+        AddHandler Me.ReportingTableDataMenuItem.Click, AddressOf Me.ReportingTableDataMenuItem_Click
         '
-        'ToolStripSeparator5
+        'SheetsToolStripSeparator2
         '
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(276, 6)
+        Me.SheetsToolStripSeparator2.Name = "SheetsToolStripSeparator2"
+        Me.SheetsToolStripSeparator2.Size = New System.Drawing.Size(276, 6)
         '
-        'HistoriekGrootboekInSchermToolStripMenuItem
+        'LedgerHistoryOnScreenMenuItem
         '
-        Me.HistoriekGrootboekInSchermToolStripMenuItem.Name = "HistoriekGrootboekInSchermToolStripMenuItem"
-        Me.HistoriekGrootboekInSchermToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
-        Me.HistoriekGrootboekInSchermToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
-        Me.HistoriekGrootboekInSchermToolStripMenuItem.Text = "Historiek Grootboek in Scherm"
+        Me.LedgerHistoryOnScreenMenuItem.Name = "LedgerHistoryOnScreenMenuItem"
+        Me.LedgerHistoryOnScreenMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
+        Me.LedgerHistoryOnScreenMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.LedgerHistoryOnScreenMenuItem.Text = "Historiek Grootboek in Scherm"
+        AddHandler Me.LedgerHistoryOnScreenMenuItem.Click, AddressOf Me.LedgerHistoryOnScreenMenuItem_Click
         '
         'DocumentToolStrip
         '
@@ -729,9 +736,9 @@ Partial Class Mim
     Friend WithEvents InfoToolStrip As ToolStripMenuItem
     Friend WithEvents SettingsFinancialYearMenuItem As ToolStripMenuItem
     Friend WithEvents BookyearPeriodDateMenuItem As ToolStripMenuItem
-    Friend WithEvents KlantenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents LeveranciersToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents RekeningenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CustomerSheetMenuItem As ToolStripMenuItem
+    Friend WithEvents SupplierSheetMenuItem As ToolStripMenuItem
+    Friend WithEvents LedgerAccountSheetMenuItem As ToolStripMenuItem
     Friend WithEvents DiversePostenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AankoopToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VerkoopToolStripMenuItem As ToolStripMenuItem
@@ -741,18 +748,18 @@ Partial Class Mim
     Friend WithEvents VerkoopboekToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Report As IDEALSoftware.VpeStandard.VpeControl
     Friend WithEvents BetalingsverzoekToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ArtikelProductDienstToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ProductSheetMenuItem As ToolStripMenuItem
     Friend WithEvents VpeLayOutOutgoingMenuItem As ToolStripMenuItem
     Friend WithEvents SQLOperationsMenuItem As ToolStripMenuItem
     Friend WithEvents ActionsSeparator As ToolStripSeparator
     Friend WithEvents CloseAppMenuItem As ToolStripMenuItem
     Friend WithEvents InboekenKwijtingenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SystemToolStripSeparator As ToolStripSeparator
-    Friend WithEvents DiverseGebruikersficheToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
-    Friend WithEvents LijstRapportageToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
-    Friend WithEvents HistoriekGrootboekInSchermToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents VariousSheetsMenuItem As ToolStripMenuItem
+    Friend WithEvents SheetsToolStripSeparator As ToolStripSeparator
+    Friend WithEvents ReportingTableDataMenuItem As ToolStripMenuItem
+    Friend WithEvents SheetsToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents LedgerHistoryOnScreenMenuItem As ToolStripMenuItem
     Friend WithEvents FinanciëelToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
     Friend WithEvents KassaverkoopToolStripMenuItem As ToolStripMenuItem

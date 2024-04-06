@@ -814,8 +814,8 @@ MaskAantal:
         Dim T As Short
         If dokumentType = "15" And Annuleren.Enabled = True Then
             If Not DatumKtrl(datumdocMTextbox.Text, PeriodAsText) Then
-                frmBJPERDAT.WindowState = FormWindowState.Normal
-                frmBJPERDAT.Focus()
+                frmBYPERDAT.WindowState = FormWindowState.Normal
+                frmBYPERDAT.Focus()
                 datumdocMTextbox.Focus()
                 Beep()
                 Exit Sub

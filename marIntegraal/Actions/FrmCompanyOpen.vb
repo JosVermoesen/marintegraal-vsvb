@@ -1,6 +1,6 @@
 ﻿Option Strict Off
 Option Explicit On
-Public Class frmBedrijfOpenen
+Public Class FrmCompanyOpen
     Dim flgVerwijderen As Boolean
     Dim strDataLocatie As String
 
@@ -177,7 +177,7 @@ Public Class frmBedrijfOpenen
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
         Mim.Text = "marIntegraal.NET " & marVersion & " - [" & Trim(bedrijvenListView.FocusedItem.Text) & "]"
 
-        AutoLoadCompany(BYPERDAT:=frmBJPERDAT)
+        AutoLoadCompany(BYPERDAT:=frmBYPERDAT)
         sluitenButton.PerformClick()
 
     End Sub

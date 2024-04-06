@@ -68,7 +68,7 @@ Public Class HistoriekRekeningScherm
 
     Private Sub HistoriekRekeningScherm_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
-        Mim.HistoriekGrootboekInSchermToolStripMenuItem.Enabled = True 
+        Mim.LedgerHistoryOnScreenMenuItem.Enabled = True 
 
     End Sub
 

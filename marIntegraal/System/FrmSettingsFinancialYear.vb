@@ -1,4 +1,4 @@
-﻿Public Class frmSetupBoekjaar
+﻿Public Class FrmSettingsFinancialYear
     Private Sub Afsluiten_Click(sender As Object, e As EventArgs) Handles Afsluiten.Click
         Close()
     End Sub

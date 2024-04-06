@@ -166,9 +166,9 @@ ProbeerNogEens:
         BYPERDAT.WindowState = FormWindowState.Minimized
         BYPERDAT.Show()
 
-        BFKlanten.Enabled = True
-        BFLeveranciers.Enabled = True
-        BFRekeningen.Enabled = True
+        CustomerSheet.Enabled = True
+        SupplierSheet.Enabled = True
+        LedgerAccountSheet.Enabled = True
 
         rsJournaal = New ADODB.Recordset
         If ntDB.Connect <> "" Then
@@ -220,15 +220,15 @@ ErrorOpvang:
         'Mim.MenuTitel(CountTo).Enabled = False
         'Next
 
-        With BFKlanten
+        With CustomerSheet
             .Enabled = False
             .WindowState = System.Windows.Forms.FormWindowState.Minimized
         End With
-        With BFLeveranciers
+        With SupplierSheet
             .Enabled = False
             .WindowState = System.Windows.Forms.FormWindowState.Minimized
         End With
-        With BFRekeningen
+        With LedgerAccountSheet
             .Enabled = False
             .WindowState = System.Windows.Forms.FormWindowState.Minimized
         End With

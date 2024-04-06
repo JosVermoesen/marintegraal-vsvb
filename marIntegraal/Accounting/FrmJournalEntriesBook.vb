@@ -21,7 +21,7 @@ Public Class FrmJournalEntriesBook
     Private Sub FrmJournalEntriesBook_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TotalDebit = 0
         TotalCredit = 0
-        TextBoxPeriodFromTo.Text = frmBJPERDAT.PeriodeBoekjaar.Text
+        TextBoxPeriodFromTo.Text = frmBYPERDAT.PeriodeBoekjaar.Text
         DateTimePickerProcessingDate.Text = MimGlobalDate
         PeriodFromChosen = Mid(PeriodFromTo, 1, 8)
         PeriodToChosen = Mid(PeriodFromTo, 9)
@@ -151,13 +151,13 @@ Public Class FrmJournalEntriesBook
     Private Sub TextBoxPeriodFromTo_Leave()
         If DateWrongFormat(Mid(TextBoxPeriodFromTo.Text, 14, 10)) Then
             MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !", MsgBoxStyle.Information)
-            TextBoxPeriodFromTo.Text = frmBJPERDAT.PeriodeBoekjaar.Text
+            TextBoxPeriodFromTo.Text = frmBYPERDAT.PeriodeBoekjaar.Text
             ButtonGenerateReport.Enabled = False
             TextBoxRecordLines.Text = "0"
             Exit Sub
         ElseIf Len(TextBoxPeriodFromTo.Text) <> 23 Then
             MsgBox("Respecteer : " & vbCrLf & vbCrLf & "DD/MM/EEJJ - DD/MM/EEJJ a.u.b. !", MsgBoxStyle.Information)
-            TextBoxPeriodFromTo.Text = frmBJPERDAT.PeriodeBoekjaar.Text
+            TextBoxPeriodFromTo.Text = frmBYPERDAT.PeriodeBoekjaar.Text
             ButtonGenerateReport.Enabled = False
             TextBoxRecordLines.Text = "0"
             Exit Sub

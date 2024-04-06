@@ -61,7 +61,7 @@ Public Class Mim
     Private Sub TotalClose()
 
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
-        AutoUnloadCompany(BJPERDAT:=frmBJPERDAT)
+        AutoUnloadCompany(BJPERDAT:=frmBYPERDAT)
         For CountTo = 0 To 9
             rsMAR(CountTo) = Nothing
         Next
@@ -118,7 +118,7 @@ Public Class Mim
         }
         adKBTable.Open("KeuzeBoxData", adKBDB, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic, ADODB.CommandTypeEnum.adCmdTableDirect) '  adLockReadOnly, adCmdTableDirect
         adKBTable.Index = "BestandsNaam"
-        With BFKlanten
+        With CustomerSheet
             .MdiParent = Me
             .Text = "Klanten"
             .BackColor = ColorTranslator.FromOle(QBColor(9))
@@ -128,7 +128,7 @@ Public Class Mim
             .Show()
         End With
 
-        With BFLeveranciers
+        With SupplierSheet
             .MdiParent = Me
             .Text = "Leveranciers"
             .BackColor = ColorTranslator.FromOle(QBColor(12))
@@ -138,7 +138,7 @@ Public Class Mim
             .Show()
         End With
 
-        With BFRekeningen
+        With LedgerAccountSheet
             .MdiParent = Me
             .Text = "Rekeningen"
             .BackColor = ColorTranslator.FromOle(QBColor(15))
@@ -151,105 +151,142 @@ Public Class Mim
 
     End Sub
 
+    ' Actions
     Private Sub CompanyOpenMenuItem_Click(sender As Object, e As EventArgs)
         Msg = "Hierna worden eerst alle bestanden en openstaande vensters van een actief bedrijf gesloten."
         If GaVerder(Msg, 1, "Bedrijf Openen") Then
             Ktrl = 100
-            AutoUnloadCompany(BJPERDAT:=frmBJPERDAT)
+            AutoUnloadCompany(BJPERDAT:=FrmBYPERDAT)
             On Error Resume Next
             ntDB.Close()
             On Error GoTo 0
             CompanyOpenMenuItem.Enabled = False
             CompanyNewMenuItem.Enabled = False
-            Dim BedrijfOpenen As New frmBedrijfOpenen With {
+            Dim BedrijfOpenen As New FrmCompanyOpen With {
                 .MdiParent = Me
             }
             BedrijfOpenen.Show()
         End If
     End Sub
-
     Private Sub CompanyNewMenuItem_Click(sender As Object, e As EventArgs)
         Msg = "Hierna worden eerst alle bestanden en openstaande vensters van een actief bedrijf gesloten."
         If GaVerder(Msg, 1, "Nieuw Bedrijf") Then
             Ktrl = 100
-            AutoUnloadCompany(BJPERDAT:=frmBJPERDAT)
+            AutoUnloadCompany(BJPERDAT:=FrmBYPERDAT)
             On Error Resume Next
             ntDB.Close()
             On Error GoTo 0
             CompanyOpenMenuItem.Enabled = False
             CompanyNewMenuItem.Enabled = False
-            Dim NieuwBedrijf As New frmNieuwBedrijf With {
+            Dim NieuwBedrijf As New FrmCompanyNew With {
                 .MdiParent = Me
             }
             NieuwBedrijf.Show()
         End If
     End Sub
-
     Private Sub CloseAppMenuItem_Click(sender As Object, e As EventArgs)
         Ktrl = 100
         'TotalClose()
         Close()
     End Sub
 
+    ' System
     Private Sub SettingsFinancialYearMenuItem_Click(sender As Object, e As EventArgs)
-        frmSetupBoekjaar.ShowDialog()
+        FrmSettingsFinancialYear.ShowDialog()
     End Sub
-
     Private Sub BookyearPeriodDateMenuItem_Click(sender As Object, e As EventArgs)
-        frmBJPERDAT.WindowState = FormWindowState.Normal
+        FrmBYPERDAT.WindowState = FormWindowState.Normal
     End Sub
-
     Private Sub VpeLayOutOutgoingMenuItem_Click(sender As Object, e As EventArgs)
         Dim LayOutDocument As New LayOutpdfDokument
         VpeLayOutOutgoingMenuItem.Enabled = False
         LayOutpdfDokument.Show()
     End Sub
-
     Private Sub SQLOperationsMenuItem_Click(sender As Object, e As EventArgs)
         Dim SqlBewerkingen As New SQLBewerkingen
         SQLOperationsMenuItem.Enabled = False
         SqlBewerkingen.Show()
     End Sub
 
+    ' Windows
     Private Sub CascadeMenuItem_Click(sender As Object, e As EventArgs)
         LayoutMdi(MdiLayout.Cascade)
     End Sub
-
     Private Sub TileHorizontalMenuItem_Click(sender As Object, e As EventArgs)
         LayoutMdi(MdiLayout.TileHorizontal)
     End Sub
-
     Private Sub TileVerticalMenuItem_Click(sender As Object, e As EventArgs)
         LayoutMdi(MdiLayout.TileVertical)
     End Sub
-
     Private Sub ArrangeIconsMenuItem_Click(sender As Object, e As EventArgs)
         LayoutMdi(MdiLayout.ArrangeIcons)
     End Sub
-
     Private Sub AccessTestMenuItem_Click(sender As Object, e As EventArgs)
         MessageBox.Show("AccessTestMenuItem_Click")
     End Sub
 
-
-
-
-    Private Sub LicentieToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        MessageBox.Show("Licentie")
+    ' Sheets
+    Private Sub CustomerSheetMenuItem_Click(sender As Object, e As EventArgs)
+        CustomerSheet.WindowState = FormWindowState.Normal
+    End Sub
+    Private Sub SupplierSheetMenuItem_Click(sender As Object, e As EventArgs)
+        SupplierSheet.WindowState = FormWindowState.Normal
+    End Sub
+    Private Sub LedgerAccountSheetMenuItem_Click(sender As Object, e As EventArgs)
+        LedgerAccountSheet.WindowState = FormWindowState.Normal
+    End Sub
+    Private Sub ProductSheetMenuItem_Click(sender As Object, e As EventArgs)
+        Dim ProductFiche As New frmProductFiche With {
+            .MdiParent = Me
+        }
+        ProductSheetMenuItem.Enabled = False
+        ProductFiche.Show()
+    End Sub
+    Private Sub VariousSheetsMenuItem_Click(sender As Object, e As EventArgs)
+        With XDocument
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .ShowDialog()
+            .Dispose()
+        End With
+    End Sub
+    Private Sub ReportingTableDataMenuItem_Click(sender As Object, e As EventArgs)
+        With LijstRapportage
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .ShowDialog()
+            .Dispose()
+        End With
+    End Sub
+    Private Sub LedgerHistoryOnScreenMenuItem_Click(sender As Object, e As EventArgs)
+        LedgerHistoryOnScreenMenuItem.Enabled = False
+        With HistoriekRekeningScherm
+            .MdiParent = Me
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .Show()
+        End With
     End Sub
 
-    Private Sub PleskMailToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Process.Start(New ProcessStartInfo("https://webmail.rv.be"))
-    End Sub
 
-    Private Sub HostingToolStripMenuItem_Click_1(sender As Object, e As EventArgs)
-        Process.Start(New ProcessStartInfo("https://web20.foxxl.com:8443"))
-    End Sub
 
+
+
+
+
+    ' Info
     Private Sub VsoftToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start(New ProcessStartInfo("https://vsoft.be/#/marintegraal"))
     End Sub
-
+    Private Sub HostingToolStripMenuItem_Click_1(sender As Object, e As EventArgs)
+        Process.Start(New ProcessStartInfo("https://web20.foxxl.com:8443"))
+    End Sub
+    Private Sub PleskMailToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        Process.Start(New ProcessStartInfo("https://webmail.rv.be"))
+    End Sub
+    Private Sub LicentieToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("Licentie")
+    End Sub
     Private Sub CommandToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
         Dim myDocumentsFolderPath As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -274,7 +311,7 @@ Public Class Mim
 
     Private Function GaVerder(ByRef Bericht As String, ByRef BedrijfOpenKontrole As Short, ByRef Titel As String) As Short
         If BedrijfOpenKontrole Then
-            If BFKlanten.Enabled = True Then
+            If CustomerSheet.Enabled = True Then
             Else
                 GaVerder = True
                 Exit Function
@@ -287,17 +324,6 @@ Public Class Mim
             GaVerder = False
         End If
     End Function
-
-    Private Sub KlantenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KlantenToolStripMenuItem.Click
-        BFKlanten.WindowState = FormWindowState.Normal
-    End Sub
-    Private Sub LeveranciersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LeveranciersToolStripMenuItem.Click
-        BFLeveranciers.WindowState = FormWindowState.Normal
-    End Sub
-    Private Sub RekeningenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RekeningenToolStripMenuItem.Click
-        BFRekeningen.WindowState = FormWindowState.Normal
-    End Sub
-
 
     Private Sub DiversePostenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DiversePostenToolStripMenuItem.Click
         Dim DiversePosten As New FrmJournalEntryInput With {
@@ -327,14 +353,6 @@ Public Class Mim
         VerkoopVerrichtingen.Show()
     End Sub
 
-    Private Sub ArtikelProductDienstToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ArtikelProductDienstToolStripMenuItem.Click
-        Dim ProductFiche As New frmProductFiche With {
-            .MdiParent = Me
-        }
-        ArtikelProductDienstToolStripMenuItem.Enabled = False
-        ProductFiche.Show()
-    End Sub
-
     Private Sub InboekenKwijtingenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InboekenKwijtingenToolStripMenuItem.Click
         Dim InboekenKwijtingen As New KwijtingInboeken
         InboekenKwijtingenToolStripMenuItem.Enabled = False
@@ -358,39 +376,6 @@ Public Class Mim
         e.Cancel = hierCancel
     End Sub
 
-    Private Sub DiverseGebruikersficheToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DiverseGebruikersficheToolStripMenuItem.Click
-
-        With XDocument 
-            .WindowState = FormWindowState.Normal 
-            .Enabled = True 
-            .ShowDialog 
-            .Dispose
-        End With
-
-    End Sub
-
-    Private Sub LijstRapportageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LijstRapportageToolStripMenuItem.Click
-
-        With LijstRapportage 
-            .WindowState = FormWindowState.Normal 
-            .Enabled = True 
-            .ShowDialog 
-            .Dispose
-        End With
-        
-    End Sub
-
-    Private Sub HistoriekGrootboekInSchermToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HistoriekGrootboekInSchermToolStripMenuItem.Click
-
-        HistoriekGrootboekInSchermToolStripMenuItem.Enabled = False 
-        With HistoriekRekeningScherm 
-            .MdiParent = Me
-            .WindowState = FormWindowState.Normal 
-            .Enabled = True 
-            .Show 
-        End With
-
-    End Sub
 
     Private Sub FinanciëelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FinanciëelToolStripMenuItem.Click
 

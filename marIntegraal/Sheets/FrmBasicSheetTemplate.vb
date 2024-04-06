@@ -1,6 +1,6 @@
 ﻿Option Strict Off
 Option Explicit On
-Public Class frmBasisFiche
+Public Class FrmBasicSheetTemplate
     Dim lastKey As String
     Dim hierFl As Integer
     Private Sub NieuweFiche()

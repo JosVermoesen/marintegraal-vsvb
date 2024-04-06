@@ -10,7 +10,7 @@ Public Class FrmJournalEntryInput
         ComboBoxBookType.Items.Add("1: Afschrijvingspost Eindejaar")
         ComboBoxBookType.Items.Add("2: Beginbalans")
 
-        DateTimePickerBookingDate.Value = frmBJPERDAT.DatumVerwerking.Value
+        DateTimePickerBookingDate.Value = frmBYPERDAT.DatumVerwerking.Value
         ButtonEraseAll.PerformClick()
         If XLogKey = "SchrijfAF!" Then
             ComboBoxBookType.SelectedIndex = 1
@@ -534,8 +534,8 @@ Public Class FrmJournalEntryInput
         End If
         If Not DatumKtrl(Format(DateTimePickerBookingDate.Value, "dd/MM/yyyy"), PeriodAsText) Then
             Beep()
-            frmBJPERDAT.WindowState = FormWindowState.Normal
-            frmBJPERDAT.Focus()
+            frmBYPERDAT.WindowState = FormWindowState.Normal
+            frmBYPERDAT.Focus()
             DateTimePickerBookingDate.Focus()
             Exit Sub
         ElseIf ListBoxJournalEntries.Items.Count = 0 Then

@@ -125,16 +125,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="frmAankoopEdit.Designer.vb">
+    <Compile Include="SupportiveForms\frmAankoopEdit.Designer.vb">
       <DependentUpon>frmAankoopEdit.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAankoopEdit.vb">
+    <Compile Include="SupportiveForms\frmAankoopEdit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAankoopInvesteerFiche.Designer.vb">
+    <Compile Include="SupportiveForms\frmAankoopInvesteerFiche.Designer.vb">
       <DependentUpon>frmAankoopInvesteerFiche.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAankoopInvesteerFiche.vb">
+    <Compile Include="SupportiveForms\frmAankoopInvesteerFiche.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmAppOutInstellingen.Designer.vb">
@@ -185,12 +185,6 @@
     <Compile Include="frmBriefwisseling.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBrowser.Designer.vb">
-      <DependentUpon>frmBrowser.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmBrowser.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmBtwAangifte.Designer.vb">
       <DependentUpon>frmBtwAangifte.vb</DependentUpon>
     </Compile>
@@ -209,28 +203,28 @@
     <Compile Include="frmAankoopVerrichtingen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBasisFiche.Designer.vb">
-      <DependentUpon>frmBasisFiche.vb</DependentUpon>
+    <Compile Include="Sheets\FrmBasicSheetTemplate.Designer.vb">
+      <DependentUpon>FrmBasicSheetTemplate.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBasisFiche.vb">
+    <Compile Include="Sheets\FrmBasicSheetTemplate.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Actions\frmBedrijfOpenen.Designer.vb">
-      <DependentUpon>frmBedrijfOpenen.vb</DependentUpon>
+    <Compile Include="Actions\FrmCompanyOpen.Designer.vb">
+      <DependentUpon>FrmCompanyOpen.vb</DependentUpon>
     </Compile>
-    <Compile Include="Actions\frmBedrijfOpenen.vb">
+    <Compile Include="Actions\FrmCompanyOpen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="System\frmBJPERDAT.Designer.vb">
-      <DependentUpon>frmBJPERDAT.vb</DependentUpon>
+    <Compile Include="System\FrmBYPERDAT.Designer.vb">
+      <DependentUpon>FrmBYPERDAT.vb</DependentUpon>
     </Compile>
-    <Compile Include="System\frmBJPERDAT.vb">
+    <Compile Include="System\FrmBYPERDAT.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBoeking.Designer.vb">
+    <Compile Include="SupportiveForms\frmBoeking.Designer.vb">
       <DependentUpon>frmBoeking.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmBoeking.vb">
+    <Compile Include="SupportiveForms\frmBoeking.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Accounting\FrmJournalEntryInput.Designer.vb">
@@ -263,10 +257,10 @@
     <Compile Include="frmHistoriekRekeningen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmHistoriekRekeningScherm.Designer.vb">
-      <DependentUpon>frmHistoriekRekeningScherm.vb</DependentUpon>
+    <Compile Include="Sheets\FrmLedgerHistoryOnScreen.Designer.vb">
+      <DependentUpon>FrmLedgerHistoryOnScreen.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmHistoriekRekeningScherm.vb">
+    <Compile Include="Sheets\FrmLedgerHistoryOnScreen.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmInvesteringsFiche.Designer.vb">
@@ -299,10 +293,10 @@
     <Compile Include="frmKwijtingInboeken.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLijstRapportage.Designer.vb">
+    <Compile Include="Sheets\frmLijstRapportage.Designer.vb">
       <DependentUpon>frmLijstRapportage.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmLijstRapportage.vb">
+    <Compile Include="Sheets\frmLijstRapportage.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMim.vb">
@@ -313,10 +307,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="aLoadMain.vb" />
-    <Compile Include="Actions\frmNieuwBedrijf.Designer.vb">
-      <DependentUpon>frmNieuwBedrijf.vb</DependentUpon>
+    <Compile Include="Actions\FrmCompanyNew.Designer.vb">
+      <DependentUpon>FrmCompanyNew.vb</DependentUpon>
     </Compile>
-    <Compile Include="Actions\frmNieuwBedrijf.vb">
+    <Compile Include="Actions\FrmCompanyNew.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmNTInputbox.Designer.vb">
@@ -325,10 +319,10 @@
     <Compile Include="frmNTInputbox.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmProductFiche.Designer.vb">
+    <Compile Include="Sheets\frmProductFiche.Designer.vb">
       <DependentUpon>frmProductFiche.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmProductFiche.vb">
+    <Compile Include="Sheets\frmProductFiche.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmProductlijstRekenkundig.Designer.vb">
@@ -343,22 +337,22 @@
     <Compile Include="frmProefEnSaldi.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="System\frmSetupBoekjaar.Designer.vb">
-      <DependentUpon>frmSetupBoekjaar.vb</DependentUpon>
+    <Compile Include="System\FrmSettingsFinancialYear.Designer.vb">
+      <DependentUpon>FrmSettingsFinancialYear.vb</DependentUpon>
     </Compile>
-    <Compile Include="System\frmSetupBoekjaar.vb">
+    <Compile Include="System\FrmSettingsFinancialYear.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="System\frmSQLBewerkingen.Designer.vb">
-      <DependentUpon>frmSQLBewerkingen.vb</DependentUpon>
+    <Compile Include="System\FrmSQLOperations.Designer.vb">
+      <DependentUpon>FrmSQLOperations.vb</DependentUpon>
     </Compile>
-    <Compile Include="System\frmSQLBewerkingen.vb">
+    <Compile Include="System\FrmSQLOperations.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSqlSearch.Designer.vb">
+    <Compile Include="SupportiveForms\frmSqlSearch.Designer.vb">
       <DependentUpon>frmSqlSearch.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmSqlSearch.vb">
+    <Compile Include="SupportiveForms\frmSqlSearch.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmStandaardKostprijsKaart.Designer.vb">
@@ -391,10 +385,10 @@
     <Compile Include="frmVerkoopVerrichtingen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="System\frmVPETest.Designer.vb">
-      <DependentUpon>frmVPETest.vb</DependentUpon>
+    <Compile Include="System\FrmVPEOutgoing.Designer.vb">
+      <DependentUpon>FrmVPEOutgoing.vb</DependentUpon>
     </Compile>
-    <Compile Include="System\frmVPETest.vb">
+    <Compile Include="System\FrmVPEOutgoing.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmVrijBerichtMaatschappij.Designer.vb">
@@ -409,10 +403,10 @@
     <Compile Include="frmXDocument.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmXLog.Designer.vb">
+    <Compile Include="SupportiveForms\frmXLog.Designer.vb">
       <DependentUpon>frmXLog.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmXLog.vb">
+    <Compile Include="SupportiveForms\frmXLog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Modules\modDatabaseRoutines.vb" />
@@ -438,10 +432,10 @@
     <Compile Include="Settings.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmAankoopEdit.resx">
+    <EmbeddedResource Include="SupportiveForms\frmAankoopEdit.resx">
       <DependentUpon>frmAankoopEdit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAankoopInvesteerFiche.resx">
+    <EmbeddedResource Include="SupportiveForms\frmAankoopInvesteerFiche.resx">
       <DependentUpon>frmAankoopInvesteerFiche.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmAppOutInstellingen.resx">
@@ -468,9 +462,6 @@
     <EmbeddedResource Include="frmBriefwisseling.resx">
       <DependentUpon>frmBriefwisseling.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBrowser.resx">
-      <DependentUpon>frmBrowser.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmBtwAangifte.resx">
       <DependentUpon>frmBtwAangifte.vb</DependentUpon>
     </EmbeddedResource>
@@ -480,16 +471,16 @@
     <EmbeddedResource Include="frmAankoopVerrichtingen.resx">
       <DependentUpon>frmAankoopVerrichtingen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBasisFiche.resx">
-      <DependentUpon>frmBasisFiche.vb</DependentUpon>
+    <EmbeddedResource Include="Sheets\FrmBasicSheetTemplate.resx">
+      <DependentUpon>FrmBasicSheetTemplate.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Actions\frmBedrijfOpenen.resx">
-      <DependentUpon>frmBedrijfOpenen.vb</DependentUpon>
+    <EmbeddedResource Include="Actions\FrmCompanyOpen.resx">
+      <DependentUpon>FrmCompanyOpen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="System\frmBJPERDAT.resx">
-      <DependentUpon>frmBJPERDAT.vb</DependentUpon>
+    <EmbeddedResource Include="System\FrmBYPERDAT.resx">
+      <DependentUpon>FrmBYPERDAT.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBoeking.resx">
+    <EmbeddedResource Include="SupportiveForms\frmBoeking.resx">
       <DependentUpon>frmBoeking.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\FrmJournalEntryInput.resx">
@@ -507,8 +498,8 @@
     <EmbeddedResource Include="frmHistoriekRekeningen.resx">
       <DependentUpon>frmHistoriekRekeningen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmHistoriekRekeningScherm.resx">
-      <DependentUpon>frmHistoriekRekeningScherm.vb</DependentUpon>
+    <EmbeddedResource Include="Sheets\FrmLedgerHistoryOnScreen.resx">
+      <DependentUpon>FrmLedgerHistoryOnScreen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInvesteringsFiche.resx">
       <DependentUpon>frmInvesteringsFiche.vb</DependentUpon>
@@ -525,19 +516,19 @@
     <EmbeddedResource Include="frmKwijtingInboeken.resx">
       <DependentUpon>frmKwijtingInboeken.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLijstRapportage.resx">
+    <EmbeddedResource Include="Sheets\frmLijstRapportage.resx">
       <DependentUpon>frmLijstRapportage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMim.resx">
       <DependentUpon>frmMim.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Actions\frmNieuwBedrijf.resx">
-      <DependentUpon>frmNieuwBedrijf.vb</DependentUpon>
+    <EmbeddedResource Include="Actions\FrmCompanyNew.resx">
+      <DependentUpon>FrmCompanyNew.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmNTInputbox.resx">
       <DependentUpon>frmNTInputbox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmProductFiche.resx">
+    <EmbeddedResource Include="Sheets\frmProductFiche.resx">
       <DependentUpon>frmProductFiche.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductlijstRekenkundig.resx">
@@ -546,13 +537,13 @@
     <EmbeddedResource Include="frmProefEnSaldi.resx">
       <DependentUpon>frmProefEnSaldi.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="System\frmSetupBoekjaar.resx">
-      <DependentUpon>frmSetupBoekjaar.vb</DependentUpon>
+    <EmbeddedResource Include="System\FrmSettingsFinancialYear.resx">
+      <DependentUpon>FrmSettingsFinancialYear.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="System\frmSQLBewerkingen.resx">
-      <DependentUpon>frmSQLBewerkingen.vb</DependentUpon>
+    <EmbeddedResource Include="System\FrmSQLOperations.resx">
+      <DependentUpon>FrmSQLOperations.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSqlSearch.resx">
+    <EmbeddedResource Include="SupportiveForms\frmSqlSearch.resx">
       <DependentUpon>frmSqlSearch.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStandaardKostprijsKaart.resx">
@@ -570,8 +561,8 @@
     <EmbeddedResource Include="frmVerkoopVerrichtingen.resx">
       <DependentUpon>frmVerkoopVerrichtingen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="System\frmVPETest.resx">
-      <DependentUpon>frmVPETest.vb</DependentUpon>
+    <EmbeddedResource Include="System\FrmVPEOutgoing.resx">
+      <DependentUpon>FrmVPEOutgoing.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVrijBerichtMaatschappij.resx">
       <DependentUpon>frmVrijBerichtMaatschappij.vb</DependentUpon>
@@ -579,7 +570,7 @@
     <EmbeddedResource Include="frmXDocument.resx">
       <DependentUpon>frmXDocument.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmXLog.resx">
+    <EmbeddedResource Include="SupportiveForms\frmXLog.resx">
       <DependentUpon>frmXLog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />

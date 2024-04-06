@@ -1,4 +1,4 @@
-﻿Public Class frmNieuwBedrijf
+﻿Public Class FrmCompanyNew
     Private Sub Negeren_Click(sender As Object, e As EventArgs) Handles Negeren.Click
         Mim.CompanyOpenMenuItem.Enabled = True
         Mim.CompanyNewMenuItem.Enabled = True

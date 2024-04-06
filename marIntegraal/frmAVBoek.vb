@@ -75,13 +75,13 @@ Public Class AVBoek
 		Dim PeriodeMax As Integer 
 
 		Ktrl = 0
-		PeriodeMax = frmBJPERDAT.PeriodeBoekjaar.Items.Count + 1
-		Do While PeriodeMax > frmBJPERDAT.PeriodeBoekjaar.SelectedIndex + 1
-			PeriodeSleutel = "17" & frmBJPERDAT.Boekjaar.Text & Format(PeriodeMax, "00")
+		PeriodeMax = frmBYPERDAT.PeriodeBoekjaar.Items.Count + 1
+		Do While PeriodeMax > frmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1
+			PeriodeSleutel = "17" & frmBYPERDAT.Boekjaar.Text & Format(PeriodeMax, "00")
 			JetGet(TableOfVarious, 1, PeriodeSleutel)
 			If Ktrl Then
 				TLBRecord(TableOfVarious) = ""
-				AdoInsertToRecord(TableOfVarious, (frmBJPERDAT.Boekjaar.Text), "v090")
+				AdoInsertToRecord(TableOfVarious, (frmBYPERDAT.Boekjaar.Text), "v090")
 				AdoInsertToRecord(TableOfVarious, Format(PeriodeMax, "00"), "v091")
 				AdoInsertToRecord(TableOfVarious, "17" & AdoGetField(TableOfVarious, "#v090 #") & AdoGetField(TableOfVarious, "#v091 #"), "v005")
 				JetInsert(TableOfVarious, 1)
@@ -105,12 +105,12 @@ jump:
 			Drukken.Visible = False
 			Exit Sub
 		Else
-			PeriodeSleutel = "17" & frmBJPERDAT.Boekjaar.Text & Format(frmBJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")
+			PeriodeSleutel = "17" & frmBYPERDAT.Boekjaar.Text & Format(frmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")
 			JetGet(TableOfVarious, 1, PeriodeSleutel)
 			If Ktrl Then
 				TLBRecord(TableOfVarious) = ""
-				AdoInsertToRecord(TableOfVarious, (frmBJPERDAT.Boekjaar.Text), "v090")
-				AdoInsertToRecord(TableOfVarious, Format(frmBJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00"), "v091")
+				AdoInsertToRecord(TableOfVarious, (frmBYPERDAT.Boekjaar.Text), "v090")
+				AdoInsertToRecord(TableOfVarious, Format(frmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00"), "v091")
 				AdoInsertToRecord(TableOfVarious, "17" & AdoGetField(TableOfVarious, "#v090 #") & AdoGetField(TableOfVarious, "#v091 #"), "v005")
 				JetInsert(TableOfVarious, 1)
 				GoTo jump
@@ -207,8 +207,8 @@ jump:
 
 		If Not DatumKtrl(tbDatumDrukken.Text, PeriodAsText) Then
 			Beep()
-			frmBJPERDAT.WindowState = FormWindowState.Normal
-			frmBJPERDAT.Focus()
+			frmBYPERDAT.WindowState = FormWindowState.Normal
+			frmBYPERDAT.Focus()
 			tbDatumDrukken.Focus()            
 		End If
 

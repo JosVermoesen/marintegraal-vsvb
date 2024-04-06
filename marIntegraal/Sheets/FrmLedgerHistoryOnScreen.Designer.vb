@@ -46,8 +46,7 @@ Partial Class HistoriekRekeningScherm
         Me.GansePeriode.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.GansePeriode.Checked = true
         Me.GansePeriode.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.GansePeriode.Cursor = System.Windows.Forms.Cursors.Default
-        Me.GansePeriode.Enabled = false
+        Me.GansePeriode.Enabled = False
         Me.GansePeriode.ForeColor = System.Drawing.SystemColors.ControlText
         Me.GansePeriode.Location = New System.Drawing.Point(609, 403)
         Me.GansePeriode.Name = "GansePeriode"
@@ -55,11 +54,11 @@ Partial Class HistoriekRekeningScherm
         Me.GansePeriode.Size = New System.Drawing.Size(97, 22)
         Me.GansePeriode.TabIndex = 32
         Me.GansePeriode.Text = "&Boekjaar"
-        Me.GansePeriode.UseVisualStyleBackColor = false
+        Me.GansePeriode.UseVisualStyleBackColor = False
         '
         'TxtLijnen
         '
-        Me.TxtLijnen.AcceptsReturn = true
+        Me.TxtLijnen.AcceptsReturn = True
         Me.TxtLijnen.BackColor = System.Drawing.Color.White
         Me.TxtLijnen.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.TxtLijnen.ForeColor = System.Drawing.Color.Black
@@ -72,7 +71,7 @@ Partial Class HistoriekRekeningScherm
         '
         'tbRekening
         '
-        Me.tbRekening.AcceptsReturn = true
+        Me.tbRekening.AcceptsReturn = True
         Me.tbRekening.BackColor = System.Drawing.Color.White
         Me.tbRekening.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.tbRekening.ForeColor = System.Drawing.Color.Black
@@ -85,7 +84,7 @@ Partial Class HistoriekRekeningScherm
         '
         'tbVanTot
         '
-        Me.tbVanTot.AcceptsReturn = true
+        Me.tbVanTot.AcceptsReturn = True
         Me.tbVanTot.BackColor = System.Drawing.Color.White
         Me.tbVanTot.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.tbVanTot.ForeColor = System.Drawing.Color.Black
@@ -99,53 +98,49 @@ Partial Class HistoriekRekeningScherm
         'btnLager
         '
         Me.btnLager.BackColor = System.Drawing.SystemColors.Control
-        Me.btnLager.Cursor = System.Windows.Forms.Cursors.Default
-        Me.btnLager.Enabled = false
+        Me.btnLager.Enabled = False
         Me.btnLager.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnLager.Location = New System.Drawing.Point(594, 124)
         Me.btnLager.Name = "btnLager"
         Me.btnLager.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnLager.Size = New System.Drawing.Size(112, 25)
         Me.btnLager.TabIndex = 25
-        Me.btnLager.TabStop = false
+        Me.btnLager.TabStop = False
         Me.btnLager.Text = "&Lager"
-        Me.btnLager.UseVisualStyleBackColor = false
+        Me.btnLager.UseVisualStyleBackColor = False
         '
         'btnHoger
         '
         Me.btnHoger.BackColor = System.Drawing.SystemColors.Control
-        Me.btnHoger.Cursor = System.Windows.Forms.Cursors.Default
-        Me.btnHoger.Enabled = false
+        Me.btnHoger.Enabled = False
         Me.btnHoger.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnHoger.Location = New System.Drawing.Point(593, 97)
         Me.btnHoger.Name = "btnHoger"
         Me.btnHoger.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnHoger.Size = New System.Drawing.Size(113, 25)
         Me.btnHoger.TabIndex = 24
-        Me.btnHoger.TabStop = false
+        Me.btnHoger.TabStop = False
         Me.btnHoger.Text = "&Hoger"
-        Me.btnHoger.UseVisualStyleBackColor = false
+        Me.btnHoger.UseVisualStyleBackColor = False
         '
         'btnSearch
         '
         Me.btnSearch.BackColor = System.Drawing.SystemColors.Control
-        Me.btnSearch.Cursor = System.Windows.Forms.Cursors.Default
         Me.btnSearch.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnSearch.Location = New System.Drawing.Point(532, 442)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnSearch.Size = New System.Drawing.Size(53, 25)
         Me.btnSearch.TabIndex = 22
-        Me.btnSearch.TabStop = false
+        Me.btnSearch.TabStop = False
         Me.btnSearch.Text = "&Zoek"
-        Me.btnSearch.UseVisualStyleBackColor = false
+        Me.btnSearch.UseVisualStyleBackColor = False
         '
         'lblLijnen
         '
-        Me.lblLijnen.AutoSize = true
+        Me.lblLijnen.AutoSize = True
         Me.lblLijnen.BackColor = System.Drawing.SystemColors.Control
         Me.lblLijnen.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblLijnen.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblLijnen.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblLijnen.Location = New System.Drawing.Point(669, 374)
         Me.lblLijnen.Name = "lblLijnen"
@@ -158,7 +153,6 @@ Partial Class HistoriekRekeningScherm
         '
         Me.lblTussenmelding.BackColor = System.Drawing.SystemColors.Control
         Me.lblTussenmelding.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblTussenmelding.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblTussenmelding.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblTussenmelding.Location = New System.Drawing.Point(607, 332)
         Me.lblTussenmelding.Name = "lblTussenmelding"
@@ -170,7 +164,6 @@ Partial Class HistoriekRekeningScherm
         'lblPeriodeVanTot
         '
         Me.lblPeriodeVanTot.BackColor = System.Drawing.SystemColors.Control
-        Me.lblPeriodeVanTot.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblPeriodeVanTot.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblPeriodeVanTot.Location = New System.Drawing.Point(12, 446)
         Me.lblPeriodeVanTot.Name = "lblPeriodeVanTot"
@@ -182,7 +175,6 @@ Partial Class HistoriekRekeningScherm
         'lblRekening
         '
         Me.lblRekening.BackColor = System.Drawing.SystemColors.Control
-        Me.lblRekening.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblRekening.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblRekening.Location = New System.Drawing.Point(377, 446)
         Me.lblRekening.Name = "lblRekening"
@@ -194,7 +186,6 @@ Partial Class HistoriekRekeningScherm
         'btnClose
         '
         Me.btnClose.BackColor = System.Drawing.SystemColors.Control
-        Me.btnClose.Cursor = System.Windows.Forms.Cursors.Default
         Me.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnClose.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnClose.Location = New System.Drawing.Point(595, 19)
@@ -202,15 +193,14 @@ Partial Class HistoriekRekeningScherm
         Me.btnClose.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnClose.Size = New System.Drawing.Size(111, 25)
         Me.btnClose.TabIndex = 23
-        Me.btnClose.TabStop = false
+        Me.btnClose.TabStop = False
         Me.btnClose.Text = "Sluiten"
-        Me.btnClose.UseVisualStyleBackColor = false
+        Me.btnClose.UseVisualStyleBackColor = False
         '
         'lblCSInfo
         '
         Me.lblCSInfo.BackColor = System.Drawing.SystemColors.Control
         Me.lblCSInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblCSInfo.Cursor = System.Windows.Forms.Cursors.Default
         Me.lblCSInfo.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblCSInfo.Location = New System.Drawing.Point(592, 291)
         Me.lblCSInfo.Name = "lblCSInfo"
@@ -222,9 +212,8 @@ Partial Class HistoriekRekeningScherm
         '
         'LblSaldo
         '
-        Me.LblSaldo.BackColor = System.Drawing.Color.FromArgb(CType(CType(255,Byte),Integer), CType(CType(255,Byte),Integer), CType(CType(192,Byte),Integer))
+        Me.LblSaldo.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.LblSaldo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.LblSaldo.Cursor = System.Windows.Forms.Cursors.Default
         Me.LblSaldo.ForeColor = System.Drawing.SystemColors.ControlText
         Me.LblSaldo.Location = New System.Drawing.Point(592, 262)
         Me.LblSaldo.Name = "LblSaldo"
@@ -237,18 +226,18 @@ Partial Class HistoriekRekeningScherm
         '
         Me.lvJournaalDetail.BackColor = System.Drawing.SystemColors.Window
         Me.lvJournaalDetail.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.lvJournaalDetail.FullRowSelect = true
-        Me.lvJournaalDetail.HideSelection = false
+        Me.lvJournaalDetail.FullRowSelect = True
+        Me.lvJournaalDetail.HideSelection = False
         Me.lvJournaalDetail.Location = New System.Drawing.Point(15, 19)
         Me.lvJournaalDetail.Name = "lvJournaalDetail"
         Me.lvJournaalDetail.Size = New System.Drawing.Size(571, 418)
         Me.lvJournaalDetail.TabIndex = 90
-        Me.lvJournaalDetail.UseCompatibleStateImageBehavior = false
+        Me.lvJournaalDetail.UseCompatibleStateImageBehavior = False
         Me.lvJournaalDetail.View = System.Windows.Forms.View.List
         '
         'lblSelectie
         '
-        Me.lblSelectie.AutoSize = true
+        Me.lblSelectie.AutoSize = True
         Me.lblSelectie.Location = New System.Drawing.Point(592, 249)
         Me.lblSelectie.Name = "lblSelectie"
         Me.lblSelectie.Size = New System.Drawing.Size(114, 13)
@@ -257,11 +246,11 @@ Partial Class HistoriekRekeningScherm
         '
         'HistoriekRekeningScherm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnClose
         Me.ClientSize = New System.Drawing.Size(718, 472)
-        Me.ControlBox = false
+        Me.ControlBox = False
         Me.Controls.Add(Me.lblSelectie)
         Me.Controls.Add(Me.GansePeriode)
         Me.Controls.Add(Me.TxtLijnen)
@@ -281,7 +270,7 @@ Partial Class HistoriekRekeningScherm
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "HistoriekRekeningScherm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Historiek van een Rekening"
+        Me.Text = "Historiek Grootboek Rekening"
         Me.ResumeLayout(false)
         Me.PerformLayout
 

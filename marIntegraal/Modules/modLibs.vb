@@ -3,10 +3,10 @@ Option Explicit On
 
 Module ModLibs
 
-    Public BFKlanten As New frmBasisFiche
-    Public BFLeveranciers As New frmBasisFiche
-    Public BFRekeningen As New frmBasisFiche
-    'Public BJPERDAT As New frmBJPERDAT
+    Public CustomerSheet As New FrmBasicSheetTemplate
+    Public SupplierSheet As New FrmBasicSheetTemplate
+    Public LedgerAccountSheet As New FrmBasicSheetTemplate
+    'Public BJPERDAT As New frmBYPERDAT
 
     'Mijn dokumenten, ApplicatieData
     Public Const CSIDL_PERSONAL As Integer = &H5
@@ -211,10 +211,10 @@ Module ModLibs
     Public dokumentPrinterNr As Short
     Public KassaPrinterNr As Short
 
-    Public FormReference As frmBasisFiche
+    Public FormReference As FrmBasicSheetTemplate
     'UPGRADE_WARNING: Lower bound of array BasisB was changed from 1 to 0. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="0F1C9BE1-AF9D-476E-83B1-17D43BECFF20"'
     'UPGRADE_WARNING: Arrays can't be declared with New. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="CC9D3AE5-6B95-4B43-91C7-28276302A5E8"'
-    Public BasisB(3) As frmBasisFiche
+    Public BasisB(3) As FrmBasicSheetTemplate
     Public JumpForm As Object
 
     Public fs As Scripting.FileSystemObject

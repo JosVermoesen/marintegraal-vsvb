@@ -2,7 +2,7 @@
 
 Public Class frmProductFiche
     Private Sub CmdSluiten_Click(sender As Object, e As EventArgs)
-        Mim.ArtikelProductDienstToolStripMenuItem.Enabled = True
+        Mim.ProductSheetMenuItem.Enabled = True
         Close()
     End Sub
 
@@ -18,7 +18,7 @@ Public Class frmProductFiche
 
     Private Sub frmProductFiche_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
 
-        Mim.ArtikelProductDienstToolStripMenuItem.Enabled=True 
+        Mim.ProductSheetMenuItem.Enabled=True 
 
     End Sub
 End Class

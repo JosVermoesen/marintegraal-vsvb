@@ -1,6 +1,6 @@
 ﻿Option Strict Off
 Option Explicit On
-Public Class frmBJPERDAT
+Public Class FrmBYPERDAT
     Private Sub Verkleinen_Click(sender As Object, e As EventArgs) Handles Verkleinen.Click
 
         WindowState = FormWindowState.Minimized
