@@ -26,7 +26,7 @@
         Mim.AccountingToolStrip.Enabled = True
         If Trim(ProducentNummer) = "" Then
         Else
-            Mim.ContractManagementToolStrip.Enabled = True
+            Mim.InsuranceBrokerToolStrip.Enabled = True
         End If
 
         'For CountTo = 1 To 5
@@ -137,7 +137,7 @@ ProbeerNogEens:
         adntDB.Open(jetConnect)
 
         If String99(Reading, 20) = "5" Then
-            Mim.ContractManagementToolStrip.Enabled = True
+            Mim.InsuranceBrokerToolStrip.Enabled = True
             ProducentNummer = "60423"
         Else
             ProducentNummer = ""
@@ -213,7 +213,7 @@ ErrorOpvang:
         Mim.SheetsToolStrip.Enabled = False
         Mim.DocumentToolStrip.Enabled = False
         Mim.AccountingToolStrip.Enabled = False
-        Mim.ContractManagementToolStrip.Enabled = False
+        Mim.InsuranceBrokerToolStrip.Enabled = False
 
         'For CountTo = 1 To 6
         'TODO

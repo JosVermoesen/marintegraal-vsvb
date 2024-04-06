@@ -78,6 +78,16 @@ Public Class Mim
 
     End Sub
 
+    Private Sub Mim_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Dim hierCancel As Boolean = e.Cancel
+        Dim UnloadMode As System.Windows.Forms.CloseReason = CloseReason.ApplicationExitCall
+        If Me.Report.IsOpen = True Then
+            MsgBox("Sluit eerst het PDF venster a.u.b.", MsgBoxStyle.Information)
+            hierCancel = True
+        End If
+        e.Cancel = hierCancel
+    End Sub
+
     Private Sub Mim_Closed(sender As Object, e As EventArgs) Handles Me.Closed
 
         Dim X As Boolean
@@ -401,11 +411,30 @@ Public Class Mim
     End Sub
 
     ' Contracts
+    Private Sub RequestForPaymentMenuItem_Click(sender As Object, e As EventArgs)
+        Dim BetalingsVerzoeken As New BetalingsVerzoek
+        RequestForPaymentMenuItem.Enabled = False
+        BetalingsVerzoek.Show()
+    End Sub
+    Private Sub BookingReceiptMenuItem_Click(sender As Object, e As EventArgs)
+        Dim InboekenKwijtingen As New KwijtingInboeken
+        BookingReceiptMenuItem.Enabled = False
+        KwijtingInboeken.Show()
+    End Sub
+    Private Sub FreeMessageToInsurerMenuItem_Click(sender As Object, e As EventArgs)
+        MessageBox.Show("FreeMessageToInsurerMenuItem_Click")
+    End Sub
+    Private Sub AswebGboExchangeMenuItem_Click(sender As Object, e As EventArgs)
+        With TelebibIN
+            .WindowState = FormWindowState.Normal
+            .Enabled = True
+            .ShowDialog()
+            .Dispose()
+        End With
+    End Sub
 
-
-
-
-
+    ' Cloud Services
+    ' TODO
 
     ' Info
     Private Sub VsoftToolStripMenuItem_Click(sender As Object, e As EventArgs)
@@ -441,45 +470,5 @@ Public Class Mim
         End If
 
     End Sub
-
-
-
-    Private Sub InboekenKwijtingenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InboekenKwijtingenToolStripMenuItem.Click
-        Dim InboekenKwijtingen As New KwijtingInboeken
-        InboekenKwijtingenToolStripMenuItem.Enabled = False
-        KwijtingInboeken.Show
-    End Sub
-
-    Private Sub BetalingsverzoekToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BetalingsverzoekToolStripMenuItem.Click
-        Dim BetalingsVerzoeken As New BetalingsVerzoek
-        BetalingsverzoekToolStripMenuItem.Enabled = False
-        BetalingsVerzoek.Show
-    End Sub
-
-
-    Private Sub Mim_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Dim hierCancel As Boolean = e.Cancel
-        Dim UnloadMode As System.Windows.Forms.CloseReason = CloseReason.ApplicationExitCall
-        If Me.Report.IsOpen = True Then
-            MsgBox("Sluit eerst het PDF venster a.u.b.", MsgBoxStyle.Information)
-            hierCancel = True
-        End If
-        e.Cancel = hierCancel
-    End Sub
-
-
-
-
-    Private Sub AswebGboUitwisselingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AswebGboUitwisselingToolStripMenuItem.Click
-
-        With TelebibIN
-            .WindowState = FormWindowState.Normal
-            .Enabled = True
-            .ShowDialog()
-            .Dispose()
-        End With
-
-    End Sub
-
 
 End Class

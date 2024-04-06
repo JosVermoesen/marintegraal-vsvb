@@ -88,13 +88,13 @@ Partial Class Mim
         Me.TransitionFinancialYearToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.SetupNewFinancialYearMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CleanUpTablesMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ContractManagementToolStrip = New System.Windows.Forms.ToolStripMenuItem()
-        Me.BetalingsverzoekToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.InboekenKwijtingenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
-        Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
-        Me.AswebGboUitwisselingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InsuranceBrokerToolStrip = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RequestForPaymentMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BookingReceiptMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InsuranceToolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.FreeMessageToInsurerMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InsuranceToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.AswebGboExchangeMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloudIOToolStrip = New System.Windows.Forms.ToolStripMenuItem()
         Me.InstellingenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InfoToolStrip = New System.Windows.Forms.ToolStripMenuItem()
@@ -112,7 +112,7 @@ Partial Class Mim
         '
         'MimMenuStrip
         '
-        Me.MimMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActionsToolStrip, Me.SystemToolStrip, Me.WindowToolStrip, Me.SheetsToolStrip, Me.DocumentToolStrip, Me.AccountingToolStrip, Me.ContractManagementToolStrip, Me.CloudIOToolStrip, Me.InfoToolStrip})
+        Me.MimMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ActionsToolStrip, Me.SystemToolStrip, Me.WindowToolStrip, Me.SheetsToolStrip, Me.DocumentToolStrip, Me.AccountingToolStrip, Me.InsuranceBrokerToolStrip, Me.CloudIOToolStrip, Me.InfoToolStrip})
         Me.MimMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MimMenuStrip.Name = "MimMenuStrip"
         Me.MimMenuStrip.Size = New System.Drawing.Size(597, 24)
@@ -568,51 +568,55 @@ Partial Class Mim
         Me.CleanUpTablesMenuItem.Text = "Opkuis Bestanden"
         AddHandler Me.CleanUpTablesMenuItem.Click, AddressOf Me.CleanUpTablesMenuItem_Click
         '
-        'ContractManagementToolStrip
+        'InsuranceBrokerToolStrip
         '
-        Me.ContractManagementToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BetalingsverzoekToolStripMenuItem, Me.InboekenKwijtingenToolStripMenuItem, Me.ToolStripSeparator14, Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem, Me.ToolStripSeparator15, Me.AswebGboUitwisselingToolStripMenuItem})
-        Me.ContractManagementToolStrip.Enabled = False
-        Me.ContractManagementToolStrip.Name = "ContractManagementToolStrip"
-        Me.ContractManagementToolStrip.Size = New System.Drawing.Size(101, 20)
-        Me.ContractManagementToolStrip.Text = "Contractbeheer"
+        Me.InsuranceBrokerToolStrip.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RequestForPaymentMenuItem, Me.BookingReceiptMenuItem, Me.InsuranceToolStripSeparator, Me.FreeMessageToInsurerMenuItem, Me.InsuranceToolStripSeparator2, Me.AswebGboExchangeMenuItem})
+        Me.InsuranceBrokerToolStrip.Enabled = False
+        Me.InsuranceBrokerToolStrip.Name = "InsuranceBrokerToolStrip"
+        Me.InsuranceBrokerToolStrip.Size = New System.Drawing.Size(101, 20)
+        Me.InsuranceBrokerToolStrip.Text = "Contractbeheer"
         '
-        'BetalingsverzoekToolStripMenuItem
+        'RequestForPaymentMenuItem
         '
-        Me.BetalingsverzoekToolStripMenuItem.Name = "BetalingsverzoekToolStripMenuItem"
-        Me.BetalingsverzoekToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
-        Me.BetalingsverzoekToolStripMenuItem.Size = New System.Drawing.Size(301, 22)
-        Me.BetalingsverzoekToolStripMenuItem.Text = "Betalingsverzoeken"
+        Me.RequestForPaymentMenuItem.Name = "RequestForPaymentMenuItem"
+        Me.RequestForPaymentMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.N), System.Windows.Forms.Keys)
+        Me.RequestForPaymentMenuItem.Size = New System.Drawing.Size(301, 22)
+        Me.RequestForPaymentMenuItem.Text = "Betalingsverzoeken"
+        AddHandler Me.RequestForPaymentMenuItem.Click, AddressOf Me.RequestForPaymentMenuItem_Click
         '
-        'InboekenKwijtingenToolStripMenuItem
+        'BookingReceiptMenuItem
         '
-        Me.InboekenKwijtingenToolStripMenuItem.Name = "InboekenKwijtingenToolStripMenuItem"
-        Me.InboekenKwijtingenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
-        Me.InboekenKwijtingenToolStripMenuItem.Size = New System.Drawing.Size(301, 22)
-        Me.InboekenKwijtingenToolStripMenuItem.Text = "Inboeken kwijtingen"
+        Me.BookingReceiptMenuItem.Name = "BookingReceiptMenuItem"
+        Me.BookingReceiptMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
+        Me.BookingReceiptMenuItem.Size = New System.Drawing.Size(301, 22)
+        Me.BookingReceiptMenuItem.Text = "Inboeken kwijtingen"
+        AddHandler Me.BookingReceiptMenuItem.Click, AddressOf Me.BookingReceiptMenuItem_Click
         '
-        'ToolStripSeparator14
+        'InsuranceToolStripSeparator
         '
-        Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
-        Me.ToolStripSeparator14.Size = New System.Drawing.Size(298, 6)
+        Me.InsuranceToolStripSeparator.Name = "InsuranceToolStripSeparator"
+        Me.InsuranceToolStripSeparator.Size = New System.Drawing.Size(298, 6)
         '
-        'VrijeBerichtgevingMaatschappijenToolStripMenuItem
+        'FreeMessageToInsurerMenuItem
         '
-        Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem.Name = "VrijeBerichtgevingMaatschappijenToolStripMenuItem"
-        Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
-        Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem.Size = New System.Drawing.Size(301, 22)
-        Me.VrijeBerichtgevingMaatschappijenToolStripMenuItem.Text = "Vrije Berichtgeving Maatschappijen"
+        Me.FreeMessageToInsurerMenuItem.Name = "FreeMessageToInsurerMenuItem"
+        Me.FreeMessageToInsurerMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.V), System.Windows.Forms.Keys)
+        Me.FreeMessageToInsurerMenuItem.Size = New System.Drawing.Size(301, 22)
+        Me.FreeMessageToInsurerMenuItem.Text = "Vrije Berichtgeving Maatschappijen"
+        AddHandler Me.FreeMessageToInsurerMenuItem.Click, AddressOf Me.FreeMessageToInsurerMenuItem_Click
         '
-        'ToolStripSeparator15
+        'InsuranceToolStripSeparator2
         '
-        Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
-        Me.ToolStripSeparator15.Size = New System.Drawing.Size(298, 6)
+        Me.InsuranceToolStripSeparator2.Name = "InsuranceToolStripSeparator2"
+        Me.InsuranceToolStripSeparator2.Size = New System.Drawing.Size(298, 6)
         '
-        'AswebGboUitwisselingToolStripMenuItem
+        'AswebGboExchangeMenuItem
         '
-        Me.AswebGboUitwisselingToolStripMenuItem.Name = "AswebGboUitwisselingToolStripMenuItem"
-        Me.AswebGboUitwisselingToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
-        Me.AswebGboUitwisselingToolStripMenuItem.Size = New System.Drawing.Size(301, 22)
-        Me.AswebGboUitwisselingToolStripMenuItem.Text = "Asweb/Gbo Uitwisseling"
+        Me.AswebGboExchangeMenuItem.Name = "AswebGboExchangeMenuItem"
+        Me.AswebGboExchangeMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
+        Me.AswebGboExchangeMenuItem.Size = New System.Drawing.Size(301, 22)
+        Me.AswebGboExchangeMenuItem.Text = "Asweb/Gbo Uitwisseling"
+        AddHandler Me.AswebGboExchangeMenuItem.Click, AddressOf Me.AswebGboExchangeMenuItem_Click
         '
         'CloudIOToolStrip
         '
@@ -756,7 +760,7 @@ Partial Class Mim
     Friend WithEvents SheetsToolStrip As ToolStripMenuItem
     Friend WithEvents DocumentToolStrip As ToolStripMenuItem
     Friend WithEvents AccountingToolStrip As ToolStripMenuItem
-    Friend WithEvents ContractManagementToolStrip As ToolStripMenuItem
+    Friend WithEvents InsuranceBrokerToolStrip As ToolStripMenuItem
     Friend WithEvents CloudIOToolStrip As ToolStripMenuItem
     Friend WithEvents InfoToolStrip As ToolStripMenuItem
     Friend WithEvents SettingsFinancialYearMenuItem As ToolStripMenuItem
@@ -772,13 +776,13 @@ Partial Class Mim
     Friend WithEvents PurchaseDiaryMenuItem As ToolStripMenuItem
     Friend WithEvents SalesDiaryMenuItem As ToolStripMenuItem
     Friend WithEvents Report As IDEALSoftware.VpeStandard.VpeControl
-    Friend WithEvents BetalingsverzoekToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RequestForPaymentMenuItem As ToolStripMenuItem
     Friend WithEvents ProductSheetMenuItem As ToolStripMenuItem
     Friend WithEvents VpeLayOutOutgoingMenuItem As ToolStripMenuItem
     Friend WithEvents SQLOperationsMenuItem As ToolStripMenuItem
     Friend WithEvents ActionsSeparator As ToolStripSeparator
     Friend WithEvents CloseAppMenuItem As ToolStripMenuItem
-    Friend WithEvents InboekenKwijtingenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BookingReceiptMenuItem As ToolStripMenuItem
     Friend WithEvents SystemToolStripSeparator As ToolStripSeparator
     Friend WithEvents VariousSheetsMenuItem As ToolStripMenuItem
     Friend WithEvents SheetsToolStripSeparator As ToolStripSeparator
@@ -813,10 +817,10 @@ Partial Class Mim
     Friend WithEvents TransitionFinancialYearToolStrip As ToolStripMenuItem
     Friend WithEvents SetupNewFinancialYearMenuItem As ToolStripMenuItem
     Friend WithEvents CleanUpTablesMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator14 As ToolStripSeparator
-    Friend WithEvents VrijeBerichtgevingMaatschappijenToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator15 As ToolStripSeparator
-    Friend WithEvents AswebGboUitwisselingToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents InsuranceToolStripSeparator As ToolStripSeparator
+    Friend WithEvents FreeMessageToInsurerMenuItem As ToolStripMenuItem
+    Friend WithEvents InsuranceToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents AswebGboExchangeMenuItem As ToolStripMenuItem
     Friend WithEvents InstellingenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HostingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents PleskMailToolStripMenuItem As ToolStripMenuItem

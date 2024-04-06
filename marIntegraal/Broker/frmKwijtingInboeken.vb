@@ -6,7 +6,7 @@ Public Class KwijtingInboeken
     End Sub
 
     Private Sub KwijtingInboeken_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Mim.InboekenKwijtingenToolStripMenuItem.Enabled = True 
+        Mim.BookingReceiptMenuItem.Enabled = True 
     End Sub
 
     Private Sub KwijtingInboeken_Load(sender As Object, e As EventArgs) Handles MyBase.Load

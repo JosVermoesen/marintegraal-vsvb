@@ -142,7 +142,7 @@ Public Class BetalingsVerzoek
 			hierCancel = True
 		Else
 			'stop
-			Mim.BetalingsverzoekToolStripMenuItem.Enabled=True
+			Mim.RequestForPaymentMenuItem.Enabled=True
 		End If
 		e.Cancel = hierCancel
 
