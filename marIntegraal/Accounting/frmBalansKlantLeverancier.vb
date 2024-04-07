@@ -559,7 +559,7 @@ End Class
 '				'TotaalBTW = TotaalBTW + dBtw
 '				TotaalGOED = TotaalGOED + dTOT '- dBtw
 '				TotaalALBETAALD = TotaalALBETAALD + drb
-'				PrintVelden()
+'				VpePrintLines()
 '				FieldText(0) = ""
 '			End If
 '		Else
@@ -674,7 +674,7 @@ End Class
 '			TotaalNOGTEBETALEN = TotaalNOGTEBETALEN + dTOT
 '		End If
 '		TotaalALBETAALD = TotaalALBETAALD + BetaaldBedrag
-'		PrintVelden()
+'		VpePrintLines()
 
 '		FieldText(0) = ""
 '		FieldText(1) = ""
@@ -1302,7 +1302,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintVelden()
+'	Private Sub VpePrintLines()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim VeldTekst As String

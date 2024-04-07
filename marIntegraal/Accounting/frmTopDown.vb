@@ -214,7 +214,7 @@ End Class
 '		FieldText(3) = Trim(AdoGetField(aIndex, "#A104 #") & " " & AdoGetField(aIndex, "#A105 #") & " " & AdoGetField(aIndex, "#A106 #"))
 '		FieldText(4) = Trim(AdoGetField(aIndex, "#A109 #")) & "-" & Trim(AdoGetField(aIndex, "#A107 #")) & " " & Trim(AdoGetField(aIndex, "#A108 #"))
 '		FieldText(5) = AdoGetField(TableDummy, "#v037 #")
-'		PrintVelden()
+'		VpePrintLines()
 '		If chkAfdrukInVenster.CheckState Then
 '		Else
 '			Printer.Write(vbCrLf)
@@ -520,7 +520,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintVelden()
+'	Private Sub VpePrintLines()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim VeldTekst As String

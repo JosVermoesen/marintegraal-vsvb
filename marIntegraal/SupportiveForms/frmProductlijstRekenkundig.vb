@@ -180,7 +180,7 @@ End Class
 '				FieldText(7) = VB.Right(Dec(Val(AdoGetField(TableOfProductsAndServices, "#v114 #")) + Val(AdoGetField(TableOfProductsAndServices, "#v119 #")) - Val(AdoGetField(TableOfProductsAndServices, "#v120 #")), MaskSy(7)), 6)
 '				FieldText(8) = Dec(Val(FieldText(6)) - Val(FieldText(7)), MaskSy(7))
 '		End Select
-'		PrintVelden()
+'		VpePrintLines()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
 
@@ -423,7 +423,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintVelden()
+'	Private Sub VpePrintLines()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim aa As String

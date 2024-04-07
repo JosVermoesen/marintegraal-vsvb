@@ -106,7 +106,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub PrintVelden()
+'	Private Sub VpePrintLines()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim aa As String
@@ -634,7 +634,7 @@ End Class
 '				FieldText(10) = Dec(Das, Mask2002.Value)
 '			End If
 '			dTas = dTas + Das
-'			PrintVelden()
+'			VpePrintLines()
 '			Printer.Write(vbCrLf)
 '		End If
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'

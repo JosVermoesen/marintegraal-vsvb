@@ -299,11 +299,11 @@
     <Compile Include="Sheets\frmLijstRapportage.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMim.vb">
+    <Compile Include="FrmMim.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMim.Designer.vb">
-      <DependentUpon>frmMim.vb</DependentUpon>
+    <Compile Include="FrmMim.Designer.vb">
+      <DependentUpon>FrmMim.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="aLoadMain.vb" />
@@ -519,8 +519,8 @@
     <EmbeddedResource Include="Sheets\frmLijstRapportage.resx">
       <DependentUpon>frmLijstRapportage.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMim.resx">
-      <DependentUpon>frmMim.vb</DependentUpon>
+    <EmbeddedResource Include="FrmMim.resx">
+      <DependentUpon>FrmMim.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Actions\FrmCompanyNew.resx">
       <DependentUpon>FrmCompanyNew.vb</DependentUpon>

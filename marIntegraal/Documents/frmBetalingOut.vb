@@ -106,7 +106,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub PrintVelden()
+'	Private Sub VpePrintLines()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim aa As String
@@ -420,7 +420,7 @@ End Class
 '			FieldText(5) = grdDokumentDetail.get_TextMatrix(Teller, 6)
 '			FieldText(6) = grdDokumentDetail.get_TextMatrix(Teller, 7)
 '			FieldText(7) = grdDokumentDetail.get_TextMatrix(Teller, 8)
-'			PrintVelden()
+'			VpePrintLines()
 '		Next 
 '		PrintTotal()
 '		If chkAfdrukInVenster.CheckState = 0 Then Printer.EndDoc()

@@ -229,7 +229,7 @@ End Class
 '				FieldText(6) = ""
 '		End Select
 
-'		PrintVelden()
+'		VpePrintLines()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
 
@@ -432,7 +432,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintVelden()
+'	Private Sub VpePrintLines()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim VeldTekst As String

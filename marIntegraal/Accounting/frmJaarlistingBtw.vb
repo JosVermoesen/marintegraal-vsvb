@@ -262,7 +262,7 @@ End Class
 '			dBeTeWe = dBeTeWe + dTnt2
 '			Line = Line + 1
 '			FieldText(0) = Dec(Line, "000000")
-'			PrintVelden()
+'			VpePrintLines()
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub BtwLijn
 '			FieldText(0) = ""
@@ -812,7 +812,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintVelden()
+'	Private Sub VpePrintLines()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim VeldTekst As String

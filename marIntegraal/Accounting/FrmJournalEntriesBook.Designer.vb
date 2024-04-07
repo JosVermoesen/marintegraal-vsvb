@@ -26,13 +26,13 @@ Partial Class FrmJournalEntriesBook
         Me.TextBoxPeriodFromTo = New System.Windows.Forms.TextBox()
         Me.LabelPeriodFromTo = New System.Windows.Forms.Label()
         Me.LabelProcessingDate = New System.Windows.Forms.Label()
-        Me.DateTimePickerProcessingDate = New System.Windows.Forms.DateTimePicker()
         Me.LabelRecordLines = New System.Windows.Forms.Label()
         Me.ButtonGenerateReport = New System.Windows.Forms.Button()
         Me.ButtonClose = New System.Windows.Forms.Button()
         Me.TextBoxRecordLines = New System.Windows.Forms.TextBox()
         Me.TextBoxMailToOption = New System.Windows.Forms.TextBox()
         Me.LabelMailToOption = New System.Windows.Forms.Label()
+        Me.DateTimePickerProcessingDate = New System.Windows.Forms.DateTimePicker()
         Me.SuspendLayout()
         '
         'AutoPageBreak
@@ -113,13 +113,6 @@ Partial Class FrmJournalEntriesBook
         Me.LabelProcessingDate.TabIndex = 2
         Me.LabelProcessingDate.Text = "Datu&m"
         '
-        'DateTimePickerProcessingDate
-        '
-        Me.DateTimePickerProcessingDate.Location = New System.Drawing.Point(92, 58)
-        Me.DateTimePickerProcessingDate.Name = "DateTimePickerProcessingDate"
-        Me.DateTimePickerProcessingDate.Size = New System.Drawing.Size(176, 20)
-        Me.DateTimePickerProcessingDate.TabIndex = 3
-        '
         'LabelRecordLines
         '
         Me.LabelRecordLines.AutoSize = True
@@ -174,7 +167,8 @@ Partial Class FrmJournalEntriesBook
         Me.TextBoxMailToOption.Name = "TextBoxMailToOption"
         Me.TextBoxMailToOption.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.TextBoxMailToOption.Size = New System.Drawing.Size(260, 20)
-        Me.TextBoxMailToOption.TabIndex = 106
+        Me.TextBoxMailToOption.TabIndex = 108
+        Me.TextBoxMailToOption.TabStop = False
         Me.TextBoxMailToOption.Text = "josvermoesen@outlook.be"
         '
         'LabelMailToOption
@@ -184,7 +178,17 @@ Partial Class FrmJournalEntriesBook
         Me.LabelMailToOption.Name = "LabelMailToOption"
         Me.LabelMailToOption.Size = New System.Drawing.Size(91, 13)
         Me.LabelMailToOption.TabIndex = 107
-        Me.LabelMailToOption.Text = "Default mailadres:"
+        Me.LabelMailToOption.Text = "Default &mailadres:"
+        '
+        'DateTimePickerProcessingDate
+        '
+        Me.DateTimePickerProcessingDate.Location = New System.Drawing.Point(92, 61)
+        Me.DateTimePickerProcessingDate.MaxDate = New Date(2061, 12, 31, 0, 0, 0, 0)
+        Me.DateTimePickerProcessingDate.MinDate = New Date(1985, 12, 1, 0, 0, 0, 0)
+        Me.DateTimePickerProcessingDate.Name = "DateTimePickerProcessingDate"
+        Me.DateTimePickerProcessingDate.Size = New System.Drawing.Size(176, 20)
+        Me.DateTimePickerProcessingDate.TabIndex = 3
+        Me.DateTimePickerProcessingDate.TabStop = False
         '
         'FrmJournalEntriesBook
         '
@@ -193,13 +197,13 @@ Partial Class FrmJournalEntriesBook
         Me.CancelButton = Me.ButtonClose
         Me.ClientSize = New System.Drawing.Size(380, 152)
         Me.ControlBox = False
+        Me.Controls.Add(Me.DateTimePickerProcessingDate)
         Me.Controls.Add(Me.LabelMailToOption)
         Me.Controls.Add(Me.TextBoxMailToOption)
         Me.Controls.Add(Me.TextBoxRecordLines)
         Me.Controls.Add(Me.ButtonClose)
         Me.Controls.Add(Me.ButtonGenerateReport)
         Me.Controls.Add(Me.LabelRecordLines)
-        Me.Controls.Add(Me.DateTimePickerProcessingDate)
         Me.Controls.Add(Me.TextBoxPeriodFromTo)
         Me.Controls.Add(Me.LabelPeriodFromTo)
         Me.Controls.Add(Me.LabelProcessingDate)
@@ -219,11 +223,11 @@ End Sub
     Public WithEvents TextBoxPeriodFromTo As TextBox
     Public WithEvents LabelPeriodFromTo As Label
     Public WithEvents LabelProcessingDate As Label
-    Friend WithEvents DateTimePickerProcessingDate As DateTimePicker
     Friend WithEvents LabelRecordLines As Label
     Friend WithEvents ButtonGenerateReport As Button
     Friend WithEvents ButtonClose As Button
     Friend WithEvents TextBoxRecordLines As TextBox
     Public WithEvents TextBoxMailToOption As TextBox
     Friend WithEvents LabelMailToOption As Label
+    Friend WithEvents DateTimePickerProcessingDate As DateTimePicker
 End Class
