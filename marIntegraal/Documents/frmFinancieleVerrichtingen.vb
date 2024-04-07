@@ -126,13 +126,13 @@ End Class
 '			MsgBox("onlogische situatie")
 '			Exit Sub
 '		Else
-'			RecordToVeld(TableOfLedgerAccounts)
+'			RecordToField(TableOfLedgerAccounts)
 '		End If
 '		JetGet(FlJournaal, 2, UCase(VB.Left(AdoGetField(TableOfLedgerAccounts, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000"))
 '		If Ktrl Then
 '			MsgBox("Dit zou het eerste uittreksel binnen het WERKELIJK jaar moeten zijn...  Kontroleer eventueel")
 '		Else
-'			RecordToVeld(FlJournaal)
+'			RecordToField(FlJournaal)
 '			If AdoGetField(FlJournaal, "#v066 #") > VB6.Format(Datum.Value, "yyyymmdd") Then
 '				Msg = "Er zijn reeds uittreksels met een hogere datum !" & vbCrLf & vbCrLf
 '				Msg = Msg & "Laatste uittreksel nr. " & UCase(VB.Left(AdoGetField(TableOfLedgerAccounts, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text) - 1, "0000") & " dateert van : " & FunctionDateText(AdoGetField(FlJournaal, "#v066 #")) & vbCrLf & vbCrLf
@@ -162,7 +162,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("TellerStop " & DummySleutel.Value & ".  kontakteer R&&Vsoft")
 '				Else
-'					RecordToVeld(TableOfCounters)
+'					RecordToField(TableOfCounters)
 '					Fl99Record = Str(Val(LabelInfo(11).Text))
 '					If BAModus = 1 Then
 '						AdoInsertToRecord(TableOfCounters, Fl99Record, "v217 ")
@@ -180,7 +180,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("TellerStop.  Versiekonflikt !  Kontakteer R&&Vsoft")
 '				Else
-'					RecordToVeld(TableOfCounters)
+'					RecordToField(TableOfCounters)
 '					Fl99Record = VB.Left(KeuzeInfo(0).Text, 7)
 '					If BAModus = 1 Then
 '						AdoInsertToRecord(TableOfCounters, Fl99Record, "v217 ")
@@ -419,7 +419,7 @@ End Class
 '			If Ktrl Then
 '				A = "Niet aanwezig. Installeer via Setup Boekjaar."
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				A = RekeningNummer(T) & Chr(124) & RTrim(AdoGetField(TableOfLedgerAccounts, "#v020 #"))
 '			End If
 '			KeuzeInfo(0).Items.Add(A)
@@ -447,7 +447,7 @@ End Class
 '				JetGet(TableOfLedgerAccounts, 0, SetSpacing(KeuzeInfo(0).Text, 7))
 '				If Ktrl Then
 '				Else
-'					RecordToVeld(TableOfLedgerAccounts)
+'					RecordToField(TableOfLedgerAccounts)
 '					If BeginBalans = 1 Then
 '						If bhEuro Then
 '							lblInfo(0).Text = VB6.Format(Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(22 + BJPERDAT.Boekjaar.SelectedIndex, "000") & " #")), "#,##0.00")
@@ -567,7 +567,7 @@ End Class
 '				If Ktrl Then
 '					'het is geen klant, probeer als leveranciersreferte...
 '				Else
-'					RecordToVeld(TableOfCustomers)
+'					RecordToField(TableOfCustomers)
 '					Msg = "Breng bedrag in voor" & vbCr
 '					Msg = Msg & "totaal van " & VB.Left(ReferteTxt, 1) & " kwijtingen" & vbCr & vbCr
 '					Msg = Msg & "klant :" & vbCr & vbCr & RTrim(AdoGetField(TableOfCustomers, "#A100 #") & " " & AdoGetField(TableOfCustomers, "#A101 #")) & " " & RTrim(AdoGetField(TableOfCustomers, "#A125 #") & " " & AdoGetField(TableOfCustomers, "#A127 #")) & vbCr
@@ -588,7 +588,7 @@ End Class
 '		If Ktrl Then
 '			Exit Sub
 '		Else
-'			RecordToVeld(TableOfInvoices)
+'			RecordToField(TableOfInvoices)
 '		End If
 
 '		dBedragKtrl = 0
@@ -603,7 +603,7 @@ End Class
 '				If Ktrl Or SetSpacing(KeyBuf(TableOfInvoices), 13) <> SetSpacing("K" & AdoGetField(TableOfCustomers, "#A110 #"), 13) Then
 '					Exit Do
 '				Else
-'					RecordToVeld(TableOfInvoices)
+'					RecordToField(TableOfInvoices)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub LijnErBij
 '				End If
@@ -713,7 +713,7 @@ End Class
 '		If Ktrl Then
 '			Exit Function
 '		Else
-'			RecordToVeld(TableOfLedgerAccounts)
+'			RecordToField(TableOfLedgerAccounts)
 '			dokumentSleutel.Value = UCase(VB.Left(AdoGetField(TableOfLedgerAccounts, "#v020 #"), 2)) & VB.Right(VB6.Format(Datum.Value, "dd/mm/yyyy"), 2) & VB6.Format(Val(LabelInfo(11).Text), "0000")
 '		End If
 '		AdoInsertToRecord(FlJournaal, dokumentSleutel.Value, "v038")
@@ -746,7 +746,7 @@ End Class
 '				If Ktrl Then
 '					Exit Function
 '				Else
-'					RecordToVeld(TableOfInvoices)
+'					RecordToField(TableOfInvoices)
 '					AdoInsertToRecord(FlJournaal, AdoGetField(TableOfInvoices, "#v033 #"), "v033")
 '					AdoInsertToRecord(FlJournaal, AdoGetField(TableOfInvoices, "#v034 #"), "v034")
 '				End If

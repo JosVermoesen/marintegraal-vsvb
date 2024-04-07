@@ -97,7 +97,7 @@ GetIt:
         If Ktrl Then
             Me.Text = "Historiek"
         Else
-            RecordToVeld(TableOfLedgerAccounts)
+            RecordToField(TableOfLedgerAccounts)
             Me.Text = "Historiek (" & Trim(rsMAR(TableOfLedgerAccounts).Fields("v020").Value) & ")"
             lvJournaalDetail.Visible = False
             Me.Refresh()
@@ -116,7 +116,7 @@ GetIt:
             lvJournaalDetail.Items.Clear 
             GoTo JournaalJump
         Else
-            'RecordToVeld FlJournaal
+            'RecordToField FlJournaal
             tbRekening.Text = rsJourHier.Fields("v019").Value
             Mid(Van, 1, 7) = Mid(rsJourHier.Fields("v070").Value, 1, 7)
             Mid(Tot, 1, 7) = Mid(rsJourHier.Fields("v070").Value, 1, 7)
@@ -124,7 +124,7 @@ GetIt:
             If Ktrl Then
                 Me.Text = "Historiek"
             Else
-                RecordToVeld(TableOfLedgerAccounts)
+                RecordToField(TableOfLedgerAccounts)
                 Me.Text = "Historiek (" & Trim(rsMAR(TableOfLedgerAccounts).Fields("v020").Value) & ")"
             End If
             rsJourHier.MoveFirst 

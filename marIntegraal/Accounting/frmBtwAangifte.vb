@@ -293,7 +293,7 @@ End Class
 '		If Ktrl Then
 '		Else
 '			Do 
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '				dokumentTot = 0
 '				For CountTo = 92 To 98 Step 2
 '					dokumentTot = dokumentTot + Val(AdoGetField(TableOfVarious, "#v" & VB6.Format(CountTo, "000") & " #"))
@@ -327,7 +327,7 @@ End Class
 '		Dim Nrr As Integer
 '		Dim PeriodeSleutel As New VB6.FixedLengthString(20)
 '		Dim DummySleutel As New VB6.FixedLengthString(5)
-'		Dim getal As Integer
+'		Dim number As Integer
 
 '		Msg = "BTW Aangifte periode initializeren." & vbCrLf & "Bent U zeker ?"
 '		Ktrl = MsgBox(Msg, MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2, "Alle boeken opnieuw uitdrukken !?!")
@@ -349,14 +349,14 @@ End Class
 '				AdoInsertToRecord(TableOfVarious, "17" & AdoGetField(TableOfVarious, "#v090 #") & AdoGetField(TableOfVarious, "#v091 #"), "v005")
 '				JetInsert(TableOfVarious, 1)
 '			Else
-'				RecordToVeld(TableOfVarious)
-'				getal = 0
+'				RecordToField(TableOfVarious)
+'				number = 0
 
 '				For T = 92 To 99
-'					getal = getal + Val(AdoGetField(TableOfVarious, "#v" & VB6.Format(T, "000") & " #"))
+'					number = number + Val(AdoGetField(TableOfVarious, "#v" & VB6.Format(T, "000") & " #"))
 '				Next 
-'				If getal Then
-'					getal = PeriodeMax
+'				If number Then
+'					number = PeriodeMax
 '					PeriodeMax = 0
 '					Exit Do
 '				End If
@@ -365,8 +365,8 @@ End Class
 '		Loop 
 
 'jump: 
-'		If getal Then
-'			MsgBox("Periode " & VB6.Format(getal, "00") & " reeds afgesloten...")
+'		If number Then
+'			MsgBox("Periode " & VB6.Format(number, "00") & " reeds afgesloten...")
 '			Initialiseren.Enabled = False
 '			CmdEmailNBB.Enabled = False
 '			Exit Sub
@@ -381,7 +381,7 @@ End Class
 '				JetInsert(TableOfVarious, 1)
 '				GoTo jump
 '			Else
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '			End If
 '		End If
 
@@ -421,7 +421,7 @@ End Class
 '			Me.SSTab1.TabEnabled(2) = False
 '			Exit Sub
 '		Else
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '		End If
 
 '		TekstInfo(28).Text = VB6.Format(BJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")

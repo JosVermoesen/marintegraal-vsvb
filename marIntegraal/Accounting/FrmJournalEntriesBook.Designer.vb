@@ -81,11 +81,11 @@ Partial Class FrmJournalEntriesBook
         Me.TextBoxPeriodFromTo.BackColor = System.Drawing.Color.White
         Me.TextBoxPeriodFromTo.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.TextBoxPeriodFromTo.ForeColor = System.Drawing.Color.Black
-        Me.TextBoxPeriodFromTo.Location = New System.Drawing.Point(11, 35)
+        Me.TextBoxPeriodFromTo.Location = New System.Drawing.Point(11, 32)
         Me.TextBoxPeriodFromTo.MaxLength = 0
         Me.TextBoxPeriodFromTo.Name = "TextBoxPeriodFromTo"
         Me.TextBoxPeriodFromTo.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.TextBoxPeriodFromTo.Size = New System.Drawing.Size(270, 20)
+        Me.TextBoxPeriodFromTo.Size = New System.Drawing.Size(257, 20)
         Me.TextBoxPeriodFromTo.TabIndex = 1
         AddHandler Me.TextBoxPeriodFromTo.Leave, AddressOf Me.TextBoxPeriodFromTo_Leave
         '
@@ -106,16 +106,16 @@ Partial Class FrmJournalEntriesBook
         Me.LabelProcessingDate.AutoSize = True
         Me.LabelProcessingDate.BackColor = System.Drawing.SystemColors.Control
         Me.LabelProcessingDate.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.LabelProcessingDate.Location = New System.Drawing.Point(10, 61)
+        Me.LabelProcessingDate.Location = New System.Drawing.Point(11, 61)
         Me.LabelProcessingDate.Name = "LabelProcessingDate"
         Me.LabelProcessingDate.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.LabelProcessingDate.Size = New System.Drawing.Size(82, 13)
+        Me.LabelProcessingDate.Size = New System.Drawing.Size(38, 13)
         Me.LabelProcessingDate.TabIndex = 2
-        Me.LabelProcessingDate.Text = "Datu&m Drukken"
+        Me.LabelProcessingDate.Text = "Datu&m"
         '
         'DateTimePickerProcessingDate
         '
-        Me.DateTimePickerProcessingDate.Location = New System.Drawing.Point(11, 77)
+        Me.DateTimePickerProcessingDate.Location = New System.Drawing.Point(92, 58)
         Me.DateTimePickerProcessingDate.Name = "DateTimePickerProcessingDate"
         Me.DateTimePickerProcessingDate.Size = New System.Drawing.Size(176, 20)
         Me.DateTimePickerProcessingDate.TabIndex = 3
@@ -132,18 +132,18 @@ Partial Class FrmJournalEntriesBook
         'ButtonGenerateReport
         '
         Me.ButtonGenerateReport.Enabled = False
-        Me.ButtonGenerateReport.Location = New System.Drawing.Point(207, 78)
+        Me.ButtonGenerateReport.Location = New System.Drawing.Point(288, 61)
         Me.ButtonGenerateReport.Name = "ButtonGenerateReport"
-        Me.ButtonGenerateReport.Size = New System.Drawing.Size(75, 23)
+        Me.ButtonGenerateReport.Size = New System.Drawing.Size(75, 46)
         Me.ButtonGenerateReport.TabIndex = 4
-        Me.ButtonGenerateReport.Text = "Af&drukken"
+        Me.ButtonGenerateReport.Text = "Genereer Rapport"
         Me.ButtonGenerateReport.UseVisualStyleBackColor = True
         AddHandler Me.ButtonGenerateReport.Click, AddressOf Me.ButtonGenerateReport_Click
         '
         'ButtonClose
         '
         Me.ButtonClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.ButtonClose.Location = New System.Drawing.Point(288, 78)
+        Me.ButtonClose.Location = New System.Drawing.Point(288, 122)
         Me.ButtonClose.Name = "ButtonClose"
         Me.ButtonClose.Size = New System.Drawing.Size(75, 23)
         Me.ButtonClose.TabIndex = 104
@@ -169,18 +169,18 @@ Partial Class FrmJournalEntriesBook
         Me.TextBoxMailToOption.BackColor = System.Drawing.Color.White
         Me.TextBoxMailToOption.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.TextBoxMailToOption.ForeColor = System.Drawing.Color.Black
-        Me.TextBoxMailToOption.Location = New System.Drawing.Point(14, 126)
+        Me.TextBoxMailToOption.Location = New System.Drawing.Point(8, 122)
         Me.TextBoxMailToOption.MaxLength = 0
         Me.TextBoxMailToOption.Name = "TextBoxMailToOption"
         Me.TextBoxMailToOption.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.TextBoxMailToOption.Size = New System.Drawing.Size(349, 20)
+        Me.TextBoxMailToOption.Size = New System.Drawing.Size(260, 20)
         Me.TextBoxMailToOption.TabIndex = 106
         Me.TextBoxMailToOption.Text = "josvermoesen@outlook.be"
         '
         'LabelMailToOption
         '
         Me.LabelMailToOption.AutoSize = True
-        Me.LabelMailToOption.Location = New System.Drawing.Point(12, 110)
+        Me.LabelMailToOption.Location = New System.Drawing.Point(8, 106)
         Me.LabelMailToOption.Name = "LabelMailToOption"
         Me.LabelMailToOption.Size = New System.Drawing.Size(91, 13)
         Me.LabelMailToOption.TabIndex = 107
@@ -191,7 +191,7 @@ Partial Class FrmJournalEntriesBook
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.ButtonClose
-        Me.ClientSize = New System.Drawing.Size(380, 158)
+        Me.ClientSize = New System.Drawing.Size(380, 152)
         Me.ControlBox = False
         Me.Controls.Add(Me.LabelMailToOption)
         Me.Controls.Add(Me.TextBoxMailToOption)

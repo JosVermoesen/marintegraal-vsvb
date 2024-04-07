@@ -20,7 +20,7 @@ End Class
 '	Dim RapportSelektie As String
 '	Dim RapportTitel As String
 '	Dim RapportDefinitie As String
-'	Dim LijstNaam As String
+'	Dim ListName As String
 '	Dim FieldText(20) As String
 '	Dim FlPartij As Short
 '	Dim DocTeller As Short
@@ -146,7 +146,7 @@ End Class
 '			Do 
 '				'UPGRADE_ISSUE: DoEvents does not return a value. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="8D115264-E27F-4472-A684-865A00B5E826"'
 '				XDoEvents = System.Windows.Forms.Application.DoEvents()
-'				RecordToVeld(TableOfInvoices)
+'				RecordToField(TableOfInvoices)
 '				If DatumKtrl(AdoGetField(TableOfInvoices, "#v035 #"), BookyearAsKey) = False Then
 '					TotaalAantalBEF = TotaalAantalBEF + 1
 '					Select Case VB.Left(AdoGetField(TableOfInvoices, "#v034 #"), 1)
@@ -267,7 +267,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim Printer As New Printer
 '		Dim BeginSleutel As New VB6.FixedLengthString(13)
 '		Dim EindSleutel As New VB6.FixedLengthString(13)
@@ -324,7 +324,7 @@ End Class
 '		ReportText(2) = Me.Text & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = TekstLijn(1).Text
 '		ReportText(3) = TekstLijn(0).Text
-'		InitializeFields()
+'		InitialiseFields()
 
 '		TDS = "Geen journalen voor : " & vbCrLf
 '		JetGetOrGreater(TableOfInvoices, 1, BeginSleutel.Value)
@@ -354,7 +354,7 @@ End Class
 '					Printer.FontBold = True
 '				End If
 '			End If
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '		MerkOp = False
@@ -368,7 +368,7 @@ End Class
 '		Do 
 '			'UPGRADE_ISSUE: DoEvents does not return a value. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="8D115264-E27F-4472-A684-865A00B5E826"'
 '			XDoEvents = System.Windows.Forms.Application.DoEvents()
-'			RecordToVeld(TableOfInvoices)
+'			RecordToField(TableOfInvoices)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub KontroleVoorwaarden
 '			bNext(TableOfInvoices)
@@ -475,7 +475,7 @@ End Class
 '				'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '				Return 
 '			Else
-'				RecordToVeld(FlJournaal)
+'				RecordToField(FlJournaal)
 '				If AdoGetField(FlJournaal, "#v035 #") < PeriodFromChosen.Value Or AdoGetField(TableOfInvoices, "#v035 #") > PeriodToChosen.Value Then
 '					MsgBox("dokumentdatum (" & AdoGetField(TableOfInvoices, "#v035 #") & ") <> boekdatum journaal (" & AdoGetField(FlJournaal, "#v035 #") & ")" & vbCr & vbCr & "Wordt uit boekhoudcontrole geweerd.  Kontroleer eventueel manueel", MsgBoxStyle.Information, AdoGetField(TableOfInvoices, "#v033 #"))
 '					'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -521,7 +521,7 @@ End Class
 '			If Ktrl Then
 '				FieldText(0) = FieldText(0) & " * niet meer aanwezig *"
 '			Else
-'				RecordToVeld(aIndex)
+'				RecordToField(aIndex)
 '				FieldText(0) = VB.Left(FieldText(0) & " " & RTrim(AdoGetField(aIndex, "#A100 #")) & " " & RTrim(AdoGetField(aIndex, "#A101 #")), 27)
 '			End If
 '			SnelHelpPrint(FieldText(0), blLogging)
@@ -545,7 +545,7 @@ End Class
 '							Printer.FontSize = Printer.FontSize
 '							Printer.Print(" ")
 '							Printer.FontSize = Printer.FontSize
-'							PrintTitel()
+'							VpePrintHeader()
 '						End If
 '					End If
 '				End If
@@ -583,7 +583,7 @@ End Class
 
 '		drb = 0
 '		Do 
-'			RecordToVeld(FlJournaal)
+'			RecordToField(FlJournaal)
 '			If Trim(AdoGetField(FlJournaal, "#v038 #")) <> "" Then
 '				If VB.Left(AdoGetField(FlJournaal, "#v019 #"), 1) <> "4" Then
 '				Else
@@ -652,7 +652,7 @@ End Class
 '					Printer.FontSize = Printer.FontSize
 '					Printer.Print(" ")
 '					Printer.FontSize = Printer.FontSize
-'					PrintTitel()
+'					VpePrintHeader()
 '				End If
 '			End If
 '		End If
@@ -693,7 +693,7 @@ End Class
 '			MsgBox("onlogische situatie")
 '		Else
 '			Do 
-'				RecordToVeld(FlJournaal)
+'				RecordToField(FlJournaal)
 '				If Trim(AdoGetField(FlJournaal, "#v038 #")) <> "" Then
 '					If VB.Left(AdoGetField(FlJournaal, "#v019 #"), 1) <> "4" Then
 '					Else
@@ -788,7 +788,7 @@ End Class
 '					Printer.FontSize = Printer.FontSize
 '					Printer.Print(" ")
 '					Printer.FontSize = Printer.FontSize
-'					PrintTitel()
+'					VpePrintHeader()
 '					GoTo JumpEindTotaal
 '				End If
 '			End If
@@ -872,7 +872,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("onlogika")
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				Do While KeyBuf(TableOfLedgerAccounts) <= GroepSelektie
 '					GroepRekening4 = KeyBuf(TableOfLedgerAccounts)
 '					SnelHelpPrint("Journalen boekjaar voor rek. " & KeyBuf(TableOfLedgerAccounts) & " worden gekontroleerd.  Ogenblik a.u.b.", blLogging)
@@ -886,7 +886,7 @@ End Class
 '					If Ktrl Then
 '						MsgBox("Geen journalen voor deze periode...")
 '					Else
-'						RecordToVeld(FlJournaal)
+'						RecordToField(FlJournaal)
 '						If VB.Left(KeyBuf(FlJournaal), 7) <= GroepSelektie Then
 '						Else
 '							Exit Do
@@ -904,7 +904,7 @@ End Class
 '								JetGet(TableOfInvoices, 0, AdoGetField(FlJournaal, "#v033 #"))
 '								If Ktrl Then
 '								Else
-'									RecordToVeld(TableOfInvoices)
+'									RecordToField(TableOfInvoices)
 '									If AdoGetField(TableOfInvoices, "#v035 #") < PeriodFromChosen.Value Then
 '										BetaaldBedragBB = Val(AdoGetField(FlJournaal, "#v068 #"))
 '										If FlPartij = TableOfCustomers Then
@@ -958,7 +958,7 @@ End Class
 '							If Ktrl Or KeyBuf(FlJournaal) > GroepRekening4 & PeriodToChosen.Value Then
 '								Exit Do
 '							Else
-'								RecordToVeld(FlJournaal)
+'								RecordToField(FlJournaal)
 '							End If
 '						Loop 
 '					End If
@@ -966,7 +966,7 @@ End Class
 '					If Ktrl Or KeyBuf(TableOfLedgerAccounts) > GroepSelektie Then
 '						Exit Do
 '					Else
-'						RecordToVeld(TableOfLedgerAccounts)
+'						RecordToField(TableOfLedgerAccounts)
 '					End If
 '				Loop 
 '			End If
@@ -1171,19 +1171,19 @@ End Class
 
 '		Select Case aIndex
 '			Case TableOfSuppliers
-'				LijstNaam = "Balans Leveranciers"
+'				ListName = "Balans Leveranciers"
 '				FlPartij = TableOfSuppliers
 '			Case TableOfCustomers
-'				LijstNaam = "Balans Klanten"
+'				ListName = "Balans Klanten"
 '				FlPartij = TableOfCustomers
 '			Case Else
 '				MsgBox("stop balans partijen!")
 '		End Select
 
 '		If XisEuroWasBEF = True Then
-'			LijstNaam = LijstNaam & " (Speciale modus: Alle cijfers in BEF !)"
+'			ListName = ListName & " (Speciale modus: Alle cijfers in BEF !)"
 '		End If
-'		Me.Text = LijstNaam
+'		Me.Text = ListName
 
 '		TekstLijn(2).Text = "0"
 '		TekstLijn(3).Text = New String("z", 12)
@@ -1191,7 +1191,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 '		Dim T As Short
 '		Dim VolgTab As Short
 
@@ -1270,7 +1270,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -1331,7 +1331,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '		If chkAfdrukInVenster.CheckState Then mdiXlog.X.AddItem(aa, mdiXlog.X.Rows - 1)

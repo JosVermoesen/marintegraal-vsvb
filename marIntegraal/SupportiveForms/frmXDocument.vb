@@ -31,14 +31,14 @@ End Class
 '	Dim aa As String
 '	Dim dTas As Double
 '	Dim IndexNR As Short
-'	Dim tMaxVeld As Short
+'	Dim tMaxField As Short
 
 
 '	Private Sub PrintTotal()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
-'		For T = 0 To tMaxVeld
+'		For T = 0 To tMaxField
 '			FieldText(T) = ""
 '		Next 
 '		FieldText(1) = "Totaal :"
@@ -134,7 +134,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 '		If chkAfdrukInVenster.CheckState Then Xlog.X.AddItem(aa, Xlog.X.Rows - 1)
 
@@ -143,7 +143,7 @@ End Class
 
 
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -341,7 +341,7 @@ End Class
 '		Dim Index As Short = Knop.GetIndex(eventSender)
 
 '		If KeyCode = 46 Then
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '			If VB.Left(cmbDokumentType.Text, 2) = VB.Left(FVT(TableOfVarious, 1), 2) And RTrim(TekstInfo(0).Text) = RTrim(Mid(FVT(TableOfVarious, 1), 3)) Then
 '				Msg = "Bestaande fiche verwijderen.  Bent U zeker ?"
 '				KtrlBox = MsgBox(Msg, 292)
@@ -392,7 +392,7 @@ End Class
 '		If Ktrl Then
 '			MsgBox("stop")
 '		Else
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '		End If
 '		TekstInfo(0).Text = Mid(AdoGetField(TableOfVarious, "#v005 #"), 3)
 '		InsertFlag(TableOfVarious) = 0
@@ -535,8 +535,8 @@ End Class
 '			End If
 '			ReportText(0) = MimGlobalDate.Value
 '			ReportText(2) = Mid(cmbDokumentType.Text, 4) & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
-'			InitializeFields()
-'			PrintTitel()
+'			InitialiseFields()
+'			VpePrintHeader()
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub AfschrijvingsLijnErBij
 '			Do 
@@ -565,7 +565,7 @@ End Class
 
 'AfschrijvingsLijnErBij: 
 '		omsLijn = ""
-'		RecordToVeld(TableOfVarious)
+'		RecordToField(TableOfVarious)
 '		If Len(AdoGetField(TableOfVarious, "#v083 #")) <> 8 Then
 '			omsLijn = "Datumformaat '" & AdoGetField(TableOfVarious, "#v083 #") & "' onjuist voor " & AdoGetField(TableOfVarious, "#v087 #")
 '			MsgBox(omsLijn)
@@ -592,7 +592,7 @@ End Class
 '			If Ktrl Then
 '				FieldText(0) = "Niet (meer) aanwezig..."
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				FieldText(0) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '			End If
 '			'afschrijvingsrekening
@@ -601,7 +601,7 @@ End Class
 '			If Ktrl Then
 '				FieldText(1) = "Niet (meer) aanwezig..."
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				FieldText(1) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '			End If
 '			'afschrijvingsKOSTrekening
@@ -610,7 +610,7 @@ End Class
 '			If Ktrl Then
 '				FieldText(2) = "Niet (meer) aanwezig..."
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				FieldText(2) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '			End If
 '			If bhKontrole Then
@@ -672,7 +672,7 @@ End Class
 '			Return 
 '		Else
 '			Do 
-'				RecordToVeld(FlJournaal)
+'				RecordToField(FlJournaal)
 '				If Trim(DummyDatum.Value) = "" Then
 '					DummyDatum.Value = AdoGetField(FlJournaal, "#v066 #")
 '					BedragBegin = Val(AdoGetField(FlJournaal, "#v068 #"))
@@ -701,7 +701,7 @@ End Class
 '		Return 
 
 '	End Function
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 '		Dim T As Short
 
 '		Select Case VB.Left(cmbDokumentType.Text, 2)
@@ -738,7 +738,7 @@ End Class
 
 '				ReportField(10) = " Bedrag Af"
 '				ReportTab(10) = 92
-'				tMaxVeld = 10
+'				tMaxField = 10
 '			Case Else
 '				MsgBox("Stop, nog niets voorzien.")
 '		End Select
@@ -748,9 +748,9 @@ End Class
 '			Xlog.Close()
 '			Xlog.Hide()
 '			Xlog.Text = cmbDokumentType.Text
-'			Xlog.X.Cols = tMaxVeld + 1
+'			Xlog.X.Cols = tMaxField + 1
 '			Xlog.X.Row = 0
-'			For T = 0 To tMaxVeld
+'			For T = 0 To tMaxField
 '				Xlog.X.Col = T
 '				Xlog.X.Text = ReportField(T)
 '			Next 

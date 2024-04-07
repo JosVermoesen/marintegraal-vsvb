@@ -117,7 +117,7 @@ End Class
 '					Printer.FontSize = 7.2
 '				End If
 '			End If
-'			PrintTitel()
+'			VpePrintHeader()
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub PrintInfo
 '		End If
@@ -376,7 +376,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 '		Dim TabNu As Short
@@ -470,7 +470,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '	End Sub

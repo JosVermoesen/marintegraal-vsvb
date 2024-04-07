@@ -18,7 +18,7 @@ End Class
 
 '	Dim TotalLines As Short
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 '		Dim T As Short
 
 '		ReportField(0) = "Line"
@@ -64,7 +64,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -138,7 +138,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 '		If chkAfdrukInVenster.CheckState Then Xlog.X.AddItem(aa, Xlog.X.Rows - 1)
 
@@ -324,7 +324,7 @@ End Class
 '			Print(FlHier, goString2.Value & vbNewLine)
 '			goString1.Value = "" : goString2.Value = ""
 '			JetGet(TableOfInvoices, 0, grdDokumentDetail.get_TextMatrix(volgNr, 2))
-'			RecordToVeld(TableOfInvoices)
+'			RecordToField(TableOfInvoices)
 '			AdoInsertToRecord(TableOfInvoices, "0", "rvDM")
 '			bUpdate(TableOfInvoices, 0)
 '		Next 
@@ -376,7 +376,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim Printer As New Printer
 '		Dim Teller As Short
 
@@ -384,7 +384,7 @@ End Class
 '		ReportText(0) = MimGlobalDate.Value
 '		ReportText(3) = "Bank " & cbBank.Text
 
-'		InitializeFields()
+'		InitialiseFields()
 '		PageCounter = 0
 '		If chkAfdrukInVenster.CheckState = 0 Then
 '			Printer = Printers(LijstPrinterNr)
@@ -403,7 +403,7 @@ End Class
 '				Printer.FontSize = 7.2
 '			End If
 '		End If
-'		PrintTitel()
+'		VpePrintHeader()
 '		For Teller = 1 To grdDokumentDetail.Rows - 1
 '			If Len(grdDokumentDetail.get_TextMatrix(Teller, 3)) <> 10 Then
 '				Exit For
@@ -453,7 +453,7 @@ End Class
 '			Exit Sub
 '		Else
 '			Do 
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '				cbBank.Items.Add(AdoGetField(TableOfVarious, "#v231 #") & ": " & AdoGetField(TableOfVarious, "#v232 #") & " [" & AdoGetField(TableOfVarious, "#v236 #") & "]")
 '				bNext(TableOfVarious)
 '				If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "28" Then
@@ -604,7 +604,7 @@ End Class
 '		Exit Sub
 
 'VolgendeLijn: 
-'		RecordToVeld(TableOfInvoices)
+'		RecordToField(TableOfInvoices)
 '		dBetaald = Val(AdoGetField(TableOfInvoices, "#v037 #"))
 '		dTotaal = Val(AdoGetField(TableOfInvoices, "#v249 #"))
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
@@ -648,7 +648,7 @@ End Class
 '			aa = aa & "Is verwijderd" & vbTab
 '			ZwareFout = ZwareFout + 1
 '		Else
-'			RecordToVeld(Fl)
+'			RecordToField(Fl)
 '			Select Case AdoGetField(Fl, "#vs03 #")
 '				Case "EUR"
 '				Case Else
@@ -741,7 +741,7 @@ End Class
 '				If Len(grdDokumentDetail.get_TextMatrix(grdDokumentDetail.Row, 6)) <> 12 Then
 '					MsgBox("Breng eerst 'juiste' rekeningnummer in a.u.b. voor " & vbCr & vbCr & grdDokumentDetail.get_TextMatrix(grdDokumentDetail.Row, 1), MsgBoxStyle.Information)
 '				End If
-'				RecordToVeld(TableOfSuppliers)
+'				RecordToField(TableOfSuppliers)
 
 '				If AdoGetField(TableOfSuppliers, "#v017 #") = "1" Then
 '					'UPGRADE_ISSUE: MSMask.MaskEdBox property mebRekening.AutoTab was not upgraded. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="CC4C7EC0-C903-48FC-ACCC-81861D12DA4A"'

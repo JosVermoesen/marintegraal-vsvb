@@ -1,12 +1,14 @@
 ﻿Option Strict Off
 Option Explicit On
 Imports System.ComponentModel
+Imports System.Drawing.Printing
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Mim
     Inherits Form
 
     Sub InitFirst()
-        FullLine = New String(Chr(173), 128)
+
         TableDefOnt(TableOfVarious) = "0000000.ONT" '00
         TableDefOnt(TableOfCustomers) = "0010000.ONT" '01
         TableDefOnt(TableOfSuppliers) = "0020000.ONT" '02
@@ -61,7 +63,7 @@ Public Class Mim
     Private Sub TotalClose()
 
         marVersion = My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & "." & My.Application.Info.Version.Revision
-        AutoUnloadCompany(BJPERDAT:=frmBYPERDAT)
+        AutoUnloadCompany(BJPERDAT:=FrmBYPERDAT)
         For CountTo = 0 To 9
             rsMAR(CountTo) = Nothing
         Next
@@ -157,8 +159,41 @@ Public Class Mim
             .Enabled = False
             .Show()
         End With
+
+        Dim strInstalledPrinters As String
+        Dim prntDoc As New PrintDocument
+        Dim pdfPrinterName As String = "Microsoft Print to PDF"
+        Dim pdfPrinterInstalled As Boolean = False
+
+        'check if there is installed printer
+        If PrinterSettings.InstalledPrinters.Count = 0 Then
+            MsgBox("No printer installed")
+            Exit Sub
+        End If
+
+        'display installed printer into combobox list item
+        For Each strInstalledPrinters In PrinterSettings.InstalledPrinters
+            Printers.Items.Add(strInstalledPrinters)
+            If strInstalledPrinters = pdfPrinterName Then
+                pdfPrinterInstalled = True
+            End If
+        Next strInstalledPrinters
+
+        'Display current default printer on combobox texts if pdf printer not installed
+        If pdfPrinterInstalled Then
+            Printers.Text = pdfPrinterName
+            ApplicationPrinter = pdfPrinterName
+
+
+        Else
+            Printers.Text = prntDoc.PrinterSettings.PrinterName
+            ApplicationPrinter = prntDoc.PrinterSettings.PrinterName
+        End If
         CompanyOpenMenuItem_Click(sender, e)
 
+    End Sub
+    Private Sub Printers_SelectedIndexChanged(sender As Object, e As EventArgs)
+        ApplicationPrinter = Printers.Text
     End Sub
     Private Function GaVerder(ByRef Bericht As String, ByRef BedrijfOpenKontrole As Short, ByRef Titel As String) As Short
         If BedrijfOpenKontrole Then

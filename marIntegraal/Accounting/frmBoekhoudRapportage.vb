@@ -22,7 +22,7 @@ End Class
 
 '	Dim ichr(10) As Short
 '	Dim LFontSize(20) As Single
-'	Dim LAantalL(20) As Short
+'	Dim LNumberL(20) As Short
 '	Dim FontDefChanged As Short
 
 '	Private Sub Annuleren_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Annuleren.Click
@@ -31,7 +31,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim ivbtab As Short
 '		Dim tlp As Short
 '		Dim alt As Short
@@ -243,7 +243,7 @@ End Class
 '			If SetSpacing(KeyBuf(TableOfLedgerAccounts), 7) > smaxsl.Value Then
 '				GoTo PrintAf
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub TelOp
 '			End If
@@ -257,7 +257,7 @@ End Class
 '				If SetSpacing(KeyBuf(TableOfLedgerAccounts), 7) > smaxsl.Value Then
 '					GoTo PrintAf
 '				Else
-'					RecordToVeld(TableOfLedgerAccounts)
+'					RecordToField(TableOfLedgerAccounts)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub TelOp
 '				End If
@@ -337,7 +337,7 @@ End Class
 '		Return 
 
 'Label2000: 
-'		PrintTitel()
+'		VpePrintHeader()
 '		Printer.Print(New String(Chr(ichr(4)), Len(stekst(0)) + 1) & Chr(ivbtab) & New String(Chr(ichr(4)), 7) & Chr(ivbtab) & New String(Chr(ichr(4)), 23) & Chr(ivbtab) & New String(Chr(ichr(4)), 24) & Chr(ichr(1)))
 '		Printer.Print(Space(Len(stekst(0)) + 1) & Chr(ichr(5)) & Space(7) & Chr(ichr(5)) & smg(2) & Chr(ichr(5)) & smg(3) & Chr(ichr(5)))
 '		Printer.Print(Space(Len(stekst(0)) + 1) & Chr(ichr(5)) & smg(4) & Chr(ichr(6)) & New String(Chr(ichr(4)), 23) & Chr(ichr(8)) & New String(Chr(ichr(4)), 24) & Chr(ichr(7)))
@@ -428,7 +428,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 

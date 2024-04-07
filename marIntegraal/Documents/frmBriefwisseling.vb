@@ -1066,7 +1066,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("Partij '" & Trim(VanTot(2).Text) & "' niet gevonden.  Gelieve klant of leveranciers nogmaals te SELECTeren en opnieuw proberen afdrukken a.u.b.")
 '				Else
-'					RecordToVeld(FlPartij)
+'					RecordToField(FlPartij)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintHetPDFdokument
 '				End If
@@ -1074,7 +1074,7 @@ End Class
 '				JetGetOrGreater(FlPartij, (Sortering.SelectedIndex), SetSpacing(VanTot(0).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)))
 '				If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '				Else
-'					RecordToVeld(FlPartij)
+'					RecordToField(FlPartij)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintHetPDFdokument
 '					Do 
@@ -1082,7 +1082,7 @@ End Class
 '						If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '							Exit Do
 '						Else
-'							RecordToVeld(FlPartij)
+'							RecordToField(FlPartij)
 '							'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '							GoSub PrintHetPDFdokument
 '						End If
@@ -1292,7 +1292,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("Partij '" & Trim(VanTot(2).Text) & "' niet gevonden.  Gelieve klant of leveranciers nogmaals te SELECTeren en opnieuw proberen afdrukken a.u.b.")
 '				Else
-'					RecordToVeld(FlPartij)
+'					RecordToField(FlPartij)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintHetdokument
 '				End If
@@ -1300,7 +1300,7 @@ End Class
 '				JetGetOrGreater(FlPartij, (Sortering.SelectedIndex), SetSpacing(VanTot(0).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)))
 '				If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '				Else
-'					RecordToVeld(FlPartij)
+'					RecordToField(FlPartij)
 '					'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '					GoSub PrintHetdokument
 '					Do 
@@ -1308,7 +1308,7 @@ End Class
 '						If Ktrl Or KeyBuf(FlPartij) > SetSpacing(VanTot(1).Text, FlIndexLen(FlPartij, Sortering.SelectedIndex)) Then
 '							Exit Do
 '						Else
-'							RecordToVeld(FlPartij)
+'							RecordToField(FlPartij)
 '							'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '							GoSub PrintHetdokument
 '						End If

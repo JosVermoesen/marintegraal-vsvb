@@ -107,7 +107,7 @@ End Class
 '					CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
 '					Exit Sub
 '				Else
-'					RecordToVeld(TableOfCustomers)
+'					RecordToField(TableOfCustomers)
 '					TekstInfo(1).Text = AdoGetField(TableOfCustomers, "#A100 #")
 '					JetGet(TableOfContracts, 1, AdoGetField(TableOfCustomers, "#A110 #"))
 '					If Ktrl Or SetSpacing(KeyBuf(TableOfContracts), 12) <> SetSpacing(AdoGetField(TableOfCustomers, "#A110 #"), 12) Then
@@ -117,7 +117,7 @@ End Class
 '						Exit Sub
 '					Else
 '						Do 
-'							RecordToVeld(TableOfContracts)
+'							RecordToField(TableOfContracts)
 '							If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) = AdoGetField(TableOfContracts, "#A010 #") Then
 '								Msg = "Boeking voor polisnummer : " & AdoGetField(TableOfContracts, "#A000 #") & vbCrLf & vbCrLf
 '								Msg = Msg & AdoGetField(TableOfContracts, "#vs99 #") & vbCrLf
@@ -157,7 +157,7 @@ End Class
 '					TekstInfo(0).Text = ""
 '					Exit Sub
 '				Else
-'					RecordToVeld(TableOfContracts)
+'					RecordToField(TableOfContracts)
 '					If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(0).Text, 4) = AdoGetField(TableOfContracts, "#A010 #") Then
 '						TekstInfo(0).Text = AdoGetField(TableOfContracts, "#A000 #")
 '						JetGet(TableOfCustomers, 0, AdoGetField(TableOfContracts, "#A110 #"))
@@ -165,7 +165,7 @@ End Class
 '							TekstInfo(1).Text = "KlantLink onmogelijk !!! Kontroleer !!!"
 '							CType(KwijtingEdit.Controls("Ok"), Object).Enabled = False
 '						Else
-'							RecordToVeld(TableOfCustomers)
+'							RecordToField(TableOfCustomers)
 '							TekstInfo(1).Text = AdoGetField(TableOfCustomers, "#A100 #")
 '							If VB.Left(CType(KwijtingBoeken.Controls("KeuzeInfo"), Object)(1).Text, 1) = "1" Then
 '								'TekstInfo(2).Text = Format(Val(AdoGetField(TableOfContracts, "#v165 #")), "00") + "/" + Format(Val(AdoGetField(TableOfContracts, "#v164 #")), "00") + "/" + Right(KwijtingBoeken!TekstInfo(0).Text, 4)

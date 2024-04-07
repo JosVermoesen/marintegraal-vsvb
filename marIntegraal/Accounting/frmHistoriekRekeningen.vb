@@ -13,7 +13,7 @@ End Class
 
 '	Dim ReportText(5) As String
 '	Dim LFontSize(20) As Single
-'	Dim LAantalL(20) As Short
+'	Dim LNumberL(20) As Short
 '	Dim FontDefChanged As Short
 
 '	Dim FieldText(20) As String
@@ -79,7 +79,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim Printer As New Printer
 '		Dim BeginSleutel As New VB6.FixedLengthString(15)
 '		Dim EindSleutel As New VB6.FixedLengthString(15)
@@ -96,7 +96,7 @@ End Class
 '		ReportText(2) = "Historieken " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = TekstLijn(1).Text
 
-'		InitializeFields()
+'		InitialiseFields()
 '		JetGetFirst(FlJournaal, 0)
 '		JetGetOrGreater(FlJournaal, 0, BeginSleutel.Value)
 '		If Ktrl Then
@@ -179,23 +179,23 @@ End Class
 '			EindTotaal()
 '		End If
 '		Line = 0
-'		RecordToVeld(FlJournaal)
+'		RecordToField(FlJournaal)
 '		JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7))
 '		If Ktrl Then
 '			SubTitelTekst = SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7) & " rekening reeds vernietigd..."
 '		Else
-'			RecordToVeld(TableOfLedgerAccounts)
+'			RecordToField(TableOfLedgerAccounts)
 '			SubTitelTekst = AdoGetField(TableOfLedgerAccounts, "#v019 #") & " " & AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '			SnelHelpPrint(SubTitelTekst, blLogging)
 '			ReportText(3) = SubTitelTekst
 '		End If
 '		VorigeSleutel.Value = SetSpacing(KeyBuf(FlJournaal), 15)
-'		PrintTitel()
+'		VpePrintHeader()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
 
 'PrintInfo: 
-'		RecordToVeld(FlJournaal)
+'		RecordToField(FlJournaal)
 '		Line = Line + 1
 '		FieldText(0) = VB6.Format(Line, "00000")
 '		FieldText(1) = FunctionDateText(AdoGetField(FlJournaal, "#v066 #"))
@@ -263,7 +263,7 @@ End Class
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
 '			VolgendePagina()
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '		Line = 0
@@ -309,7 +309,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 
 '		ReportField(0) = "Line"
 '		ReportTab(0) = 2
@@ -385,7 +385,7 @@ End Class
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
 '			VolgendePagina()
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 '		Exit Sub
 
@@ -395,7 +395,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -422,7 +422,7 @@ End Class
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
 '			VolgendePagina()
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 '		Exit Sub
 
@@ -451,7 +451,7 @@ End Class
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
 '			VolgendePagina()
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 '		Exit Sub
 
@@ -508,7 +508,7 @@ End Class
 '				JetGetOrGreater(TableOfLedgerAccounts, 0, SetSpacing(TekstLijn(2).Text, 7))
 '				If Ktrl Then
 '				Else
-'					RecordToVeld(TableOfLedgerAccounts)
+'					RecordToField(TableOfLedgerAccounts)
 '					TekstLijn(2).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
 '					SnelHelpPrint(AdoGetField(TableOfLedgerAccounts, "#v020 #"), blLogging)
 '				End If

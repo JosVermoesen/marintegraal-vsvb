@@ -40,7 +40,7 @@ Public Class KwijtingEdit
 			tbPolisNummer.Focus
 			Exit Sub
 		Else
-			RecordToVeld(TableOfContracts)
+			RecordToField(TableOfContracts)
 			tbPolisNummer.Text = AdoGetField(TableOfContracts, "#A000 #")
 			JetGet(TableOfCustomers, 0, AdoGetField(TableOfContracts, "#A110 #"))
 			If Ktrl Then
@@ -48,7 +48,7 @@ Public Class KwijtingEdit
 				btnOK.Enabled= False
 				btnRefresh.Enabled = False 
 			Else
-				RecordToVeld(TableOfCustomers)
+				RecordToField(TableOfCustomers)
 				tbKlant.Text = AdoGetField(TableOfCustomers, "#A100 #")
 				btnOk.Enabled = True
 				btnRefresh.Enabled = True 
@@ -120,7 +120,7 @@ Public Class KwijtingEdit
 			If Ktrl Then
 				Dummy = "KlantLink onmogelijk !!! Kontroleer !!!"
 			Else
-				RecordToVeld(TableOfCustomers)
+				RecordToField(TableOfCustomers)
 				Dummy = Trim(AdoGetField(TableOfCustomers, "#A100 #") & " " & AdoGetField(TableOfCustomers, "#A101 #"))
 			End If
 			getPolice = policiesRS.Fields("A000").Value
@@ -160,7 +160,7 @@ Public Class KwijtingEdit
 						TaksEnKost = 0
 						If Ktrl Then
 						Else
-							RecordToVeld(TableOfVarious)
+							RecordToField(TableOfVarious)
 							If Val(strB010) = Val(AdoGetField(TableOfVarious, "#B010 #")) Then
 								TaksEnKost = Val(AdoGetField(TableOfVarious, "#B011 #"))
 							End If
@@ -282,7 +282,7 @@ End Class
 '					CType(Me.Controls("Ok"), Object).Enabled = False
 '					Exit Sub
 '				Else
-'					RecordToVeld(TableOfCustomers)
+'					RecordToField(TableOfCustomers)
 '					TekstInfo(1).Text = AdoGetField(TableOfCustomers, "#A100 #")
 '					JetGet(TableOfContracts, 1, AdoGetField(TableOfCustomers, "#A110 #"))
 '					If Ktrl Or SetSpacing(KeyBuf(TableOfContracts), 12) <> SetSpacing(AdoGetField(TableOfCustomers, "#A110 #"), 12) Then
@@ -292,7 +292,7 @@ End Class
 '						Exit Sub
 '					Else
 '						Do 
-'							RecordToVeld(TableOfContracts)
+'							RecordToField(TableOfContracts)
 '							msgTitel = AdoGetField(TableOfContracts, "#B010 #") & " " & AdoGetField(TableOfContracts, "#e069 #")
 							
 '							Msg = "Kwijting voor polisnummer : " & AdoGetField(TableOfContracts, "#A000 #") & vbCrLf & vbCrLf

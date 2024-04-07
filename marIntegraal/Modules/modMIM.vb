@@ -369,7 +369,7 @@ EenFoutBijINLaden:
                 MsgBox("Onlogika btrieve versie !")
             End If
         Else
-            RecordToVeld(TableOfCounters)
+            RecordToField(TableOfCounters)
             If BAModus = 1 Then
                 AdoInsertToRecord(TableOfCounters, Fl99Record, "v217 ")
                 bUpdate(TableOfCounters, 0)

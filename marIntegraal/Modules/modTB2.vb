@@ -819,7 +819,7 @@ TLBError:
         '			As2TelebibIn.UserInfo(3).Text = Str(Val(As2TelebibIn.UserInfo(3).Text) + 1)
         '			ddag = "01"
         '		Else
-        '			RecordToVeld(TableOfContracts)
+        '			RecordToField(TableOfContracts)
         '			PolisTeWijzigen = False
         '			DagKtrl1.Value = AdoGetField(TableOfContracts, "#v165 #")
         '			DagKtrl2.Value = Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2)
@@ -851,7 +851,7 @@ TLBError:
         '			If Ktrl Then
         '				Dummy.Value = "Verbeter !!! " & TempoNaamKlant
         '			Else
-        '				RecordToVeld(TableOfCustomers)
+        '				RecordToField(TableOfCustomers)
         '				Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
         '			End If
         '		End If
@@ -874,7 +874,7 @@ TLBError:
         '		If Ktrl Then
         '			TLBRecord(TableOfVarious) = ""
         '		Else
-        '			RecordToVeld(TableOfVarious)
+        '			RecordToField(TableOfVarious)
         '		End If
 
         '		Select Case Mid(iolijn, 42, 1)
@@ -1333,7 +1333,7 @@ TLBError:
         '					'As2TelebibIn.UserInfo(3).Caption = Str$(Val(As2TelebibIn.UserInfo(3).Caption) + 1)
         '					ddag = "01"
         '				Else
-        '					RecordToVeld(TableOfContracts)
+        '					RecordToField(TableOfContracts)
         '					PolisTeWijzigen = False
         '					DagKtrl1.Value = AdoGetField(TableOfContracts, "#v165 #")
         '					DagKtrl2.Value = Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2)
@@ -1370,7 +1370,7 @@ TLBError:
         '					If Ktrl Then
         '						Dummy.Value = "Verbeter !!! " & TempoNaamKlant
         '					Else
-        '						RecordToVeld(TableOfCustomers)
+        '						RecordToField(TableOfCustomers)
         '						Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
         '					End If
         '				End If
@@ -1380,7 +1380,7 @@ TLBError:
         '				If Ktrl Then
         '					TLBRecord(TableOfVarious) = ""
         '				Else
-        '					RecordToVeld(TableOfVarious)
+        '					RecordToField(TableOfVarious)
         '				End If
 
         '				Select Case Mid(iolijn, 42, 1)

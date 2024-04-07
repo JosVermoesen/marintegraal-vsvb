@@ -63,7 +63,7 @@ End Class
 '		JetGet(TableOfVarious, 1, "29" & cmbSelect.Text)
 '		If Ktrl Then
 '		Else
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '			If InStr(AdoGetField(TableOfVarious, "#v132 #"), "[Colwidth]") Then
 '				txtSQL.Text = VB.Left(AdoGetField(TableOfVarious, "#v132 #"), InStr(AdoGetField(TableOfVarious, "#v132 #"), "[Colwidth]") - 1)
 '			Else
@@ -100,7 +100,7 @@ End Class
 '			JetGet(TableOfVarious, 1, "29" & cmbSelect.Text)
 '			If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then
 '			ElseIf MsgBox("Bestaande definitie '" & cmbSelect.Text & "' verwijderen ?", MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2) = MsgBoxResult.Yes Then 
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '				Bdelete(TableOfVarious)
 '				SelectComboVullen()
 '			Else
@@ -300,7 +300,7 @@ End Class
 '			AdoInsertToRecord(TableOfVarious, "29" & AdoGetField(TableOfVarious, "#v250 #"), "v005")
 '			JetInsert(TableOfVarious, 1)
 '		ElseIf MsgBox("Bestaande definitie '" & cmbSelect.Text & "' overschrijven ?", MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton2) = MsgBoxResult.Yes Then 
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '			Msg = ""
 '			For CountTo = 0 To msfSQL.get_Cols() - 1
 '				Msg = Msg & VB6.Format(msfSQL.get_ColWidth(CountTo)) & vbTab
@@ -417,7 +417,7 @@ End Class
 '		If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then
 '		Else
 '			Do 
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '				cmbSelect.Items.Add(AdoGetField(TableOfVarious, "#v250 #"))
 '				bNext(TableOfVarious)
 '				If Ktrl Or VB.Left(KeyBuf(TableOfVarious), 2) <> "29" Then

@@ -18,7 +18,7 @@ End Class
 '	Dim RapportSelektie As String
 '	Dim RapportTitel As String
 '	Dim RapportDefinitie As String
-'	Dim LijstNaam As String
+'	Dim ListName As String
 '	Dim FieldText(20) As String
 '	Dim ktrlBoekjaar As String
 
@@ -59,7 +59,7 @@ End Class
 
 
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim Printer As New Printer
 '		Dim BeginSleutel As New VB6.FixedLengthString(13)
 '		Dim EindSleutel As New VB6.FixedLengthString(13)
@@ -88,10 +88,10 @@ End Class
 '				EindSleutel.Value = "K" & TekstLijn(3).Text
 '		End Select
 
-'		ReportText(2) = LijstNaam & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(2) = ListName & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = TekstLijn(1).Text
 '		ReportText(3) = TekstLijn(0).Text
-'		InitializeFields()
+'		InitialiseFields()
 
 '		JetGetOrGreater(TableOfInvoices, 1, BeginSleutel.Value)
 '		If Ktrl Or UCase(SetSpacing(KeyBuf(TableOfInvoices), 13)) > UCase(EindSleutel.Value) Then
@@ -133,8 +133,8 @@ End Class
 '					Printer.FontSize = 7.2
 '				End If
 '			End If
-'			PrintTitel()
-'			RecordToVeld(TableOfInvoices)
+'			VpePrintHeader()
+'			RecordToField(TableOfInvoices)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub KontroleVoorwaarden
 '		End If
@@ -145,7 +145,7 @@ End Class
 '			If Ktrl Or UCase(SetSpacing(KeyBuf(TableOfInvoices), 13)) > UCase(EindSleutel.Value) Then
 '				Exit Do
 '			End If
-'			RecordToVeld(TableOfInvoices)
+'			RecordToField(TableOfInvoices)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub KontroleVoorwaarden
 '		Loop 
@@ -191,12 +191,12 @@ End Class
 '		Return 
 
 'StelSamen: 
-'		RecordToVeld(TableDummy)
+'		RecordToField(TableDummy)
 '		JetGet(aIndex, 0, AdoGetField(TableDummy, "#v034 #"))
 '		If Ktrl Then
 '			FieldText(0) = "--"
 '		Else
-'			RecordToVeld(aIndex)
+'			RecordToField(aIndex)
 '			FieldText(0) = AdoGetField(aIndex, "#A10A #")
 '		End If
 
@@ -297,7 +297,7 @@ End Class
 '			If Ktrl Then
 '				AdoInsertToRecord(TableDummy, "* niet meer aanwezig *", "A100")
 '			Else
-'				RecordToVeld(aIndex)
+'				RecordToField(aIndex)
 '				'1
 '				AdoInsertToRecord(TableDummy, VB.Left(AdoGetField(aIndex, "#A100 #"), 35), "A100")
 '				'2
@@ -420,12 +420,12 @@ End Class
 
 '		Select Case aIndex
 '			Case TableOfCustomers
-'				LijstNaam = "TopDown Klanten"
+'				ListName = "TopDown Klanten"
 '			Case TableOfSuppliers
-'				LijstNaam = "TopDown Leveranciers"
+'				ListName = "TopDown Leveranciers"
 '		End Select
 
-'		Me.Text = LijstNaam
+'		Me.Text = ListName
 '		TekstLijn(2).Text = "0"
 '		TekstLijn(3).Text = New String("z", 12)
 '		If Mim.AV(2).Enabled Then
@@ -445,7 +445,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 '		Dim T As Short
 '		Dim VolgTab As Short
 
@@ -489,7 +489,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -549,7 +549,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '	End Sub

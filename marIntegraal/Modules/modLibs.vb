@@ -8,6 +8,8 @@ Module ModLibs
     Public LedgerAccountSheet As New FrmBasicSheetTemplate
     'Public BJPERDAT As New frmBYPERDAT
 
+    Public Const FullLine As String = "--------------------------------------------------------------------------------------------------------------------------------"
+
     'Mijn dokumenten, ApplicatieData
     Public Const CSIDL_PERSONAL As Integer = &H5
     Public Const CSIDL_APPDATA As Integer = &H1A
@@ -70,6 +72,7 @@ Module ModLibs
     Public Mask2002 As String 'VB6.FixedLengthString(10)
     Public vsfPro As Boolean
 
+    Public ApplicationPrinter As String
     Public SysVar(6) As String
     Public FileNr(NumberOfTables) As Short
     Public TLBRecord(NumberOfTables) As String
@@ -92,8 +95,11 @@ Module ModLibs
     Public EscCodesPrinter(2) As Short
     Public PaperLength(2) As Short
     Public PrinterINI(2) As String
+
     Public ReportField(23) As String
     Public ReportTab(23) As Short
+    Public ReportSecondLineField(23) As String
+    Public ReportSecondLineTab(23) As Short
 
     'UPGRADE_ISSUE: Declaration type not supported: Array of fixed-length strings. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="934BD4FF-1FF9-47BD-888F-D411E47E78FA"'
     Public TeleBibCode(maxTeleBib) As String '*10
@@ -110,7 +116,6 @@ Module ModLibs
     Public PrinterCurrentY As Short
     Public PageCounter As Short
 
-    <VBFixedString(128)> Public FullLine As String 'New VB6.FixedLengthString(128)
 
     Public marVersion As String
     Public LogPrint As String

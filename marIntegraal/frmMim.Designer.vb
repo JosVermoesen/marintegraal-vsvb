@@ -107,6 +107,7 @@ Partial Class Mim
         Me.CommandToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Report = New IDEALSoftware.VpeStandard.VpeControl()
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.Printers = New System.Windows.Forms.ComboBox()
         Me.MimMenuStrip.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -727,11 +728,23 @@ Partial Class Mim
         '
         Me.OpenFileDialog.FileName = "OpenFileDialog1"
         '
+        'Printers
+        '
+        Me.Printers.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Printers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Printers.FormattingEnabled = True
+        Me.Printers.Location = New System.Drawing.Point(0, 342)
+        Me.Printers.Name = "Printers"
+        Me.Printers.Size = New System.Drawing.Size(597, 21)
+        Me.Printers.TabIndex = 9
+        AddHandler Me.Printers.SelectedIndexChanged, AddressOf Me.Printers_SelectedIndexChanged
+        '
         'Mim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(597, 363)
+        Me.Controls.Add(Me.Printers)
         Me.Controls.Add(Me.MimMenuStrip)
         Me.Controls.Add(Me.Report)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -831,4 +844,5 @@ Partial Class Mim
     Friend WithEvents OpenFileDialog As OpenFileDialog
     Friend WithEvents InfoToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents CommandToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Printers As ComboBox
 End Class

@@ -218,7 +218,7 @@ Public Class FrmJournalEntryInput
         '    BoekBeginBalans = False
         '    Exit Function
         'ElseIf VB.Left(KeyBuf(TableOfLedgerAccounts), 1) < "8" Then
-        '    RecordToVeld(TableOfLedgerAccounts)
+        '    RecordToField(TableOfLedgerAccounts)
         '    If bhEuro Then
         '        TotaalResultaat = TotaalResultaat + Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(ActiveBookyear + 23, "000") & " #"))
         '    Else
@@ -229,7 +229,7 @@ Public Class FrmJournalEntryInput
         '        If Ktrl Or VB.Left(KeyBuf(TableOfLedgerAccounts), 1) > "7" Then
         '            Exit Do
         '        Else
-        '            RecordToVeld(TableOfLedgerAccounts)
+        '            RecordToField(TableOfLedgerAccounts)
         '            If bhEuro Then
         '                TotaalResultaat = TotaalResultaat + Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(ActiveBookyear + 23, "000") & " #"))
         '            Else
@@ -271,7 +271,7 @@ Public Class FrmJournalEntryInput
         '    BoekBeginBalans = False
         '    Exit Function
         'ElseIf VB.Left(KeyBuf(TableOfLedgerAccounts), 1) < "6" Then
-        '    RecordToVeld(TableOfLedgerAccounts)
+        '    RecordToField(TableOfLedgerAccounts)
         '    If bhEuro Then
         '        dBedrag = Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(ActiveBookyear + 23, "000") & " #"))
         '    Else
@@ -287,7 +287,7 @@ Public Class FrmJournalEntryInput
         '        If Ktrl Or VB.Left(KeyBuf(TableOfLedgerAccounts), 1) >= "6" Then
         '            Exit Do
         '        Else
-        '            RecordToVeld(TableOfLedgerAccounts)
+        '            RecordToField(TableOfLedgerAccounts)
         '            If bhEuro Then
         '                dBedrag = Val(AdoGetField(TableOfLedgerAccounts, "#e" & VB6.Format(ActiveBookyear + 23, "000") & " #"))
         '            Else
@@ -375,7 +375,7 @@ Public Class FrmJournalEntryInput
 
         'AfschrijvingsLijnErBij:
         '        OmschrijvingsLijn.Value = ""
-        '        RecordToVeld(TableOfVarious)
+        '        RecordToField(TableOfVarious)
         '        If Len(AdoGetField(TableOfVarious, "#v083 #")) <> 8 Then
         '            OmschrijvingsLijn.Value = "Datumformaat onjuist voor " & AdoGetField(TableOfVarious, "#v087 #")
         '            MsgBox("dokumentendatum niet in formaat DDMMJJEE" & vbCrLf & vbCrLf & OmschrijvingsLijn.Value & vbCrLf & vbCrLf & AdoGetField(TableOfVarious, "#v083 #"))
@@ -472,7 +472,7 @@ Public Class FrmJournalEntryInput
         'If Ktrl Then
         'MsgBox("Stop")
         'Else
-        'RecordToVeld(TableOfVarious)
+        'RecordToField(TableOfVarious)
         'dRa = Val(AdoGetField(TableOfVarious, "#v085 #")) + Val(Mid(VB6.GetItemString(JournaalPost, T), 50, 12))
         'AdoInsertToRecord(TableOfVarious, Str(dRa), "v085")
         'If XisEuroWasBEF = True Then
@@ -700,7 +700,7 @@ Public Class FrmJournalEntryInput
                 TextBoxLedgerAccount.Focus()
                 Beep()
             Else
-                RecordToVeld(TableOfLedgerAccounts)
+                RecordToField(TableOfLedgerAccounts)
                 TextBoxLedgerAccount.Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
                 LabelLedgerAccountName.Text = AdoGetField(TableOfLedgerAccounts, "#v020 #")
             End If
@@ -725,7 +725,7 @@ Public Class FrmJournalEntryInput
                 TextBoxOffsetAccount.Focus()
                 Beep()
             Else
-                RecordToVeld(TableOfLedgerAccounts)
+                RecordToField(TableOfLedgerAccounts)
                 TextBoxOffsetAccount.Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
                 LabelOffsetAccountName.Text = AdoGetField(TableOfLedgerAccounts, "#v020 #")
             End If

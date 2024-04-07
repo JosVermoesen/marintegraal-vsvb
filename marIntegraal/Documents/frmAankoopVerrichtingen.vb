@@ -341,7 +341,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("LogicaStop zoeken leveranciersfiche")
 '			Else
-'				RecordToVeld(TableOfSuppliers)
+'				RecordToField(TableOfSuppliers)
 '				AdoInsertToRecord(TableOfSuppliers, TekstInfo(11).Text, "A170")
 '				bUpdate(TableOfSuppliers, 0)
 '				If Ktrl Then
@@ -362,7 +362,7 @@ End Class
 '			MsgBox("Onlogica.")
 '			cmdSQLInfo.Visible = False
 '		Else
-'			RecordToVeld(TableOfSuppliers)
+'			RecordToField(TableOfSuppliers)
 '			If AdoGetField(TableOfSuppliers, "#v254 #") <> "" Then
 '				KtrlBox = SQLPopUp(AdoGetField(TableOfSuppliers, "#v254 #"), JetTableName(TableOfSuppliers), "A110", AdoGetField(TableOfSuppliers, "#A110 #"))
 '			Else
@@ -612,7 +612,7 @@ End Class
 '			End If
 '			TekstInfo(9).Text = Dec(1, "###.########")
 '		Else
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '			TekstInfo(9).Text = Dec(Val(AdoGetField(TableOfVarious, "#v040 #")), "###.########")
 '		End If
 
@@ -792,7 +792,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("stop")
 '			Else
-'				RecordToVeld(TableOfSuppliers)
+'				RecordToField(TableOfSuppliers)
 '				InstalLeverancier()
 '			End If
 '		Else
@@ -1234,7 +1234,7 @@ End Class
 '			WegBoekFout = True
 '			Exit Function
 '		Else
-'			RecordToVeld(TableOfSuppliers)
+'			RecordToField(TableOfSuppliers)
 '			dMuntL = Val(TekstInfo(9).Text)
 '		End If
 
@@ -1296,7 +1296,7 @@ End Class
 '					WegBoekFout = True
 '					Exit Function
 '				Else
-'					RecordToVeld(TableOfProductsAndServices)
+'					RecordToField(TableOfProductsAndServices)
 '					AdoInsertToRecord(FlJournaal, Mid(AankoopDetail.Text, 77, 30), "v067")
 '					AdoInsertToRecord(FlJournaal, Mid(AankoopDetail.Text, 63, 13), "v102")
 '					AantalStuks = Val(Mid(AankoopDetail.Text, 77 + 41, 10))

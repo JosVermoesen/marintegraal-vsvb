@@ -416,7 +416,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("logicafout", MsgBoxStyle.Critical)
 '				Else
-'					RecordToVeld(TableOfContracts)
+'					RecordToField(TableOfContracts)
 '				End If
 
 '				'Ktrl = BeheersKost(Trim(Mid(GridText, 1, 12)), BeheerForfait)
@@ -494,7 +494,7 @@ End Class
 '			Beep()
 '			Exit Sub
 '		Else
-'			RecordToVeld(TableOfSuppliers)
+'			RecordToField(TableOfSuppliers)
 '		End If
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
@@ -508,7 +508,7 @@ End Class
 '				If Ktrl Or VB.Left(KeyBuf(TableOfSuppliers), 2) <> "CO" Then
 '					Exit Do
 '				Else
-'					RecordToVeld(TableOfSuppliers)
+'					RecordToField(TableOfSuppliers)
 '					T = T + 1
 '					KeuzeInfo(0).Items.Add(Mid(AdoGetField(TableOfSuppliers, "#A110 #"), 3, 4) & ": " & AdoGetField(TableOfSuppliers, "#A100 #") & "/" & SetSpacing(AdoGetField(TableOfSuppliers, "#A400 #"), 8))
 '				End If
@@ -533,7 +533,7 @@ End Class
 '			Beep()
 '			Exit Sub
 '		ElseIf Maatschappij.Value = Mid(KeyBuf(TableOfContracts), 15, 4) Then 
-'			RecordToVeld(TableOfContracts)
+'			RecordToField(TableOfContracts)
 '			Select Case VB.Left(AdoGetField(TableOfContracts, "#vs97 #"), 1)
 '				Case "0", "7", "9"
 '				Case Else
@@ -541,7 +541,7 @@ End Class
 '					If Ktrl Then
 '						Dummy.Value = "KlantLink onmogelijk !!! Kontroleer !!!"
 '					Else
-'						RecordToVeld(TableOfCustomers)
+'						RecordToField(TableOfCustomers)
 '						Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
 '					End If
 '					PolisDetail.AddItem(AdoGetField(TableOfContracts, "#A000 #") & vbTab & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2) & "/" & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 5, 2) & "/" & Mid(PeriodFromTo.Value, 1, 4) & vbTab & vbTab & vbTab & Dummy.Value & vbTab & 0, PolisDetail.Rows - 1)
@@ -559,7 +559,7 @@ End Class
 '				System.Windows.Forms.Cursor.Current = vbNormal
 '				Exit Do
 '			ElseIf Maatschappij.Value = Mid(KeyBuf(TableOfContracts), 15, 4) Then 
-'				RecordToVeld(TableOfContracts)
+'				RecordToField(TableOfContracts)
 '				Select Case VB.Left(AdoGetField(TableOfContracts, "#vs97 #"), 1)
 '					Case "0", "7", "9"
 '					Case Else
@@ -567,7 +567,7 @@ End Class
 '						If Ktrl Then
 '							Dummy.Value = "KlantLink onmogelijk !!! Kontroleer !!!"
 '						Else
-'							RecordToVeld(TableOfCustomers)
+'							RecordToField(TableOfCustomers)
 '							Dummy.Value = AdoGetField(TableOfCustomers, "#A100 #")
 '						End If
 '						PolisDetail.AddItem(AdoGetField(TableOfContracts, "#A000 #") & vbTab & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 7, 2) & "/" & Mid(AdoGetField(TableOfContracts, "#AW_2 #"), 5, 2) & "/" & Mid(PeriodFromTo.Value, 1, 4) & vbTab & vbTab & vbTab & Dummy.Value & vbTab & 0, PolisDetail.Rows - 1)
@@ -588,7 +588,7 @@ End Class
 '				If Ktrl Then
 '					'MsgBox "stop"
 '				Else
-'					RecordToVeld(TableOfSuppliers)
+'					RecordToField(TableOfSuppliers)
 '				End If
 '				JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(TableOfSuppliers, "#v016 #"), 7))
 '				If Ktrl Then
@@ -843,7 +843,7 @@ End Class
 '				dokumentSleutel.Value = BakdokumentSleutel.Value
 '				Exit Function
 '			Else
-'				RecordToVeld(TableOfContracts)
+'				RecordToField(TableOfContracts)
 '				JetGet(TableOfCustomers, 0, SetSpacing(AdoGetField(TableOfContracts, "#A110 #"), 12))
 '				If Ktrl Then
 '					MsgBox("Klantnummer " & AdoGetField(TableOfContracts, "#A110 #") & " in lijn " & Str(PolisDetail.Row) & vbCrLf & vbCrLf & "niet te vinden !")

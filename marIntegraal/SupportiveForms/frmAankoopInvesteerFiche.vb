@@ -78,7 +78,7 @@ End Class
 '			TekstInfo(5).Text = "6300000"
 '			Versneld.CheckState = System.Windows.Forms.CheckState.Checked
 '		Else
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '			TekstInfo(2).Text = Dec(Val(AdoGetField(TableOfVarious, "#v082 #")), "###") 'lineair over aantal jaar
 '			TekstInfo(6).Text = (AdoGetField(TableOfVarious, "#v083 #")) 'datum vorige bewerking
 '			TekstInfo(7).Text = Dec(Val(AdoGetField(TableOfVarious, "#v084 #")), MaskEURBH) 'totaal vorige bewerkingen

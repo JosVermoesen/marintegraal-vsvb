@@ -154,7 +154,7 @@ End Class
 '		If Ktrl Then
 '			MsgBox("stop")
 '		Else
-'			RecordToVeld(TableOfSuppliers)
+'			RecordToField(TableOfSuppliers)
 '		End If
 
 'PrintSteedsOpnieuw: 
@@ -424,7 +424,7 @@ End Class
 '			Beep()
 '			Exit Sub
 '		Else
-'			RecordToVeld(TableOfSuppliers)
+'			RecordToField(TableOfSuppliers)
 '		End If
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
@@ -438,7 +438,7 @@ End Class
 '				If Ktrl Or VB.Left(KeyBuf(TableOfSuppliers), 2) <> VoorLetter Then
 '					Exit Do
 '				Else
-'					RecordToVeld(TableOfSuppliers)
+'					RecordToField(TableOfSuppliers)
 '					T = T + 1
 '					KeuzeInfo(0).Items.Add(Mid(AdoGetField(TableOfSuppliers, "#A110 #"), 3, 4) & ": " & AdoGetField(TableOfSuppliers, "#A100 #") & "/" & SetSpacing(AdoGetField(TableOfSuppliers, "#A400 #"), 8))
 '				End If
@@ -533,7 +533,7 @@ End Class
 '				Me.lFax.Text = ""
 '				Me.lMail.Text = ""
 '			Else
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '				Select Case VB.Left(Me.KeuzeInfo(1).Text, 1)
 '					Case "C"
 '						Me.lFax.Text = AdoGetField(TableOfVarious, "ss02") 'Fax Schade
@@ -931,7 +931,7 @@ End Class
 '		If Ktrl Then
 '			'niks
 '		Else
-'			RecordToVeld(TableOfVarious)
+'			RecordToField(TableOfVarious)
 '			Select Case VB.Left(AdoGetField(TableOfVarious, "#A500 #"), 1)
 '				Case "5" 'Voertuigen
 '					GridText = "Klient vervangt zijn voertuig door een ander met volgende kenmerken :" & vbCrLf & vbCrLf

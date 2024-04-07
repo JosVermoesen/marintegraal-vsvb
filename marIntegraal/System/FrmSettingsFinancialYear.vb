@@ -130,7 +130,7 @@ End Class
 '			If Ktrl Then
 '				CrText = ""
 '			Else
-'				RecordToVeld(TableOfCounters)
+'				RecordToField(TableOfCounters)
 '				'CrText = ntRS(TableOfCounters).Fields("v217")
 '				CrText = rsMAR(TableOfCounters).Fields("v217").Value
 '				Select Case Mid(TeleBibCode(T), 2, 2)
@@ -195,7 +195,7 @@ End Class
 '						TLBRecord(TableOfCounters) = ""
 '						AdoInsertToRecord(TableOfCounters, Mid(TeleBibCode(T), 5, 5), "v071")
 '					Else
-'						RecordToVeld(TableOfCounters)
+'						RecordToField(TableOfCounters)
 '					End If
 
 '					Select Case Mid(TeleBibCode(T), 2, 2)

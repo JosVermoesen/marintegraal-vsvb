@@ -28,7 +28,7 @@ End Class
 '	Dim TotalCredit As Decimal
 
 '	Dim LFontSize(20) As Single
-'	Dim LAantalL(20) As Short
+'	Dim LNumberL(20) As Short
 '	Dim FontDefChanged As Short
 
 '	Dim PeriodFromChosen As New VB6.FixedLengthString(8)
@@ -68,7 +68,7 @@ End Class
 '		ReportText(2) = "Algemeen Journaal (Systeem OT) " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = txtTekstLijn(1).Text
 '		ReportText(3) = "Boekjaar aanvang : " & VB.Left(BookyearFromTo.Value, 4) & ", " & txtTekstLijn(0).Text
-'		InitializeFields()
+'		InitialiseFields()
 
 '		JetGetFirst(FlJournaal, 4)
 '		JetGetOrGreater(FlJournaal, 4, BeginSleutel.Value)
@@ -91,7 +91,7 @@ End Class
 '				Printer.FontSize = 7.2
 '			End If
 '		End If
-'		PrintTitel()
+'		VpePrintHeader()
 '		TotalDebit = 0
 '		TotalCredit = 0
 
@@ -128,7 +128,7 @@ End Class
 '		Exit Sub
 
 'PrintInfo: 
-'		RecordToVeld(FlJournaal)
+'		RecordToField(FlJournaal)
 '		If AdoGetField(FlJournaal, "#v066 #") >= PeriodFromChosen.Value And AdoGetField(FlJournaal, "#v066 #") <= PeriodToChosen.Value Then
 '			Line = Line + 1
 '			If DCDatum.Value <> AdoGetField(FlJournaal, "#v066 #") Then
@@ -147,7 +147,7 @@ End Class
 '			If Ktrl Then
 '				FieldText(3) = "-"
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				FieldText(3) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '				SnelHelpPrint(AdoGetField(TableOfLedgerAccounts, "#v019 #") & " " & AdoGetField(TableOfLedgerAccounts, "#v020 #") & " " & FieldText(3), blLogging)
 '			End If
@@ -196,7 +196,7 @@ End Class
 '		ReportText(2) = "Proef- en Saldibalans " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = txtTekstLijn(1).Text
 '		ReportText(3) = "Boekjaar aanvang : " & VB.Left(BookyearFromTo.Value, 4) & ", " & txtTekstLijn(0).Text
-'		InitializeFields()
+'		InitialiseFields()
 
 '		JetGetFirst(FlJournaal, 0)
 '		JetGetOrGreater(FlJournaal, 0, BeginSleutel.Value)
@@ -224,7 +224,7 @@ End Class
 '				Printer.FontBold = True
 '			End If
 '		End If
-'		PrintTitel()
+'		VpePrintHeader()
 
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
@@ -287,7 +287,7 @@ End Class
 '		Exit Sub
 
 'PrintInfo: 
-'		RecordToVeld(FlJournaal)
+'		RecordToField(FlJournaal)
 '		If VB.Left(VorigeSleutel.Value, 7) <> VB.Left(KeyBuf(FlJournaal), 7) Then
 '			If VorigeSleutel.Value = Space(15) Then
 '			ElseIf SaldiKontrole = True Then 
@@ -303,7 +303,7 @@ End Class
 '				FieldText(1) = "Rekening reeds vernietigd..."
 '				FieldText(2) = ""
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				FieldText(1) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 
 '				If bhEuro Then
@@ -450,7 +450,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 
 '		Dim lTeller As Integer
 
@@ -615,7 +615,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 '		Dim T As Short
 '		Dim VolgTab As Short
 
@@ -687,7 +687,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -756,7 +756,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 '		Exit Sub
 
@@ -820,7 +820,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '		For T = 0 To 7

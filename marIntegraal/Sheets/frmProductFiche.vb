@@ -396,7 +396,7 @@ End Class
 '		Dim vBibDef As String
 
 '		FicheIsNieuw = False
-'		RecordToVeld(TableOfProductsAndServices)
+'		RecordToField(TableOfProductsAndServices)
 '		Me.Text = "ProduktFiche : " & RTrim(AdoGetField(TableOfProductsAndServices, "#v105 #"))
 
 '		'If rsPFStat.State = adStateOpen Then
@@ -681,7 +681,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox(TxtInfo(Index).Text & " bestaat niet (meer) !")
 '				Else
-'					RecordToVeld(SharedFl)
+'					RecordToField(SharedFl)
 '					SnelHelpPrint(FVT(SharedFl, 1) & " Druk [Ctrl] om te wijzigen", blLogging)
 '				End If
 '			Else

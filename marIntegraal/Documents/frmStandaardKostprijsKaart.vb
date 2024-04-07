@@ -118,7 +118,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				grdProduktDetail.Col = 5
 '				LblAankoopNieuw.Text = VB6.Format(CDbl(LblAankoopNieuw.Text) + (Val(AdoGetField(TableOfProductsAndServices, "#e113 #")) * Val(grdProduktDetail.Text)), "#,##0.000000")
 '				LblVerkoopNieuw.Text = VB6.Format(CDbl(LblVerkoopNieuw.Text) + (Val(AdoGetField(TableOfProductsAndServices, "#e112 #")) * Val(grdProduktDetail.Text)), "#,##0.000000")
@@ -138,7 +138,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				grdProduktDetail.Col = 5
 '				TotaalAankoopNieuw = TotaalAankoopNieuw + (Val(AdoGetField(TableOfProductsAndServices, "#e113 #")) * Val(grdProduktDetail.Text))
 '				TotaalVerkoopNieuw = TotaalVerkoopNieuw + (Val(AdoGetField(TableOfProductsAndServices, "#e112 #")) * Val(grdProduktDetail.Text))
@@ -258,7 +258,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '			End If
 '			Printer.Write(SetSpacing((grdProduktDetail.Text), 13) & " ")
 '			grdProduktDetail.Col = 1
@@ -299,7 +299,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie!")
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				grdProduktDetail.Col = 5
 
 '				If bhEuro Then
@@ -348,7 +348,7 @@ End Class
 '		If Ktrl Then
 '			MsgBox("Onlogische situatie!")
 '		Else
-'			RecordToVeld(TableOfProductsAndServices)
+'			RecordToField(TableOfProductsAndServices)
 '		End If
 '		If bhEuro Then
 '			Bedragv121 = Val(AdoGetField(TableOfProductsAndServices, "#e121 #")) + (Aantal * TotaalPrijs)
@@ -462,7 +462,7 @@ End Class
 '			JetGet(TableOfProductsAndServices, 0, Mid(rsKPK.Fields("v005").Value, 3))
 '			If Ktrl Then
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 
 '				LblProduktInfo.Text = AdoGetField(TableOfProductsAndServices, "#v102 #") & vbCr & AdoGetField(TableOfProductsAndServices, "#v105 #")
 '				CmdSProdukt.Text = AdoGetField(TableOfProductsAndServices, "#v102 #")
@@ -475,7 +475,7 @@ End Class
 '					JetGet(TableOfProductsAndServices, 0, (AAA))
 '					If Ktrl Then
 '					Else
-'						RecordToVeld(TableOfProductsAndServices)
+'						RecordToField(TableOfProductsAndServices)
 '						aa = AdoGetField(TableOfProductsAndServices, "#v102 #") & vbTab
 '						aa = aa & AdoGetField(TableOfProductsAndServices, "#v105 #") & vbTab
 '						aa = aa & Dec(Val(AdoGetField(TableOfProductsAndServices, "#e113 #")), MaskSy(2) & "00") & vbTab
@@ -586,7 +586,7 @@ End Class
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				LblProduktInfo.Text = AdoGetField(TableOfProductsAndServices, "#v102 #") & vbCr & AdoGetField(TableOfProductsAndServices, "#v105 #")
 '				CmdSProdukt.Text = AdoGetField(TableOfProductsAndServices, "#v102 #")
 '				If bhEuro Then
@@ -603,7 +603,7 @@ End Class
 '					JetGet(TableOfProductsAndServices, 0, (AAA))
 '					If Ktrl Then
 '					Else
-'						RecordToVeld(TableOfProductsAndServices)
+'						RecordToField(TableOfProductsAndServices)
 '						aa = AdoGetField(TableOfProductsAndServices, "#v102 #") & vbTab
 '						aa = aa & AdoGetField(TableOfProductsAndServices, "#v105 #") & vbTab
 '						If bhEuro Then
@@ -625,7 +625,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
 '				Else
-'					RecordToVeld(TableOfProductsAndServices)
+'					RecordToField(TableOfProductsAndServices)
 '					If bhEuro Then
 '						AdoInsertToRecord(TableOfProductsAndServices, Dec(CDbl(LblVerkoopNieuw.Text), "#######.000000"), "e112")
 '						AdoInsertToRecord(TableOfProductsAndServices, Dec(CDbl(LblAankoopNieuw.Text), "#######.000000"), "e113")
@@ -736,7 +736,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("onlogische situatie")
 '				Else
-'					RecordToVeld(TableOfProductsAndServices)
+'					RecordToField(TableOfProductsAndServices)
 '					If bhEuro Then
 '						AdoInsertToRecord(TableOfProductsAndServices, Dec(CDbl(LblVerkoopNieuw.Text), "#######.000000"), "e112")
 '						AdoInsertToRecord(TableOfProductsAndServices, Dec(CDbl(LblAankoopNieuw.Text), "#######.000000"), "e113")
@@ -835,7 +835,7 @@ End Class
 '			JetGet(TableOfProductsAndServices, 0, Mid(rsKPK.Fields("v005").Value, 3))
 '			If Ktrl Then
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				X = LijstInstal
 '				If Not PrijsAantepassen Then
 '					' Add a ListItem object.
@@ -938,10 +938,10 @@ End Class
 '			If Ktrl Then
 '				MsgBox("Onlogische situatie", MsgBoxStyle.Critical)
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				X = LijstInstal
 '				JetGet(TableOfProductsAndServices, 0, VB.Left(TempoTekst, InStr(TempoTekst, vbCr) - 1))
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				AdoInsertToRecord(TableOfProductsAndServices, Dec(TotaalVerkoopNieuw, "#######.000000"), "e112")
 '				AdoInsertToRecord(TableOfProductsAndServices, Dec(TotaalAankoopNieuw, "#######.000000"), "e113")
 '				bUpdate(TableOfProductsAndServices, 0)
@@ -1073,7 +1073,7 @@ End Class
 '			LblVerkoopNieuw.Text = VB6.Format(0, "#,##0.000000")
 '		Else
 '			Do 
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub VoegLijnERBij
 '				bNext(TableOfVarious)
@@ -1097,7 +1097,7 @@ End Class
 '				aa = aa & "0" & vbTab
 '				aa = aa & "--" & vbTab
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				aa = AdoGetField(TableOfProductsAndServices, "#v102 #") & vbTab
 '				aa = aa & AdoGetField(TableOfProductsAndServices, "#v105 #") & vbTab
 '				aa = aa & Dec(Val(AdoGetField(TableOfProductsAndServices, "#e113 #")), MaskSy(2) & "00") & vbTab
@@ -1187,7 +1187,7 @@ End Class
 '			AantalDeelProdukten = 0
 '		Else
 '			Do 
-'				RecordToVeld(TableOfVarious)
+'				RecordToField(TableOfVarious)
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '				GoSub VoegLijnERBij2
 '				bNext(TableOfVarious)
@@ -1209,7 +1209,7 @@ End Class
 '				aa = aa & "0" & vbTab
 '				aa = aa & "--" & vbTab
 '			Else
-'				RecordToVeld(TableOfProductsAndServices)
+'				RecordToField(TableOfProductsAndServices)
 '				aa = AdoGetField(TableOfProductsAndServices, "#v102 #") & vbTab
 '				aa = aa & AdoGetField(TableOfProductsAndServices, "#v105 #") & vbTab
 '				aa = aa & Dec(Val(AdoGetField(TableOfProductsAndServices, "#e113 #")), MaskSy(2) & "00") & vbTab

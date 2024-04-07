@@ -183,7 +183,7 @@ End Class
 '				If Ktrl Then
 '					MsgBox("OnlogicaStop")
 '				Else
-'					RecordToVeld(TableOfLedgerAccounts)
+'					RecordToField(TableOfLedgerAccounts)
 '					TekstInfo(0).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
 '					TekstInfo(1).Text = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '					TekstInfo(2).TabIndex = 0
@@ -320,7 +320,7 @@ End Class
 '							TekstInfo(1).Text = ""
 '							Ok.Enabled = False
 '						Else
-'							RecordToVeld(TableOfLedgerAccounts)
+'							RecordToField(TableOfLedgerAccounts)
 '							TekstInfo(0).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
 '							TekstInfo(1).Text = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '							Ok.Enabled = True
@@ -335,7 +335,7 @@ End Class
 '							TekstInfo(4).Text = ""
 '							Ok.Enabled = False
 '						Else
-'							RecordToVeld(TableOfProductsAndServices)
+'							RecordToField(TableOfProductsAndServices)
 '							TekstInfo(3).Text = AdoGetField(TableOfProductsAndServices, "#v102 #")
 '							TekstInfo(4).Text = AdoGetField(TableOfProductsAndServices, "#v105 #")
 '							JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(TableOfProductsAndServices, "#v116 #"), 7))
@@ -343,7 +343,7 @@ End Class
 '								TekstInfo(1).Text = ""
 '								Ok.Enabled = False
 '							Else
-'								RecordToVeld(TableOfLedgerAccounts)
+'								RecordToField(TableOfLedgerAccounts)
 '								TekstInfo(0).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
 '								TekstInfo(1).Text = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '								Ok.Enabled = True
@@ -392,7 +392,7 @@ End Class
 '					TekstInfo(0).Text = ""
 '					TekstInfo(1).Text = ""
 '				Else
-'					RecordToVeld(TableOfLedgerAccounts)
+'					RecordToField(TableOfLedgerAccounts)
 '					TekstInfo(0).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
 '					TekstInfo(1).Text = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '				End If
@@ -415,7 +415,7 @@ End Class
 '						TekstInfo(3).Focus()
 '					End If
 '				Else
-'					RecordToVeld(TableOfProductsAndServices)
+'					RecordToField(TableOfProductsAndServices)
 '					TekstInfo(3).Text = AdoGetField(TableOfProductsAndServices, "#v102 #")
 '					TekstInfo(4).Text = AdoGetField(TableOfProductsAndServices, "#v105 #")
 '					JetGet(TableOfLedgerAccounts, 0, SetSpacing(AdoGetField(TableOfProductsAndServices, "#v116 #"), 7))
@@ -423,7 +423,7 @@ End Class
 '						TekstInfo(1).Text = ""
 '						Ok.Enabled = False
 '					Else
-'						RecordToVeld(TableOfLedgerAccounts)
+'						RecordToField(TableOfLedgerAccounts)
 '						TekstInfo(0).Text = AdoGetField(TableOfLedgerAccounts, "#v019 #")
 '						TekstInfo(1).Text = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '						Ok.Enabled = True

@@ -22,7 +22,7 @@ Public Class FrmBasicSheetTemplate
         If Ktrl Then
             MsgBox("stop")
         Else
-            RecordToVeld(hierFl)
+            RecordToField(hierFl)
         End If
         lastKey = AdoGetField(hierFl, "#" & JetTableUseIndex(hierFl, 0) & "#")
         codeTextBox.Text = lastKey

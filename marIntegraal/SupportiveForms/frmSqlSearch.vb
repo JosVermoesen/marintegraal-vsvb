@@ -45,7 +45,7 @@ Public Class SqlSearch
         If Ktrl Then
             MsgBox("InitSQL")
         Else
-            RecordToVeld(TableOfVarious)
+            RecordToField(TableOfVarious)
             Msg = AdoGetField(TableOfVarious, "#v132 #")
             If InStr(UCase(Msg), "WHERE") Then
                 Msg = Mid(Msg, 1, InStr(UCase(Msg), " WHERE ") - 1)
@@ -192,7 +192,7 @@ InitSQL:
                 txtTeZoeken.Focus()
                 Exit Sub
             Else
-                RecordToVeld(SharedFl)
+                RecordToField(SharedFl)
             End If
             Close()
 

@@ -296,7 +296,7 @@ Public Class BetalingsVerzoek
 		If Ktrl Then
 			CommissieCheck = 0
 		Else
-			RecordToVeld(TableOfVarious)
+			RecordToField(TableOfVarious)
 			NettoPremie = Val(AdoGetField(TableOfVarious, "#B013 #"))
 			Commissie = Val(AdoGetField(TableOfVarious, "#B014 #"))
 			If NettoPremie = 0 Then
@@ -364,7 +364,7 @@ Public Class BetalingsVerzoek
 				If Ktrl Then
 					Dummy = "KlantLink onmogelijk !!! Kontroleer !!!"
 				Else
-					RecordToVeld(TableOfCustomers)
+					RecordToField(TableOfCustomers)
 					Dummy = Trim(AdoGetField(TableOfCustomers, "#A100 #") & " " & AdoGetField(TableOfCustomers, "#A101 #"))
 				End If
 
@@ -417,7 +417,7 @@ Public Class BetalingsVerzoek
 				TaksEnKost = 0
 				If Ktrl Then
 				Else
-					RecordToVeld(TableOfVarious)
+					RecordToField(TableOfVarious)
 					If Val(strB010) = Val(AdoGetField(TableOfVarious, "#B010 #")) Then
 						TaksEnKost = Val(AdoGetField(TableOfVarious, "#B011 #"))
 					End If
@@ -524,7 +524,7 @@ Public Class BetalingsVerzoek
 			If Ktrl Then
 				MsgBox("Stop")
 			Else
-				RecordToVeld(TableOfContracts)'				
+				RecordToField(TableOfContracts)'				
 			End If
 			teldetail = 0
 			'TotaalBEF = 0
@@ -534,7 +534,7 @@ Public Class BetalingsVerzoek
 			If Ktrl Then
 				MsgBox("stop")
 			Else
-				RecordToVeld(TableOfCustomers)
+				RecordToField(TableOfCustomers)
 			End If
 
 			KlantNummer = AdoGetField(TableOfCustomers, "#A110 #")
@@ -542,7 +542,7 @@ Public Class BetalingsVerzoek
 			If Ktrl Then
 				Beep()
 			Else
-				RecordToVeld(TableOfSuppliers)
+				RecordToField(TableOfSuppliers)
 			End If
 
 			JetGet(TableOfVarious, 1, "25" & SetSpacing(AdoGetField(TableOfContracts, "#A010 #"), 4) & AdoGetField(TableOfContracts, "#A000 #"))
@@ -550,7 +550,7 @@ Public Class BetalingsVerzoek
 			TaksEnKost = 0
 			If Ktrl Then
 			Else
-				RecordToVeld(TableOfVarious)
+				RecordToField(TableOfVarious)
 				If Val(AdoGetField(TableOfContracts, "#B010 #")) = Val(AdoGetField(TableOfVarious, "#B010 #")) Then
 					TaksEnKost = Val(AdoGetField(TableOfVarious, "#B011 #"))
 					BrutoPremie = Val(AdoGetField(TableOfVarious, "#B013 #"))

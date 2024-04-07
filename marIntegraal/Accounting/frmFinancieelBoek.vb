@@ -16,7 +16,7 @@ End Class
 '	Dim TotalCredit As Decimal
 
 '	Dim LFontSize(20) As Single
-'	Dim LAantalL(20) As Short
+'	Dim LNumberL(20) As Short
 '	Dim FontDefChanged As Short
 
 '	Dim FieldText(17) As String
@@ -117,7 +117,7 @@ End Class
 '		Exit Sub
 
 'VolgendeLijn: 
-'		RecordToVeld(FlJournaal)
+'		RecordToField(FlJournaal)
 '		If SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7) = VB.Left(KeuzeInfo(0).Text, 7) Then
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
@@ -138,7 +138,7 @@ End Class
 '		If Ktrl Then
 '			A = A & "//" & vbTab
 '		Else
-'			RecordToVeld(TableOfLedgerAccounts)
+'			RecordToField(TableOfLedgerAccounts)
 '			A = A & AdoGetField(TableOfLedgerAccounts, "#v020 #") & vbTab
 '		End If
 '		A = A & rsMAR(FlJournaal).Fields("v068").Value & vbTab
@@ -183,7 +183,7 @@ End Class
 '			Err.Clear()
 '			On Error Resume Next
 '			If Err.Number - 480 > 0 Then Exit Sub
-'			PrintTitel()
+'			VpePrintHeader()
 '			PrintTotal()
 '		End If
 '		Printer.Print()
@@ -192,12 +192,12 @@ End Class
 
 '		JetTableClose(TableDummy)
 '		JetGetFirst(TableDummy, 0)
-'		RecordToVeld(TableDummy)
+'		RecordToField(TableDummy)
 '		JetGet(TableOfLedgerAccounts, 0, VB.Left(FVT(TableDummy, 0), 7))
 '		If Ktrl Then
 '			RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '		Else
-'			RecordToVeld(TableOfLedgerAccounts)
+'			RecordToField(TableOfLedgerAccounts)
 '			RekeningNaam.Value = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '		End If
 '		Tabul = 0
@@ -208,12 +208,12 @@ End Class
 '			If Ktrl Then
 '				Exit Do
 '			End If
-'			RecordToVeld(TableDummy)
+'			RecordToField(TableDummy)
 '			JetGet(TableOfLedgerAccounts, 0, VB.Left(FVT(TableDummy, 0), 7))
 '			If Ktrl Then
 '				RekeningNaam.Value = "Rekening reeds vernietigd !!!"
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				RekeningNaam.Value = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '			End If
 '			If Tabul = 0 Then
@@ -272,7 +272,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim Printer As New Printer
 '		Dim bModDummy As Short
 '		Dim TelUittreksel As Short
@@ -297,7 +297,7 @@ End Class
 '		If UittrekselsLijst.Items.Count = 0 Then
 '			Exit Sub
 '		Else
-'			InitializeFields()
+'			InitialiseFields()
 '			JetTableClose(TableDummy)
 '			ClearFlDummy()
 '			Ktrl = JetTableOpen(TableDummy)
@@ -318,7 +318,7 @@ End Class
 '					Printer.FontBold = True
 '				End If
 '			End If
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '		For TelUittreksel = 0 To UittrekselsLijst.Items.Count - 1
@@ -404,7 +404,7 @@ End Class
 '		Return 
 
 'PrintInfo: 
-'		RecordToVeld(FlJournaal)
+'		RecordToField(FlJournaal)
 '		If SetSpacing(AdoGetField(FlJournaal, "#v019 #"), 7) = VB.Left(KeuzeInfo(0).Text, 7) Then
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
@@ -424,7 +424,7 @@ End Class
 '		If Ktrl Then
 '			FieldText(2) = "Reeds vernietigd..."
 '		Else
-'			RecordToVeld(TableOfLedgerAccounts)
+'			RecordToField(TableOfLedgerAccounts)
 '			FieldText(2) = AdoGetField(TableOfLedgerAccounts, "#v020 #")
 '		End If
 '		FieldText(3) = AdoGetField(FlJournaal, "#v067 #")
@@ -466,7 +466,7 @@ End Class
 '			JetInsert(TableDummy, 0)
 '			GoTo StartPunt
 '		Else
-'			RecordToVeld(TableDummy)
+'			RecordToField(TableDummy)
 '			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v013 #")) + 1), "v013")
 '			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v068 #")) + HetBedrag), "v068")
 '			bUpdate(TableDummy, 0)
@@ -541,7 +541,7 @@ End Class
 '			If Ktrl Then
 '				A = RekeningNummer(T) & Chr(124) & "Niet aanwezig. Setup Boekjaar!"
 '			Else
-'				RecordToVeld(TableOfLedgerAccounts)
+'				RecordToField(TableOfLedgerAccounts)
 '				A = RekeningNummer(T) & Chr(124) & RTrim(AdoGetField(TableOfLedgerAccounts, "#v020 #"))
 '			End If
 '			JetGetFirst(FlJournaal, 0)
@@ -559,7 +559,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 
 '		ReportField(0) = "Datum"
 '		ReportTab(0) = 2
@@ -632,7 +632,7 @@ End Class
 '		Exit Sub
 
 'VoegErBij: 
-'		RecordToVeld(FlJournaal)
+'		RecordToField(FlJournaal)
 '		If Len(AdoGetField(FlJournaal, "#v038 #")) <> 8 Then
 '			'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '			Return 
@@ -655,7 +655,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -744,7 +744,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 '		Exit Sub
 
@@ -789,7 +789,7 @@ End Class
 '						If Ktrl Then
 '							A = RekeningNummer(T) & Chr(124) & "Niet aanwezig. Setup Boekjaar!"
 '						Else
-'							RecordToVeld(TableOfLedgerAccounts)
+'							RecordToField(TableOfLedgerAccounts)
 '							A = RekeningNummer(T) & Chr(124) & RTrim(AdoGetField(TableOfLedgerAccounts, "#v020 #"))
 '						End If
 '						JetGetFirst(FlJournaal, 0)

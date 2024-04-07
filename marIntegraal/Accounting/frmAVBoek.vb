@@ -2,19 +2,28 @@
 Option Explicit On
 
 Public Class AVBoek
-	Dim getal As Integer
+	Dim NumberHere As Integer
 
-	Dim psTekst(5) As String
-	Dim RapportVeldNr(23) As Short
-	Dim RapportManier(23) As Short
-	Dim KolomTotaal(17) As Decimal
+	Dim psText(5) As String
+	Dim ReportFieldNr(23) As Short
+	Dim ReportWay(23) As Short
+	Dim ColumnTotal(17) As Decimal
 	Dim T As Short
 
 	Dim LFontSize(20) As Single
 	Dim LAantalL(20) As Short
 	Dim FontDefChanged As Short
 
-	Dim LijstNaam As String
+	Dim Line
+	Dim ReportText(5) As String
+	Dim ListName As String
+	Dim ListSubName As String
+
+	Dim pdfReportTitle As String
+	Dim pdfReportTitle2 As String
+
+	Dim pdfY As Double
+
 	Dim rFlag As String
 	Dim r(10) As String
 	Dim FlBtw As Short
@@ -50,103 +59,39 @@ Public Class AVBoek
 		End If
 
 		tbDatumDrukken.Text = MimGlobalDate
-			   
+
 		Select Case aIndex
 			Case TableOfSuppliers
-				LijstNaam = "Aankoopboek"
-				aIndex = TableOfSuppliers 
+				ListName = "Aankoopboek"
+				aIndex = TableOfSuppliers
 			Case TableOfCustomers
-				LijstNaam = "Verkoopboek"
-				aIndex = TableOfCustomers 
+				ListName = "Verkoopboek"
+				aIndex = TableOfCustomers
 			Case Else
 				MsgBox("Stop")
 		End Select
-		Me.Text = LijstNaam
+		Text = ListName
 
-		agfControle
-		rbFactuur.Checked = True 
-
-	End Sub
-
-	Sub AgfControle
-
-		Dim PeriodeSleutel As String 
-		Dim T As Integer 
-		Dim PeriodeMax As Integer 
-
-		Ktrl = 0
-		PeriodeMax = frmBYPERDAT.PeriodeBoekjaar.Items.Count + 1
-		Do While PeriodeMax > frmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1
-			PeriodeSleutel = "17" & frmBYPERDAT.Boekjaar.Text & Format(PeriodeMax, "00")
-			JetGet(TableOfVarious, 1, PeriodeSleutel)
-			If Ktrl Then
-				TLBRecord(TableOfVarious) = ""
-				AdoInsertToRecord(TableOfVarious, (frmBYPERDAT.Boekjaar.Text), "v090")
-				AdoInsertToRecord(TableOfVarious, Format(PeriodeMax, "00"), "v091")
-				AdoInsertToRecord(TableOfVarious, "17" & AdoGetField(TableOfVarious, "#v090 #") & AdoGetField(TableOfVarious, "#v091 #"), "v005")
-				JetInsert(TableOfVarious, 1)
-			Else
-				RecordToVeld(TableOfVarious)
-				getal = 0
-				For T = 92 To 99
-					getal = getal + Val(AdoGetField(TableOfVarious, "#v" & Format(T, "000") & " #"))
-				Next 
-				If getal Then
-					getal = PeriodeMax
-					PeriodeMax = 0
-					Exit Do
-				End If
-			End If
-			PeriodeMax = PeriodeMax - 1
-		Loop 
-jump: 
-		If getal Then
-			MsgBox("Periode " & Format(getal, "00") & " reeds afgesloten...")
-			Drukken.Visible = False
-			Exit Sub
-		Else
-			PeriodeSleutel = "17" & frmBYPERDAT.Boekjaar.Text & Format(frmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")
-			JetGet(TableOfVarious, 1, PeriodeSleutel)
-			If Ktrl Then
-				TLBRecord(TableOfVarious) = ""
-				AdoInsertToRecord(TableOfVarious, (frmBYPERDAT.Boekjaar.Text), "v090")
-				AdoInsertToRecord(TableOfVarious, Format(frmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00"), "v091")
-				AdoInsertToRecord(TableOfVarious, "17" & AdoGetField(TableOfVarious, "#v090 #") & AdoGetField(TableOfVarious, "#v091 #"), "v005")
-				JetInsert(TableOfVarious, 1)
-				GoTo jump
-			Else
-				RecordToVeld(TableOfVarious)
-			End If
-		End If
-
-		If Mid(String99(Reading, 20), 1, 1) = "4" Then
-			ForFait = 1
-		Else
-			ForFait = 0
-		End If		
-		
-	End Sub
-
-	Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-
-		Close
+		AgfControle()
+		rbFactuur.Checked = True
 
 	End Sub
 
 	Private Sub RbFactuur_CheckedChanged(sender As Object, e As EventArgs) Handles rbFactuur.CheckedChanged
 
-		FactuurCreditnotaCheck 
+		FactuurCreditnotaCheck()
 
 	End Sub
 
 	Private Sub RbCreditnota_CheckedChanged(sender As Object, e As EventArgs) Handles rbCreditnota.CheckedChanged
 
-		FactuurCreditnotaCheck 
+		FactuurCreditnotaCheck()
 
 	End Sub
 
-	Sub FactuurCreditnotaCheck
+	Sub FactuurCreditnotaCheck()
 
+		InitialiseFields()
 		Select Case aIndex
 			Case TableOfSuppliers
 				T = 0
@@ -156,64 +101,358 @@ jump:
 				MsgBox("Stop")
 		End Select
 
-		getal = 0
-		Select Case rbFactuur.Checked 
-			Case True 'Faktuur
+		NumberHere = 0
+		Select Case rbFactuur.Checked
+			Case True 'Factuur
+				ListSubName = "Facturen"
 				Fl99Record = String99(Reading, 1 + T)
 				tbTOT.Text = Format(Val(Fl99Record), "00000")
 				Fl99Record = String99(Reading, 2 + T)
 				If Format(Val(Fl99Record), "00000") = tbTOT.Text Then
-					Drukken.Enabled = False
+					ButtonGenerateReport.Enabled = False
 					TekstVan.Text = Format(Val(Fl99Record), "00000")
 				Else
-					Drukken.Enabled = True
+					ButtonGenerateReport.Enabled = True
 					TekstVan.Text = Format(Val(Fl99Record) + 1, "00000")
 				End If
 				If aIndex = TableOfSuppliers Then
 					Ar = 1
-					getal = Val(AdoGetField(TableOfVarious, "#v092 #")) + Val(AdoGetField(TableOfVarious, "#v093 #"))
+					NumberHere = Val(AdoGetField(TableOfVarious, "#v092 #")) + Val(AdoGetField(TableOfVarious, "#v093 #"))
 				Else
 					Ar = 12
-					getal = Val(AdoGetField(TableOfVarious, "#v096 #")) + Val(AdoGetField(TableOfVarious, "#v097 #"))
+					NumberHere = Val(AdoGetField(TableOfVarious, "#v096 #")) + Val(AdoGetField(TableOfVarious, "#v097 #"))
 				End If
 			Case Else
+				ListSubName = "Creditnota's"
 				Fl99Record = String99(Reading, 3 + T)
 				tbTOT.Text = Format(Val(Fl99Record), "00000")
 				Fl99Record = String99(Reading, 4 + T)
 				If Format(Val(Fl99Record), "00000") = tbTOT.Text Then
-					Drukken.Enabled = False
+					ButtonGenerateReport.Enabled = False
 					TekstVan.Text = Format(Val(Fl99Record), "00000")
 				Else
-					Drukken.Enabled = True
+					ButtonGenerateReport.Enabled = True
 					TekstVan.Text = Format(Val(Fl99Record) + 1, "00000")
 				End If
 				If aIndex = TableOfSuppliers Then
 					Ar = 3
-					getal = Val(AdoGetField(TableOfVarious, "#v094 #")) + Val(AdoGetField(TableOfVarious, "#v095 #"))
+					NumberHere = Val(AdoGetField(TableOfVarious, "#v094 #")) + Val(AdoGetField(TableOfVarious, "#v095 #"))
 				Else
 					Ar = 14
-					getal = Val(AdoGetField(TableOfVarious, "#v098 #")) + Val(AdoGetField(TableOfVarious, "#v099 #"))
+					NumberHere = Val(AdoGetField(TableOfVarious, "#v098 #")) + Val(AdoGetField(TableOfVarious, "#v099 #"))
 				End If
 		End Select
-		If getal Then
+		If NumberHere Then
 			MsgBox("Binnen deze periode, zijn er reeds" & vbCrLf & "dokumenten opgenomen !", 0, "BTW aangifte kontroleren a.u.b. !")
-			Drukken.Enabled = False
+			ButtonGenerateReport.Enabled = False
 		Else
 			'Drukken.Enabled = True
 		End If
 	End Sub
-	
-	Private Sub TbDatumDrukken_Leave(sender As Object, e As EventArgs) Handles tbDatumDrukken.Leave
 
-		If Not DatumKtrl(tbDatumDrukken.Text, PeriodAsText) Then
-			Beep()
-			frmBYPERDAT.WindowState = FormWindowState.Normal
-			frmBYPERDAT.Focus()
-			tbDatumDrukken.Focus()            
+	Sub AgfControle()
+
+		Dim PeriodeSleutel As String
+		Dim T As Integer
+		Dim PeriodeMax As Integer
+
+		Ktrl = 0
+		PeriodeMax = FrmBYPERDAT.PeriodeBoekjaar.Items.Count + 1
+		Do While PeriodeMax > FrmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1
+			PeriodeSleutel = "17" & FrmBYPERDAT.Boekjaar.Text & Format(PeriodeMax, "00")
+			JetGet(TableOfVarious, 1, PeriodeSleutel)
+			If Ktrl Then
+				TLBRecord(TableOfVarious) = ""
+				AdoInsertToRecord(TableOfVarious, (FrmBYPERDAT.Boekjaar.Text), "v090")
+				AdoInsertToRecord(TableOfVarious, Format(PeriodeMax, "00"), "v091")
+				AdoInsertToRecord(TableOfVarious, "17" & AdoGetField(TableOfVarious, "#v090 #") & AdoGetField(TableOfVarious, "#v091 #"), "v005")
+				JetInsert(TableOfVarious, 1)
+			Else
+				RecordToField(TableOfVarious)
+				NumberHere = 0
+				For T = 92 To 99
+					NumberHere += Val(AdoGetField(TableOfVarious, "#v" & Format(T, "000") & " #"))
+				Next
+				If NumberHere Then
+					NumberHere = PeriodeMax
+					PeriodeMax = 0
+					Exit Do
+				End If
+			End If
+			PeriodeMax -= 1
+		Loop
+jump:
+		If NumberHere Then
+			MsgBox("Periode " & Format(NumberHere, "00") & " reeds afgesloten...")
+			ButtonGenerateReport.Visible = False
+			Exit Sub
+		Else
+			PeriodeSleutel = "17" & FrmBYPERDAT.Boekjaar.Text & Format(FrmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")
+			JetGet(TableOfVarious, 1, PeriodeSleutel)
+			If Ktrl Then
+				TLBRecord(TableOfVarious) = ""
+				AdoInsertToRecord(TableOfVarious, (FrmBYPERDAT.Boekjaar.Text), "v090")
+				AdoInsertToRecord(TableOfVarious, Format(FrmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00"), "v091")
+				AdoInsertToRecord(TableOfVarious, "17" & AdoGetField(TableOfVarious, "#v090 #") & AdoGetField(TableOfVarious, "#v091 #"), "v005")
+				JetInsert(TableOfVarious, 1)
+				GoTo jump
+			Else
+				RecordToField(TableOfVarious)
+			End If
+		End If
+
+		If Mid(String99(Reading, 20), 1, 1) = "4" Then
+			ForFait = 1
+		Else
+			ForFait = 0
 		End If
 
 	End Sub
-		
+
+	Private Sub InitialiseFields()
+		Dim T As Short
+
+		ReportFieldNr(0) = 33
+		ReportWay(0) = 0 'niks omwerken gewoon afdrukken
+		ReportField(0) = "Document"
+		ReportTab(0) = 2
+
+		ReportFieldNr(1) = 35
+		ReportWay(1) = 5 'datum omwerken
+		ReportField(1) = "Datum dok."
+		ReportTab(1) = 14
+
+		Select Case aIndex
+			Case TableOfSuppliers
+				ReportFieldNr(2) = 39
+				ReportWay(2) = 0
+				ReportField(2) = "Referte"
+				ReportTab(2) = 25
+
+				ReportFieldNr(3) = 46
+				ReportWay(3) = 9 'geheel NumberHere geformateerd
+				ReportField(3) = "   VAK 81"
+				ReportTab(3) = 46
+
+				ReportFieldNr(4) = 47
+				ReportWay(4) = 9
+				ReportField(4) = "   VAK 82"
+				ReportTab(4) = 56
+
+				ReportFieldNr(5) = 48
+				ReportWay(5) = 9
+				ReportField(5) = "   VAK 83"
+				ReportTab(5) = 66
+
+				ReportFieldNr(6) = 49
+				ReportWay(6) = 9
+				ReportField(6) = "   DERDEN"
+				ReportTab(6) = 76
+
+				ReportFieldNr(7) = 50
+				ReportWay(7) = 9
+				ReportField(7) = "   VAK 84"
+				ReportTab(7) = 86
+
+				ReportFieldNr(8) = 51
+				ReportWay(8) = 9
+				ReportField(8) = "   VAK 85"
+				ReportTab(8) = 96
+
+				ReportFieldNr(9) = 52
+				ReportWay(9) = 9
+				ReportField(9) = "   VAK 86"
+				ReportTab(9) = 106
+
+				ReportFieldNr(10) = 99
+				ReportWay(10) = 1 'zoek flpartij kode+naam1
+				ReportField(10) = "ID.Kode/Naam"
+				ReportTab(10) = 2
+
+				ReportFieldNr(11) = 53
+				ReportWay(11) = 9
+				ReportField(11) = "   VAK 87"
+				ReportTab(11) = 56
+
+				ReportFieldNr(12) = 54
+				ReportWay(12) = 9
+				ReportField(12) = "   VAK 88"
+				ReportTab(12) = 66
+
+				ReportFieldNr(13) = 42
+				ReportWay(13) = 9
+				ReportField(13) = "   VAK 55"
+				ReportTab(13) = 76
+
+				ReportFieldNr(14) = 43
+				ReportWay(14) = 9
+				ReportField(14) = "   VAK 56"
+				ReportTab(14) = 86
+
+				ReportFieldNr(15) = 44
+				ReportWay(15) = 9
+				ReportField(15) = "   VAK 57"
+				ReportTab(15) = 96
+
+				ReportFieldNr(16) = 45
+				ReportWay(16) = 9
+				ReportTab(16) = 106
+
+				Select Case Ar
+					Case 1
+						ReportField(16) = "   VAK 59"
+					Case Else
+						ReportField(16) = "   VAK 63"
+				End Select
+				ReportTab(17) = 0
+				tMaxVeld = 16
+
+			Case TableOfCustomers
+				ReportFieldNr(2) = 55
+				ReportWay(2) = 9 'geheel NumberHere geformateerd
+				ReportField(2) = "VAK 00"
+				ReportTab(2) = 44
+
+				ReportFieldNr(3) = 56
+				ReportWay(3) = 9
+				ReportField(3) = "VAK 01"
+				ReportTab(3) = 55
+
+				ReportFieldNr(4) = 57
+				ReportWay(4) = 9
+				ReportField(4) = "VAK 02"
+				ReportTab(4) = 66
+
+				ReportFieldNr(5) = 58
+				ReportWay(5) = 9
+				ReportField(5) = "VAK 03"
+				ReportTab(5) = 77
+
+				ReportFieldNr(6) = 59
+				ReportWay(6) = 9
+				ReportField(6) = "VAK 45"
+				ReportTab(6) = 88
+
+				ReportFieldNr(7) = 60
+				ReportWay(7) = 9
+				ReportField(7) = "VAK 46"
+				ReportTab(7) = 99
+
+				ReportFieldNr(8) = 61
+				ReportWay(8) = 9
+				ReportField(8) = "VAK 47"
+				ReportTab(8) = 110
+
+				ReportFieldNr(9) = 99
+				ReportWay(9) = 1
+				ReportField(9) = "ID.Kode/Naam"
+				ReportTab(9) = 2
+
+				ReportFieldNr(10) = 62
+				ReportWay(10) = 9
+				ReportField(10) = "VAK 48"
+				ReportTab(10) = 77
+
+
+				ReportFieldNr(11) = 63
+				ReportWay(11) = 9
+				ReportField(11) = "VAK 49"
+				ReportTab(11) = 88
+
+				ReportFieldNr(12) = 64
+				ReportWay(12) = 9
+				ReportTab(12) = 99
+
+				Select Case Ar
+					Case 12
+						ReportField(12) = "VAK 54"
+					Case Else
+						ReportField(12) = "VAK 64"
+				End Select
+				tMaxVeld = 12
+				ReportTab(13) = 0
+		End Select
+
+		For T = 0 To 17
+			ColumnTotal(T) = 0
+		Next
+
+		Dim SecondLine = False
+		pdfReportTitle = Space(128)
+		pdfReportTitle2 = Space(128)
+		For T = 0 To tMaxVeld
+			Select Case SecondLine
+				Case False
+					Mid(pdfReportTitle, ReportTab(T)) = ReportField(T)
+					If ReportTab(T + 1) < ReportTab(T) Then SecondLine = True
+				Case True
+					Mid(pdfReportTitle2, ReportTab(T)) = ReportField(T)
+			End Select
+		Next
+
+	End Sub
+
+	Private Sub VpePrintHeader()
+
+		With Mim.Report
+			.SelectFont("Courier New", 7.2)
+			.TextBold = True
+			.TextColor = ColorTranslator.FromOle(0) 'zwart
+
+			.nTopMargin = 1
+			.nBottomMargin = 29
+			.nLeftMargin = 0.5
+			.nRightMargin = 0.5
+			.PenSize = 0.01
+		End With
+
+		PageCounter += 1
+		pdfY = Mim.Report.Print(1, 1, ReportText(2))
+		pdfY = Mim.Report.Print(17, 1, "Pagina : " & Dec(PageCounter, "##########") & vbCrLf)
+		pdfY = Mim.Report.Print(17, pdfY, "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
+		pdfY = Mim.Report.Print(1, pdfY, FullLine & vbCrLf)
+		pdfY = Mim.Report.Print(1, pdfY, pdfReportTitle & vbCrLf)
+		pdfY = Mim.Report.Print(1, pdfY, pdfReportTitle2 & vbCrLf)
+		pdfY = Mim.Report.Print(1, pdfY, FullLine & vbCrLf & vbCrLf)
+
+	End Sub
+
+	Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+
+		Close()
+
+	End Sub
+
+	Private Sub ButtonGenerateReport_Click(sender As Object, e As EventArgs) Handles ButtonGenerateReport.Click
+
+		MessageBox.Show("ButtonGenerateReport_Click")
+
+		With Mim.Report
+			.CloseDoc()
+			.OpenDoc()
+			.Author = "marIntegraal"
+			.GUILanguage = 3 'Nederlands
+			.Title = "Diverse Postenboek"
+		End With
+		ReportText(2) = ListName & " " & ListSubName & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+		ReportText(0) = tbDatumDrukken.Text
+		'ReportText(0) = DateTimePickerProcessingDate.Value
+		'ReportText(3) = TextBoxPeriodFromTo.Text
+		VpePrintHeader()
+		Line = 0
+
+		Mim.Report.Preview()
+	End Sub
+
+	Private Sub TbDatumDrukken_Leave(sender As Object, e As EventArgs) Handles tbDatumDrukken.Leave
+
+		If Not DatumKtrl(tbDatumDrukken.Text, PeriodAsText) Then
+			MessageBox.Show("Datum verwerking buiten periode" & vbCrLf & vbCrLf & FrmBYPERDAT.PeriodeBoekjaar.Text & "!", "Datum controle", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+			tbDatumDrukken.Focus()
+		End If
+
+	End Sub
+
 End Class
 
 
@@ -238,7 +477,7 @@ End Class
 '			Printer.Print(" ")
 '			Printer.FontSize = 7.2
 '		End If
-'		PrintTitel()
+'		VpePrintHeader()
 '		PrintTotal()
 
 '		Printer.Print()
@@ -331,7 +570,7 @@ End Class
 '				Printer.FontSize = Printer.FontSize
 '				Printer.Print(" ")
 '				Printer.FontSize = Printer.FontSize
-'				PrintTitel()
+'				VpePrintHeader()
 '			End If
 '			Printer.Write(vbCrLf)
 '			Tabul = 56
@@ -367,7 +606,7 @@ End Class
 '							Printer.FontSize = Printer.FontSize
 '							Printer.Print(" ")
 '							Printer.FontSize = Printer.FontSize
-'							PrintTitel()
+'							VpePrintHeader()
 '						End If
 '					Else
 '						Tabul = 0
@@ -392,7 +631,7 @@ End Class
 '				Printer.FontSize = Printer.FontSize
 '				Printer.Print(" ")
 '				Printer.FontSize = Printer.FontSize
-'				PrintTitel()
+'				VpePrintHeader()
 '			End If
 '		End If
 '		If chkAfdrukInVenster.CheckState = 0 Then
@@ -474,7 +713,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim Printer As New Printer
 '		Dim BeginSleutel As String
 '		Dim EindSleutel As String
@@ -487,7 +726,7 @@ End Class
 '		Dim Tel As Short
 
 '		For T = 0 To 17
-'			KolomTotaal(T) = 0
+'			ColumnTotal(T) = 0
 '		Next 
 '		For T = 0 To 99
 '			BedragForfait(T) = 0
@@ -515,10 +754,10 @@ End Class
 '				Tekst = FaktuurCreditnota(1).Text
 '		End Select
 
-'		ReportText(2) = LijstNaam & " " & Tekst & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(2) = ListName & " " & Tekst & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = TekstLijn(1).Text
 '		ReportText(3) = TekstLijn(0).Text
-'		InitializeFields()
+'		InitialiseFields()
 
 '		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 '		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
@@ -587,7 +826,7 @@ End Class
 '				Printer.FontBold = True
 '			End If
 '		End If
-'		PrintTitel()
+'		VpePrintHeader()
 
 
 '		Do While Not rsAVBoekHier.EOF
@@ -655,34 +894,34 @@ End Class
 '				Select Case Ar
 '					Case 1
 '						'Record Kontroleren, zou MOETEN op nul staan...
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(16)), "v045") 'vak 59
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(9)), "v052") 'vak 86
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(11)), "v053") 'vak 87
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(12)), "v054") 'vak 88
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(16)), "v045") 'vak 59
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(9)), "v052") 'vak 86
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(11)), "v053") 'vak 87
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(12)), "v054") 'vak 88
 
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstVan.Text), "00000"), "v092")
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstLijn(3).Text), "00000"), "v093")
 
 '					Case 3
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(16)), "v100") 'vak 63
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(7)), "v050") 'vak 84
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(8)), "v051") 'vak 85
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(16)), "v100") 'vak 63
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(7)), "v050") 'vak 84
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(8)), "v051") 'vak 85
 
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstVan.Text), "00000"), "v094")
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstLijn(3).Text), "00000"), "v095")
 '						For Tel = 3 To 16
-'							KolomTotaal(Tel) = -KolomTotaal(Tel)
+'							ColumnTotal(Tel) = -ColumnTotal(Tel)
 '						Next 
 '					Case Else
 '						MsgBox("Stop")
 '				End Select
 
-'				AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(13) + Val(AdoGetField(TableOfVarious, "#v042 #"))), "v042") 'vak 55
-'				AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(14) + Val(AdoGetField(TableOfVarious, "#v043 #"))), "v043") 'vak 56
-'				AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(15) + Val(AdoGetField(TableOfVarious, "#v044 #"))), "v044") 'vak 57
-'				AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(3) + Val(AdoGetField(TableOfVarious, "#v046 #"))), "v046") 'vak 81
-'				AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(4) + Val(AdoGetField(TableOfVarious, "#v047 #"))), "v047") 'vak 82
-'				AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(5) + Val(AdoGetField(TableOfVarious, "#v048 #"))), "v048") 'vak 83
+'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(13) + Val(AdoGetField(TableOfVarious, "#v042 #"))), "v042") 'vak 55
+'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(14) + Val(AdoGetField(TableOfVarious, "#v043 #"))), "v043") 'vak 56
+'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(15) + Val(AdoGetField(TableOfVarious, "#v044 #"))), "v044") 'vak 57
+'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(3) + Val(AdoGetField(TableOfVarious, "#v046 #"))), "v046") 'vak 81
+'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(4) + Val(AdoGetField(TableOfVarious, "#v047 #"))), "v047") 'vak 82
+'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(5) + Val(AdoGetField(TableOfVarious, "#v048 #"))), "v048") 'vak 83
 
 '				If ForFait Then
 '					AdoInsertToRecord(TableOfVarious, Str(VakForfait(0)), "v055") 'vak 00
@@ -695,25 +934,25 @@ End Class
 '			Case TableOfCustomers
 '				Select Case Ar
 '					Case 12
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(12)), "v064") 'vak 54
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(2) + Val(AdoGetField(TableOfVarious, "#v055 #"))), "v055") 'vak 00 bijtellen ?
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(12)), "v064") 'vak 54
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(2) + Val(AdoGetField(TableOfVarious, "#v055 #"))), "v055") 'vak 00 bijtellen ?
 
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(3)), "v056") 'vak 01
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(4)), "v057") 'vak 02
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(5)), "v058") 'vak 03
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(6)), "v059") 'vak 45
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(7)), "v060") 'vak 46
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(8)), "v061") 'vak 47
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(3)), "v056") 'vak 01
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(4)), "v057") 'vak 02
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(5)), "v058") 'vak 03
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(6)), "v059") 'vak 45
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(7)), "v060") 'vak 46
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(8)), "v061") 'vak 47
 
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstVan.Text), "00000"), "v096")
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstLijn(3).Text), "00000"), "v097")
 
 '					Case 14
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(12)), "v101") 'vak 64
-'						AdoInsertToRecord(TableOfVarious, Str(Val(AdoGetField(TableOfVarious, "#v055 #")) - KolomTotaal(2)), "v055") 'vak 00 aftrekken ?
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(12)), "v101") 'vak 64
+'						AdoInsertToRecord(TableOfVarious, Str(Val(AdoGetField(TableOfVarious, "#v055 #")) - ColumnTotal(2)), "v055") 'vak 00 aftrekken ?
 
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(10)), "v062") 'vak 48
-'						AdoInsertToRecord(TableOfVarious, Str(KolomTotaal(11)), "v063") 'vak 49
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(10)), "v062") 'vak 48
+'						AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(11)), "v063") 'vak 49
 
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstVan.Text), "00000"), "v098")
 '						AdoInsertToRecord(TableOfVarious, VB6.Format(Val(TekstLijn(3).Text), "00000"), "v099")
@@ -750,221 +989,6 @@ End Class
 
 '	End Sub
 
-'	Private Sub InitializeFields()
-'		Dim T As Short
-'		Dim VolgTab As Short
-
-'		RapportVeldNr(0) = 33
-'		RapportManier(0) = 0 'niks omwerken gewoon afdrukken
-'		ReportField(0) = "dokument"
-'		ReportTab(0) = 2
-
-'		RapportVeldNr(1) = 35
-'		RapportManier(1) = 5 'datum omwerken
-'		ReportField(1) = "Datum dok."
-'		ReportTab(1) = 14
-
-'		Select Case aIndex
-'			Case TableOfSuppliers
-'				RapportVeldNr(2) = 39
-'				RapportManier(2) = 0
-'				ReportField(2) = "Referte"
-'				ReportTab(2) = 25
-
-'				RapportVeldNr(3) = 46
-'				RapportManier(3) = 9 'geheel getal geformateerd
-'				ReportField(3) = "   VAK 81"
-'				ReportTab(3) = 46
-
-'				RapportVeldNr(4) = 47
-'				RapportManier(4) = 9
-'				ReportField(4) = "   VAK 82"
-'				ReportTab(4) = 56
-
-'				RapportVeldNr(5) = 48
-'				RapportManier(5) = 9
-'				ReportField(5) = "   VAK 83"
-'				ReportTab(5) = 66
-
-'				RapportVeldNr(6) = 49
-'				RapportManier(6) = 9
-'				ReportField(6) = "   DERDEN"
-'				ReportTab(6) = 76
-
-'				RapportVeldNr(7) = 50
-'				RapportManier(7) = 9
-'				ReportField(7) = "   VAK 84"
-'				ReportTab(7) = 86
-
-'				RapportVeldNr(8) = 51
-'				RapportManier(8) = 9
-'				ReportField(8) = "   VAK 85"
-'				ReportTab(8) = 96
-
-'				RapportVeldNr(9) = 52
-'				RapportManier(9) = 9
-'				ReportField(9) = "   VAK 86"
-'				ReportTab(9) = 106
-
-'				RapportVeldNr(10) = 99
-'				RapportManier(10) = 1 'zoek flpartij kode+naam1
-'				ReportField(10) = "ID.Kode/Naam"
-'				ReportTab(10) = 2
-
-'				RapportVeldNr(11) = 53
-'				RapportManier(11) = 9
-'				ReportField(11) = "   VAK 87"
-'				ReportTab(11) = 56
-
-'				RapportVeldNr(12) = 54
-'				RapportManier(12) = 9
-'				ReportField(12) = "   VAK 88"
-'				ReportTab(12) = 66
-
-'				RapportVeldNr(13) = 42
-'				RapportManier(13) = 9
-'				ReportField(13) = "   VAK 55"
-'				ReportTab(13) = 76
-
-'				RapportVeldNr(14) = 43
-'				RapportManier(14) = 9
-'				ReportField(14) = "   VAK 56"
-'				ReportTab(14) = 86
-
-'				RapportVeldNr(15) = 44
-'				RapportManier(15) = 9
-'				ReportField(15) = "   VAK 57"
-'				ReportTab(15) = 96
-
-'				RapportVeldNr(16) = 45
-'				RapportManier(16) = 9
-'				ReportTab(16) = 106
-
-'				Select Case Ar
-'					Case 1
-'						ReportField(16) = "   VAK 59"
-'					Case Else
-'						ReportField(16) = "   VAK 63"
-'				End Select
-'				ReportTab(17) = 0
-'				tMaxVeld = 16
-
-'			Case TableOfCustomers
-'				RapportVeldNr(2) = 55
-'				RapportManier(2) = 9 'geheel getal geformateerd
-'				ReportField(2) = "VAK 00"
-'				ReportTab(2) = 44
-
-'				RapportVeldNr(3) = 56
-'				RapportManier(3) = 9
-'				ReportField(3) = "VAK 01"
-'				ReportTab(3) = 55
-
-'				RapportVeldNr(4) = 57
-'				RapportManier(4) = 9
-'				ReportField(4) = "VAK 02"
-'				ReportTab(4) = 66
-
-'				RapportVeldNr(5) = 58
-'				RapportManier(5) = 9
-'				ReportField(5) = "VAK 03"
-'				ReportTab(5) = 77
-
-'				RapportVeldNr(6) = 59
-'				RapportManier(6) = 9
-'				ReportField(6) = "VAK 45"
-'				ReportTab(6) = 88
-
-'				RapportVeldNr(7) = 60
-'				RapportManier(7) = 9
-'				ReportField(7) = "VAK 46"
-'				ReportTab(7) = 99
-
-'				RapportVeldNr(8) = 61
-'				RapportManier(8) = 9
-'				ReportField(8) = "VAK 47"
-'				ReportTab(8) = 110
-
-'				RapportVeldNr(9) = 99
-'				RapportManier(9) = 1
-'				ReportField(9) = "ID.Kode/Naam"
-'				ReportTab(9) = 2
-
-'				RapportVeldNr(10) = 62
-'				RapportManier(10) = 9
-'				ReportField(10) = "VAK 48"
-'				ReportTab(10) = 77
-
-
-'				RapportVeldNr(11) = 63
-'				RapportManier(11) = 9
-'				ReportField(11) = "VAK 49"
-'				ReportTab(11) = 88
-
-'				RapportVeldNr(12) = 64
-'				RapportManier(12) = 9
-'				ReportTab(12) = 99
-
-'				Select Case Ar
-'					Case 12
-'						ReportField(12) = "VAK 54"
-'					Case Else
-'						ReportField(12) = "VAK 64"
-'				End Select
-'				tMaxVeld = 12
-'				ReportTab(13) = 0
-'		End Select
-
-'		For T = 0 To 17
-'			KolomTotaal(T) = 0
-'		Next 
-
-'		If chkAfdrukInVenster.CheckState Then
-'			Me.Hide()
-'			Xlog.Close()
-'			Xlog.Hide()
-'			Xlog.Text = Me.Text
-'			Xlog.X.Cols = tMaxVeld + 1
-'			Xlog.X.Row = 0
-'			For T = 0 To tMaxVeld
-'				Xlog.X.Col = T
-'				Xlog.X.Text = ReportField(T)
-'			Next 
-'			Me.Show()
-'		End If
-
-'	End Sub
-
-'	Private Sub PrintTitel()
-'		Dim Printer As New Printer
-'		Dim T As Short
-
-'		If chkAfdrukInVenster.CheckState Then Exit Sub
-
-'		If usrLicentieInfo <> "" Then
-'			Printer.CurrentX = 50
-'			Printer.CurrentY = 50
-'			Printer.Write(usrLicentieInfo)
-'		End If
-'		PageCounter = PageCounter + 1
-'		Printer.CurrentY = 400
-'		Printer.Write(TAB(1), ReportText(2), TAB(108), "Pagina : " & Dec(PageCounter, "##########"))
-'		Printer.Write(TAB(108), "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
-'		Printer.Write(TAB(1), UCase(ReportText(3)))
-
-'		Printer.Print(vbCrLf & FullLine.Value)
-
-'		Do While ReportTab(T) <> 0
-'			Printer.Print(TAB(ReportTab(T)))
-'			Printer.Write(ReportField(T))
-'			If ReportTab(T + 1) < ReportTab(T) Then
-'				Printer.Write(vbCrLf)
-'			End If
-'			T = T + 1
-'		Loop 
-'		Printer.Write(FullLine.Value & vbCrLf & vbCrLf)
-
-'	End Sub
 
 '	Private Sub PrintTotal()
 '		Dim Printer As New Printer
@@ -981,9 +1005,9 @@ End Class
 '			If chkAfdrukInVenster.CheckState = 0 Then
 '				Printer.Print(TAB(ReportTab(T)))
 '			End If
-'			Select Case RapportManier(T)
+'			Select Case ReportWay(T)
 '				Case 9
-'					VeldTekst = Dec(KolomTotaal(T), MaskHier)
+'					VeldTekst = Dec(ColumnTotal(T), MaskHier)
 '					If chkAfdrukInVenster.CheckState Then
 '						aa = aa & VeldTekst & vbTab
 '					Else
@@ -1036,7 +1060,7 @@ End Class
 '				Printer.Print(TAB(ReportTab(T)))
 '			End If
 
-'			Select Case RapportManier(T)
+'			Select Case ReportWay(T)
 '				Case 1
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 '					If Not adoGet(aIndex, 0, "=", Mid(RV(rsAVBoekHier, "v034"), 2)) Then
@@ -1049,14 +1073,14 @@ End Class
 '					End If
 '				Case 5
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VeldTekst = FunctionDateText(RV(rsAVBoekHier, "v" & VB6.Format(RapportVeldNr(T), "000")))
+'					VeldTekst = FunctionDateText(RV(rsAVBoekHier, "v" & VB6.Format(ReportFieldNr(T), "000")))
 '				Case 9
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VeldTekst = Dec(Val(RV(rsAVBoekHier, "v" & VB6.Format(RapportVeldNr(T), "000"))), MaskHier)
-'					KolomTotaal(T) = KolomTotaal(T) + Val(VeldTekst)
+'					VeldTekst = Dec(Val(RV(rsAVBoekHier, "v" & VB6.Format(ReportFieldNr(T), "000"))), MaskHier)
+'					ColumnTotal(T) = ColumnTotal(T) + Val(VeldTekst)
 '				Case Else
 '					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-'					VeldTekst = RV(rsAVBoekHier, "v" & VB6.Format(RapportVeldNr(T), "000"))
+'					VeldTekst = RV(rsAVBoekHier, "v" & VB6.Format(ReportFieldNr(T), "000"))
 '			End Select
 
 '			If chkAfdrukInVenster.CheckState = 0 Then
@@ -1078,7 +1102,7 @@ End Class
 '				Printer.FontSize = Printer.FontSize
 '				Printer.Print(" ")
 '				Printer.FontSize = Printer.FontSize
-'				PrintTitel()
+'				VpePrintHeader()
 '			End If
 '		End If
 

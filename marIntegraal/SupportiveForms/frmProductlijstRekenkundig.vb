@@ -21,7 +21,7 @@ End Class
 '	Dim rsLijstProducten As ADODB.Recordset
 
 '	Dim IndexNR As Short
-'	Dim tMaxVeld As Short
+'	Dim tMaxField As Short
 
 '	Private Sub Annuleren_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Annuleren.Click
 
@@ -57,7 +57,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub Drukken_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
+'	Private Sub ButtonGenerateReport_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Drukken.Click
 '		Dim Printer As New Printer
 '		Dim BeginSleutel As String
 '		Dim EindSleutel As String
@@ -82,7 +82,7 @@ End Class
 '		ReportText(0) = TekstLijn(1).Text
 '		ReportText(3) = TekstLijn(0).Text
 
-'		InitializeFields()
+'		InitialiseFields()
 '		JetTableClose(TableOfProductsAndServices)
 '		'Set rsLijstProducten = New ADODB.Recordset
 '		'SQLstring = "SELECT * FROM Produkten WHERE "
@@ -110,7 +110,7 @@ End Class
 '					Printer.FontSize = 8
 '				End If
 '			End If
-'			PrintTitel()
+'			VpePrintHeader()
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub PrintInfo
 '		End If
@@ -139,7 +139,7 @@ End Class
 '		Dim BasisAantal As Single
 
 'PrintInfo: 
-'		RecordToVeld(TableOfProductsAndServices)
+'		RecordToField(TableOfProductsAndServices)
 '		Select Case CmbLijstType.SelectedIndex
 '			Case 0
 '				FieldText(0) = AdoGetField(TableOfProductsAndServices, "#v102 #")
@@ -228,7 +228,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 '		Dim T As Short
 
 '		Select Case CmbLijstType.SelectedIndex
@@ -259,7 +259,7 @@ End Class
 
 '				ReportField(8) = "Plaats"
 '				ReportTab(8) = 107
-'				tMaxVeld = 8
+'				tMaxField = 8
 
 '			Case 1
 '				ReportField(0) = "Nummer"
@@ -288,7 +288,7 @@ End Class
 
 '				ReportField(8) = "Bestellen"
 '				ReportTab(8) = 107
-'				tMaxVeld = 8
+'				tMaxField = 8
 
 '			Case Else
 '				MsgBox("Stop")
@@ -299,9 +299,9 @@ End Class
 '			Xlog.Close()
 '			Xlog.Hide()
 '			Xlog.Text = CmbLijstType.Text
-'			Xlog.X.Cols = tMaxVeld + 1
+'			Xlog.X.Cols = tMaxField + 1
 '			Xlog.X.Row = 0
-'			For T = 0 To tMaxVeld
+'			For T = 0 To tMaxField
 '				Xlog.X.Col = T
 '				Xlog.X.Text = ReportField(T)
 '			Next 
@@ -310,7 +310,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -355,7 +355,7 @@ End Class
 '		Dim Printer As New Printer
 '		Dim T As Short
 
-'		For T = 0 To tMaxVeld
+'		For T = 0 To tMaxField
 '			FieldText(T) = ""
 '		Next 
 '		FieldText(1) = "Totaal aantal lijnen : " & VB6.Format(TotalLines)
@@ -367,7 +367,7 @@ End Class
 
 '		T = 0
 '		aa = ""
-'		Do While T < tMaxVeld
+'		Do While T < tMaxField
 '			If chkAfdrukInVenster.CheckState Then
 '				aa = aa & FieldText(T) & vbTab
 '			Else
@@ -462,7 +462,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '		If chkAfdrukInVenster.CheckState Then Xlog.X.AddItem(aa, Xlog.X.Rows - 1)

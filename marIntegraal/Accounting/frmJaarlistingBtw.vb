@@ -17,7 +17,7 @@ End Class
 '	Dim RapportSelektie As String
 '	Dim RapportTitel As String
 '	Dim RapportDefinitie As String
-'	Dim LijstNaam As String
+'	Dim ListName As String
 '	Dim FieldText(20) As String
 
 '	Dim dTotaal As Decimal
@@ -67,10 +67,10 @@ End Class
 '		BeginSleutel = SetSpacing("K0", 13)
 '		EindSleutel = SetSpacing("K" & "zzzzzzzzzzzz", 13)
 
-'		ReportText(2) = LijstNaam & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+'		ReportText(2) = ListName & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
 '		ReportText(0) = VB6.Format(Datum._Value, "dd/mm/yyyy")
 '		ReportText(3) = TekstLijn(0).Text
-'		InitializeFields()
+'		InitialiseFields()
 
 '		ktrlEur = EurBefJaar()
 
@@ -107,8 +107,8 @@ End Class
 '					Printer.FontSize = 7.2
 '				End If
 '			End If
-'			PrintTitel()
-'			RecordToVeld(TableOfInvoices)
+'			VpePrintHeader()
+'			RecordToField(TableOfInvoices)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub KontroleVoorwaarden
 '		End If
@@ -120,7 +120,7 @@ End Class
 '			If Ktrl Or UCase(KeyBuf(TableOfInvoices)) > UCase(EindSleutel) Then
 '				Exit Do
 '			End If
-'			RecordToVeld(TableOfInvoices)
+'			RecordToField(TableOfInvoices)
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
 '			GoSub KontroleVoorwaarden
 '		Loop 
@@ -205,7 +205,7 @@ End Class
 '			If Ktrl Then
 '				FieldText(1) = "* niet meer aanwezig *"
 '			Else
-'				RecordToVeld(TableOfCustomers)
+'				RecordToField(TableOfCustomers)
 '				FieldText(1) = SetSpacing(AdoGetField(TableOfCustomers, "#A100 #"), 32)
 '				SnelHelpPrint(FieldText(1), blLogging)
 '				FieldText(2) = SetSpacing(RTrim(RTrim(AdoGetField(TableOfCustomers, "#A104 #")) & " " & RTrim(AdoGetField(aIndex, "#A105 #")) & " " & RTrim(AdoGetField(aIndex, "#A106 #"))), 24)
@@ -491,7 +491,7 @@ End Class
 '	Private Sub Datum_Change(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles Datum.Change
 
 '		Me.Text = "Jaarlisting B.T.W. België " & VB.Right(VB6.Format(Datum._Value, "dd/mm/yyyy"), 4) & " !!!"
-'		LijstNaam = Me.Text
+'		ListName = Me.Text
 
 '	End Sub
 
@@ -586,8 +586,8 @@ End Class
 '		Next 
 
 '		Me.Text = "Jaarlisting B.T.W. België " & VB.Right(VB6.Format(Datum._Value, "dd/mm/yyyy"), 4) & " !!!"
-'		LijstNaam = Me.Text
-'		TopDown.Text = LijstNaam
+'		ListName = Me.Text
+'		TopDown.Text = ListName
 '		If bhEuro Then
 '			Me.obMunt(1).Checked = True
 '			Me.obMunt(0).Enabled = False
@@ -599,7 +599,7 @@ End Class
 '	End Sub
 
 
-'	Private Sub InitializeFields()
+'	Private Sub InitialiseFields()
 '		Dim T As Short
 
 '		ReportField(0) = "Line"
@@ -647,7 +647,7 @@ End Class
 
 '	End Sub
 
-'	Private Sub PrintTitel()
+'	Private Sub VpePrintHeader()
 '		Dim Printer As New Printer
 '		Dim T As Short
 
@@ -841,7 +841,7 @@ End Class
 '			Printer.FontSize = Printer.FontSize
 '			Printer.Print(" ")
 '			Printer.FontSize = Printer.FontSize
-'			PrintTitel()
+'			VpePrintHeader()
 '		End If
 
 '	End Sub

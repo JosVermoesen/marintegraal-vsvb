@@ -1,8 +1,6 @@
 ﻿Option Strict Off
 Option Explicit On
 Imports IDEALSoftware.VpeStandard
-Imports System.IO
-Imports System.ComponentModel
 
 Public Class FrmJournalEntriesBook
     Dim Line
@@ -21,7 +19,7 @@ Public Class FrmJournalEntriesBook
     Private Sub FrmJournalEntriesBook_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TotalDebit = 0
         TotalCredit = 0
-        TextBoxPeriodFromTo.Text = frmBYPERDAT.PeriodeBoekjaar.Text
+        TextBoxPeriodFromTo.Text = FrmBYPERDAT.PeriodeBoekjaar.Text
         DateTimePickerProcessingDate.Text = MimGlobalDate
         PeriodFromChosen = Mid(PeriodFromTo, 1, 8)
         PeriodToChosen = Mid(PeriodFromTo, 9)
@@ -76,8 +74,8 @@ Public Class FrmJournalEntriesBook
 
         PageCounter += 1
         pdfY = Mim.Report.Print(1, 1, ReportText(2))
-        pdfY = Mim.Report.Print(17.3, 1, "Pagina : " & Dec(PageCounter, "##########") & vbCrLf)
-        pdfY = Mim.Report.Print(17.3, pdfY, "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
+        pdfY = Mim.Report.Print(17, 1, "Pagina : " & Dec(PageCounter, "##########") & vbCrLf)
+        pdfY = Mim.Report.Print(17, pdfY, "Datum  : " & ReportText(0) & vbCrLf & vbCrLf)
         pdfY = Mim.Report.Print(1, pdfY, UCase(ReportText(3)) & vbCrLf)
         pdfY = Mim.Report.Print(1, pdfY, FullLine & vbCrLf)
         pdfY = Mim.Report.Print(1, pdfY, PdfReportTitle & vbCrLf)
@@ -168,7 +166,12 @@ Public Class FrmJournalEntriesBook
         End If
     End Sub
 
+    Private Sub ButtonClose_Click(sender As Object, e As EventArgs)
+        Close()
+    End Sub
+
     Private Sub ButtonGenerateReport_Click()
+
         With Mim.Report
             .CloseDoc()
             .OpenDoc()
@@ -177,7 +180,7 @@ Public Class FrmJournalEntriesBook
             .Title = "Diverse Postenboek"
         End With
         ReportText(2) = "Diverse Postenboek " & Mid(Mim.Text, InStr(Mim.Text, "["))
-        ReportText(0) = DateTimePickerProcessingDate.Value
+        ReportText(0) = Format(DateTimePickerProcessingDate.Value, "dd/MM/yyyy")
         ReportText(3) = TextBoxPeriodFromTo.Text
         InitialiseFields()
         VpePrintHeader()
@@ -197,10 +200,6 @@ Public Class FrmJournalEntriesBook
         Mim.Report.AddMailReceiver(TextBoxMailToOption.Text, RecipientClass.To)
         Mim.Report.Preview()
         'Mim.Report.CloseDoc()
-    End Sub
 
-    Private Sub ButtonClose_Click()
-        Close()
     End Sub
-
 End Class

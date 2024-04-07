@@ -437,11 +437,11 @@ TryAgain:
                     dKtrlCumul = dKtrlCumul + 99
                     Exit Sub
                 ElseIf ActiveBookyear Then
-                    RecordToVeld(TableOfLedgerAccounts)
+                    RecordToField(TableOfLedgerAccounts)
                     AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e023 #")) + Val(AdoGetField(FlJournaal, "#v068 #"))), "e023")
                     rsMAR(TableOfLedgerAccounts).Fields("dece023").Value = rsMAR(TableOfLedgerAccounts).Fields("dece023").Value + rsMAR(FlJournaal).Fields("dece068").Value
                 Else
-                    RecordToVeld(TableOfLedgerAccounts)
+                    RecordToField(TableOfLedgerAccounts)
                     AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e022 #")) + Val(AdoGetField(FlJournaal, "#v068 #"))), "e022")
                     rsMAR(TableOfLedgerAccounts).Fields("dece022").Value = rsMAR(TableOfLedgerAccounts).Fields("dece022").Value + rsMAR(FlJournaal).Fields("dece068").Value
                 End If
@@ -630,7 +630,7 @@ JetErrorInsert:
     End Function
 
 
-    Sub RecordToVeld(ByRef Fl As Short)
+    Sub RecordToField(ByRef Fl As Short)
         Dim T As Short
         Dim b As String
 
@@ -768,7 +768,7 @@ JetErrorInsert:
         ElseIf Ktrl Then
             MsgBox("Tellers Stopkode " & Format(Ktrl) & ", voor setup-tellersleutel " & TlString & vbCrLf & vbCrLf & "Overloop ALLE setup instellingen vooraleer énig boekjaar op te starten !" & vbCrLf & "Wij staan tot uw beschikking om U hierbij te helpen.")
         Else
-            RecordToVeld(TableOfCounters)
+            RecordToField(TableOfCounters)
             'String99 = ntRS(TableOfCounters).Fields("v217")
             On Error Resume Next
             Err.Clear()
@@ -1008,13 +1008,13 @@ TeleBibError:
             dKtrlCumul = dKtrlCumul + 99
             Exit Function
         ElseIf ActiveBookyear Then
-            RecordToVeld(TableOfLedgerAccounts)
+            RecordToField(TableOfLedgerAccounts)
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
             AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e023 #")) + Val(RV(rsJournaal, "v068"))), "e023")
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJournaal, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
             rsMAR(TableOfLedgerAccounts).Fields("dece023").Value = rsMAR(TableOfLedgerAccounts).Fields("dece023").Value + RV(rsJournaal, "dece068")
         Else
-            RecordToVeld(TableOfLedgerAccounts)
+            RecordToField(TableOfLedgerAccounts)
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
             AdoInsertToRecord(TableOfLedgerAccounts, Str(Val(AdoGetField(TableOfLedgerAccounts, "#e022 #")) + Val(RV(rsJournaal, "v068"))), "e022")
             'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJournaal, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
