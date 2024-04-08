@@ -1,6 +1,6 @@
 ﻿Option Strict Off
 Option Explicit On
-Public Class FrmJournalEntryInput
+Public Class FormJournalEntryInput
     Dim TotalDCAmount As Double
 
     Private Sub FrmJournalEntryInput_Load(sender As Object, e As EventArgs) Handles MyBase.Load

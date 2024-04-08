@@ -143,10 +143,10 @@
     <Compile Include="CloudIO\frmAppOutInstellingen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Accounting\frmAVBoek.Designer.vb">
-      <DependentUpon>frmAVBoek.vb</DependentUpon>
+    <Compile Include="Accounting\FormBSBook.Designer.vb">
+      <DependentUpon>FormBSBook.vb</DependentUpon>
     </Compile>
-    <Compile Include="Accounting\frmAVBoek.vb">
+    <Compile Include="Accounting\FormBSBook.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Accounting\frmBalansKlantLeverancier.Designer.vb">
@@ -191,10 +191,10 @@
     <Compile Include="Accounting\frmBtwAangifte.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Accounting\FrmJournalEntriesBook.Designer.vb">
-      <DependentUpon>FrmJournalEntriesBook.vb</DependentUpon>
+    <Compile Include="Accounting\FormJournalEntriesBook.Designer.vb">
+      <DependentUpon>FormJournalEntriesBook.vb</DependentUpon>
     </Compile>
-    <Compile Include="Accounting\FrmJournalEntriesBook.vb">
+    <Compile Include="Accounting\FormJournalEntriesBook.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Documents\frmAankoopVerrichtingen.Designer.vb">
@@ -227,10 +227,10 @@
     <Compile Include="SupportiveForms\frmBoeking.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Accounting\FrmJournalEntryInput.Designer.vb">
-      <DependentUpon>FrmJournalEntryInput.vb</DependentUpon>
+    <Compile Include="Accounting\FormJournalEntryInput.Designer.vb">
+      <DependentUpon>FormJournalEntryInput.vb</DependentUpon>
     </Compile>
-    <Compile Include="Accounting\FrmJournalEntryInput.vb">
+    <Compile Include="Accounting\FormJournalEntryInput.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SupportiveForms\frmDokHistoriek.Designer.vb">
@@ -299,11 +299,11 @@
     <Compile Include="Sheets\frmLijstRapportage.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMim.vb">
+    <Compile Include="FormMim.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMim.Designer.vb">
-      <DependentUpon>FrmMim.vb</DependentUpon>
+    <Compile Include="FormMim.Designer.vb">
+      <DependentUpon>FormMim.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="aLoadMain.vb" />
@@ -441,8 +441,8 @@
     <EmbeddedResource Include="CloudIO\frmAppOutInstellingen.resx">
       <DependentUpon>frmAppOutInstellingen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Accounting\frmAVBoek.resx">
-      <DependentUpon>frmAVBoek.vb</DependentUpon>
+    <EmbeddedResource Include="Accounting\FormBSBook.resx">
+      <DependentUpon>FormBSBook.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Accounting\frmBalansKlantLeverancier.resx">
       <DependentUpon>frmBalansKlantLeverancier.vb</DependentUpon>
@@ -465,8 +465,8 @@
     <EmbeddedResource Include="Accounting\frmBtwAangifte.resx">
       <DependentUpon>frmBtwAangifte.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Accounting\FrmJournalEntriesBook.resx">
-      <DependentUpon>FrmJournalEntriesBook.vb</DependentUpon>
+    <EmbeddedResource Include="Accounting\FormJournalEntriesBook.resx">
+      <DependentUpon>FormJournalEntriesBook.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Documents\frmAankoopVerrichtingen.resx">
       <DependentUpon>frmAankoopVerrichtingen.vb</DependentUpon>
@@ -483,8 +483,8 @@
     <EmbeddedResource Include="SupportiveForms\frmBoeking.resx">
       <DependentUpon>frmBoeking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Accounting\FrmJournalEntryInput.resx">
-      <DependentUpon>FrmJournalEntryInput.vb</DependentUpon>
+    <EmbeddedResource Include="Accounting\FormJournalEntryInput.resx">
+      <DependentUpon>FormJournalEntryInput.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SupportiveForms\frmDokHistoriek.resx">
       <DependentUpon>frmDokHistoriek.vb</DependentUpon>
@@ -519,8 +519,8 @@
     <EmbeddedResource Include="Sheets\frmLijstRapportage.resx">
       <DependentUpon>frmLijstRapportage.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmMim.resx">
-      <DependentUpon>FrmMim.vb</DependentUpon>
+    <EmbeddedResource Include="FormMim.resx">
+      <DependentUpon>FormMim.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Actions\FrmCompanyNew.resx">
       <DependentUpon>FrmCompanyNew.vb</DependentUpon>

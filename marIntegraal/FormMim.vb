@@ -2,7 +2,6 @@
 Option Explicit On
 Imports System.ComponentModel
 Imports System.Drawing.Printing
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Mim
     Inherits Form
@@ -159,42 +158,10 @@ Public Class Mim
             .Enabled = False
             .Show()
         End With
-
-        Dim strInstalledPrinters As String
-        Dim prntDoc As New PrintDocument
-        Dim pdfPrinterName As String = "Microsoft Print to PDF"
-        Dim pdfPrinterInstalled As Boolean = False
-
-        'check if there is installed printer
-        If PrinterSettings.InstalledPrinters.Count = 0 Then
-            MsgBox("No printer installed")
-            Exit Sub
-        End If
-
-        'display installed printer into combobox list item
-        For Each strInstalledPrinters In PrinterSettings.InstalledPrinters
-            Printers.Items.Add(strInstalledPrinters)
-            If strInstalledPrinters = pdfPrinterName Then
-                pdfPrinterInstalled = True
-            End If
-        Next strInstalledPrinters
-
-        'Display current default printer on combobox texts if pdf printer not installed
-        If pdfPrinterInstalled Then
-            Printers.Text = pdfPrinterName
-            ApplicationPrinter = pdfPrinterName
-
-
-        Else
-            Printers.Text = prntDoc.PrinterSettings.PrinterName
-            ApplicationPrinter = prntDoc.PrinterSettings.PrinterName
-        End If
         CompanyOpenMenuItem_Click(sender, e)
 
     End Sub
-    Private Sub Printers_SelectedIndexChanged(sender As Object, e As EventArgs)
-        ApplicationPrinter = Printers.Text
-    End Sub
+
     Private Function GaVerder(ByRef Bericht As String, ByRef BedrijfOpenKontrole As Short, ByRef Titel As String) As Short
         If BedrijfOpenKontrole Then
             If CustomerSheet.Enabled = True Then
@@ -376,20 +343,20 @@ Public Class Mim
 
     ' Accounting
     Private Sub JournalEntryInputMenuItem_Click(sender As Object, e As EventArgs)
-        Dim DiversePosten As New FrmJournalEntryInput With {
+        Dim DiversePosten As New FormJournalEntryInput With {
             .MdiParent = Me
         }
         JournalEntryInputMenuItem.Enabled = False
         DiversePosten.Show()
     End Sub
     Private Sub JournalEntriesBookMenuItem_Click(sender As Object, e As EventArgs)
-        Dim dpBoek As New FrmJournalEntriesBook
+        Dim dpBoek As New FormJournalEntriesBook
         'dpBoek.MdiParent = Me
         dpBoek.ShowDialog()
     End Sub
     Private Sub PurchaseDiaryMenuItem_Click(sender As Object, e As EventArgs)
         aIndex = TableOfSuppliers
-        With AVBoek
+        With BSBook
             .WindowState = FormWindowState.Normal
             .Enabled = True
             .ShowDialog()
@@ -398,7 +365,7 @@ Public Class Mim
     End Sub
     Private Sub SalesDiaryMenuItem_Click(sender As Object, e As EventArgs)
         aIndex = TableOfCustomers
-        With AVBoek
+        With BSBook
             .WindowState = FormWindowState.Normal
             .Enabled = True
             .ShowDialog()

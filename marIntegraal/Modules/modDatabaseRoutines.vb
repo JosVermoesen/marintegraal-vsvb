@@ -218,6 +218,8 @@ EditAgain:
 
     End Function
 
+
+
     Sub JetTableClose(ByRef Fl As Short)
         Dim T As Short
 
@@ -251,7 +253,6 @@ EditAgain:
         End If
 
     End Sub
-
     Sub Bdelete(ByRef Fl As Short)
 
         Ktrl = 0
@@ -269,7 +270,6 @@ EditAgain:
         End If
 
     End Sub
-
     Sub JetGetFirst(ByRef Fl As Short, ByRef fIndex As Short)
 
         On Error Resume Next
@@ -296,7 +296,6 @@ EditAgain:
         End If
 
     End Sub
-
     Sub JetGet(ByRef Fl As Short, ByRef fIndex As Short, ByRef fSleutel As String)
 
         On Error Resume Next
@@ -322,7 +321,6 @@ EditAgain:
         End If
 
     End Sub
-
     Sub JetGetOrGreater(ByRef Fl As Short, ByRef fIndex As Short, ByRef fKey As String)
 
         On Error Resume Next
@@ -358,7 +356,6 @@ TryAgain:
         KeyIndex(Fl) = fIndex
 
     End Sub
-
     Sub JetInsert(ByRef Fl As Short, ByRef fIndex As Short) ', fKey As String)
         Dim XXXXX As Short
 
@@ -647,7 +644,7 @@ JetErrorInsert:
             Do While vBC(Fl, T) <> ""
                 'AdoInsertToRecord Fl, Trim$(ntRS(Fl).Fields(vBC(Fl, T))), vBC(Fl, T)
                 AdoInsertToRecord(Fl, rsMAR(Fl).Fields(vBC(Fl, T)).Value, vBC(Fl, T))
-                T = T + 1
+                T += 1
             Loop
         End If
 

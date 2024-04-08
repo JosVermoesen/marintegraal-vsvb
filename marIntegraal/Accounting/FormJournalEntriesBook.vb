@@ -2,7 +2,7 @@
 Option Explicit On
 Imports IDEALSoftware.VpeStandard
 
-Public Class FrmJournalEntriesBook
+Public Class FormJournalEntriesBook
     Dim Line
     Dim JournalEntriesRS As ADODB.Recordset
     Dim pdfY As Double

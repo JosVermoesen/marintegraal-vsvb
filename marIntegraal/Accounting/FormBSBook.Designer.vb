@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class AVBoek
+Partial Class BSBook
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -33,13 +33,12 @@ Partial Class AVBoek
         Me._Label1_2 = New System.Windows.Forms.Label()
         Me._Label1_3 = New System.Windows.Forms.Label()
         Me.DateTimePickerProcessingDate = New System.Windows.Forms.DateTimePicker()
+        Me.lblInOntwikkeling = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'chkDetailJournaal
         '
         Me.chkDetailJournaal.BackColor = System.Drawing.SystemColors.Control
-        Me.chkDetailJournaal.Checked = True
-        Me.chkDetailJournaal.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkDetailJournaal.ForeColor = System.Drawing.SystemColors.ControlText
         Me.chkDetailJournaal.Location = New System.Drawing.Point(9, 86)
         Me.chkDetailJournaal.Name = "chkDetailJournaal"
@@ -83,7 +82,7 @@ Partial Class AVBoek
         Me.rbCreditnota.Location = New System.Drawing.Point(77, 43)
         Me.rbCreditnota.Name = "rbCreditnota"
         Me.rbCreditnota.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.rbCreditnota.Size = New System.Drawing.Size(93, 16)
+        Me.rbCreditnota.Size = New System.Drawing.Size(83, 16)
         Me.rbCreditnota.TabIndex = 5
         Me.rbCreditnota.Text = "Creditnota's"
         Me.rbCreditnota.UseVisualStyleBackColor = False
@@ -95,7 +94,7 @@ Partial Class AVBoek
         Me.rbFactuur.Location = New System.Drawing.Point(9, 42)
         Me.rbFactuur.Name = "rbFactuur"
         Me.rbFactuur.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.rbFactuur.Size = New System.Drawing.Size(77, 16)
+        Me.rbFactuur.Size = New System.Drawing.Size(62, 16)
         Me.rbFactuur.TabIndex = 4
         Me.rbFactuur.Text = "Facturen"
         Me.rbFactuur.UseVisualStyleBackColor = False
@@ -165,14 +164,24 @@ Partial Class AVBoek
         Me.DateTimePickerProcessingDate.Name = "DateTimePickerProcessingDate"
         Me.DateTimePickerProcessingDate.Size = New System.Drawing.Size(176, 20)
         Me.DateTimePickerProcessingDate.TabIndex = 1
-        AddHandler Me.DateTimePickerProcessingDate.Leave, AddressOf Me.DateTimePickerProcessingDate_Leave
         '
-        'AVBoek
+        'lblInOntwikkeling
+        '
+        Me.lblInOntwikkeling.AutoSize = True
+        Me.lblInOntwikkeling.Font = New System.Drawing.Font("Microsoft Sans Serif", 27.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInOntwikkeling.Location = New System.Drawing.Point(48, 117)
+        Me.lblInOntwikkeling.Name = "lblInOntwikkeling"
+        Me.lblInOntwikkeling.Size = New System.Drawing.Size(270, 42)
+        Me.lblInOntwikkeling.TabIndex = 89
+        Me.lblInOntwikkeling.Text = "In Ontwikkeling"
+        '
+        'BSBook
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnClose
-        Me.ClientSize = New System.Drawing.Size(383, 115)
+        Me.ClientSize = New System.Drawing.Size(383, 177)
+        Me.Controls.Add(Me.lblInOntwikkeling)
         Me.Controls.Add(Me.DateTimePickerProcessingDate)
         Me.Controls.Add(Me.chkDetailJournaal)
         Me.Controls.Add(Me.tbTOT)
@@ -184,7 +193,7 @@ Partial Class AVBoek
         Me.Controls.Add(Me._Label1_1)
         Me.Controls.Add(Me._Label1_2)
         Me.Controls.Add(Me._Label1_3)
-        Me.Name = "AVBoek"
+        Me.Name = "BSBook"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmAVBoek"
         Me.ResumeLayout(False)
@@ -202,4 +211,5 @@ Partial Class AVBoek
     Public WithEvents _Label1_2 As Label
     Public WithEvents _Label1_3 As Label
     Friend WithEvents DateTimePickerProcessingDate As DateTimePicker
+    Friend WithEvents lblInOntwikkeling As Label
 End Class

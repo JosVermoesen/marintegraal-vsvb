@@ -23,17 +23,17 @@ Public Class SqlSearch
                     SorteerIndex = Mid(comboTekst, CountTo - 3, 4)
                     SorteerOrde = Mid(comboTekst, CountTo - 3, 4)
                     If Mid(comboTekst, CountTo - 4, 1) = "+" Then
-                        SorteerOrde = SorteerOrde & " ASC"
+                        SorteerOrde &= " ASC"
                     Else
-                        SorteerOrde = SorteerOrde & " DESC"
+                        SorteerOrde &= " DESC"
                     End If
                 Else
                     SorteerIndex = SorteerIndex & "+" & Mid(comboTekst, CountTo - 3, 4)
                     SorteerOrde = SorteerOrde & ", " & Mid(comboTekst, CountTo - 3, 4)
                     If Mid(comboTekst, CountTo - 4, 1) = "+" Then
-                        SorteerOrde = SorteerOrde & " ASC"
+                        SorteerOrde &= " ASC"
                     Else
-                        SorteerOrde = SorteerOrde & " DESC"
+                        SorteerOrde &= " DESC"
                     End If
                 End If
 

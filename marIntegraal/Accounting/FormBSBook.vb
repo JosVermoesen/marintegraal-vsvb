@@ -1,7 +1,7 @@
 ﻿Option Strict Off
 Option Explicit On
 
-Public Class AVBoek
+Public Class BSBook
 	Dim NumberHere As Integer
 
 	Dim psText(5) As String
@@ -43,11 +43,10 @@ Public Class AVBoek
 	Dim Ar As Short
 	Dim tMaxVeld As Short
 	Dim VeldTXT(17) As String
-	Dim aa As String
 
 	Dim MaskHier As String
 
-	Dim rsAVBoekHier As ADODB.Recordset
+	Dim rsBSBookHere As ADODB.Recordset
 	Dim rsJourHier As ADODB.Recordset
 
 	Private Sub AVBoek_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -175,7 +174,7 @@ Public Class AVBoek
 				Next
 				If NumberHere Then
 					NumberHere = PeriodeMax
-					PeriodeMax = 0
+					'PeriodeMax = 0
 					Exit Do
 				End If
 			End If
@@ -418,109 +417,195 @@ jump:
 	End Sub
 
 	Private Sub VpePrintLines()
-		'		Dim Printer As New Printer
-		'		Dim T As Short
-		'		Dim VeldTekst As String
+		Dim SecondLine = False
+		Dim PdfLine As String = Space(128)
+		Dim PdfLine2 As String = Space(128)
+		Dim T = 0
+		Dim VeldTekst = ""
 
-		'		Err.Clear()
-		'		On Error Resume Next
+		Do While ReportTab(T) <> 0
+			Select Case ReportWay(T)
+				Case 1
+					JetGet(aIndex, 0, SetSpacing(Mid(RV(rsBSBookHere, "v034"), 2), FlIndexLen(aIndex, 0)))
+					If Ktrl = 0 Then
+						'RecordToField(aIndex)
+						VeldTekst = Trim(RV(rsMAR(aIndex), "A110")) & " " & Trim(RV(rsMAR(aIndex), "A100"))
+					Else
+						VeldTekst = Mid(RV(rsBSBookHere, "v034"), 2) & " is niet meer aanwezig"
+						MsgBox(VeldTekst)
+					End If
 
-		'		aa = ""
-		'		Do While ReportTab(T) <> 0
-		'			If chkAfdrukInVenster.CheckState = 0 Then
-		'				Printer.Print(TAB(ReportTab(T)))
-		'			End If
+				Case 5
+					VeldTekst = FunctionDateText(RV(rsBSBookHere, "v" & Dec(ReportFieldNr(T), "000")))
 
-		'			Select Case ReportWay(T)
-		'				Case 1
-		'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'					If Not adoGet(aIndex, 0, "=", Mid(RV(rsAVBoekHier, "v034"), 2)) Then
-		'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'						VeldTekst = Mid(RV(rsAVBoekHier, "v034"), 2) & " is niet meer aanwezig"
-		'						MsgBox(VeldTekst)
-		'					Else
-		'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'						VeldTekst = Trim(RV(rsMAR(aIndex), "A110")) & " " & Trim(RV(rsMAR(aIndex), "A100"))
-		'					End If
-		'				Case 5
-		'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'					VeldTekst = FunctionDateText(RV(rsAVBoekHier, "v" & VB6.Format(ReportFieldNr(T), "000")))
-		'				Case 9
-		'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'					VeldTekst = Dec(Val(RV(rsAVBoekHier, "v" & VB6.Format(ReportFieldNr(T), "000"))), MaskHier)
-		'					ColumnTotal(T) = ColumnTotal(T) + Val(VeldTekst)
-		'				Case Else
-		'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'					VeldTekst = RV(rsAVBoekHier, "v" & VB6.Format(ReportFieldNr(T), "000"))
-		'			End Select
-
-		'			If chkAfdrukInVenster.CheckState = 0 Then
-		'				Printer.Write(VeldTekst)
-		'				If ReportTab(T + 1) < ReportTab(T) Then
-		'					Printer.Write(vbCrLf)
-		'				End If
-		'			Else
-		'				aa = aa & VeldTekst & vbTab
-		'			End If
-		'			T = T + 1
-		'		Loop 
-
+				Case 9
+					VeldTekst = Dec(Val(RV(rsBSBookHere, "v" & Dec(ReportFieldNr(T), "000"))), MaskHier)
+					ColumnTotal(T) = ColumnTotal(T) + Val(VeldTekst)
+				Case Else
+					VeldTekst = RV(rsBSBookHere, "v" & Dec(ReportFieldNr(T), "000"))
+			End Select
+			Select Case SecondLine
+				Case False
+					Mid(PdfLine, ReportTab(T)) = VeldTekst
+					If ReportTab(T + 1) < ReportTab(T) Then SecondLine = True
+				Case True
+					Mid(PdfLine2, ReportTab(T)) = VeldTekst
+			End Select
+			aa = aa & VeldTekst & vbTab
+			T += 1
+		Loop
+		pdfY = Mim.Report.Print(1, pdfY, PdfLine & vbCrLf)
+		pdfY = Mim.Report.Print(1, pdfY, PdfLine2 & vbCrLf & vbCrLf)
+		If pdfY > 27.5 Then
+			Mim.Report.PageBreak()
+			VpePrintHeader()
+		End If
 
 	End Sub
 
 	Private Sub PrintTotal()
-		'		Dim Printer As New Printer
-		'		Dim T As Short
-		'		Dim VeldTekst As String
-		'		Dim TotaalGrens As Integer
+		Dim SecondLine = False
+		Dim PdfLine As String = Space(128)
+		Dim PdfLine2 As String = Space(128)
+		Dim T = 0
+		Dim VeldTekst As String
 
-		'		If chkAfdrukInVenster.CheckState = 0 Then
-		'			Printer.Write(vbCrLf & FullLine.Value & vbCrLf)
-		'		End If
+		Do While ReportTab(T) <> 0
+			VeldTekst = ""
+			Select Case ReportWay(T)
+				Case 9
+					VeldTekst = Dec(ColumnTotal(T), MaskHier)
+			End Select
+			Select Case SecondLine
+				Case True
+					Mid(PdfLine2, ReportTab(T)) = VeldTekst
+				Case False
+					Mid(PdfLine, ReportTab(T)) = VeldTekst
+					If ReportTab(T + 1) < ReportTab(T) Then SecondLine = True
+			End Select
+			T += 1
+		Loop
+		pdfY = Mim.Report.Print(1, pdfY, FullLine & vbCrLf)
+		pdfY = Mim.Report.Print(1, pdfY, PdfLine & vbCrLf)
+		pdfY = Mim.Report.Print(1, pdfY, PdfLine2 & vbCrLf & vbCrLf)
 
-		'		aa = ""
-		'		Do While ReportTab(T) <> 0
-		'			If chkAfdrukInVenster.CheckState = 0 Then
-		'				Printer.Print(TAB(ReportTab(T)))
+	End Sub
+
+	Private Sub DetailRekeningen()
+
+		Dim RekeningNaam As String = Space(30)
+		Dim Tabul As Short
+		Dim ForfaitNr As Short
+
+
+		Do While rsJourHier.EOF = False
+			'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsBSBookHere, v033). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+			'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, v033). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+			'			If RV(rsJourHier, "v033") = RV(rsBSBookHere, "v033") Then
+			'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+			'				If VB.Left(RV(rsJourHier, "v019"), 2) = "40" Or VB.Left(RV(rsJourHier, "v019"), 2) = "44" Then
+			'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+			'					RekeningNaam.Value = RV(rsJourHier, "v067")
+			'				Else
+			'					If Not adoGet(TableOfLedgerAccounts, 0, "=", RV(rsJourHier, "v019")) Then
+			'						RekeningNaam.Value = "Rekening reeds vernietigd !!!"
+			'					Else
+			'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+			'						RekeningNaam.Value = RV(rsMAR(TableOfLedgerAccounts), "v020")
+			'						If ForFait Then
+			'							'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
+			'							GoSub ForFaitBerekening
+			'						End If
+			'					End If
+			'				End If
+			'				If chkDetailJournaal.CheckState Then
+			'					If Tabul = 0 Then
+			'						Tabul = 56
+			'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+			'						Printer.Write(TAB(Tabul + 2), RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier) & vbCrLf)
+			'						If Printer.CurrentY >= Printer.Height - 1200 Then
+			'							Printer.NewPage()
+			'							Printer.FontSize = Printer.FontSize
+			'							Printer.Print(" ")
+			'							Printer.FontSize = Printer.FontSize
+			'							VpePrintHeader()
+			'						End If
+			'					Else
+			'						Tabul = 0
+			'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+			'						Printer.Write(TAB(Tabul + 2), RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier))
+			'					End If
+			'				End If
+			'				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
+			'				GoSub DetailCumul
+			'				rsJourHier.MoveNext()
+			'			Else
+			'				Exit Do
+			'			End If
+		Loop
+
+		'		If chkDetailJournaal.CheckState Then
+		'			If Tabul = 0 Then
+		'				Printer.Write(vbCrLf)
 		'			End If
-		'			Select Case ReportWay(T)
-		'				Case 9
-		'					VeldTekst = Dec(ColumnTotal(T), MaskHier)
-		'					If chkAfdrukInVenster.CheckState Then
-		'						aa = aa & VeldTekst & vbTab
-		'					Else
-		'						Printer.Write(VeldTekst)
-		'						If ReportTab(T + 1) < ReportTab(T) Then
-		'							Printer.Write(vbCrLf)
-		'						End If
-		'					End If
-		'				Case Else
-		'					If chkAfdrukInVenster.CheckState Then
-		'						aa = aa & " " & vbTab
-		'					End If
-		'			End Select
-		'			T = T + 1
-		'		Loop 
-		'		If chkAfdrukInVenster.CheckState Then
-		'			Xlog.X.AddItem(aa, Xlog.X.Rows - 1)
-		'			Xlog.X.Row = 1
-		'			Xlog.X.Col = 0
-		'			Xlog.X.set_ColWidth(0, 1140)
-		'			Xlog.WindowState = System.Windows.Forms.FormWindowState.Maximized
-		'			'Xlog.X.ColAlignment(2) = flexAlignRightTop
-		'			'UPGRADE_ISSUE: Unable to determine which constant to upgrade vbNormal to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
-		'			'UPGRADE_ISSUE: Screen property Screen.MousePointer does not support custom mousepointers. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="45116EAB-7060-405E-8ABE-9DBB40DC2E86"'
-		'			'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
-		'			System.Windows.Forms.Cursor.Current = vbNormal
-		'			Xlog.WijzigenLijn.Visible = False
-		'			Xlog.Afsluiten.Enabled = False
-		'			Xlog.Afsluiten.TabStop = False
-		'			Xlog.cbAfbeelding.Visible = False
-		'			XLogKey = ""
-		'			Xlog.SSTab1.TabPages.Item(1).Visible = False
-		'			Xlog.ShowDialog()
-		'			Xlog.Close()
+		'			If Printer.CurrentY >= Printer.Height - 1200 Then
+		'				Printer.NewPage()
+		'				Printer.FontSize = Printer.FontSize
+		'				Printer.Print(" ")
+		'				Printer.FontSize = Printer.FontSize
+		'				VpePrintHeader()
+		'			End If
 		'		End If
+		'		If chkAfdrukInVenster.CheckState = 0 Then
+		'			Printer.Write(vbCrLf)
+		'		End If
+		'		Exit Sub
+
+		'DetailCumul: 
+		'StartPunt: 
+		'		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'		JetGet(TableDummy, 0, RV(rsJourHier, "v019"))
+		'		If Ktrl Then
+		'			TLBRecord(TableDummy) = ""
+		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'			AdoInsertToRecord(TableDummy, RV(rsJourHier, "v019"), "v089")
+		'			AdoInsertToRecord(TableDummy, "0", "v013")
+		'			AdoInsertToRecord(TableDummy, "0", "v068")
+		'			JetInsert(TableDummy, 0)
+		'			GoTo StartPunt
+		'		Else
+		'			RecordToVeld(TableDummy)
+		'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v013 #")) + 1), "v013")
+		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v068 #")) + RV(rsJourHier, "dece068")), "v068")
+		'			bUpdate(TableDummy, 0)
+		'		End If
+		'		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
+		'		Return 
+
+		'ForFaitBerekening: 
+		'		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'		If RTrim(RV(rsMAR(TableOfLedgerAccounts), "v216")) <> "" Then
+		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'			ForfaitNr = Val(RV(rsMAR(TableOfLedgerAccounts), "v216"))
+		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'			BedragForfait(ForfaitNr) = BedragForfait(ForfaitNr) + RV(rsJourHier, "dece068")
+		'			If PctForfait(ForfaitNr) = 0 Then
+		'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'				JetGet(TableOfVarious, 1, SetSpacing("21" + RV(rsMAR(TableOfLedgerAccounts), "v216"), 20))
+		'				If Ktrl Then
+		'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'					MsgBox("Forfaitaire Kode : " + RV(rsMAR(TableOfLedgerAccounts), "v216") + " en waarde nog niet aanwezig.  Eerst inbrengen via diverse gebruikersfiches pér bedrijf a.u.b. !")
+		'				Else
+		'					RecordToVeld(TableOfVarious)
+		'					PctForfait(ForfaitNr) = Val(AdoGetField(TableOfVarious, "#v218 #"))
+		'					BtwForfait(ForfaitNr) = Val(Mid(fmarBoxText("002", "2", AdoGetField(TableOfVarious, "#v111 #")), 4, 4))
+		'					KortingForfait(ForfaitNr) = Val(AdoGetField(TableOfVarious, "#v230 #"))
+		'				End If
+		'			End If
+		'		End If
+		'		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
+		'		Return 
 
 	End Sub
 
@@ -539,12 +624,11 @@ jump:
 		sSQL = "SELECT * FROM dokumenten WHERE v033 >='" & keyFrom & "' AND v033 <= '" & keyTo & "' ORDER BY v033"
 
 		' Create a recordset using the provided collection
-
-		rsAVBoekHier = New ADODB.Recordset With {
+		rsBSBookHere = New ADODB.Recordset With {
 			.CursorLocation = ADODB.CursorLocationEnum.adUseClient
 		}
-		rsAVBoekHier.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
-		If rsAVBoekHier.RecordCount <= 0 Then
+		rsBSBookHere.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+		If rsBSBookHere.RecordCount <= 0 Then
 			'Message something
 		Else
 			GetAVBookRecordSet = True
@@ -572,19 +656,6 @@ jump:
 	End Function
 
 	Private Sub ButtonGenerateReport_Click(sender As Object, e As EventArgs) Handles ButtonGenerateReport.Click
-
-		With Mim.Report
-			.CloseDoc()
-			.OpenDoc()
-			.Author = "marIntegraal"
-			.GUILanguage = 3 'Nederlands
-			.Title = "Diverse Postenboek"
-		End With
-
-		ReportText(2) = ListName & " " & ListSubName & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
-		ReportText(0) = Format(DateTimePickerProcessingDate.Value, "dd/MM/yyyy")
-		VpePrintHeader()
-		Line = 0
 
 		Dim BeginSleutel As String
 		Dim EindSleutel As String
@@ -643,53 +714,57 @@ jump:
 			Exit Sub
 		End If
 
-		rsAVBoekHier.MoveFirst()
+		With Mim.Report
+			.CloseDoc()
+			.OpenDoc()
+			.Author = "marIntegraal"
+			.GUILanguage = 3 'Nederlands
+			.Title = "Aankoop- en Verkoopboek"
+		End With
+
+		ReportText(2) = ListName & " " & ListSubName & " " & Mid(Mim.Text, InStr(Mim.Text, "["))
+		ReportText(0) = Format(DateTimePickerProcessingDate.Value, "dd/MM/yyyy")
+		VpePrintHeader()
+		Line = 0
+
+		rsBSBookHere.MoveFirst()
 		'rsJourHier.MoveFirst()
 
-		Do While Not rsAVBoekHier.EOF
+		Do While Not rsBSBookHere.EOF
 			VpePrintLines()
-			rsAVBoekHier.MoveNext()
+			If chkDetailJournaal.Checked Then
+				DetailRekeningen()
+			End If
+			rsBSBookHere.MoveNext()
 		Loop
+		PrintTotal()
+		' CumulPrint()
 
 		Cursor.Current = Cursors.Default
-
 		Mim.Report.Preview()
 
-		'		Do While Not rsAVBoekHier.EOF
-		'			VpePrintLines()
-		'			DetailRekeningen()
-		'			rsAVBoekHier.MoveNext()
-		'		Loop 
-		'		PrintTotal()
-		'		CumulPrint()
+		Msg = "Totaliseren voor BTW AANGIFTE.  Bent U zeker?"
+		If rbFactuur.Checked Then
+			Msg = Msg & vbCrLf & vbCrLf & "Opgelet !  Creditnota's niet vergeten straks..."
+		End If
+		Ktrl = MsgBox(Msg, MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton1, "BTW Aangifte")
+		If Ktrl = MsgBoxResult.Yes Then
+			'GoSub BTWAangifte
+		End If
+		Refresh()
+		Activate()
+		rsBSBookHere.Close()
+		rsJourHier.Close()
+		rsBSBookHere = Nothing
+		rsJourHier = Nothing
+		If rbFactuur.Checked = True Then
+			rbCreditnota.Checked = True
+		Else
+			Close()
+		End If
+		Exit Sub
 
-
-		'		Msg = "Totaliseren voor BTW AANGIFTE.  Bent U zeker?"
-		'		If FaktuurCreditnota(0).Checked Then
-		'			Msg = Msg & vbCrLf & vbCrLf & "Opgelet !  Creditnota's niet vergeten straks..."
-		'		End If
-		'		Ktrl = MsgBox(Msg, MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton1, "BTW Aangifte")
-		'		If Ktrl = MsgBoxResult.Yes Then
-		'			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
-		'			GoSub BTWAangifte
-		'		End If
-		'		Me.Refresh()
-		'		Me.Activate()
-		'		rsAVBoekHier.Close()
-		'		rsJourHier.Close()
-		'		'UPGRADE_NOTE: Object rsAVBoekHier may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		'		rsAVBoekHier = Nothing
-		'		'UPGRADE_NOTE: Object rsJourHier may not be destroyed until it is garbage collected. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6E35BFF6-CD74-4B09-9689-3E1A43DF8969"'
-		'		rsJourHier = Nothing
-		'		If FaktuurCreditnota(0).Checked = True Then
-		'			FaktuurCreditnota(1).Checked = True
-		'		Else
-		'			Me.Close()
-		'		End If
-		'		Exit Sub
-
-
-		'BTWAangifte: 
+		' BTWAangifte: 
 		'		JetGet(TableOfVarious, 1, SetSpacing("17" & BJPERDAT.Boekjaar.Text & VB6.Format(BJPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00"), 20))
 		'		If Ktrl Then
 		'			MsgBox("Stop")
@@ -806,7 +881,7 @@ jump:
 
 	End Sub
 
-	Private Sub DateTimePickerProcessingDate_Leave(sender As Object, e As EventArgs)
+	Private Sub DateTimePickerProcessingDate_Leave(sender As Object, e As EventArgs) Handles DateTimePickerProcessingDate.Leave
 
 		If Not DatumKtrl(Format(DateTimePickerProcessingDate.Value, "ddMMyyyy"), PeriodAsText) Then
 			MessageBox.Show("Datum verwerking buiten periode" & vbCrLf & vbCrLf & FrmBYPERDAT.PeriodeBoekjaar.Text & "!", "Datum controle", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
@@ -913,135 +988,6 @@ jump:
 		'			Printer.Write(vbCrLf & vbCrLf)
 		'			Printer.Print(TAB(2), "VAK 54 : " & Dec(BtwTotaalForfait, "########.00"))
 		'		End If
-
-	End Sub
-
-	Private Sub DetailRekeningen()
-		'		Dim Printer As New Printer
-		'		Dim RekeningNaam As New VB6.FixedLengthString(30)
-		'		Dim Tabul As Short
-		'		Dim ForfaitNr As Short
-
-		'		If chkDetailJournaal.CheckState Then
-		'			If Printer.CurrentY >= Printer.Height - 1200 Then
-		'				Printer.NewPage()
-		'				Printer.FontSize = Printer.FontSize
-		'				Printer.Print(" ")
-		'				Printer.FontSize = Printer.FontSize
-		'				VpePrintHeader()
-		'			End If
-		'			Printer.Write(vbCrLf)
-		'			Tabul = 56
-		'		End If
-
-		'		Do While rsJourHier.EOF = False
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsAVBoekHier, v033). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, v033). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			If RV(rsJourHier, "v033") = RV(rsAVBoekHier, "v033") Then
-		'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'				If VB.Left(RV(rsJourHier, "v019"), 2) = "40" Or VB.Left(RV(rsJourHier, "v019"), 2) = "44" Then
-		'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'					RekeningNaam.Value = RV(rsJourHier, "v067")
-		'				Else
-		'					If Not adoGet(TableOfLedgerAccounts, 0, "=", RV(rsJourHier, "v019")) Then
-		'						RekeningNaam.Value = "Rekening reeds vernietigd !!!"
-		'					Else
-		'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'						RekeningNaam.Value = RV(rsMAR(TableOfLedgerAccounts), "v020")
-		'						If ForFait Then
-		'							'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
-		'							GoSub ForFaitBerekening
-		'						End If
-		'					End If
-		'				End If
-		'				If chkDetailJournaal.CheckState Then
-		'					If Tabul = 0 Then
-		'						Tabul = 56
-		'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'						Printer.Write(TAB(Tabul + 2), RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier) & vbCrLf)
-		'						If Printer.CurrentY >= Printer.Height - 1200 Then
-		'							Printer.NewPage()
-		'							Printer.FontSize = Printer.FontSize
-		'							Printer.Print(" ")
-		'							Printer.FontSize = Printer.FontSize
-		'							VpePrintHeader()
-		'						End If
-		'					Else
-		'						Tabul = 0
-		'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'						Printer.Write(TAB(Tabul + 2), RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier))
-		'					End If
-		'				End If
-		'				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
-		'				GoSub DetailCumul
-		'				rsJourHier.MoveNext()
-		'			Else
-		'				Exit Do
-		'			End If
-		'		Loop 
-
-		'		If chkDetailJournaal.CheckState Then
-		'			If Tabul = 0 Then
-		'				Printer.Write(vbCrLf)
-		'			End If
-		'			If Printer.CurrentY >= Printer.Height - 1200 Then
-		'				Printer.NewPage()
-		'				Printer.FontSize = Printer.FontSize
-		'				Printer.Print(" ")
-		'				Printer.FontSize = Printer.FontSize
-		'				VpePrintHeader()
-		'			End If
-		'		End If
-		'		If chkAfdrukInVenster.CheckState = 0 Then
-		'			Printer.Write(vbCrLf)
-		'		End If
-		'		Exit Sub
-
-		'DetailCumul: 
-		'StartPunt: 
-		'		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'		JetGet(TableDummy, 0, RV(rsJourHier, "v019"))
-		'		If Ktrl Then
-		'			TLBRecord(TableDummy) = ""
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			AdoInsertToRecord(TableDummy, RV(rsJourHier, "v019"), "v089")
-		'			AdoInsertToRecord(TableDummy, "0", "v013")
-		'			AdoInsertToRecord(TableDummy, "0", "v068")
-		'			JetInsert(TableDummy, 0)
-		'			GoTo StartPunt
-		'		Else
-		'			RecordToVeld(TableDummy)
-		'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v013 #")) + 1), "v013")
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v068 #")) + RV(rsJourHier, "dece068")), "v068")
-		'			bUpdate(TableDummy, 0)
-		'		End If
-		'		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-		'		Return 
-
-		'ForFaitBerekening: 
-		'		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'		If RTrim(RV(rsMAR(TableOfLedgerAccounts), "v216")) <> "" Then
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			ForfaitNr = Val(RV(rsMAR(TableOfLedgerAccounts), "v216"))
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			BedragForfait(ForfaitNr) = BedragForfait(ForfaitNr) + RV(rsJourHier, "dece068")
-		'			If PctForfait(ForfaitNr) = 0 Then
-		'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'				JetGet(TableOfVarious, 1, SetSpacing("21" + RV(rsMAR(TableOfLedgerAccounts), "v216"), 20))
-		'				If Ktrl Then
-		'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'					MsgBox("Forfaitaire Kode : " + RV(rsMAR(TableOfLedgerAccounts), "v216") + " en waarde nog niet aanwezig.  Eerst inbrengen via diverse gebruikersfiches pér bedrijf a.u.b. !")
-		'				Else
-		'					RecordToVeld(TableOfVarious)
-		'					PctForfait(ForfaitNr) = Val(AdoGetField(TableOfVarious, "#v218 #"))
-		'					BtwForfait(ForfaitNr) = Val(Mid(fmarBoxText("002", "2", AdoGetField(TableOfVarious, "#v111 #")), 4, 4))
-		'					KortingForfait(ForfaitNr) = Val(AdoGetField(TableOfVarious, "#v230 #"))
-		'				End If
-		'			End If
-		'		End If
-		'		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-		'		Return 
 
 	End Sub
 
