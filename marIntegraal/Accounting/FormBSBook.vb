@@ -491,75 +491,76 @@ jump:
 
 	End Sub
 
-	Private Sub DetailRekeningen()
+	Private Sub DetailRekeningen(key33 As String)
 
 		Dim RekeningNaam As String = Space(30)
-		Dim Tabul As Short
+		Dim PdfDetailLine As String = Space(128)
+		Dim Tabul As Integer = 56
 		Dim ForfaitNr As Short
+		Dim VeldTekst As String
+		Dim Ktrl44 As Boolean = False
 
+		Ktrl = GetJourRecordSet(key33)
+		If Not Ktrl Then
+			MsgBox("Geen journaalgegevens gevonden voor dit document")
+			Exit Sub
+		End If
 
-		Do While rsJourHier.EOF = False
-			'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsBSBookHere, v033). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, v033). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			'			If RV(rsJourHier, "v033") = RV(rsBSBookHere, "v033") Then
-			'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			'				If VB.Left(RV(rsJourHier, "v019"), 2) = "40" Or VB.Left(RV(rsJourHier, "v019"), 2) = "44" Then
-			'					'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			'					RekeningNaam.Value = RV(rsJourHier, "v067")
-			'				Else
-			'					If Not adoGet(TableOfLedgerAccounts, 0, "=", RV(rsJourHier, "v019")) Then
-			'						RekeningNaam.Value = "Rekening reeds vernietigd !!!"
-			'					Else
-			'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			'						RekeningNaam.Value = RV(rsMAR(TableOfLedgerAccounts), "v020")
-			'						If ForFait Then
-			'							'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
-			'							GoSub ForFaitBerekening
-			'						End If
-			'					End If
-			'				End If
-			'				If chkDetailJournaal.CheckState Then
-			'					If Tabul = 0 Then
-			'						Tabul = 56
-			'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			'						Printer.Write(TAB(Tabul + 2), RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier) & vbCrLf)
-			'						If Printer.CurrentY >= Printer.Height - 1200 Then
-			'							Printer.NewPage()
-			'							Printer.FontSize = Printer.FontSize
-			'							Printer.Print(" ")
-			'							Printer.FontSize = Printer.FontSize
-			'							VpePrintHeader()
-			'						End If
-			'					Else
-			'						Tabul = 0
-			'						'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-			'						Printer.Write(TAB(Tabul + 2), RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier))
-			'					End If
-			'				End If
-			'				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
-			'				GoSub DetailCumul
-			'				rsJourHier.MoveNext()
-			'			Else
-			'				Exit Do
-			'			End If
+		rsJourHier.MoveFirst()
+		Do While Not rsJourHier.EOF
+			If rsJourHier("v019").Value.ToString.Substring(0, 2) = "40" Or rsJourHier("v019").Value.ToString.Substring(0, 2) = "44" Then
+				If Ktrl44 = False Then
+					RekeningNaam = SetSpacing(rsJourHier("v067").Value.ToString, 30)
+					VeldTekst = Dec(Val(rsJourHier("dece068").Value), MaskHier)
+					Mid(PdfDetailLine, 2) = rsJourHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+					Ktrl44 = True
+					Tabul = 0
+				End If
+			Else
+				JetGet(TableOfLedgerAccounts, 0, rsJourHier("v019").Value.ToString)
+				If Ktrl = 0 Then
+					'RecordToField(aIndex)
+					RekeningNaam = SetSpacing(Trim(RV(rsMAR(TableOfLedgerAccounts), "v020")), 30)
+				Else
+					RekeningNaam = SetSpacing("Rekening reeds vernietigd!", 30)
+					MsgBox(RekeningNaam)
+				End If
+				'VeldTekst = Dec(Val(RV(rsJourHier("v019").Value,Dec(ReportFieldNr(T), "000"))), MaskHier)
+				VeldTekst = Dec(Val(rsJourHier("dece068").Value), MaskHier)
+				' Printer  RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier) & vbCrLf)
+				If Tabul = 0 Then
+					Tabul = 56
+					' add second part of the line
+					Mid(PdfDetailLine, Tabul + 2) = rsJourHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+					pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf)
+					If pdfY > 27.5 Then
+						Mim.Report.PageBreak()
+						VpePrintHeader()
+					End If
+					' GoSub DetailCumul
+					PdfDetailLine = Space(128)
+				Else
+					' add first part of the line
+					Mid(PdfDetailLine, 2) = rsJourHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+					' GoSub DetailCumul
+					Tabul = 0
+				End If
+				'If ForFait Then
+				' GoSub ForFaitBerekening
+				'End If
+			End If
+			rsJourHier.MoveNext()
 		Loop
 
-		'		If chkDetailJournaal.CheckState Then
-		'			If Tabul = 0 Then
-		'				Printer.Write(vbCrLf)
-		'			End If
-		'			If Printer.CurrentY >= Printer.Height - 1200 Then
-		'				Printer.NewPage()
-		'				Printer.FontSize = Printer.FontSize
-		'				Printer.Print(" ")
-		'				Printer.FontSize = Printer.FontSize
-		'				VpePrintHeader()
-		'			End If
-		'		End If
-		'		If chkAfdrukInVenster.CheckState = 0 Then
-		'			Printer.Write(vbCrLf)
-		'		End If
-		'		Exit Sub
+		If Tabul = 0 Then
+			pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf & vbCrLf)
+		Else
+			pdfY = Mim.Report.Print(1, pdfY, vbCrLf)
+		End If
+		If pdfY > 27.5 Then
+			Mim.Report.PageBreak()
+			VpePrintHeader()
+		End If
 
 		'DetailCumul: 
 		'StartPunt: 
@@ -636,12 +637,12 @@ jump:
 
 	End Function
 
-	Private Function GetJourRecordSet(keyFrom As String, keyTo As String) As Boolean
+	Private Function GetJourRecordSet(key33 As String) As Boolean
 
 		GetJourRecordSet = False
 
 		Dim sSQL As String
-		sSQL = "SELECT * FROM Journalen WHERE v033 >='" & keyFrom & "' AND v033 <= '" & keyTo & "' ORDER BY v033"
+		sSQL = "SELECT * FROM Journalen WHERE v033 ='" & key33 & "' ORDER BY v019"
 
 		rsJourHier = New ADODB.Recordset With {
 			.CursorLocation = ADODB.CursorLocationEnum.adUseClient
@@ -707,12 +708,6 @@ jump:
 			Cursor.Current = Cursors.Default
 			Exit Sub
 		End If
-		Result = GetJourRecordSet(BeginSleutel, EindSleutel)
-		If Not Result Then
-			MsgBox("Geen journalen voor documenten gevonden")
-			Cursor.Current = Cursors.Default
-			Exit Sub
-		End If
 
 		With Mim.Report
 			.CloseDoc()
@@ -728,12 +723,10 @@ jump:
 		Line = 0
 
 		rsBSBookHere.MoveFirst()
-		'rsJourHier.MoveFirst()
-
 		Do While Not rsBSBookHere.EOF
 			VpePrintLines()
 			If chkDetailJournaal.Checked Then
-				DetailRekeningen()
+				DetailRekeningen(rsBSBookHere.Fields("v033").Value)
 			End If
 			rsBSBookHere.MoveNext()
 		Loop
@@ -754,7 +747,6 @@ jump:
 		Refresh()
 		Activate()
 		rsBSBookHere.Close()
-		rsJourHier.Close()
 		rsBSBookHere = Nothing
 		rsJourHier = Nothing
 		If rbFactuur.Checked = True Then
