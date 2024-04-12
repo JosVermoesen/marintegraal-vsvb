@@ -156,13 +156,13 @@ jump:
 
     Sub ClearFlDummy()
 
-        JetTableClose(TableDummy)
+        'JetTableClose(TableDummy)
         Ktrl = JetTableOpen(TableDummy)
         JetGetFirst(TableDummy, 0)
-        If Ktrl Then
-            JetTableClose(TableDummy)
-            Exit Sub
-        End If
+        Do While rsMAR(TableDummy).EOF
+            rsMAR(TableDummy).Delete()
+            rsMAR(TableDummy).MoveNext()
+        Loop
         JetTableClose(TableDummy)
 
     End Sub

@@ -2,52 +2,43 @@
 Option Explicit On
 
 Public Class BSBook
-	Dim NumberHere As Integer
+	'Dim psText(5) As String
+	'Dim LFontSize(20) As Single
+	'Dim LAantalL(20) As Short
+	'Dim FontDefChanged As Short
+	'Dim rFlag As String
+	'Dim r(10) As String
+	'Dim FlBtw As Short
+	'Dim DBVT(23) As Double
+	'Dim DDVT(23) As Double
+	'Dim BtwForfait(100) As Single
+	'Dim KortingForfait(100) As Single
+	'Dim VakForfait(3) As Double
+	'Dim BtwTotaalForfait As Double
+	'Dim ForfaitBtw As Double
+	'Dim VeldTXT(17) As String
 
-	Dim psText(5) As String
+	Dim NumberHere As Integer
 	Dim ReportFieldNr(23) As Short
 	Dim ReportWay(23) As Short
 	Dim ColumnTotal(17) As Decimal
 	Dim T As Short
-
-	Dim LFontSize(20) As Single
-	Dim LAantalL(20) As Short
-	Dim FontDefChanged As Short
-
 	Dim Line
 	Dim ReportText(5) As String
 	Dim ListName As String
 	Dim ListSubName As String
-
 	Dim pdfReportTitle As String
 	Dim pdfReportTitle2 As String
-
 	Dim pdfY As Double
-
-	Dim rFlag As String
-	Dim r(10) As String
-	Dim FlBtw As Short
-	Dim DBVT(23) As Double
-	Dim DDVT(23) As Double
-
 	Dim BedragForfait(100) As Double
 	Dim PctForfait(100) As Double
-	Dim BtwForfait(100) As Single
-	Dim KortingForfait(100) As Single
-	Dim VakForfait(3) As Double
-	Dim BtwTotaalForfait As Double
-
 	Dim ForFait As Short
-	Dim ForfaitBtw As Double
-
 	Dim Ar As Short
 	Dim tMaxVeld As Short
-	Dim VeldTXT(17) As String
-
 	Dim MaskHier As String
-
-	Dim rsBSBookHere As ADODB.Recordset
-	Dim rsJourHier As ADODB.Recordset
+	Dim rsSellersOrBuyersHere As ADODB.Recordset
+	Dim rsSorBJournalHier As ADODB.Recordset
+	Dim rsDummy As ADODB.Recordset
 
 	Private Sub AVBoek_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -73,6 +64,9 @@ Public Class BSBook
 
 		AgfControle()
 		rbFactuur.Checked = True
+
+		adntDB.Execute("DELETE * FROM TmpBestand")
+		'ClearFlDummy()
 
 	End Sub
 
@@ -218,7 +212,7 @@ jump:
 
 		ReportFieldNr(1) = 35
 		ReportWay(1) = 5 'datum omwerken
-		ReportField(1) = "Datum dok."
+		ReportField(1) = "Datum doc."
 		ReportTab(1) = 14
 
 		Select Case aIndex
@@ -394,7 +388,7 @@ jump:
 	Private Sub VpePrintHeader()
 
 		With Mim.Report
-			.SelectFont("Courier New", 7.2)
+			.SelectFont("Courier", 7)
 			.TextBold = True
 			.TextColor = ColorTranslator.FromOle(0) 'zwart
 
@@ -426,23 +420,23 @@ jump:
 		Do While ReportTab(T) <> 0
 			Select Case ReportWay(T)
 				Case 1
-					JetGet(aIndex, 0, SetSpacing(Mid(RV(rsBSBookHere, "v034"), 2), FlIndexLen(aIndex, 0)))
+					JetGet(aIndex, 0, SetSpacing(Mid(RV(rsSellersOrBuyersHere, "v034"), 2), FlIndexLen(aIndex, 0)))
 					If Ktrl = 0 Then
 						'RecordToField(aIndex)
 						VeldTekst = Trim(RV(rsMAR(aIndex), "A110")) & " " & Trim(RV(rsMAR(aIndex), "A100"))
 					Else
-						VeldTekst = Mid(RV(rsBSBookHere, "v034"), 2) & " is niet meer aanwezig"
+						VeldTekst = Mid(RV(rsSellersOrBuyersHere, "v034"), 2) & " is niet meer aanwezig"
 						MsgBox(VeldTekst)
 					End If
 
 				Case 5
-					VeldTekst = FunctionDateText(RV(rsBSBookHere, "v" & Dec(ReportFieldNr(T), "000")))
+					VeldTekst = FunctionDateText(RV(rsSellersOrBuyersHere, "v" & Dec(ReportFieldNr(T), "000")))
 
 				Case 9
-					VeldTekst = Dec(Val(RV(rsBSBookHere, "v" & Dec(ReportFieldNr(T), "000"))), MaskHier)
+					VeldTekst = Dec(Val(RV(rsSellersOrBuyersHere, "v" & Dec(ReportFieldNr(T), "000"))), MaskHier)
 					ColumnTotal(T) = ColumnTotal(T) + Val(VeldTekst)
 				Case Else
-					VeldTekst = RV(rsBSBookHere, "v" & Dec(ReportFieldNr(T), "000"))
+					VeldTekst = RV(rsSellersOrBuyersHere, "v" & Dec(ReportFieldNr(T), "000"))
 			End Select
 			Select Case SecondLine
 				Case False
@@ -506,50 +500,48 @@ jump:
 			Exit Sub
 		End If
 
-		rsJourHier.MoveFirst()
-		Do While Not rsJourHier.EOF
-			If rsJourHier("v019").Value.ToString.Substring(0, 2) = "40" Or rsJourHier("v019").Value.ToString.Substring(0, 2) = "44" Then
+		rsSorBJournalHier.MoveFirst()
+		Do While Not rsSorBJournalHier.EOF
+			If rsSorBJournalHier("v019").Value.ToString.Substring(0, 2) = "40" Or rsSorBJournalHier("v019").Value.ToString.Substring(0, 2) = "44" Then
 				If Ktrl44 = False Then
-					RekeningNaam = SetSpacing(rsJourHier("v067").Value.ToString, 30)
-					VeldTekst = Dec(Val(rsJourHier("dece068").Value), MaskHier)
-					Mid(PdfDetailLine, 2) = rsJourHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+					RekeningNaam = SetSpacing(rsSorBJournalHier("v067").Value.ToString, 30)
+					VeldTekst = Dec(Val(rsSorBJournalHier("v068").Value.ToString), MaskHier)
+					Mid(PdfDetailLine, 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
 					Ktrl44 = True
 					Tabul = 0
+					DetailCumul(rsSorBJournalHier("v019").Value.ToString, Val(VeldTekst))
 				End If
 			Else
-				JetGet(TableOfLedgerAccounts, 0, rsJourHier("v019").Value.ToString)
+				JetGet(TableOfLedgerAccounts, 0, rsSorBJournalHier("v019").Value.ToString)
 				If Ktrl = 0 Then
-					'RecordToField(aIndex)
 					RekeningNaam = SetSpacing(Trim(RV(rsMAR(TableOfLedgerAccounts), "v020")), 30)
 				Else
 					RekeningNaam = SetSpacing("Rekening reeds vernietigd!", 30)
 					MsgBox(RekeningNaam)
 				End If
-				'VeldTekst = Dec(Val(RV(rsJourHier("v019").Value,Dec(ReportFieldNr(T), "000"))), MaskHier)
-				VeldTekst = Dec(Val(rsJourHier("dece068").Value), MaskHier)
-				' Printer  RV(rsJourHier, "v019") & " " & RekeningNaam.Value & " " & Dec(RV(rsJourHier, "dece068"), MaskHier) & vbCrLf)
+				VeldTekst = Dec(Val(rsSorBJournalHier("dece068").Value), MaskHier)
 				If Tabul = 0 Then
 					Tabul = 56
 					' add second part of the line
-					Mid(PdfDetailLine, Tabul + 2) = rsJourHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+					Mid(PdfDetailLine, Tabul + 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
 					pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf)
 					If pdfY > 27.5 Then
 						Mim.Report.PageBreak()
 						VpePrintHeader()
 					End If
-					' GoSub DetailCumul
 					PdfDetailLine = Space(128)
 				Else
 					' add first part of the line
-					Mid(PdfDetailLine, 2) = rsJourHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
-					' GoSub DetailCumul
+					Mid(PdfDetailLine, 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
 					Tabul = 0
 				End If
+				DetailCumul(rsSorBJournalHier("v019").Value.ToString, rsSorBJournalHier("dece068").Value)
+				'TODO: implement ForFaitBerekening
 				'If ForFait Then
 				' GoSub ForFaitBerekening
 				'End If
 			End If
-			rsJourHier.MoveNext()
+			rsSorBJournalHier.MoveNext()
 		Loop
 
 		If Tabul = 0 Then
@@ -562,35 +554,13 @@ jump:
 			VpePrintHeader()
 		End If
 
-		'DetailCumul: 
-		'StartPunt: 
-		'		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'		JetGet(TableDummy, 0, RV(rsJourHier, "v019"))
-		'		If Ktrl Then
-		'			TLBRecord(TableDummy) = ""
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			AdoInsertToRecord(TableDummy, RV(rsJourHier, "v019"), "v089")
-		'			AdoInsertToRecord(TableDummy, "0", "v013")
-		'			AdoInsertToRecord(TableDummy, "0", "v068")
-		'			JetInsert(TableDummy, 0)
-		'			GoTo StartPunt
-		'		Else
-		'			RecordToVeld(TableDummy)
-		'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v013 #")) + 1), "v013")
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v068 #")) + RV(rsJourHier, "dece068")), "v068")
-		'			bUpdate(TableDummy, 0)
-		'		End If
-		'		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
-		'		Return 
-
 		'ForFaitBerekening: 
 		'		'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 		'		If RTrim(RV(rsMAR(TableOfLedgerAccounts), "v216")) <> "" Then
 		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 		'			ForfaitNr = Val(RV(rsMAR(TableOfLedgerAccounts), "v216"))
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsJourHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			BedragForfait(ForfaitNr) = BedragForfait(ForfaitNr) + RV(rsJourHier, "dece068")
+		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsSorBJournalHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'			BedragForfait(ForfaitNr) = BedragForfait(ForfaitNr) + RV(rsSorBJournalHier, "dece068")
 		'			If PctForfait(ForfaitNr) = 0 Then
 		'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 		'				JetGet(TableOfVarious, 1, SetSpacing("21" + RV(rsMAR(TableOfLedgerAccounts), "v216"), 20))
@@ -610,6 +580,26 @@ jump:
 
 	End Sub
 
+	Private Sub DetailCumul(account As String, amount As Double)
+
+StartPunt:
+		JetGet(TableDummy, 0, account)
+		If Ktrl Then
+			TLBRecord(TableDummy) = ""
+			AdoInsertToRecord(TableDummy, account, "v089")
+			AdoInsertToRecord(TableDummy, "0", "v013")
+			AdoInsertToRecord(TableDummy, "0", "v068")
+			JetInsert(TableDummy, 0)
+			GoTo StartPunt
+		Else
+			RecordToField(TableDummy)
+			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v013 #")) + 1), "v013")
+			AdoInsertToRecord(TableDummy, Str(Val(AdoGetField(TableDummy, "#v068 #")) + amount), "v068")
+			bUpdate(TableDummy, 0)
+		End If
+
+	End Sub
+
 	Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
 
 		Close()
@@ -625,14 +615,33 @@ jump:
 		sSQL = "SELECT * FROM dokumenten WHERE v033 >='" & keyFrom & "' AND v033 <= '" & keyTo & "' ORDER BY v033"
 
 		' Create a recordset using the provided collection
-		rsBSBookHere = New ADODB.Recordset With {
+		rsSellersOrBuyersHere = New ADODB.Recordset With {
 			.CursorLocation = ADODB.CursorLocationEnum.adUseClient
 		}
-		rsBSBookHere.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
-		If rsBSBookHere.RecordCount <= 0 Then
+		rsSellersOrBuyersHere.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+		If rsSellersOrBuyersHere.RecordCount <= 0 Then
 			'Message something
 		Else
 			GetAVBookRecordSet = True
+		End If
+
+	End Function
+
+	Private Function GetDummyRecordSet() As Boolean
+
+		GetDummyRecordSet = False
+
+		Dim sSQL As String
+		sSQL = "SELECT * FROM TmpBestand"
+
+		rsDummy = New ADODB.Recordset With {
+			.CursorLocation = ADODB.CursorLocationEnum.adUseClient
+		}
+		rsDummy.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+		If rsDummy.RecordCount <= 0 Then
+			'Message something
+		Else
+			GetDummyRecordSet = True
 		End If
 
 	End Function
@@ -644,11 +653,11 @@ jump:
 		Dim sSQL As String
 		sSQL = "SELECT * FROM Journalen WHERE v033 ='" & key33 & "' ORDER BY v019"
 
-		rsJourHier = New ADODB.Recordset With {
+		rsSorBJournalHier = New ADODB.Recordset With {
 			.CursorLocation = ADODB.CursorLocationEnum.adUseClient
 		}
-		rsJourHier.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
-		If rsJourHier.RecordCount <= 0 Then
+		rsSorBJournalHier.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+		If rsSorBJournalHier.RecordCount <= 0 Then
 			'Message something
 		Else
 			GetJourRecordSet = True
@@ -722,16 +731,18 @@ jump:
 		VpePrintHeader()
 		Line = 0
 
-		rsBSBookHere.MoveFirst()
-		Do While Not rsBSBookHere.EOF
+		rsSellersOrBuyersHere.MoveFirst()
+		Do While Not rsSellersOrBuyersHere.EOF
 			VpePrintLines()
 			If chkDetailJournaal.Checked Then
-				DetailRekeningen(rsBSBookHere.Fields("v033").Value)
+				DetailRekeningen(rsSellersOrBuyersHere.Fields("v033").Value)
 			End If
-			rsBSBookHere.MoveNext()
+			rsSellersOrBuyersHere.MoveNext()
 		Loop
 		PrintTotal()
-		' CumulPrint()
+		If chkDetailJournaal.Checked Then
+			CumulPrint()
+		End If
 
 		Cursor.Current = Cursors.Default
 		Mim.Report.Preview()
@@ -746,9 +757,9 @@ jump:
 		End If
 		Refresh()
 		Activate()
-		rsBSBookHere.Close()
-		rsBSBookHere = Nothing
-		rsJourHier = Nothing
+		rsSellersOrBuyersHere.Close()
+		rsSellersOrBuyersHere = Nothing
+		rsSorBJournalHier = Nothing
 		If rbFactuur.Checked = True Then
 			rbCreditnota.Checked = True
 		Else
@@ -883,65 +894,89 @@ jump:
 	End Sub
 
 	Private Sub CumulPrint()
-		'		Dim Printer As New Printer
-		'		Dim RekeningNaam As New VB6.FixedLengthString(30)
-		'		Dim Tabul As Short
-		'		Dim Tel As Short
 
-		'		If chkAfdrukInVenster.CheckState Then Exit Sub
+		'Dim ktrlHier As Boolean = GetDummyRecordSet()
+		'If Not ktrlHier Then
+		'MsgBox("Geen cumul data gevonden")
+		'Exit Sub
+		'End If
 
-		'		Printer.EndDoc()
-		'		If Printer.Width > 12000 Then
-		'			Printer.FontSize = 10
-		'			Printer.FontName = "Courier New"
-		'			Printer.Print(" ")
-		'			Printer.FontSize = 10
-		'		Else
-		'			Printer.FontSize = 7.2
-		'			Printer.FontName = "Courier New"
-		'			Printer.Print(" ")
-		'			Printer.FontSize = 7.2
-		'		End If
-		'		VpePrintHeader()
-		'		PrintTotal()
+		Mim.Report.PageBreak()
+		VpePrintHeader()
+		PrintTotal()
 
-		'		Printer.Print()
-		'		Printer.Print(TAB(2), "** CENTRALISATIE **")
-		'		Printer.Print("")
+		Dim Tabul As Integer = 56
+		Dim Tel As Integer
+		Dim PdfDetailLine As String = Space(128)
 
-		'		JetTableClose(TableDummy)
-		'		JetGetFirst(TableDummy, 0)
-		'		RecordToVeld(TableDummy)
-		'		If Not adoGet(TableOfLedgerAccounts, 0, "=", VB.Left(FVT(TableDummy, 0), 7)) Then
-		'			RekeningNaam.Value = "Rekening reeds vernietigd !!!"
-		'		Else
-		'			RecordToVeld(TableOfLedgerAccounts)
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			RekeningNaam.Value = RV(rsMAR(TableOfLedgerAccounts), "v020")
-		'		End If
-		'		Tabul = 0
-		'		Printer.Write(TAB(Tabul + 2), Dec(Val(AdoGetField(TableDummy, "#v013 #")), "####") & " x " & SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(AdoGetField(TableDummy, "#v068 #")), MaskHier))
+		pdfY = Mim.Report.Print(1, pdfY, vbCrLf)
+		pdfY = Mim.Report.Print(2, pdfY, "** CENTRALISATIE **" & vbCrLf)
 
-		'		Do 
-		'			bNext(TableDummy)
-		'			If Ktrl Then
-		'				Exit Do
-		'			End If
-		'			RecordToVeld(TableDummy)
-		'			If Not adoGet(TableOfLedgerAccounts, 0, "=", VB.Left(FVT(TableDummy, 0), 7)) Then
-		'				RekeningNaam.Value = "Rekening reeds vernietigd !!!"
-		'			Else
-		'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'				RekeningNaam.Value = RV(rsMAR(TableOfLedgerAccounts), "v020")
-		'			End If
-		'			If Tabul = 0 Then
-		'				Tabul = 56
-		'				Printer.Write(TAB(Tabul + 2), Dec(Val(AdoGetField(TableDummy, "#v013 #")), "####") & " x " & SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(AdoGetField(TableDummy, "#v068 #")), MaskHier) & vbCrLf)
-		'			Else
-		'				Tabul = 0
-		'				Printer.Write(TAB(Tabul + 2), Dec(Val(AdoGetField(TableDummy, "#v013 #")), "####") & " x " & SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7) & " " & RekeningNaam.Value & " " & Dec(Val(AdoGetField(TableDummy, "#v068 #")), MaskHier))
-		'			End If
-		'		Loop 
+
+		Dim aantalKeer As Integer = 0
+		Dim rekeningNummer As String = ""
+		Dim rekeningNaam As String = ""
+		Dim bedrag As Double = 0
+		Dim Ktrl44 As Boolean = False
+
+		JetTableClose(TableDummy)
+		JetGetFirst(TableDummy, 0)
+		RecordToField(TableDummy)
+		rekeningNummer = SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7)
+		JetGet(TableOfLedgerAccounts, 0, rekeningNummer)
+		If Ktrl Then
+			rekeningNaam = SetSpacing("Rekening reeds vernietigd !!!", 30)
+		Else
+			RecordToField(TableOfLedgerAccounts)
+			rekeningNummer = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v019").Value, 7)
+			rekeningNaam = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v020").Value, 30)
+		End If
+		aantalKeer = Val(AdoGetField(TableDummy, "#v013 #"))
+		bedrag = Val(AdoGetField(TableDummy, "#v068 #"))
+
+		Tabul = 0
+		Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHier)
+
+		Do
+			bNext(TableDummy, 0, rekeningNummer)
+			If Ktrl Then
+				Exit Do
+			End If
+			RecordToField(TableDummy)
+			rekeningNummer = SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7)
+			JetGet(TableOfLedgerAccounts, 0, rekeningNummer)
+			If Ktrl Then
+				rekeningNaam = SetSpacing("Rekening reeds vernietigd !!!", 30)
+			Else
+				RecordToField(TableOfLedgerAccounts)
+				rekeningNummer = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v019").Value, 7)
+				rekeningNaam = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v020").Value, 30)
+			End If
+			aantalKeer = Val(AdoGetField(TableDummy, "#v013 #"))
+			bedrag = Val(AdoGetField(TableDummy, "#v068 #"))
+
+			If Tabul = 0 Then
+				Tabul = 56
+				Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHier)
+				pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf)
+				If pdfY > 27.5 Then
+					Mim.Report.PageBreak()
+					VpePrintHeader()
+				End If
+				PdfDetailLine = Space(128)
+			Else
+				Tabul = 0
+				Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHier)
+			End If
+		Loop
+
+		If Tabul = 0 Then
+			pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf & vbCrLf)
+		Else
+			pdfY = Mim.Report.Print(1, pdfY, vbCrLf)
+		End If
+
+
 
 		'		Dim BedragVK2 As Double
 		'		Dim BedragVK As Double
@@ -979,33 +1014,9 @@ jump:
 		'			Next 
 		'			Printer.Write(vbCrLf & vbCrLf)
 		'			Printer.Print(TAB(2), "VAK 54 : " & Dec(BtwTotaalForfait, "########.00"))
-		'		End If
+		'End If
 
 	End Sub
 
 End Class
 
-'	Private Sub TekstLijn_Enter(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles TekstLijn.Enter
-'		Dim Index As Short = TekstLijn.GetIndex(eventSender)
-
-'		TekstLijn(Index).SelectionStart = 0
-'		TekstLijn(Index).SelectionLength = Len(TekstLijn(Index).Text)
-
-'	End Sub
-
-'	Private Sub TekstLijn_Leave(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles TekstLijn.Leave
-'		Dim Index As Short = TekstLijn.GetIndex(eventSender)
-
-'		Select Case Index
-'			Case 1
-'				If DateWrongFormat(TekstLijn(1).Text) Then
-'					Beep()
-'					TekstLijn(1).Text = MimGlobalDate.Value
-'					TekstLijn(1).Focus()
-'				End If
-'			Case 3
-'				TekstLijn(3).Text = VB6.Format(Val(TekstLijn(3).Text), "00000")
-'		End Select
-
-'	End Sub
-'End Class
