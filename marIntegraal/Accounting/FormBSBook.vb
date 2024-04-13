@@ -30,59 +30,17 @@ Public Class BSBook
 	Dim pdfReportTitle As String
 	Dim pdfReportTitle2 As String
 	Dim pdfY As Double
-	Dim BedragForfait(100) As Double
-	Dim PctForfait(100) As Double
-	Dim ForFait As Short
+	Dim FixedAmount(100) As Double
+	Dim FixedPercentage(100) As Double
+	Dim Fixed As Short
 	Dim Ar As Short
-	Dim tMaxVeld As Short
-	Dim MaskHier As String
+	Dim tMaxField As Short
+	Dim MaskHere As String
 	Dim rsSellersOrBuyersHere As ADODB.Recordset
-	Dim rsSorBJournalHier As ADODB.Recordset
+	Dim rsSorBJournalHere As ADODB.Recordset
 	Dim rsDummy As ADODB.Recordset
 
-	Private Sub AVBoek_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-		If bhEuro Then
-			MaskHier = "#####0.00"
-		Else
-			MaskHier = "########0"
-		End If
-
-		DateTimePickerProcessingDate.Text = MimGlobalDate
-
-		Select Case aIndex
-			Case TableOfSuppliers
-				ListName = "Aankoopboek"
-				aIndex = TableOfSuppliers
-			Case TableOfCustomers
-				ListName = "Verkoopboek"
-				aIndex = TableOfCustomers
-			Case Else
-				MsgBox("Stop")
-		End Select
-		Text = ListName
-
-		AgfControle()
-		rbFactuur.Checked = True
-
-		adntDB.Execute("DELETE * FROM TmpBestand")
-		'ClearFlDummy()
-
-	End Sub
-
-	Private Sub RbFactuur_CheckedChanged(sender As Object, e As EventArgs) Handles rbFactuur.CheckedChanged
-
-		FactuurCreditnotaCheck()
-
-	End Sub
-
-	Private Sub RbCreditnota_CheckedChanged(sender As Object, e As EventArgs) Handles rbCreditnota.CheckedChanged
-
-		FactuurCreditnotaCheck()
-
-	End Sub
-
-	Sub FactuurCreditnotaCheck()
+	Sub InvoiceCreditNoteCheck()
 
 		InitialiseFields()
 		Select Case aIndex
@@ -95,18 +53,18 @@ Public Class BSBook
 		End Select
 
 		NumberHere = 0
-		Select Case rbFactuur.Checked
+		Select Case RbInvoices.Checked
 			Case True 'Factuur
 				ListSubName = "Facturen"
 				Fl99Record = String99(Reading, 1 + T)
-				tbTOT.Text = Format(Val(Fl99Record), "00000")
+				tbUntil.Text = Format(Val(Fl99Record), "00000")
 				Fl99Record = String99(Reading, 2 + T)
-				If Format(Val(Fl99Record), "00000") = tbTOT.Text Then
-					ButtonGenerateReport.Enabled = False
-					TekstVan.Text = Format(Val(Fl99Record), "00000")
+				If Format(Val(Fl99Record), "00000") = tbUntil.Text Then
+					BtnGenerateReport.Enabled = False
+					lblFrom.Text = Format(Val(Fl99Record), "00000")
 				Else
-					ButtonGenerateReport.Enabled = True
-					TekstVan.Text = Format(Val(Fl99Record) + 1, "00000")
+					BtnGenerateReport.Enabled = True
+					lblFrom.Text = Format(Val(Fl99Record) + 1, "00000")
 				End If
 				If aIndex = TableOfSuppliers Then
 					Ar = 1
@@ -118,14 +76,14 @@ Public Class BSBook
 			Case Else
 				ListSubName = "Creditnota's"
 				Fl99Record = String99(Reading, 3 + T)
-				tbTOT.Text = Format(Val(Fl99Record), "00000")
+				tbUntil.Text = Format(Val(Fl99Record), "00000")
 				Fl99Record = String99(Reading, 4 + T)
-				If Format(Val(Fl99Record), "00000") = tbTOT.Text Then
-					ButtonGenerateReport.Enabled = False
-					TekstVan.Text = Format(Val(Fl99Record), "00000")
+				If Format(Val(Fl99Record), "00000") = tbUntil.Text Then
+					BtnGenerateReport.Enabled = False
+					lblFrom.Text = Format(Val(Fl99Record), "00000")
 				Else
-					ButtonGenerateReport.Enabled = True
-					TekstVan.Text = Format(Val(Fl99Record) + 1, "00000")
+					BtnGenerateReport.Enabled = True
+					lblFrom.Text = Format(Val(Fl99Record) + 1, "00000")
 				End If
 				If aIndex = TableOfSuppliers Then
 					Ar = 3
@@ -137,13 +95,13 @@ Public Class BSBook
 		End Select
 		If NumberHere Then
 			MsgBox("Binnen deze periode, zijn er reeds" & vbCrLf & "dokumenten opgenomen !", 0, "BTW aangifte kontroleren a.u.b. !")
-			ButtonGenerateReport.Enabled = False
+			BtnGenerateReport.Enabled = False
 		Else
 			'Drukken.Enabled = True
 		End If
 	End Sub
 
-	Sub AgfControle()
+	Sub AgfControl()
 
 		Dim PeriodeSleutel As String
 		Dim T As Integer
@@ -177,7 +135,7 @@ Public Class BSBook
 jump:
 		If NumberHere Then
 			MsgBox("Periode " & Format(NumberHere, "00") & " reeds afgesloten...")
-			ButtonGenerateReport.Visible = False
+			BtnGenerateReport.Visible = False
 			Exit Sub
 		Else
 			PeriodeSleutel = "17" & FrmBYPERDAT.Boekjaar.Text & Format(FrmBYPERDAT.PeriodeBoekjaar.SelectedIndex + 1, "00")
@@ -195,9 +153,9 @@ jump:
 		End If
 
 		If Mid(String99(Reading, 20), 1, 1) = "4" Then
-			ForFait = 1
+			Fixed = 1
 		Else
-			ForFait = 0
+			Fixed = 0
 		End If
 
 	End Sub
@@ -298,7 +256,7 @@ jump:
 						ReportField(16) = "   VAK 63"
 				End Select
 				ReportTab(17) = 0
-				tMaxVeld = 16
+				tMaxField = 16
 
 			Case TableOfCustomers
 				ReportFieldNr(2) = 55
@@ -362,7 +320,7 @@ jump:
 					Case Else
 						ReportField(12) = "VAK 64"
 				End Select
-				tMaxVeld = 12
+				tMaxField = 12
 				ReportTab(13) = 0
 		End Select
 
@@ -373,7 +331,7 @@ jump:
 		Dim SecondLine = False
 		pdfReportTitle = Space(128)
 		pdfReportTitle2 = Space(128)
-		For T = 0 To tMaxVeld
+		For T = 0 To tMaxField
 			Select Case SecondLine
 				Case False
 					Mid(pdfReportTitle, ReportTab(T)) = ReportField(T)
@@ -433,7 +391,7 @@ jump:
 					VeldTekst = FunctionDateText(RV(rsSellersOrBuyersHere, "v" & Dec(ReportFieldNr(T), "000")))
 
 				Case 9
-					VeldTekst = Dec(Val(RV(rsSellersOrBuyersHere, "v" & Dec(ReportFieldNr(T), "000"))), MaskHier)
+					VeldTekst = Dec(Val(RV(rsSellersOrBuyersHere, "v" & Dec(ReportFieldNr(T), "000"))), MaskHere)
 					ColumnTotal(T) = ColumnTotal(T) + Val(VeldTekst)
 				Case Else
 					VeldTekst = RV(rsSellersOrBuyersHere, "v" & Dec(ReportFieldNr(T), "000"))
@@ -468,7 +426,7 @@ jump:
 			VeldTekst = ""
 			Select Case ReportWay(T)
 				Case 9
-					VeldTekst = Dec(ColumnTotal(T), MaskHier)
+					VeldTekst = Dec(ColumnTotal(T), MaskHere)
 			End Select
 			Select Case SecondLine
 				Case True
@@ -485,7 +443,7 @@ jump:
 
 	End Sub
 
-	Private Sub DetailRekeningen(key33 As String)
+	Private Sub LedgerAccountsDetail(key33 As String)
 
 		Dim RekeningNaam As String = Space(30)
 		Dim PdfDetailLine As String = Space(128)
@@ -500,32 +458,32 @@ jump:
 			Exit Sub
 		End If
 
-		rsSorBJournalHier.MoveFirst()
-		Do While Not rsSorBJournalHier.EOF
-			If rsSorBJournalHier("v019").Value.ToString.Substring(0, 2) = "40" Or rsSorBJournalHier("v019").Value.ToString.Substring(0, 2) = "44" Then
-				If rsSorBJournalHier("v038").Value.ToString = "" Then
+		rsSorBJournalHere.MoveFirst()
+		Do While Not rsSorBJournalHere.EOF
+			If rsSorBJournalHere("v019").Value.ToString.Substring(0, 2) = "40" Or rsSorBJournalHere("v019").Value.ToString.Substring(0, 2) = "44" Then
+				If rsSorBJournalHere("v038").Value.ToString = "" Then
 					If Ktrl44 = False Then
-						RekeningNaam = SetSpacing(rsSorBJournalHier("v067").Value.ToString, 30)
-						VeldTekst = Dec(Val(rsSorBJournalHier("v068").Value.ToString), MaskHier)
-						Mid(PdfDetailLine, 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+						RekeningNaam = SetSpacing(rsSorBJournalHere("v067").Value.ToString, 30)
+						VeldTekst = Dec(Val(rsSorBJournalHere("v068").Value.ToString), MaskHere)
+						Mid(PdfDetailLine, 2) = rsSorBJournalHere("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
 						Ktrl44 = True
 						Tabul = 0
-						DetailCumul(rsSorBJournalHier("v019").Value.ToString, Val(VeldTekst))
+						CumulDetail(rsSorBJournalHere("v019").Value.ToString, Val(VeldTekst))
 					End If
 				End If
 			Else
-				JetGet(TableOfLedgerAccounts, 0, rsSorBJournalHier("v019").Value.ToString)
+				JetGet(TableOfLedgerAccounts, 0, rsSorBJournalHere("v019").Value.ToString)
 				If Ktrl = 0 Then
 					RekeningNaam = SetSpacing(Trim(RV(rsMAR(TableOfLedgerAccounts), "v020")), 30)
 				Else
 					RekeningNaam = SetSpacing("Rekening reeds vernietigd!", 30)
 					MsgBox(RekeningNaam)
 				End If
-				VeldTekst = Dec(Val(rsSorBJournalHier("dece068").Value), MaskHier)
+				VeldTekst = Dec(Val(rsSorBJournalHere("dece068").Value), MaskHere)
 				If Tabul = 0 Then
 					Tabul = 56
 					' add second part of the line
-					Mid(PdfDetailLine, Tabul + 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+					Mid(PdfDetailLine, Tabul + 2) = rsSorBJournalHere("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
 					pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf)
 					If pdfY > 27.5 Then
 						Mim.Report.PageBreak()
@@ -534,16 +492,16 @@ jump:
 					PdfDetailLine = Space(128)
 				Else
 					' add first part of the line
-					Mid(PdfDetailLine, 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+					Mid(PdfDetailLine, 2) = rsSorBJournalHere("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
 					Tabul = 0
 				End If
-				DetailCumul(rsSorBJournalHier("v019").Value.ToString, rsSorBJournalHier("dece068").Value)
+				CumulDetail(rsSorBJournalHere("v019").Value.ToString, rsSorBJournalHere("dece068").Value)
 				'TODO: implement ForFaitBerekening
-				'If ForFait Then
+				'If Fixed Then
 				' GoSub ForFaitBerekening
 				'End If
 			End If
-			rsSorBJournalHier.MoveNext()
+			rsSorBJournalHere.MoveNext()
 		Loop
 
 		If Tabul = 0 Then
@@ -561,9 +519,9 @@ jump:
 		'		If RTrim(RV(rsMAR(TableOfLedgerAccounts), "v216")) <> "" Then
 		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 		'			ForfaitNr = Val(RV(rsMAR(TableOfLedgerAccounts), "v216"))
-		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsSorBJournalHier, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-		'			BedragForfait(ForfaitNr) = BedragForfait(ForfaitNr) + RV(rsSorBJournalHier, "dece068")
-		'			If PctForfait(ForfaitNr) = 0 Then
+		'			'UPGRADE_WARNING: Couldn't resolve default property of object RV(rsSorBJournalHere, dece068). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+		'			FixedAmount(ForfaitNr) = FixedAmount(ForfaitNr) + RV(rsSorBJournalHere, "dece068")
+		'			If FixedPercentage(ForfaitNr) = 0 Then
 		'				'UPGRADE_WARNING: Couldn't resolve default property of object RV(). Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 		'				JetGet(TableOfVarious, 1, SetSpacing("21" + RV(rsMAR(TableOfLedgerAccounts), "v216"), 20))
 		'				If Ktrl Then
@@ -571,7 +529,7 @@ jump:
 		'					MsgBox("Forfaitaire Kode : " + RV(rsMAR(TableOfLedgerAccounts), "v216") + " en waarde nog niet aanwezig.  Eerst inbrengen via diverse gebruikersfiches pér bedrijf a.u.b. !")
 		'				Else
 		'					RecordToVeld(TableOfVarious)
-		'					PctForfait(ForfaitNr) = Val(AdoGetField(TableOfVarious, "#v218 #"))
+		'					FixedPercentage(ForfaitNr) = Val(AdoGetField(TableOfVarious, "#v218 #"))
 		'					BtwForfait(ForfaitNr) = Val(Mid(fmarBoxText("002", "2", AdoGetField(TableOfVarious, "#v111 #")), 4, 4))
 		'					KortingForfait(ForfaitNr) = Val(AdoGetField(TableOfVarious, "#v230 #"))
 		'				End If
@@ -582,7 +540,7 @@ jump:
 
 	End Sub
 
-	Private Sub DetailCumul(account As String, amount As Double)
+	Private Sub CumulDetail(account As String, amount As Double)
 
 StartPunt:
 		JetGet(TableDummy, 0, account)
@@ -602,15 +560,15 @@ StartPunt:
 
 	End Sub
 
-	Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+	Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
 
 		Close()
 
 	End Sub
 
-	Private Function GetAVBookRecordSet(keyFrom As String, keyTo As String) As Boolean
+	Private Function GetBSBookRecordSet(keyFrom As String, keyTo As String) As Boolean
 
-		GetAVBookRecordSet = False
+		GetBSBookRecordSet = False
 
 		Dim sSQL As String
 
@@ -624,7 +582,7 @@ StartPunt:
 		If rsSellersOrBuyersHere.RecordCount <= 0 Then
 			'Message something
 		Else
-			GetAVBookRecordSet = True
+			GetBSBookRecordSet = True
 		End If
 
 	End Function
@@ -655,11 +613,11 @@ StartPunt:
 		Dim sSQL As String
 		sSQL = "SELECT * FROM Journalen WHERE v033 ='" & key33 & "' ORDER BY v019"
 
-		rsSorBJournalHier = New ADODB.Recordset With {
+		rsSorBJournalHere = New ADODB.Recordset With {
 			.CursorLocation = ADODB.CursorLocationEnum.adUseClient
 		}
-		rsSorBJournalHier.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
-		If rsSorBJournalHier.RecordCount <= 0 Then
+		rsSorBJournalHere.Open(sSQL, adntDB, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+		If rsSorBJournalHere.RecordCount <= 0 Then
 			'Message something
 		Else
 			GetJourRecordSet = True
@@ -667,7 +625,171 @@ StartPunt:
 
 	End Function
 
-	Private Sub ButtonGenerateReport_Click(sender As Object, e As EventArgs) Handles ButtonGenerateReport.Click
+	Private Sub CumulPrint()
+
+		'Dim ktrlHier As Boolean = GetDummyRecordSet()
+		'If Not ktrlHier Then
+		'MsgBox("Geen cumul data gevonden")
+		'Exit Sub
+		'End If
+
+		Mim.Report.PageBreak()
+		VpePrintHeader()
+		PrintTotal()
+
+		Dim Tabul As Integer = 56
+		Dim Tel As Integer
+		Dim PdfDetailLine As String = Space(128)
+
+		pdfY = Mim.Report.Print(1, pdfY, vbCrLf)
+		pdfY = Mim.Report.Print(2, pdfY, "** CENTRALISATIE **" & vbCrLf)
+
+
+		Dim aantalKeer As Integer = 0
+		Dim rekeningNummer As String = ""
+		Dim rekeningNaam As String = ""
+		Dim bedrag As Double = 0
+		Dim Ktrl44 As Boolean = False
+
+		JetTableClose(TableDummy)
+		JetGetFirst(TableDummy, 0)
+		RecordToField(TableDummy)
+		rekeningNummer = SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7)
+		JetGet(TableOfLedgerAccounts, 0, rekeningNummer)
+		If Ktrl Then
+			rekeningNaam = SetSpacing("Rekening reeds vernietigd !!!", 30)
+		Else
+			RecordToField(TableOfLedgerAccounts)
+			rekeningNummer = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v019").Value, 7)
+			rekeningNaam = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v020").Value, 30)
+		End If
+		aantalKeer = Val(AdoGetField(TableDummy, "#v013 #"))
+		bedrag = Val(AdoGetField(TableDummy, "#v068 #"))
+
+		Tabul = 0
+		Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHere)
+
+		Do
+			bNext(TableDummy, 0, rekeningNummer)
+			If Ktrl Then
+				Exit Do
+			End If
+			RecordToField(TableDummy)
+			rekeningNummer = SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7)
+			JetGet(TableOfLedgerAccounts, 0, rekeningNummer)
+			If Ktrl Then
+				rekeningNaam = SetSpacing("Rekening reeds vernietigd !!!", 30)
+			Else
+				RecordToField(TableOfLedgerAccounts)
+				rekeningNummer = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v019").Value, 7)
+				rekeningNaam = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v020").Value, 30)
+			End If
+			aantalKeer = Val(AdoGetField(TableDummy, "#v013 #"))
+			bedrag = Val(AdoGetField(TableDummy, "#v068 #"))
+
+			If Tabul = 0 Then
+				Tabul = 56
+				Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHere)
+				pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf)
+				If pdfY > 27.5 Then
+					Mim.Report.PageBreak()
+					VpePrintHeader()
+				End If
+				PdfDetailLine = Space(128)
+			Else
+				Tabul = 0
+				Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHere)
+			End If
+		Loop
+
+		If Tabul = 0 Then
+			pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf & vbCrLf)
+		Else
+			pdfY = Mim.Report.Print(1, pdfY, vbCrLf)
+		End If
+
+
+
+		'		Dim BedragVK2 As Double
+		'		Dim BedragVK As Double
+
+		'		BtwTotaalForfait = 0
+		'		VakForfait(0) = 0
+		'		VakForfait(1) = 0
+		'		VakForfait(2) = 0
+		'		VakForfait(3) = 0
+		'		If Fixed Then
+		'			Printer.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf)
+		'			Printer.Print(TAB(2), "** FORFAITAIR STELSEL **")
+		'			Printer.Write(vbCrLf & vbCrLf)
+		'			Printer.Write(TAB(2), "FORFAITCODE", "AANKOOPBEDRAG", "FAKTOR", "VERKOOP 1", "KORTING", "VERKOOP NETTO", "BTW %", "BTW BEDRAG" & vbCrLf & vbCrLf)
+		'			For Tel = 0 To 39
+		'				If FixedAmount(Tel) <> 0 Then
+		'					BedragVK2 = CDbl(VB6.Format(FixedAmount(Tel) * FixedPercentage(Tel), "0.00"))
+		'					BedragVK = CDbl(VB6.Format(BedragVK2 - (BedragVK2 * KortingForfait(Tel) / 100), "0.00"))
+		'					Printer.Write(TAB(2), Dec(Tel, "00"), Dec(FixedAmount(Tel), "########.00"), Dec(FixedPercentage(Tel), "####.0000"), Dec(BedragVK2, "########.00"), Dec(BedragVK - BedragVK2, "########.00"), Dec(BedragVK, "#######.00"), Dec(BtwForfait(Tel), "###.0"))
+		'					ForfaitBtw = CDbl(VB6.Format(BedragVK * BtwForfait(Tel) / 100, "0.00"))
+		'					Printer.Write(Dec(ForfaitBtw, "########.00") & vbCrLf)
+		'					VakForfait(Int(Tel / 10)) = VakForfait(Int(Tel / 10)) + BedragVK
+		'					BtwTotaalForfait = BtwTotaalForfait + ForfaitBtw
+		'				End If
+		'			Next 
+		'			For Tel = 40 To 99
+		'				If FixedAmount(Tel) <> 0 Then
+		'					MsgBox("BTW aangifte Vak " & VB6.Format(System.Math.Abs(Tel / 10)) & " bestaat toch niet ?")
+		'				End If
+		'			Next 
+		'			Printer.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf)
+		'			Printer.Print(TAB(2), "** BTW VAKKEN **")
+		'			For Tel = 0 To 3
+		'				Printer.Write(TAB(2), "VAK " & Dec(Tel, "00") & " : " & Dec(VakForfait(Tel), "########.00") & vbCrLf)
+		'			Next 
+		'			Printer.Write(vbCrLf & vbCrLf)
+		'			Printer.Print(TAB(2), "VAK 54 : " & Dec(BtwTotaalForfait, "########.00"))
+		'End If
+
+	End Sub
+
+	Private Sub BSBook_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+		If bhEuro Then
+			MaskHere = "#####0.00"
+		Else
+			MaskHere = "########0"
+		End If
+
+		DateTimePickerProcessingDate.Text = MimGlobalDate
+
+		Select Case aIndex
+			Case TableOfSuppliers
+				ListName = "Aankoopboek"
+				aIndex = TableOfSuppliers
+			Case TableOfCustomers
+				ListName = "Verkoopboek"
+				aIndex = TableOfCustomers
+			Case Else
+				MsgBox("Stop")
+		End Select
+		Text = ListName
+
+		AgfControl()
+		RbInvoices.Checked = True
+
+		adntDB.Execute("DELETE * FROM TmpBestand")
+		'ClearFlDummy()
+
+	End Sub
+
+	Private Sub DateTimePickerProcessingDate_Leave(sender As Object, e As EventArgs) Handles DateTimePickerProcessingDate.Leave
+
+		If Not DatumKtrl(Format(DateTimePickerProcessingDate.Value, "ddMMyyyy"), PeriodAsText) Then
+			MessageBox.Show("Datum verwerking buiten periode" & vbCrLf & vbCrLf & FrmBYPERDAT.PeriodeBoekjaar.Text & "!", "Datum controle", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+			DateTimePickerProcessingDate.Focus()
+		End If
+
+	End Sub
+
+	Private Sub BtnGenerateReport_Click(sender As Object, e As EventArgs) Handles BtnGenerateReport.Click
 
 		Dim BeginSleutel As String
 		Dim EindSleutel As String
@@ -686,8 +808,8 @@ StartPunt:
 			ColumnTotal(T) = 0
 		Next
 		For T = 0 To 99
-			BedragForfait(T) = 0
-			PctForfait(T) = 0
+			FixedAmount(T) = 0
+			FixedPercentage(T) = 0
 		Next
 
 		Select Case aIndex
@@ -700,19 +822,19 @@ StartPunt:
 			Case Else
 				MsgBox("Stop")
 		End Select
-		Select Case rbFactuur.Checked
+		Select Case RbInvoices.Checked
 			Case -1
-				BeginSleutel = BeginAV & "0" & Mid(PeriodFromTo, 1, 4) & Dec(Val(TekstVan.Text), "00000")
-				EindSleutel = EindAV & "0" & Mid(PeriodFromTo, 1, 4) & Dec(Val(tbTOT.Text), "00000")
-				Tekst = rbFactuur.Text
+				BeginSleutel = BeginAV & "0" & Mid(PeriodFromTo, 1, 4) & Dec(Val(lblFrom.Text), "00000")
+				EindSleutel = EindAV & "0" & Mid(PeriodFromTo, 1, 4) & Dec(Val(tbUntil.Text), "00000")
+				Tekst = RbInvoices.Text
 			Case Else
-				BeginSleutel = BeginAV & "1" & Mid(PeriodFromTo, 1, 4) & Dec(Val(TekstVan.Text), "00000")
-				EindSleutel = EindAV & "1" & Mid(PeriodFromTo, 1, 4) & Dec(Val(tbTOT.Text), "00000")
-				Tekst = rbCreditnota.Text
+				BeginSleutel = BeginAV & "1" & Mid(PeriodFromTo, 1, 4) & Dec(Val(lblFrom.Text), "00000")
+				EindSleutel = EindAV & "1" & Mid(PeriodFromTo, 1, 4) & Dec(Val(tbUntil.Text), "00000")
+				Tekst = RbCreditNotes.Text
 		End Select
 
 		Cursor.Current = Cursors.WaitCursor
-		Dim Result As Boolean = GetAVBookRecordSet(BeginSleutel, EindSleutel)
+		Dim Result As Boolean = GetBSBookRecordSet(BeginSleutel, EindSleutel)
 
 		If Not Result Then
 			MsgBox("Geen documenten gevonden")
@@ -736,13 +858,13 @@ StartPunt:
 		rsSellersOrBuyersHere.MoveFirst()
 		Do While Not rsSellersOrBuyersHere.EOF
 			VpePrintLines()
-			If chkDetailJournaal.Checked Then
-				DetailRekeningen(rsSellersOrBuyersHere.Fields("v033").Value)
+			If cbJournalDetail.Checked Then
+				LedgerAccountsDetail(rsSellersOrBuyersHere.Fields("v033").Value)
 			End If
 			rsSellersOrBuyersHere.MoveNext()
 		Loop
 		PrintTotal()
-		If chkDetailJournaal.Checked Then
+		If cbJournalDetail.Checked Then
 			CumulPrint()
 		End If
 
@@ -750,7 +872,7 @@ StartPunt:
 		Mim.Report.Preview()
 
 		Msg = "Totaliseren voor BTW AANGIFTE.  Bent U zeker?"
-		If rbFactuur.Checked Then
+		If RbInvoices.Checked Then
 			Msg = Msg & vbCrLf & vbCrLf & "Opgelet !  Creditnota's niet vergeten straks..."
 		End If
 		Ktrl = MsgBox(Msg, MsgBoxStyle.Question + MsgBoxStyle.YesNo + MsgBoxStyle.DefaultButton1, "BTW Aangifte")
@@ -761,9 +883,9 @@ StartPunt:
 		Activate()
 		rsSellersOrBuyersHere.Close()
 		rsSellersOrBuyersHere = Nothing
-		rsSorBJournalHier = Nothing
-		If rbFactuur.Checked = True Then
-			rbCreditnota.Checked = True
+		rsSorBJournalHere = Nothing
+		If RbInvoices.Checked = True Then
+			RbCreditNotes.Checked = True
 		Else
 			Close()
 		End If
@@ -820,7 +942,7 @@ StartPunt:
 		'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(4) + Val(AdoGetField(TableOfVarious, "#v047 #"))), "v047") 'vak 82
 		'				AdoInsertToRecord(TableOfVarious, Str(ColumnTotal(5) + Val(AdoGetField(TableOfVarious, "#v048 #"))), "v048") 'vak 83
 
-		'				If ForFait Then
+		'				If Fixed Then
 		'					AdoInsertToRecord(TableOfVarious, Str(VakForfait(0)), "v055") 'vak 00
 		'					AdoInsertToRecord(TableOfVarious, Str(VakForfait(1)), "v056") 'vak 01
 		'					AdoInsertToRecord(TableOfVarious, Str(VakForfait(2)), "v057") 'vak 02
@@ -886,138 +1008,12 @@ StartPunt:
 
 	End Sub
 
-	Private Sub DateTimePickerProcessingDate_Leave(sender As Object, e As EventArgs) Handles DateTimePickerProcessingDate.Leave
-
-		If Not DatumKtrl(Format(DateTimePickerProcessingDate.Value, "ddMMyyyy"), PeriodAsText) Then
-			MessageBox.Show("Datum verwerking buiten periode" & vbCrLf & vbCrLf & FrmBYPERDAT.PeriodeBoekjaar.Text & "!", "Datum controle", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-			DateTimePickerProcessingDate.Focus()
-		End If
-
+	Private Sub RbInvoices_CheckedChanged(sender As Object, e As EventArgs) Handles RbInvoices.CheckedChanged
+		InvoiceCreditNoteCheck()
 	End Sub
 
-	Private Sub CumulPrint()
-
-		'Dim ktrlHier As Boolean = GetDummyRecordSet()
-		'If Not ktrlHier Then
-		'MsgBox("Geen cumul data gevonden")
-		'Exit Sub
-		'End If
-
-		Mim.Report.PageBreak()
-		VpePrintHeader()
-		PrintTotal()
-
-		Dim Tabul As Integer = 56
-		Dim Tel As Integer
-		Dim PdfDetailLine As String = Space(128)
-
-		pdfY = Mim.Report.Print(1, pdfY, vbCrLf)
-		pdfY = Mim.Report.Print(2, pdfY, "** CENTRALISATIE **" & vbCrLf)
-
-
-		Dim aantalKeer As Integer = 0
-		Dim rekeningNummer As String = ""
-		Dim rekeningNaam As String = ""
-		Dim bedrag As Double = 0
-		Dim Ktrl44 As Boolean = False
-
-		JetTableClose(TableDummy)
-		JetGetFirst(TableDummy, 0)
-		RecordToField(TableDummy)
-		rekeningNummer = SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7)
-		JetGet(TableOfLedgerAccounts, 0, rekeningNummer)
-		If Ktrl Then
-			rekeningNaam = SetSpacing("Rekening reeds vernietigd !!!", 30)
-		Else
-			RecordToField(TableOfLedgerAccounts)
-			rekeningNummer = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v019").Value, 7)
-			rekeningNaam = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v020").Value, 30)
-		End If
-		aantalKeer = Val(AdoGetField(TableDummy, "#v013 #"))
-		bedrag = Val(AdoGetField(TableDummy, "#v068 #"))
-
-		Tabul = 0
-		Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHier)
-
-		Do
-			bNext(TableDummy, 0, rekeningNummer)
-			If Ktrl Then
-				Exit Do
-			End If
-			RecordToField(TableDummy)
-			rekeningNummer = SetSpacing(AdoGetField(TableDummy, "#v089 #"), 7)
-			JetGet(TableOfLedgerAccounts, 0, rekeningNummer)
-			If Ktrl Then
-				rekeningNaam = SetSpacing("Rekening reeds vernietigd !!!", 30)
-			Else
-				RecordToField(TableOfLedgerAccounts)
-				rekeningNummer = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v019").Value, 7)
-				rekeningNaam = SetSpacing(rsMAR(TableOfLedgerAccounts).Fields("v020").Value, 30)
-			End If
-			aantalKeer = Val(AdoGetField(TableDummy, "#v013 #"))
-			bedrag = Val(AdoGetField(TableDummy, "#v068 #"))
-
-			If Tabul = 0 Then
-				Tabul = 56
-				Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHier)
-				pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf)
-				If pdfY > 27.5 Then
-					Mim.Report.PageBreak()
-					VpePrintHeader()
-				End If
-				PdfDetailLine = Space(128)
-			Else
-				Tabul = 0
-				Mid(PdfDetailLine, Tabul + 2) = Dec(aantalKeer, "####") & " x " & rekeningNummer & " " & rekeningNaam & " " & Dec(bedrag, MaskHier)
-			End If
-		Loop
-
-		If Tabul = 0 Then
-			pdfY = Mim.Report.Print(1, pdfY, PdfDetailLine & vbCrLf & vbCrLf)
-		Else
-			pdfY = Mim.Report.Print(1, pdfY, vbCrLf)
-		End If
-
-
-
-		'		Dim BedragVK2 As Double
-		'		Dim BedragVK As Double
-
-		'		BtwTotaalForfait = 0
-		'		VakForfait(0) = 0
-		'		VakForfait(1) = 0
-		'		VakForfait(2) = 0
-		'		VakForfait(3) = 0
-		'		If ForFait Then
-		'			Printer.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf)
-		'			Printer.Print(TAB(2), "** FORFAITAIR STELSEL **")
-		'			Printer.Write(vbCrLf & vbCrLf)
-		'			Printer.Write(TAB(2), "FORFAITCODE", "AANKOOPBEDRAG", "FAKTOR", "VERKOOP 1", "KORTING", "VERKOOP NETTO", "BTW %", "BTW BEDRAG" & vbCrLf & vbCrLf)
-		'			For Tel = 0 To 39
-		'				If BedragForfait(Tel) <> 0 Then
-		'					BedragVK2 = CDbl(VB6.Format(BedragForfait(Tel) * PctForfait(Tel), "0.00"))
-		'					BedragVK = CDbl(VB6.Format(BedragVK2 - (BedragVK2 * KortingForfait(Tel) / 100), "0.00"))
-		'					Printer.Write(TAB(2), Dec(Tel, "00"), Dec(BedragForfait(Tel), "########.00"), Dec(PctForfait(Tel), "####.0000"), Dec(BedragVK2, "########.00"), Dec(BedragVK - BedragVK2, "########.00"), Dec(BedragVK, "#######.00"), Dec(BtwForfait(Tel), "###.0"))
-		'					ForfaitBtw = CDbl(VB6.Format(BedragVK * BtwForfait(Tel) / 100, "0.00"))
-		'					Printer.Write(Dec(ForfaitBtw, "########.00") & vbCrLf)
-		'					VakForfait(Int(Tel / 10)) = VakForfait(Int(Tel / 10)) + BedragVK
-		'					BtwTotaalForfait = BtwTotaalForfait + ForfaitBtw
-		'				End If
-		'			Next 
-		'			For Tel = 40 To 99
-		'				If BedragForfait(Tel) <> 0 Then
-		'					MsgBox("BTW aangifte Vak " & VB6.Format(System.Math.Abs(Tel / 10)) & " bestaat toch niet ?")
-		'				End If
-		'			Next 
-		'			Printer.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf)
-		'			Printer.Print(TAB(2), "** BTW VAKKEN **")
-		'			For Tel = 0 To 3
-		'				Printer.Write(TAB(2), "VAK " & Dec(Tel, "00") & " : " & Dec(VakForfait(Tel), "########.00") & vbCrLf)
-		'			Next 
-		'			Printer.Write(vbCrLf & vbCrLf)
-		'			Printer.Print(TAB(2), "VAK 54 : " & Dec(BtwTotaalForfait, "########.00"))
-		'End If
-
+	Private Sub RbCreditNotes_CheckedChanged(sender As Object, e As EventArgs) Handles RbCreditNotes.CheckedChanged
+		InvoiceCreditNoteCheck()
 	End Sub
 
 End Class

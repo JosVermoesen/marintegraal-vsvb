@@ -22,142 +22,145 @@ Partial Class BSBook
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.chkDetailJournaal = New System.Windows.Forms.CheckBox()
-        Me.tbTOT = New System.Windows.Forms.TextBox()
-        Me.btnClose = New System.Windows.Forms.Button()
-        Me.rbCreditnota = New System.Windows.Forms.RadioButton()
-        Me.rbFactuur = New System.Windows.Forms.RadioButton()
-        Me.ButtonGenerateReport = New System.Windows.Forms.Button()
-        Me.TekstVan = New System.Windows.Forms.Label()
-        Me._Label1_1 = New System.Windows.Forms.Label()
-        Me._Label1_2 = New System.Windows.Forms.Label()
-        Me._Label1_3 = New System.Windows.Forms.Label()
+        Me.cbJournalDetail = New System.Windows.Forms.CheckBox()
+        Me.tbUntil = New System.Windows.Forms.TextBox()
+        Me.BtnClose = New System.Windows.Forms.Button()
+        Me.RbCreditNotes = New System.Windows.Forms.RadioButton()
+        Me.RbInvoices = New System.Windows.Forms.RadioButton()
+        Me.BtnGenerateReport = New System.Windows.Forms.Button()
+        Me.lblFrom = New System.Windows.Forms.Label()
+        Me.DateLabel = New System.Windows.Forms.Label()
+        Me.FromLabel = New System.Windows.Forms.Label()
+        Me.UntilLabel = New System.Windows.Forms.Label()
         Me.DateTimePickerProcessingDate = New System.Windows.Forms.DateTimePicker()
         Me.SuspendLayout()
         '
-        'chkDetailJournaal
+        'cbJournalDetail
         '
-        Me.chkDetailJournaal.BackColor = System.Drawing.SystemColors.Control
-        Me.chkDetailJournaal.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.chkDetailJournaal.Location = New System.Drawing.Point(9, 86)
-        Me.chkDetailJournaal.Name = "chkDetailJournaal"
-        Me.chkDetailJournaal.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.chkDetailJournaal.Size = New System.Drawing.Size(119, 15)
-        Me.chkDetailJournaal.TabIndex = 8
-        Me.chkDetailJournaal.Text = "Detail Journaal"
-        Me.chkDetailJournaal.UseVisualStyleBackColor = False
+        Me.cbJournalDetail.BackColor = System.Drawing.SystemColors.Control
+        Me.cbJournalDetail.Checked = True
+        Me.cbJournalDetail.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbJournalDetail.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.cbJournalDetail.Location = New System.Drawing.Point(125, 92)
+        Me.cbJournalDetail.Name = "cbJournalDetail"
+        Me.cbJournalDetail.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.cbJournalDetail.Size = New System.Drawing.Size(119, 15)
+        Me.cbJournalDetail.TabIndex = 8
+        Me.cbJournalDetail.Text = "Detail Journaal"
+        Me.cbJournalDetail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.cbJournalDetail.UseVisualStyleBackColor = False
         '
-        'tbTOT
+        'tbUntil
         '
-        Me.tbTOT.AcceptsReturn = True
-        Me.tbTOT.BackColor = System.Drawing.Color.White
-        Me.tbTOT.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.tbTOT.ForeColor = System.Drawing.Color.Black
-        Me.tbTOT.Location = New System.Drawing.Point(213, 66)
-        Me.tbTOT.MaxLength = 0
-        Me.tbTOT.Name = "tbTOT"
-        Me.tbTOT.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.tbTOT.Size = New System.Drawing.Size(57, 20)
-        Me.tbTOT.TabIndex = 7
+        Me.tbUntil.AcceptsReturn = True
+        Me.tbUntil.BackColor = System.Drawing.Color.White
+        Me.tbUntil.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.tbUntil.ForeColor = System.Drawing.Color.Black
+        Me.tbUntil.Location = New System.Drawing.Point(189, 66)
+        Me.tbUntil.MaxLength = 0
+        Me.tbUntil.Name = "tbUntil"
+        Me.tbUntil.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.tbUntil.Size = New System.Drawing.Size(57, 20)
+        Me.tbUntil.TabIndex = 7
         '
-        'btnClose
+        'BtnClose
         '
-        Me.btnClose.BackColor = System.Drawing.SystemColors.Control
-        Me.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnClose.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.btnClose.Location = New System.Drawing.Point(287, 78)
-        Me.btnClose.Name = "btnClose"
-        Me.btnClose.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.btnClose.Size = New System.Drawing.Size(80, 23)
-        Me.btnClose.TabIndex = 21
-        Me.btnClose.TabStop = False
-        Me.btnClose.Text = "Sluiten"
-        Me.btnClose.UseVisualStyleBackColor = False
+        Me.BtnClose.BackColor = System.Drawing.SystemColors.Control
+        Me.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.BtnClose.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.BtnClose.Location = New System.Drawing.Point(259, 87)
+        Me.BtnClose.Name = "BtnClose"
+        Me.BtnClose.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.BtnClose.Size = New System.Drawing.Size(80, 23)
+        Me.BtnClose.TabIndex = 21
+        Me.BtnClose.TabStop = False
+        Me.BtnClose.Text = "Sluiten"
+        Me.BtnClose.UseVisualStyleBackColor = False
         '
-        'rbCreditnota
+        'RbCreditNotes
         '
-        Me.rbCreditnota.BackColor = System.Drawing.SystemColors.Control
-        Me.rbCreditnota.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.rbCreditnota.Location = New System.Drawing.Point(77, 43)
-        Me.rbCreditnota.Name = "rbCreditnota"
-        Me.rbCreditnota.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.rbCreditnota.Size = New System.Drawing.Size(83, 16)
-        Me.rbCreditnota.TabIndex = 5
-        Me.rbCreditnota.Text = "Creditnota's"
-        Me.rbCreditnota.UseVisualStyleBackColor = False
+        Me.RbCreditNotes.BackColor = System.Drawing.SystemColors.Control
+        Me.RbCreditNotes.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.RbCreditNotes.Location = New System.Drawing.Point(12, 90)
+        Me.RbCreditNotes.Name = "RbCreditNotes"
+        Me.RbCreditNotes.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RbCreditNotes.Size = New System.Drawing.Size(83, 16)
+        Me.RbCreditNotes.TabIndex = 5
+        Me.RbCreditNotes.Text = "Creditnota's"
+        Me.RbCreditNotes.UseVisualStyleBackColor = False
         '
-        'rbFactuur
+        'RbInvoices
         '
-        Me.rbFactuur.BackColor = System.Drawing.SystemColors.Control
-        Me.rbFactuur.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.rbFactuur.Location = New System.Drawing.Point(9, 42)
-        Me.rbFactuur.Name = "rbFactuur"
-        Me.rbFactuur.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.rbFactuur.Size = New System.Drawing.Size(62, 16)
-        Me.rbFactuur.TabIndex = 4
-        Me.rbFactuur.Text = "Facturen"
-        Me.rbFactuur.UseVisualStyleBackColor = False
+        Me.RbInvoices.BackColor = System.Drawing.SystemColors.Control
+        Me.RbInvoices.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.RbInvoices.Location = New System.Drawing.Point(12, 68)
+        Me.RbInvoices.Name = "RbInvoices"
+        Me.RbInvoices.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.RbInvoices.Size = New System.Drawing.Size(72, 16)
+        Me.RbInvoices.TabIndex = 4
+        Me.RbInvoices.Text = "Facturen"
+        Me.RbInvoices.UseVisualStyleBackColor = False
         '
-        'ButtonGenerateReport
+        'BtnGenerateReport
         '
-        Me.ButtonGenerateReport.BackColor = System.Drawing.SystemColors.Control
-        Me.ButtonGenerateReport.Enabled = False
-        Me.ButtonGenerateReport.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.ButtonGenerateReport.Location = New System.Drawing.Point(287, 9)
-        Me.ButtonGenerateReport.Name = "ButtonGenerateReport"
-        Me.ButtonGenerateReport.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ButtonGenerateReport.Size = New System.Drawing.Size(80, 49)
-        Me.ButtonGenerateReport.TabIndex = 9
-        Me.ButtonGenerateReport.Text = "Genereer Rapport"
-        Me.ButtonGenerateReport.UseVisualStyleBackColor = False
+        Me.BtnGenerateReport.BackColor = System.Drawing.SystemColors.Control
+        Me.BtnGenerateReport.Enabled = False
+        Me.BtnGenerateReport.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.BtnGenerateReport.Location = New System.Drawing.Point(259, 9)
+        Me.BtnGenerateReport.Name = "BtnGenerateReport"
+        Me.BtnGenerateReport.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.BtnGenerateReport.Size = New System.Drawing.Size(80, 49)
+        Me.BtnGenerateReport.TabIndex = 9
+        Me.BtnGenerateReport.Text = "Genereer Rapport"
+        Me.BtnGenerateReport.UseVisualStyleBackColor = False
         '
-        'TekstVan
+        'lblFrom
         '
-        Me.TekstVan.BackColor = System.Drawing.SystemColors.Control
-        Me.TekstVan.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.TekstVan.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.TekstVan.Location = New System.Drawing.Point(212, 43)
-        Me.TekstVan.Name = "TekstVan"
-        Me.TekstVan.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.TekstVan.Size = New System.Drawing.Size(57, 20)
-        Me.TekstVan.TabIndex = 26
+        Me.lblFrom.BackColor = System.Drawing.SystemColors.Control
+        Me.lblFrom.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblFrom.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.lblFrom.Location = New System.Drawing.Point(188, 43)
+        Me.lblFrom.Name = "lblFrom"
+        Me.lblFrom.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.lblFrom.Size = New System.Drawing.Size(57, 20)
+        Me.lblFrom.TabIndex = 26
         '
-        '_Label1_1
+        'DateLabel
         '
-        Me._Label1_1.BackColor = System.Drawing.SystemColors.Control
-        Me._Label1_1.ForeColor = System.Drawing.SystemColors.ControlText
-        Me._Label1_1.Location = New System.Drawing.Point(9, 16)
-        Me._Label1_1.Name = "_Label1_1"
-        Me._Label1_1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me._Label1_1.Size = New System.Drawing.Size(77, 13)
-        Me._Label1_1.TabIndex = 0
-        Me._Label1_1.Text = "Datu&m"
+        Me.DateLabel.BackColor = System.Drawing.SystemColors.Control
+        Me.DateLabel.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.DateLabel.Location = New System.Drawing.Point(9, 12)
+        Me.DateLabel.Name = "DateLabel"
+        Me.DateLabel.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.DateLabel.Size = New System.Drawing.Size(53, 20)
+        Me.DateLabel.TabIndex = 0
+        Me.DateLabel.Text = "Datu&m"
         '
-        '_Label1_2
+        'FromLabel
         '
-        Me._Label1_2.BackColor = System.Drawing.SystemColors.Control
-        Me._Label1_2.ForeColor = System.Drawing.SystemColors.ControlText
-        Me._Label1_2.Location = New System.Drawing.Point(176, 45)
-        Me._Label1_2.Name = "_Label1_2"
-        Me._Label1_2.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me._Label1_2.Size = New System.Drawing.Size(32, 13)
-        Me._Label1_2.TabIndex = 24
-        Me._Label1_2.Text = "Van"
+        Me.FromLabel.BackColor = System.Drawing.SystemColors.Control
+        Me.FromLabel.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.FromLabel.Location = New System.Drawing.Point(152, 45)
+        Me.FromLabel.Name = "FromLabel"
+        Me.FromLabel.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.FromLabel.Size = New System.Drawing.Size(32, 13)
+        Me.FromLabel.TabIndex = 24
+        Me.FromLabel.Text = "Van"
         '
-        '_Label1_3
+        'UntilLabel
         '
-        Me._Label1_3.BackColor = System.Drawing.SystemColors.Control
-        Me._Label1_3.ForeColor = System.Drawing.SystemColors.ControlText
-        Me._Label1_3.Location = New System.Drawing.Point(177, 68)
-        Me._Label1_3.Name = "_Label1_3"
-        Me._Label1_3.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me._Label1_3.Size = New System.Drawing.Size(32, 13)
-        Me._Label1_3.TabIndex = 6
-        Me._Label1_3.Text = "Tot"
+        Me.UntilLabel.BackColor = System.Drawing.SystemColors.Control
+        Me.UntilLabel.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.UntilLabel.Location = New System.Drawing.Point(153, 68)
+        Me.UntilLabel.Name = "UntilLabel"
+        Me.UntilLabel.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.UntilLabel.Size = New System.Drawing.Size(32, 13)
+        Me.UntilLabel.TabIndex = 6
+        Me.UntilLabel.Text = "Tot"
         '
         'DateTimePickerProcessingDate
         '
-        Me.DateTimePickerProcessingDate.Location = New System.Drawing.Point(92, 12)
+        Me.DateTimePickerProcessingDate.Location = New System.Drawing.Point(68, 12)
         Me.DateTimePickerProcessingDate.MaxDate = New Date(2061, 12, 31, 0, 0, 0, 0)
         Me.DateTimePickerProcessingDate.MinDate = New Date(1985, 12, 1, 0, 0, 0, 0)
         Me.DateTimePickerProcessingDate.Name = "DateTimePickerProcessingDate"
@@ -168,35 +171,35 @@ Partial Class BSBook
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.CancelButton = Me.btnClose
-        Me.ClientSize = New System.Drawing.Size(383, 115)
+        Me.CancelButton = Me.BtnClose
+        Me.ClientSize = New System.Drawing.Size(354, 120)
         Me.Controls.Add(Me.DateTimePickerProcessingDate)
-        Me.Controls.Add(Me.chkDetailJournaal)
-        Me.Controls.Add(Me.tbTOT)
-        Me.Controls.Add(Me.btnClose)
-        Me.Controls.Add(Me.rbCreditnota)
-        Me.Controls.Add(Me.rbFactuur)
-        Me.Controls.Add(Me.ButtonGenerateReport)
-        Me.Controls.Add(Me.TekstVan)
-        Me.Controls.Add(Me._Label1_1)
-        Me.Controls.Add(Me._Label1_2)
-        Me.Controls.Add(Me._Label1_3)
+        Me.Controls.Add(Me.cbJournalDetail)
+        Me.Controls.Add(Me.tbUntil)
+        Me.Controls.Add(Me.BtnClose)
+        Me.Controls.Add(Me.RbCreditNotes)
+        Me.Controls.Add(Me.RbInvoices)
+        Me.Controls.Add(Me.BtnGenerateReport)
+        Me.Controls.Add(Me.lblFrom)
+        Me.Controls.Add(Me.DateLabel)
+        Me.Controls.Add(Me.FromLabel)
+        Me.Controls.Add(Me.UntilLabel)
         Me.Name = "BSBook"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "frmAVBoek"
+        Me.Text = "FormBSBook"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Public WithEvents chkDetailJournaal As CheckBox
-    Public WithEvents tbTOT As TextBox
-    Public WithEvents btnClose As Button
-    Public WithEvents rbCreditnota As RadioButton
-    Public WithEvents rbFactuur As RadioButton
-    Public WithEvents ButtonGenerateReport As Button
-    Public WithEvents TekstVan As Label
-    Public WithEvents _Label1_1 As Label
-    Public WithEvents _Label1_2 As Label
-    Public WithEvents _Label1_3 As Label
+    Public WithEvents cbJournalDetail As CheckBox
+    Public WithEvents tbUntil As TextBox
+    Public WithEvents BtnClose As Button
+    Public WithEvents RbCreditNotes As RadioButton
+    Public WithEvents RbInvoices As RadioButton
+    Public WithEvents BtnGenerateReport As Button
+    Public WithEvents lblFrom As Label
+    Public WithEvents DateLabel As Label
+    Public WithEvents FromLabel As Label
+    Public WithEvents UntilLabel As Label
     Friend WithEvents DateTimePickerProcessingDate As DateTimePicker
 End Class

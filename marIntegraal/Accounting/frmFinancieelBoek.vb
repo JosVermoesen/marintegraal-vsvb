@@ -341,7 +341,7 @@ End Class
 '					TotalDebit = TotalDebit + HetBedrag
 '			End Select
 '			'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
-'			GoSub DetailCumul
+'			GoSub CumulDetail
 '			VpePrintLines()
 '			If TelUittreksel = UittrekselsLijst.Items.Count - 1 Then
 '				'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
@@ -443,7 +443,7 @@ End Class
 '		DeRekening.Value = FieldText(1)
 '		HetBedrag = DCBedrag
 '		'UPGRADE_ISSUE: GoSub statement is not supported. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="C5A1A479-AB8B-4D40-AAF4-DB19A2E5E77F"'
-'		GoSub DetailCumul
+'		GoSub CumulDetail
 '		VpePrintLines()
 '		'UPGRADE_WARNING: Return has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="9B7D5ADD-D8FE-4819-A36C-6DEDAF088CC7"'
 '		Return 
@@ -455,7 +455,7 @@ End Class
 '		Exit Sub
 '		Resume 
 
-'DetailCumul: 
+'CumulDetail: 
 'StartPunt: 
 '		JetGet(TableDummy, 0, SetSpacing(DeRekening.Value, 20))
 '		If Ktrl Then
