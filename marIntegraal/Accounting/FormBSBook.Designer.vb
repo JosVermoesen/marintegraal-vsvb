@@ -33,7 +33,6 @@ Partial Class BSBook
         Me._Label1_2 = New System.Windows.Forms.Label()
         Me._Label1_3 = New System.Windows.Forms.Label()
         Me.DateTimePickerProcessingDate = New System.Windows.Forms.DateTimePicker()
-        Me.lblInOntwikkeling = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'chkDetailJournaal
@@ -165,23 +164,12 @@ Partial Class BSBook
         Me.DateTimePickerProcessingDate.Size = New System.Drawing.Size(176, 20)
         Me.DateTimePickerProcessingDate.TabIndex = 1
         '
-        'lblInOntwikkeling
-        '
-        Me.lblInOntwikkeling.AutoSize = True
-        Me.lblInOntwikkeling.Font = New System.Drawing.Font("Microsoft Sans Serif", 27.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblInOntwikkeling.Location = New System.Drawing.Point(48, 117)
-        Me.lblInOntwikkeling.Name = "lblInOntwikkeling"
-        Me.lblInOntwikkeling.Size = New System.Drawing.Size(270, 42)
-        Me.lblInOntwikkeling.TabIndex = 89
-        Me.lblInOntwikkeling.Text = "In Ontwikkeling"
-        '
         'BSBook
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnClose
-        Me.ClientSize = New System.Drawing.Size(383, 177)
-        Me.Controls.Add(Me.lblInOntwikkeling)
+        Me.ClientSize = New System.Drawing.Size(383, 115)
         Me.Controls.Add(Me.DateTimePickerProcessingDate)
         Me.Controls.Add(Me.chkDetailJournaal)
         Me.Controls.Add(Me.tbTOT)
@@ -211,5 +199,4 @@ Partial Class BSBook
     Public WithEvents _Label1_2 As Label
     Public WithEvents _Label1_3 As Label
     Friend WithEvents DateTimePickerProcessingDate As DateTimePicker
-    Friend WithEvents lblInOntwikkeling As Label
 End Class

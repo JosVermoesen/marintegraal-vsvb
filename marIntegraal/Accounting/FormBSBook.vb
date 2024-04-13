@@ -503,13 +503,15 @@ jump:
 		rsSorBJournalHier.MoveFirst()
 		Do While Not rsSorBJournalHier.EOF
 			If rsSorBJournalHier("v019").Value.ToString.Substring(0, 2) = "40" Or rsSorBJournalHier("v019").Value.ToString.Substring(0, 2) = "44" Then
-				If Ktrl44 = False Then
-					RekeningNaam = SetSpacing(rsSorBJournalHier("v067").Value.ToString, 30)
-					VeldTekst = Dec(Val(rsSorBJournalHier("v068").Value.ToString), MaskHier)
-					Mid(PdfDetailLine, 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
-					Ktrl44 = True
-					Tabul = 0
-					DetailCumul(rsSorBJournalHier("v019").Value.ToString, Val(VeldTekst))
+				If rsSorBJournalHier("v038").Value.ToString = "" Then
+					If Ktrl44 = False Then
+						RekeningNaam = SetSpacing(rsSorBJournalHier("v067").Value.ToString, 30)
+						VeldTekst = Dec(Val(rsSorBJournalHier("v068").Value.ToString), MaskHier)
+						Mid(PdfDetailLine, 2) = rsSorBJournalHier("v019").Value.ToString & " " & RekeningNaam & " " & VeldTekst
+						Ktrl44 = True
+						Tabul = 0
+						DetailCumul(rsSorBJournalHier("v019").Value.ToString, Val(VeldTekst))
+					End If
 				End If
 			Else
 				JetGet(TableOfLedgerAccounts, 0, rsSorBJournalHier("v019").Value.ToString)
